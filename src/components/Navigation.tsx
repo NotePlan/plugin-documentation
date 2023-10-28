@@ -240,7 +240,9 @@ export const navigation: Array<NavGroup> = [
   },
   {
     title: 'Plugins',
-    links: [{ title: 'Event Helpers', href: '/eventhelpers' }],
+    links: [{ title: '🕓 Event Helpers', href: '/eventhelpers' },
+      { title: '⏱ Habits & Summaries', href: '/summaries' },
+    ],
   },
 ]
 
