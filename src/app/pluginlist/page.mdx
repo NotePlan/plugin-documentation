@@ -1,673 +1,837 @@
 export const metadata = {
-  title: 'Quickstart',
+  title: 'Plugin List',
   description:
     'This guide will get you all set up and ready to use the Protocol API. We’ll cover how to get started an API client and how to make your first API request.',
 }
 
 # Plugin Commands
-  [🔄 Refresh](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Generate%20Plugin%20Command%20Listing&arg0=#%20Plugin%20Commands&arg1=false)
----
+
+## [🔄 Refresh](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Generate%20Plugin%20Command%20Listing&arg0=#%20Plugin%20Commands&arg1=false)
+
 ## NotePlan Publish v0.1
-> 
-> Author: 
+
+> Author:
+
 ### Commands
+
 - /test [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Publish.disabled&command=test)
-  **
+  \*\*
+
 ---
+
 ## Preview v0.4.2
+
 > Shows HTML preview of the current note, including Mermaid diagrams and MathJax equations. Requires NP v3.9.2.
 > Author: Jonathan Clark [Documentation](https://github.com/NotePlan/plugins/tree/main/np.Preview/)
+
 ### Commands
+
 - /preview note [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Preview&command=preview%20note)
-  *Preview note in HTML window*
+  _Preview note in HTML window_
 - /start live preview [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Preview&command=start%20live%20preview)
-  *Preview note in HTML window, and add a trigger to enable near-live update to it*
+  _Preview note in HTML window, and add a trigger to enable near-live update to it_
+
 ---
+
 ## ⏱ Habits and Summaries v0.20.0 [update to latest version](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%E2%8F%B1%20Habits%20and%20Summaries)
+
 > Generate summaries from notes for a given time period and saves to notes; show heatmap of when tasks were completed. Click link for more details and settings.
 > Author: Jonathan Clark [Documentation](https://github.com/NotePlan/plugins/tree/main/jgclark.Summaries/)
+
 ### Commands
+
 - /appendProgressUpdate [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Summaries&command=appendProgressUpdate)
-  *Append weekly/monthly habit and progress update*
+  _Append weekly/monthly habit and progress update_
 - /today progress [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Summaries&command=today%20progress)
-  *insert today's progress update*
+  _insert today's progress update_
 - /periodStats [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Summaries&command=periodStats)
-  *Generate counts (and other stats) of tags and mentions for a time period*
+  _Generate counts (and other stats) of tags and mentions for a time period_
 - /heatmap for tag [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Summaries&command=heatmap%20for%20tag)
-  *Show a heatmap for a given tag or mention*
+  _Show a heatmap for a given tag or mention_
 - /heatmap for task completion [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Summaries&command=heatmap%20for%20task%20completion)
-  *Show a heatmap for completion of tasks*
+  _Show a heatmap for completion of tasks_
 - /weeklyStatsToCSV [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Summaries&command=weeklyStatsToCSV)
-  *Generate stats for tags and mentions for all weeks this year, and write CSV to a file*
+  _Generate stats for tags and mentions for all weeks this year, and write CSV to a file_
 - /Habits+Summaries: update plugin settings [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Summaries&command=Habits%2BSummaries%3A%20update%20plugin%20settings)
-  *Settings interface (even for iOS)*
+  _Settings interface (even for iOS)_
 - /test:GenTaskStats [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Summaries&command=test%3AGenTaskStats)
-  *test task gen stats*
+  _test task gen stats_
 - /test:GenTagStats [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Summaries&command=test%3AGenTagStats)
-  *test tag gen stats*
+  _test tag gen stats_
 - /test:JGCHeatmaps [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Summaries&command=test%3AJGCHeatmaps)
-  *Test JGC Heatmaps*
+  _Test JGC Heatmaps_
+
 ---
+
 ## ⚡️ Quick Capture v0.15.0 [install it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%E2%9A%A1%EF%B8%8F%20Quick%20Capture)
+
 > Commands to more quickly add tasks/todos or general text to NotePlan notes. See website for configuration of special Inbox note, and how to use from other apps through x-callback calls.
 > Author: Jonathan Clark [Documentation](https://github.com/NotePlan/plugins/tree/main/jgclark.QuickCapture/)
+
 ### Commands
-- /quick add task to inbox 
-  *Quickly add a task to your chosen Inbox location*
-- /quick append task to note 
-  *Quickly append a task to a chosen project note*
-- /quick add task under heading 
-  *Quickly add a task to a chosen note's section heading*
-- /quick add line under heading 
-  *Quickly add text to a chosen note's section heading*
-- /quick add to calendar note 
-  *Quickly append a task to a chosen calendar note*
-- /quick add to today's journal 
-  *Quickly append text to the Journal in today's note*
-- /quick add to journal this week 
-  *Quickly append text to the Journal in this week's note*
-- /quick add to this month's journal 
-  *Quickly append text to the Journal in this month's note*
-- /quick add to this year's journal 
-  *Quickly append text to the Journal in this year's note*
-- /quick prepend task to calendar note 
-  *Quickly prepend a task to a chosen calendar note*
-- /quick prepend task to note 
-  *Quickly prepend a task to a chosen project note*
-- /QuickCapture: update plugin settings 
-  *Settings interface (even for iOS)*
+
+- /quick add task to inbox
+  _Quickly add a task to your chosen Inbox location_
+- /quick append task to note
+  _Quickly append a task to a chosen project note_
+- /quick add task under heading
+  _Quickly add a task to a chosen note's section heading_
+- /quick add line under heading
+  _Quickly add text to a chosen note's section heading_
+- /quick add to calendar note
+  _Quickly append a task to a chosen calendar note_
+- /quick add to today's journal
+  _Quickly append text to the Journal in today's note_
+- /quick add to journal this week
+  _Quickly append text to the Journal in this week's note_
+- /quick add to this month's journal
+  _Quickly append text to the Journal in this month's note_
+- /quick add to this year's journal
+  _Quickly append text to the Journal in this year's note_
+- /quick prepend task to calendar note
+  _Quickly prepend a task to a chosen calendar note_
+- /quick prepend task to note
+  _Quickly prepend a task to a chosen project note_
+- /QuickCapture: update plugin settings
+  _Settings interface (even for iOS)_
+
 ---
+
 ## ✅ Task Automations v2.16.0 [update to latest version](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%E2%9C%85%20Task%20Automations)
+
 > Automations for handling Tasks:
+
 - Overdue/Forgotten task scanning
 - Task sorting within a note
 - Copying #tags/@mentions from one task to another
 - Mark all tasks in note open/completed
 - Automatically opening URLs of task lines
-> Author: @dwertheimer [Documentation](https://github.com/NotePlan/plugins/blob/main/dwertheimer.TaskAutomations/readme.md)
+  > Author: @dwertheimer [Documentation](https://github.com/NotePlan/plugins/blob/main/dwertheimer.TaskAutomations/readme.md)
+
 ### Commands
+
 - /Task Automations: Update Plugin Settings [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Task%20Automations%3A%20Update%20Plugin%20Settings)
-  *Preferences*
+  _Preferences_
 - /ts [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=ts)
-  *Tasks Sort - Sort tasks on the page*
+  _Tasks Sort - Sort tasks on the page_
 - /sth [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=sth)
-  *Sort tasks under heading (choose)*
+  _Sort tasks under heading (choose)_
 - /tsd [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=tsd)
-  *Tasks Sort by User Default (in settings)*
+  _Tasks Sort by User Default (in settings)_
 - /tsc [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=tsc)
-  *Tasks Sort by calendar due date*
+  _Tasks Sort by calendar due date_
 - /tsm [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=tsm)
-  *Tasks Sort by @Mention - Sort tasks on the page by mention/person*
+  _Tasks Sort by @Mention - Sort tasks on the page by mention/person_
 - /tst [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=tst)
-  *Tasks Sort by #Tag - Sort tasks on the page by hashtag*
+  _Tasks Sort by #Tag - Sort tasks on the page by hashtag_
 - /tstm [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=tstm)
-  *Tasks Sort by #Tag and then @Mention*
+  _Tasks Sort by #Tag and then @Mention_
 - /tt [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=tt)
-  *Tasks to Top - Bring all tasks in note to top*
+  _Tasks to Top - Bring all tasks in note to top_
 - /mat [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=mat)
-  *Mark All Tasks (choose open or complete)*
+  _Mark All Tasks (choose open or complete)_
 - /cta - Copy tags from previous line [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=cta%20-%20Copy%20tags%20from%20previous%20line)
-  *Copy #tags and @mentions from previous line*
+  _Copy #tags and @mentions from previous line_
 - /cth - Copy tags from heading above [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=cth%20-%20Copy%20tags%20from%20heading%20above)
-  *Copy #tags/@mentions from heading to all lines between*
+  _Copy #tags/@mentions from heading to all lines between_
 - /ctm - Copy line for each mention [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=ctm%20-%20Copy%20line%20for%20each%20mention)
-  *Copy line for each @mention, listing it first*
+  _Copy line for each @mention, listing it first_
 - /ctt - Copy line for each hashtag [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=ctt%20-%20Copy%20line%20for%20each%20hashtag)
-  *Copy line for each #hashtag, listing it first*
+  _Copy line for each #hashtag, listing it first_
 - /Task Sync [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Task%20Sync)
-  *Create synced copies of tasks containing a string in a new document*
+  _Create synced copies of tasks containing a string in a new document_
 - /Review overdue tasks (by Task) [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Review%20overdue%20tasks%20%28by%20Task%29)
-  *Search for overdue tasks in all Calendar (and optionally Project) Notes*
-- /Review Overdue Tasks as of  [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Review%20Overdue%20Tasks%20as%20of%20%3CDate%3E)
-  *e.g. search as of Tomorrow or later*
+  _Search for overdue tasks in all Calendar (and optionally Project) Notes_
+- /Review Overdue Tasks as of [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Review%20Overdue%20Tasks%20as%20of%20%3CDate%3E)
+  _e.g. search as of Tomorrow or later_
 - /Search Notes for Open Tasks [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Search%20Notes%20for%20Open%20Tasks)
-  *Search Calendar Notes (and optionally Project Notes) for open tasks to process*
+  _Search Calendar Notes (and optionally Project Notes) for open tasks to process_
 - /Review overdue tasks (in Active Note) [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Review%20overdue%20tasks%20%28in%20Active%20Note%29)
-  *Search for overdue tasks in the foreground note*
+  _Search for overdue tasks in the foreground note_
 - /Review/Reschedule Tasks Scheduled for this week [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Review%2FReschedule%20Tasks%20Scheduled%20for%20this%20week)
-  *Review all tasks marked for or on this week's note*
+  _Review all tasks marked for or on this week's note_
 - /Review/Reschedule Tasks Dated Today [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Review%2FReschedule%20Tasks%20Dated%20Today)
-  *Review all tasks marked for today's date*
+  _Review all tasks marked for today's date_
 - /Process Overdue Items in a Separate Window [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Process%20Overdue%20Items%20in%20a%20Separate%20Window)
-  *Mac-only - Uses HTML Popup/React*
+  _Mac-only - Uses HTML Popup/React_
 - /Process Overdue Items in a Specific Folder [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Process%20Overdue%20Items%20in%20a%20Specific%20Folder)
-  *Uses HTML Popup/React*
-- /Review overdue tasks in  [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Review%20overdue%20tasks%20in%20%3CChoose%20Folder%3E)
-  *Search for overdue tasks in a folder you choose review them individually, setting to >today if today is >= the date*
+  _Uses HTML Popup/React_
+- /Review overdue tasks in [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Review%20overdue%20tasks%20in%20%3CChoose%20Folder%3E)
+  _Search for overdue tasks in a folder you choose review them individually, setting to >today if today is >= the date_
 - /Mark done and create follow-up underneath [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Mark%20done%20and%20create%20follow-up%20underneath)
-  *Create a follow-up task and save it just below the task in question*
+  _Create a follow-up task and save it just below the task in question_
 - /Mark done and create follow-up in future note [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.TaskAutomations&command=Mark%20done%20and%20create%20follow-up%20in%20future%20note)
-  *Create a follow-up task in a future note*
+  _Create a follow-up task in a future note_
+
 ---
+
 ## ✍️ Meeting Notes v1.2.0 [update to latest version](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%E2%9C%8D%EF%B8%8F%20Meeting%20Notes)
+
 > Create Meeting Notes from events using templates.
 > Author: NotePlan [Documentation](CorePlugins)
+
 ### Commands
+
 - /newMeetingNote [try it](noteplan://x-callback-url/runPlugin?pluginID=np.MeetingNotes&command=newMeetingNote)
-  *Create a meeting note by choosing an event and a template.*
+  _Create a meeting note by choosing an event and a template._
+
 ---
+
 ## ✓ Todoist Noteplan Sync v0.1.0
+
 > Import and sync tasks between Todoist and Noteplan
 > Author: dbludeau [Documentation](https://github.com/NotePlan/plugins/blob/main/dbludeau.TodoistNoteplanSync/README.md)
+
 ### Commands
+
 - /todoist sync everything [try it](noteplan://x-callback-url/runPlugin?pluginID=dbludeau.TodoistNoteplanSync&command=todoist%20sync%20everything)
-  *Sync all tasks in Todoist to a Noteplan folder set in settings*
+  _Sync all tasks in Todoist to a Noteplan folder set in settings_
 - /todoist sync today [try it](noteplan://x-callback-url/runPlugin?pluginID=dbludeau.TodoistNoteplanSync&command=todoist%20sync%20today)
-  *Sync Todoist tasks due today to the Noteplan daily note*
+  _Sync Todoist tasks due today to the Noteplan daily note_
 - /todoist sync project [try it](noteplan://x-callback-url/runPlugin?pluginID=dbludeau.TodoistNoteplanSync&command=todoist%20sync%20project)
-  *Sync Todoist project (list) linked to the current Noteplan note using frontmatter*
+  _Sync Todoist project (list) linked to the current Noteplan note using frontmatter_
 - /todoist sync all linked projects [try it](noteplan://x-callback-url/runPlugin?pluginID=dbludeau.TodoistNoteplanSync&command=todoist%20sync%20all%20linked%20projects)
-  *Sync all Todoist projects (lists) to linked Noteplan notes using frontmatter*
+  _Sync all Todoist projects (lists) to linked Noteplan notes using frontmatter_
 - /todoist sync all linked projects and today [try it](noteplan://x-callback-url/runPlugin?pluginID=dbludeau.TodoistNoteplanSync&command=todoist%20sync%20all%20linked%20projects%20and%20today)
-  *Sync all linked projects as well as populate Todoist tasks due today to the today note. This command avoids duplicating tasks in the daily note*
+  _Sync all linked projects as well as populate Todoist tasks due today to the today note. This command avoids duplicating tasks in the daily note_
 - /Todoist Noteplan Sync: Version [try it](noteplan://x-callback-url/runPlugin?pluginID=dbludeau.TodoistNoteplanSync&command=Todoist%20Noteplan%20Sync%3A%20Version)
-  *Update + Check Version*
+  _Update + Check Version_
 - /Todoist Noteplan Sync: Update Plugin Settings [try it](noteplan://x-callback-url/runPlugin?pluginID=dbludeau.TodoistNoteplanSync&command=Todoist%20Noteplan%20Sync%3A%20Update%20Plugin%20Settings)
-  *Preferences*
+  _Preferences_
+
 ---
+
 ## ⬇️ Plugin Installer v0.1
+
 > Install plugins right from the command bar. This is a core plugin and can't be deleted.
-> Author:  [Documentation](CorePlugins)
+> Author: [Documentation](CorePlugins)
+
 ### Commands
+
 - /install plugin [try it](noteplan://x-callback-url/runPlugin?pluginID=np.installer&command=install%20plugin)
-  *Load a list of plugins and lets you install one*
+  _Load a list of plugins and lets you install one_
 - /development install [try it](noteplan://x-callback-url/runPlugin?pluginID=np.installer&command=development%20install)
-  *Load a list of plugins and lets you install one, including hidden ones*
+  _Load a list of plugins and lets you install one, including hidden ones_
+
 ---
+
 ## ⭐️ Favorites v1.2.3 [install it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%E2%AD%90%EF%B8%8F%20Favorites)
+
 > Get fast access to commonly-used notes. Set any Project Note(s) as a Favorites and have quick access to choose/open the file
-> Author: @dwertheimer [Documentation](Put a link to a web page or your github readme file here, and it will be displayed as the 'website' in the plugin preference pane to give users more info on the plugin before/after install, e.g.  https://github.com/dwertheimer/Noteplan-plugins/blob/main/np.plugin-flow-skeleton/readme.md)
+> Author: @dwertheimer [Documentation](Put a link to a web page or your github readme file here, and it will be displayed as the 'website' in the plugin preference pane to give users more info on the plugin before/after install, e.g. https://github.com/dwertheimer/Noteplan-plugins/blob/main/np.plugin-flow-skeleton/readme.md)
+
 ### Commands
-- /faves - Choose+Open Favorite (⭐️) Note 
-  *Open one of the saved Favorites*
-- /fave - Make this Note a Favorite (⭐️) 
-  *Set open Note to be a Favorite (add ⭐️)*
-- /unfave - Remove this Note from Favorites List (⭐️) 
-  *Remove this Note from saved Favorites (remove ⭐️ from name)*
-- /Set/Change/Rename Preset Action 
-  *Add or edit a preset to run a favorite URL/X-Callback*
-- /Favorites: Update Plugin Settings 
-  *Preferences*
+
+- /faves - Choose+Open Favorite (⭐️) Note
+  _Open one of the saved Favorites_
+- /fave - Make this Note a Favorite (⭐️)
+  _Set open Note to be a Favorite (add ⭐️)_
+- /unfave - Remove this Note from Favorites List (⭐️)
+  _Remove this Note from saved Favorites (remove ⭐️ from name)_
+- /Set/Change/Rename Preset Action
+  _Add or edit a preset to run a favorite URL/X-Callback_
+- /Favorites: Update Plugin Settings
+  _Preferences_
+
 ---
+
 ## 🎛 Dashboard v0.6.2 [update to latest version](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%8E%9B%20Dashboard)
+
 > A Dashboard for NotePlan
 > Author: Jonathan Clark [Documentation](https://github.com/NotePlan/plugins/tree/main/jgclark.Dashboard/)
+
 ### Commands
+
 - /show dashboard [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Dashboard&command=show%20dashboard)
-  *Show Dashboard window*
+  _Show Dashboard window_
 - /Dashboard: reset window size [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Dashboard&command=Dashboard%3A%20reset%20window%20size)
-  *reset Dashboard window size*
+  _reset Dashboard window size_
 - /Dashboard: update plugin settings [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Dashboard&command=Dashboard%3A%20update%20plugin%20settings)
-  *Settings interface (even for iOS)*
+  _Settings interface (even for iOS)_
+
 ---
+
 ## 💡 NotePlan AI v0.7.0-beta1
+
 > GPT integration for research, summarization, etc.
 > Author: a man of mystery and @dwertheimer [Documentation](https://github.com/NotePlan/plugins/blob/main/shared.AI/README.md)
+
 ### Commands
+
 - /NotePlan AI: Check Version [try it](noteplan://x-callback-url/runPlugin?pluginID=shared.AI&command=NotePlan%20AI%3A%20Check%20Version)
-  *Update + Check Version*
+  _Update + Check Version_
 - /NotePlan AI: Insert Chat [try it](noteplan://x-callback-url/runPlugin?pluginID=shared.AI&command=NotePlan%20AI%3A%20Insert%20Chat)
-  *Insert ChatGPT Chat at cursor*
+  _Insert ChatGPT Chat at cursor_
 - /NotePlan AI: Create Chat in New Document [try it](noteplan://x-callback-url/runPlugin?pluginID=shared.AI&command=NotePlan%20AI%3A%20Create%20Chat%20in%20New%20Document)
-  *ChatGPT in New Document*
+  _ChatGPT in New Document_
 - /Summarize Note/Selection [try it](noteplan://x-callback-url/runPlugin?pluginID=shared.AI&command=Summarize%20Note%2FSelection)
-  *Uses ChatGPT/OpenAI to summarize a note/selection*
+  _Uses ChatGPT/OpenAI to summarize a note/selection_
 - /NotePlan AI: Research [try it](noteplan://x-callback-url/runPlugin?pluginID=shared.AI&command=NotePlan%20AI%3A%20Research)
-  *Start Clickable Research dig site*
+  _Start Clickable Research dig site_
 - /NotePlan AI: Research Selected Text [try it](noteplan://x-callback-url/runPlugin?pluginID=shared.AI&command=NotePlan%20AI%3A%20Research%20Selected%20Text)
-  *Continue research using the selected text.*
+  _Continue research using the selected text._
 - /NotePlan AI: Images [try it](noteplan://x-callback-url/runPlugin?pluginID=shared.AI&command=NotePlan%20AI%3A%20Images)
-  *Generate images with DALL-E*
+  _Generate images with DALL-E_
 - /NotePlan AI: Update Plugin Settings [try it](noteplan://x-callback-url/runPlugin?pluginID=shared.AI&command=NotePlan%20AI%3A%20Update%20Plugin%20Settings)
-  *Preferences*
+  _Preferences_
 - /Move Note to Research Collection [try it](noteplan://x-callback-url/runPlugin?pluginID=shared.AI&command=Move%20Note%20to%20Research%20Collection)
-  *Move the current note to Research collection.*
+  _Move the current note to Research collection._
+
 ---
+
 ## 💭 Journalling v0.15.1
+
 > Support for daily journalling in NotePlan, including start-of-day template, and end-of-day review questions. Before use it requires some configuration: please see website for details.
 > Author: Jonathan Clark [Documentation](https://github.com/NotePlan/plugins/blob/main/jgclark.DailyJournal/README.md)
+
 ### Commands
+
 - /todayStart [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.DailyJournal&command=todayStart)
-  *Apply Daily Note Template to Today's Calendar Note (requires configuring)*
+  _Apply Daily Note Template to Today's Calendar Note (requires configuring)_
 - /dayStart [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.DailyJournal&command=dayStart)
-  *Apply Daily Note Template (requires configuring)*
+  _Apply Daily Note Template (requires configuring)_
 - /weekStart [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.DailyJournal&command=weekStart)
-  *Apply Weekly Note Template (requires configuring)*
+  _Apply Weekly Note Template (requires configuring)_
 - /monthStart [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.DailyJournal&command=monthStart)
-  *Apply Monthly Note Template (requires configuring)*
+  _Apply Monthly Note Template (requires configuring)_
 - /dayReview [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.DailyJournal&command=dayReview)
-  *Ask Journal questions for an end-of-day review (requires configuring)*
+  _Ask Journal questions for an end-of-day review (requires configuring)_
 - /weekReview [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.DailyJournal&command=weekReview)
-  *Ask Journal questions for an end-of-week review (requires configuring)*
+  _Ask Journal questions for an end-of-week review (requires configuring)_
 - /monthReview [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.DailyJournal&command=monthReview)
-  *Ask Journal questions for an end-of-month review (requires configuring)*
+  _Ask Journal questions for an end-of-month review (requires configuring)_
 - /quarterReview [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.DailyJournal&command=quarterReview)
-  *Ask Journal questions for an end-of-quarter review (requires configuring)*
+  _Ask Journal questions for an end-of-quarter review (requires configuring)_
 - /yearReview [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.DailyJournal&command=yearReview)
-  *Ask Journal questions for an end-of-year review (requires configuring)*
+  _Ask Journal questions for an end-of-year review (requires configuring)_
 - /Journalling: update plugin settings [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.DailyJournal&command=Journalling%3A%20update%20plugin%20settings)
-  *Settings interface (even for iOS)*
+  _Settings interface (even for iOS)_
+
 ---
+
 ## 📅 Date Automations v1.3.2
+
 > Helping you move faster with dates and times
 > Author: David Wertheimer [Documentation](https://github.com/NotePlan/plugins/blob/main/dwertheimer.DateAutomations/README.md)
+
 ### Commands
+
 - /ldn [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.DateAutomations&command=ldn)
-  *Create link to today's Calendar Note at cursor (e.g. [[2022-04-16]])*
+  _Create link to today's Calendar Note at cursor (e.g. [[2022-04-16]])_
 - /date [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.DateAutomations&command=date)
-  *Insert date (without time) at cursor (uses your locale setting), e.g. Saturday, April 16, 2022 (or shorter)*
+  _Insert date (without time) at cursor (uses your locale setting), e.g. Saturday, April 16, 2022 (or shorter)_
 - /iso [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.DateAutomations&command=iso)
-  *Insert date+time (in ISO format, GMT) at cursor, e.g. 2022-04-16T17:28:14.662Z*
+  _Insert date+time (in ISO format, GMT) at cursor, e.g. 2022-04-16T17:28:14.662Z_
 - /now [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.DateAutomations&command=now)
-  *Insert (human readable) date+time at cursor, e.g. Saturday, April 16, 2022, 13:29*
+  _Insert (human readable) date+time at cursor, e.g. Saturday, April 16, 2022, 13:29_
 - /now - ISO-8601 standard [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.DateAutomations&command=now%20-%20ISO-8601%20standard)
-  *Insert ISO-8601 date+time at cursor, e.g. 2021-08-06 17:20*
+  _Insert ISO-8601 date+time at cursor, e.g. 2021-08-06 17:20_
 - /time [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.DateAutomations&command=time)
-  *Insert (human readable) time at cursor, e.g. 06:55:22*
+  _Insert (human readable) time at cursor, e.g. 06:55:22_
 - /dp [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.DateAutomations&command=dp)
-  *(Date Picker) Choose format and insert date/time time at cursor*
+  _(Date Picker) Choose format and insert date/time time at cursor_
 - /formatted [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.DateAutomations&command=formatted)
-  *Insert custom formatted (format) date/time per your settings*
+  _Insert custom formatted (format) date/time per your settings_
 - /wd [try it](noteplan://x-callback-url/runPlugin?pluginID=dwertheimer.DateAutomations&command=wd)
-  *Insert dates of current week, e.g. Mon 2022-04-11 - Sun 2022-04-17*
+  _Insert dates of current week, e.g. Mon 2022-04-11 - Sun 2022-04-17_
+
 ---
+
 ## 📒 np.Templating v1.9.8
+
 > Templating Plugin for NotePlan
 > Author: Mike Erickson (@codedungeon) [Documentation](https://nptemplating-docs.netlify.app/docs/intro)
+
 ### Commands
+
 - /np:append [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=np%3Aappend)
-  *Append template to end of current note*
+  _Append template to end of current note_
 - /np:insert [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=np%3Ainsert)
-  *Insert template to current note*
+  _Insert template to current note_
 - /np:invoke [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=np%3Ainvoke)
-  *Place template using  attribute in template*
+  _Place template using attribute in template_
 - /np:new [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=np%3Anew)
-  *Create new note with title, using folder attribute*
+  _Create new note with title, using folder attribute_
 - /np:qtn [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=np%3Aqtn)
-  *Create new note based on Quick Note Template*
+  _Create new note based on Quick Note Template_
 - /np:convert [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=np%3Aconvert)
-  *Convert Project Note to Frontmatter format*
+  _Convert Project Note to Frontmatter format_
 - /np:about [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=np%3Aabout)
-  *np.Templating About...*
+  _np.Templating About..._
 - /np:execute [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=np%3Aexecute)
-  *Execute Template Script*
+  _Execute Template Script_
+
 ---
+
 ## 📙 Note Helpers v0.18.2 [update to latest version](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%93%99%20Note%20Helpers)
+
 > Commands to quickly jump around and manage notes
 > Author: Jonathan Clark & Eduard Metzger [Documentation](https://github.com/NotePlan/plugins/tree/main/jgclark.NoteHelpers/)
+
 ### Commands
+
 - /add number of days to dates [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=add%20number%20of%20days%20to%20dates)
-  *Look for bullets mentioning dates and add number of days till that date*
+  _Look for bullets mentioning dates and add number of days till that date_
 - /add trigger to note [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=add%20trigger%20to%20note)
-  *Select from a list of available triggers to add to the current note*
+  _Select from a list of available triggers to add to the current note_
 - /convert to frontmatter [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=convert%20to%20frontmatter)
-  *Convert the current note to use frontmatter syntax, including some default text that can be added in the Plugin's settings*
+  _Convert the current note to use frontmatter syntax, including some default text that can be added in the Plugin's settings_
 - /enable heading links [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=enable%20heading%20links)
-  *Look for Links to headings and make them work by converting them to plugin command calls*
+  _Look for Links to headings and make them work by converting them to plugin command calls_
 - /jump to heading [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=jump%20to%20heading)
-  *Jumps to the heading that the user selects. (Currently only works in main window)*
+  _Jumps to the heading that the user selects. (Currently only works in main window)_
 - /jump to note's heading [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=jump%20to%20note's%20heading)
-  *Jump to a different note, and then selected heading. (Currently only works in main window)*
+  _Jump to a different note, and then selected heading. (Currently only works in main window)_
 - /jump to done [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=jump%20to%20done)
-  *Jump to the '## Done' section. (Currently only works in main window)*
+  _Jump to the '## Done' section. (Currently only works in main window)_
 - /move note [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=move%20note)
-  *Moves the currently opened (non-calendar) note to a folder you select*
+  _Moves the currently opened (non-calendar) note to a folder you select_
 - /index folders [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=index%20folders)
-  *Make/Update indexes for all notes in a folder (and sub-folders if wanted)*
+  _Make/Update indexes for all notes in a folder (and sub-folders if wanted)_
 - /open note new window [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=open%20note%20new%20window)
-  *Open a user-selected note in a new window.*
+  _Open a user-selected note in a new window._
 - /open note new split [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=open%20note%20new%20split)
-  *Open a user-selected note in a new split of the main window*
+  _Open a user-selected note in a new split of the main window_
 - /open current note new split [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=open%20current%20note%20new%20split)
-  *Open the current note again in a new split of the main window*
+  _Open the current note again in a new split of the main window_
 - /open URL from a note [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=open%20URL%20from%20a%20note)
-  *Open a chosen URL from a chosen note*
+  _Open a chosen URL from a chosen note_
 - /rename note filename [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=rename%20note%20filename)
-  *Rename the current note's filename*
+  _Rename the current note's filename_
 - /reset caches [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=reset%20caches)
-  *Reset NotePlan caches*
+  _Reset NotePlan caches_
 - /list inconsistent note filenames [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=list%20inconsistent%20note%20filenames)
-  *Lists the names of notes whose filenames are inconsistent with their titles.*
+  _Lists the names of notes whose filenames are inconsistent with their titles._
 - /rename filename to title [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=rename%20filename%20to%20title)
-  *Renames the current filename to the title of the note.*
+  _Renames the current filename to the title of the note._
 - /rename inconsistent note filenames [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=rename%20inconsistent%20note%20filenames)
-  *Renames the files of notes whose filenames are inconsistent with their titles.*
+  _Renames the files of notes whose filenames are inconsistent with their titles._
 - /Show This Month [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=Show%20This%20Month)
-  *Open the current Month note*
+  _Open the current Month note_
 - /Show This Quarter [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=Show%20This%20Quarter)
-  *Open the current Quarter note*
+  _Open the current Quarter note_
 - /Show This Year [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=Show%20This%20Year)
-  *Open the current Year note*
+  _Open the current Year note_
 - /update all indexes [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=update%20all%20indexes)
-  *Update all folder index notes*
+  _Update all folder index notes_
 - /NoteHelpers: update plugin settings [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.NoteHelpers&command=NoteHelpers%3A%20update%20plugin%20settings)
-  *Settings interface (even for iOS)*
+  _Settings interface (even for iOS)_
+
 ---
+
 ## 📚 Readwise Unofficial v1.0.0 [install it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%93%9A%20Readwise%20Unofficial)
+
 > A sync plugin for Readwise
 > Author: aaronpoweruser [Documentation](https://github.com/NotePlan/plugins/blob/main/aaronpoweruser.ReadwiseUnofficial/README.md)
+
 ### Commands
-- /Readwise sync 
-  *Sync Readwise highlights*
-- /Readwise rebuild 
-  *Force sync Readwise highlights*
+
+- /Readwise sync
+  _Sync Readwise highlights_
+- /Readwise rebuild
+  _Force sync Readwise highlights_
+
 ---
+
 ## 📦 Filer v1.1.4 [install it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%93%A6%20Filer)
+
 > Help file (move) the current paragraph, selected paragraphs, or heading and its section, to different notes. Please see details for more, err, details.
 > Author: jgclark [Documentation](https://github.com/NotePlan/plugins/tree/main/jgclark.Filer)
+
 ### Commands
-- /add sync'd copy to note 
-  *Add a sync'd copy of the current line to a section in another note*
-- /archive note keeping folder structure 
-  *Move the current note to NotePlan's Archive, but keep the same folder structure for it inside the special @Archive folder*
-- /copy note links 
-  *copies [[note link]] lines or blocks from the open calendar note to their respective project notes*
-- /copy note links (recently changed) 
-  *copies [[note link]] lines or blocks from recently-changed calendar notes to their respective project notes*
-- /move note links 
-  *moves [[note link]] lines or blocks from the open calendar note to their respective project notes*
-- /move note links (recently changed) 
-  *moves [[note link]] lines or blocks from recently-changed calendar notes to their respective project notes*
-- /move paragraph or selection 
-  *moves this paragraph (or selected paragraphs) to a different note*
-- /move paragraph block 
-  *moves all paragraphs in the current block to a different note*
-- /quick move to Today's note 
-  *quick move a block of paragraphs to Today's note*
-- /quick move to Tomorrow's note 
-  *quick move a block of paragraphs to Tomorrow's daily note*
-- /quick move to Weekly note 
-  *quick move a block of paragraphs to the current Weekly note*
-- /quick move to Next Weekly note 
-  *quick move a block of paragraphs to Next Week's note*
-- /new note from clipboard 
-  *New note from clipboard*
-- /new note from selection 
-  *New note from selection (and leave link to it in its place)*
-- /Filer: update plugin settings 
-  *Settings interface (even for iOS)*
+
+- /add sync'd copy to note
+  _Add a sync'd copy of the current line to a section in another note_
+- /archive note keeping folder structure
+  _Move the current note to NotePlan's Archive, but keep the same folder structure for it inside the special @Archive folder_
+- /copy note links
+  _copies [[note link]] lines or blocks from the open calendar note to their respective project notes_
+- /copy note links (recently changed)
+  _copies [[note link]] lines or blocks from recently-changed calendar notes to their respective project notes_
+- /move note links
+  _moves [[note link]] lines or blocks from the open calendar note to their respective project notes_
+- /move note links (recently changed)
+  _moves [[note link]] lines or blocks from recently-changed calendar notes to their respective project notes_
+- /move paragraph or selection
+  _moves this paragraph (or selected paragraphs) to a different note_
+- /move paragraph block
+  _moves all paragraphs in the current block to a different note_
+- /quick move to Today's note
+  _quick move a block of paragraphs to Today's note_
+- /quick move to Tomorrow's note
+  _quick move a block of paragraphs to Tomorrow's daily note_
+- /quick move to Weekly note
+  _quick move a block of paragraphs to the current Weekly note_
+- /quick move to Next Weekly note
+  _quick move a block of paragraphs to Next Week's note_
+- /new note from clipboard
+  _New note from clipboard_
+- /new note from selection
+  _New note from selection (and leave link to it in its place)_
+- /Filer: update plugin settings
+  _Settings interface (even for iOS)_
+
 ---
+
 ## 🔁 @repeat Extensions v0.6.1 [install it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%94%81%20%40repeat%20Extensions)
+
 > Commands to extend the built-in @repeat() mechanism with much more flexible time periods. To work it needs 'append completion date' turned on in Preferences > Todo.
 > Author: Jonathan Clark [Documentation](https://github.com/NotePlan/plugins/tree/main/jgclark.RepeatExtensions/)
+
 ### Commands
-- /generate repeats 
-  *Generate new @repeat(...) tasks from completed ones*
-- /Repeats: update plugin settings 
-  *Settings interface (for iOS)*
+
+- /generate repeats
+  _Generate new @repeat(...) tasks from completed ones_
+- /Repeats: update plugin settings
+  _Settings interface (for iOS)_
+
 ---
+
 ## 🔌 Plugin Information & Tester v1.3.0
+
 > View Plugin Commands and Test that Plugins are working.
 > Author: @dwertheimer [Documentation](https://github.com/NotePlan/plugins/blob/main/np.plugin-test/README.md)
+
 ### Commands
+
 - /🔌 Plugin Tester [try it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=%F0%9F%94%8C%20Plugin%20Tester)
-  *Simple plugin test to check that plugins are working for you*
+  _Simple plugin test to check that plugins are working for you_
 - /Generate Plugin Command Listing [try it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Generate%20Plugin%20Command%20Listing)
-  *View Plugin Commands*
+  _View Plugin Commands_
 - /(Test) Write Editor Paragraph Details to Console Log [try it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=%28Test%29%20Write%20Editor%20Paragraph%20Details%20to%20Console%20Log)
-  *Output all API variables*
+  _Output all API variables_
 - /Do Nothing [try it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Do%20Nothing)
-  *Does Nothing - Can be used to override keystrokes (e.g. CMD-S) you don’t want to do anything*
+  _Does Nothing - Can be used to override keystrokes (e.g. CMD-S) you don’t want to do anything_
+
 ---
+
 ## 🔎 Search Extensions v1.2.4 [update to latest version](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%94%8E%20Search%20Extensions)
+
 > Allows searches to be saved and re-run, to use more powerful search operators, and be done over specified time periods. Click link for more details and settings.
 > Author: Jonathan Clark [Documentation](https://github.com/NotePlan/plugins/tree/main/jgclark.SearchExtensions/)
+
 ### Commands
+
 - /quickSearch [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.SearchExtensions&command=quickSearch)
-  *quick Search over all notes, showing results in a fixed Quick Search results note*
+  _quick Search over all notes, showing results in a fixed Quick Search results note_
 - /search [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.SearchExtensions&command=search)
-  *Save results from a search over all notes*
+  _Save results from a search over all notes_
 - /searchOpenTasks [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.SearchExtensions&command=searchOpenTasks)
-  *Save results from a search over all open tasks in all notes*
+  _Save results from a search over all open tasks in all notes_
 - /searchInPeriod [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.SearchExtensions&command=searchInPeriod)
-  *Save results from a search of specified tags or mentions over Calendar notes from a time period*
+  _Save results from a search of specified tags or mentions over Calendar notes from a time period_
 - /searchOverCalendar [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.SearchExtensions&command=searchOverCalendar)
-  *Save results from a search of specified tags or mentions over all Calendar notes*
+  _Save results from a search of specified tags or mentions over all Calendar notes_
 - /searchOverNotes [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.SearchExtensions&command=searchOverNotes)
-  *Save results from a search over all project notes*
+  _Save results from a search over all project notes_
 - /flexiSearch [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.SearchExtensions&command=flexiSearch)
-  *Save results from a search with the most flexible of options*
+  _Save results from a search with the most flexible of options_
 - /Search: update plugin settings [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.SearchExtensions&command=Search%3A%20update%20plugin%20settings)
-  *Settings interface (even for iOS)*
+  _Settings interface (even for iOS)_
+
 ---
+
 ## 🔗 Link Creator v1.6.1 [update to latest version](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%94%97%20Link%20Creator)
+
 > Interactively helps you form links/x-callback-urls (and also Template Tags with runPlugin commands) to perform actions from within NotePlan or between other applications and NotePlan.
 > Author: dwertheimer [Documentation](https://github.com/NotePlan/plugins/blob/main/np.CallbackURLs/README.md)
+
 ### Commands
+
 - /Get X-Callback-URL [try it](noteplan://x-callback-url/runPlugin?pluginID=np.CallbackURLs&command=Get%20X-Callback-URL)
-  *Run Wizard to get X-Callback-URL*
+  _Run Wizard to get X-Callback-URL_
 - /Create Link to Current Note+Heading [try it](noteplan://x-callback-url/runPlugin?pluginID=np.CallbackURLs&command=Create%20Link%20to%20Current%20Note%2BHeading)
-  *External link to open this note*
+  _External link to open this note_
 - /Create Link to Current Line [try it](noteplan://x-callback-url/runPlugin?pluginID=np.CallbackURLs&command=Create%20Link%20to%20Current%20Line)
-  *External link to open note to this line*
+  _External link to open note to this line_
 - /open todos containing links in browser [try it](noteplan://x-callback-url/runPlugin?pluginID=np.CallbackURLs&command=open%20todos%20containing%20links%20in%20browser)
-  *Open URLs in all open todo items on the page*
+  _Open URLs in all open todo items on the page_
 - /open URL on this line [try it](noteplan://x-callback-url/runPlugin?pluginID=np.CallbackURLs&command=open%20URL%20on%20this%20line)
-  *Open the URL on the current line in the default browser*
+  _Open the URL on the current line in the default browser_
+
 ---
+
 ## 🔢 Note Statistics v0.6.1
+
 > Show statistics for notes, tasks, words, and hashtags and mentions over periods of time. See website for more details, including how to tailor some of the stats.
 > Author: Jonathan & Eduard [Documentation](https://github.com/NotePlan/plugins/tree/main/np.statistics/)
+
 ### Commands
+
 - /note stats [try it](noteplan://x-callback-url/runPlugin?pluginID=np.statistics&command=note%20stats)
-  *Counts of all the notes in NotePlan*
+  _Counts of all the notes in NotePlan_
 - /task stats for all notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.statistics&command=task%20stats%20for%20all%20notes)
-  *Shows task statistics for all notes*
+  _Shows task statistics for all notes_
 - /task stats for current note [try it](noteplan://x-callback-url/runPlugin?pluginID=np.statistics&command=task%20stats%20for%20current%20note)
-  *Shows task counts for the current note*
+  _Shows task counts for the current note_
 - /word stats [try it](noteplan://x-callback-url/runPlugin?pluginID=np.statistics&command=word%20stats)
-  *Shows word count and other stats for the current note*
+  _Shows word count and other stats for the current note_
+
 ---
+
 ## 🔬 Projects + Reviews v0.12.3
+
 > Making it easier to work with Project notes in NotePlan. Start, regularly review, pause, complete and cancel projects. Inspired by the PARA and 'Getting Things Done' methods, but more widely applicable.
 > Author: Jonathan Clark [Documentation](https://github.com/NotePlan/plugins/tree/main/jgclark.Reviews)
+
 ### Commands
+
 - /project lists [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=project%20lists)
-  *creates/updates a human-readable list of project notes, including basic tasks statistics and time until next review, and time until the project is due to complete.*
+  _creates/updates a human-readable list of project notes, including basic tasks statistics and time until next review, and time until the project is due to complete._
 - /start reviews [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=start%20reviews)
-  *start a new series of reviews, deciding which are now ready for review, and kicking off the first one*
+  _start a new series of reviews, deciding which are now ready for review, and kicking off the first one_
 - /finish project review [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=finish%20project%20review)
-  *updates the currently open project's @reviewed() date*
+  _updates the currently open project's @reviewed() date_
 - /next project review [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=next%20project%20review)
-  *updates this project's @reviewed() date, and jump to next project to review*
+  _updates this project's @reviewed() date, and jump to next project to review_
 - /skip project review [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=skip%20project%20review)
-  *skip this review, add a @nextReview() date, and jump to next project to review*
+  _skip this review, add a @nextReview() date, and jump to next project to review_
 - /pause project toggle [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=pause%20project%20toggle)
-  *Toggles paused status by adding or removing '#paused' in the open project note. If paused, it won't be offered as a project to review*
+  _Toggles paused status by adding or removing '#paused' in the open project note. If paused, it won't be offered as a project to review_
 - /complete project [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=complete%20project)
-  *adds @completed(date) to the open project note, adds its details to a yearly note in Summaries folder (if the folder exists), and offers to move the note to the NotePlan Archive*
+  _adds @completed(date) to the open project note, adds its details to a yearly note in Summaries folder (if the folder exists), and offers to move the note to the NotePlan Archive_
 - /cancel project [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=cancel%20project)
-  *adds @cancelled(date) date to the open project note, adds its details to a yearly note in Summaries folder (if the folder exists), and offers to move the note to the NotePlan Archive*
+  _adds @cancelled(date) date to the open project note, adds its details to a yearly note in Summaries folder (if the folder exists), and offers to move the note to the NotePlan Archive_
 - /add progress update [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=add%20progress%20update)
-  *prompts for a short description and percentage completion number for the open project note, and writes it to the metadata area of the note*
+  _prompts for a short description and percentage completion number for the open project note, and writes it to the metadata area of the note_
 - /Projects: update plugin settings [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=Projects%3A%20update%20plugin%20settings)
-  *Settings interface (even for iOS)*
+  _Settings interface (even for iOS)_
 - /test:logFullReviewList [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=test%3AlogFullReviewList)
-  *write full-review-list file to log*
+  _write full-review-list file to log_
 - /test:makeFullReviewList [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=test%3AmakeFullReviewList)
-  *make/update full review list note*
+  _make/update full review list note_
 - /test:redisplayProjectListHTML [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=test%3AredisplayProjectListHTML)
-  *Redisplay project lists (HTML)*
+  _Redisplay project lists (HTML)_
 - /test:renderProjectLists [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.Reviews&command=test%3ArenderProjectLists)
-  *Render project lists (without recalc)*
+  _Render project lists (without recalc)_
+
 ---
+
 ## 🕓 Event Helpers v0.21.0 [update to latest version](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%95%93%20Event%20Helpers)
+
 > Commands to extend NotePlan's events handling, including calendar lists, time blocks, and date offset templating. See link for more details, and configuration.
 > Author: jgclark [Documentation](https://github.com/NotePlan/plugins/tree/main/jgclark.EventHelpers)
+
 ### Commands
+
 - /time blocks to calendar [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.EventHelpers&command=time%20blocks%20to%20calendar)
-  *promote time blocks to be full calendar events*
+  _promote time blocks to be full calendar events_
 - /insert day's events as list [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.EventHelpers&command=insert%20day's%20events%20as%20list)
-  *insert list of this day's calendar events at cursor*
+  _insert list of this day's calendar events at cursor_
 - /insert matching events [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.EventHelpers&command=insert%20matching%20events)
-  *inserts this day's calendar events matching certain patterns at cursor*
+  _inserts this day's calendar events matching certain patterns at cursor_
 - /process date offsets [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.EventHelpers&command=process%20date%20offsets)
-  *finds date offset patterns and turns them into due dates, based on date at start of section*
+  _finds date offset patterns and turns them into due dates, based on date at start of section_
 - /shift dates [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.EventHelpers&command=shift%20dates)
-  *takes dates in the selection and shifts them forwards or backwards by a given date interval*
+  _takes dates in the selection and shifts them forwards or backwards by a given date interval_
 - /Events: update plugin settings [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.EventHelpers&command=Events%3A%20update%20plugin%20settings)
-  *Settings interface (even for iOS)*
+  _Settings interface (even for iOS)_
 - /test:eventsUpdateSettings [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.EventHelpers&command=test%3AeventsUpdateSettings)
-  *update settings for Events Helpers*
+  _update settings for Events Helpers_
+
 ---
+
 ## 🕸 Map of Contents v0.3.1 [install it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%95%B8%20Map%20of%20Contents)
+
 > Make Map of Contents, and save to a notes. Click link for more details and settings.
 > Author: Jonathan Clark [Documentation](https://github.com/NotePlan/plugins/tree/main/jgclark.MOCs/)
+
 ### Commands
-- /make MOC 
-  *Make/Update a Map of Content*
-- /MOC: update plugin settings 
-  *Settings interface (even for iOS)*
+
+- /make MOC
+  _Make/Update a Map of Content_
+- /MOC: update plugin settings
+  _Settings interface (even for iOS)_
+
 ---
+
 ## 🖥️ Window Sets v0.2.0
+
 > Allows you to easily save and restore particular sets of NotePlan windows on macOS.
 > Author: Jonathan Clark [Documentation](https://github.com/NotePlan/plugins/blob/main/jgclark.WindowSets/README.md)
+
 ### Commands
+
 - /open window set [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.WindowSets&command=open%20window%20set)
-  *Open a saved set of windows/panes*
+  _Open a saved set of windows/panes_
 - /save window set [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.WindowSets&command=save%20window%20set)
-  *Save the current windows/panes as a named set*
+  _Save the current windows/panes as a named set_
 - /log current window sets [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.WindowSets&command=log%20current%20window%20sets)
-  *Log my available windows sets*
+  _Log my available windows sets_
 - /log current windows list [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.WindowSets&command=log%20current%20windows%20list)
-  *Log list of currently-open windows/panes*
+  _Log list of currently-open windows/panes_
 - /test:readWindowSetDefinitions [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.WindowSets&command=test%3AreadWindowSetDefinitions)
-  *readWindowSetDefinitions*
+  _readWindowSetDefinitions_
 - /test:deleteAllSavedWindowSets [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.WindowSets&command=test%3AdeleteAllSavedWindowSets)
-  *Delete all saved window sets*
+  _Delete all saved window sets_
 - /test:Log preference [try it](noteplan://x-callback-url/runPlugin?pluginID=jgclark.WindowSets&command=test%3ALog%20preference)
-  *Log local preference*
+  _Log local preference_
+
 ---
+
 ## 🗓 AutoTimeBlocking / Events v1.17.3 [install it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%97%93%20AutoTimeBlocking%20%2F%20Events)
+
 > Various Event Automations:
+
 - Automatically find time in your calendar and create Time Blocks for items marked for >today,
 - Write out synced copies of Today's todos (without the AutoTimeBlocking), and
 - Create calendar events for all text items under a specific heading
-> Author: dwertheimer [Documentation](https://noteplan.co/n/#/1EF12392-B544-4044-AC7A-428F57EB2DFC)
+  > Author: dwertheimer [Documentation](https://noteplan.co/n/#/1EF12392-B544-4044-AC7A-428F57EB2DFC)
+
 ### Commands
-- /Event Automations: Update Plugin Settings 
-  *Preferences*
-- /atb - Create AutoTimeBlocks for >today's Tasks 
-  *Read >today todos and insert them into today's calendar note as timeblocks*
-- /mdatb 
-  *Mark task on current line done and run /atb to re-create timeblocks*
-- /Create AutoTimeBlocks using presets 
-  *Read >today todos and insert them into today's calendar note as timeblocks, but using presets defined in _configuration note*
-- /Choose Calendar for /atb to write to 
-  *Select a calendar to write to when using /atb*
-- /Insert Synced Todos for Open Calendar Note 
-  *Output a list of todos for the day open in the editor (any todos in the References pane will show up -- either >dated or >today if you're on today's note)*
-- /Remove Synced Todos for Open Calendar Note 
-  *Remove the contents of Synced Todos created by this plugin*
-- /Remove Time Blocks for Open Calendar Note 
-  *Remove the contents of Time Blocks created by this plugin*
-- /Remove All Previous Synced Copies Written by this Plugin 
-  *Remove previously written Synced Copies*
-- /Remove All Previous Time Blocks in Calendar Notes Written by this Plugin 
-  *Remove previously written Time Blocks*
-- /cevt - Create Events From Text under heading 
-  *Create calendar events by writing (natural language) text under a heading*
-- /pevt - Prompt for Natural Language Event text 
-  *Create calendar events by writing (natural language) via prompt*
-- /onEditorWillSave 
-  *onEditorWillSave*
+
+- /Event Automations: Update Plugin Settings
+  _Preferences_
+- /atb - Create AutoTimeBlocks for >today's Tasks
+  _Read >today todos and insert them into today's calendar note as timeblocks_
+- /mdatb
+  _Mark task on current line done and run /atb to re-create timeblocks_
+- /Create AutoTimeBlocks using presets
+  _Read >today todos and insert them into today's calendar note as timeblocks, but using presets defined in \_configuration note_
+- /Choose Calendar for /atb to write to
+  _Select a calendar to write to when using /atb_
+- /Insert Synced Todos for Open Calendar Note
+  _Output a list of todos for the day open in the editor (any todos in the References pane will show up -- either >dated or >today if you're on today's note)_
+- /Remove Synced Todos for Open Calendar Note
+  _Remove the contents of Synced Todos created by this plugin_
+- /Remove Time Blocks for Open Calendar Note
+  _Remove the contents of Time Blocks created by this plugin_
+- /Remove All Previous Synced Copies Written by this Plugin
+  _Remove previously written Synced Copies_
+- /Remove All Previous Time Blocks in Calendar Notes Written by this Plugin
+  _Remove previously written Time Blocks_
+- /cevt - Create Events From Text under heading
+  _Create calendar events by writing (natural language) text under a heading_
+- /pevt - Prompt for Natural Language Event text
+  _Create calendar events by writing (natural language) via prompt_
+- /onEditorWillSave
+  _onEditorWillSave_
+
 ---
+
 ## 🟰 Math Solver v1.2.0 [install it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%9F%B0%20Math%20Solver)
+
 > Write basic math in your NotePlan notes and use this plugin to calculate it.
 > Author: dwertheimer [Documentation](https://github.com/NotePlan/plugins/blob/main/dwertheimer.MathSolver/README.md)
+
 ### Commands
-- /Calculate Math Code Blocks in Active Document 
-  *Read math text in current document and calculate the results*
-- /Remove Math Annotations from Active Document 
-  *Remove Calculations placed by this plugin*
-- /Calculate Totals Only 
-  *Calculate Math Block (show totals only)*
-- /Calculate Preceeding Math Block 
-  *Calculate math block immediately above the click*
-- /Calculate Math Blocks (no rounding) 
-  *Override rounding/precision preferences setting and display full decimals (where they exist)*
-- /Insert Math Block at Cursor 
-  *Place Math Block and Calculation Link*
-- /Debug Math Calculations 
-  *Calculate Math Blocks and Show Verbose Output*
+
+- /Calculate Math Code Blocks in Active Document
+  _Read math text in current document and calculate the results_
+- /Remove Math Annotations from Active Document
+  _Remove Calculations placed by this plugin_
+- /Calculate Totals Only
+  _Calculate Math Block (show totals only)_
+- /Calculate Preceeding Math Block
+  _Calculate math block immediately above the click_
+- /Calculate Math Blocks (no rounding)
+  _Override rounding/precision preferences setting and display full decimals (where they exist)_
+- /Insert Math Block at Cursor
+  _Place Math Block and Calculation Link_
+- /Debug Math Calculations
+  _Calculate Math Blocks and Show Verbose Output_
+
 ---
+
 ## 🤝 Shared Resources v0.4.4 [update to latest version](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%A4%9D%20Shared%20Resources)
+
 > Shared resources for NotePlan plugins. (There are no commands for users to run directly.)
 > Author: jgclark + dwertheimer [Documentation](https://github.com/NotePlan/plugins/blob/main/np.Shared/README.md)
+
 ### Commands
+
 - /shared:logProvidedSharedResources [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Shared&command=shared%3AlogProvidedSharedResources)
-  *Log resources provided in np.Shared/ folder*
+  _Log resources provided in np.Shared/ folder_
 - /shared:logAvailableSharedResources [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Shared&command=shared%3AlogAvailableSharedResources)
-  *log locally available resources in np.Shared/ folder*
+  _log locally available resources in np.Shared/ folder_
+
 ---
+
 ## 🧩 Codedungeon Toolbox v1.4.1 [install it](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%A7%A9%20Codedungeon%20Toolbox)
+
 > General Purpose Utility Commands
 > Author: codedungeon [Documentation](https://github.com/NotePlan/plugins/blob/main/codedungeon.Toolbox/README.md)
+
 ### Commands
-- /convertToHtml 
-  *Convert current note to HTML*
-- /convertSelectionToHtml 
-  *Convert current selection to HTML*
-- /reorderList 
-  *Reorder current ordered list*
+
+- /convertToHtml
+  _Convert current note to HTML_
+- /convertSelectionToHtml
+  _Convert current selection to HTML_
+- /reorderList
+  _Reorder current ordered list_
+
 ---
+
 ## 🧩 Raindrop.io v0.1.0
+
 > Raindrop.io integration plugin.
 > Author: KimMachineGun [Documentation](https://github.com/NotePlan/plugins/blob/main/KimMachineGun.Raindrop/README.md)
+
 ### Commands
+
 - /rd [try it](noteplan://x-callback-url/runPlugin?pluginID=KimMachineGun.Raindrop&command=rd)
-  *Search and create note.*
+  _Search and create note._
 - /rd:insert [try it](noteplan://x-callback-url/runPlugin?pluginID=KimMachineGun.Raindrop&command=rd%3Ainsert)
-  *Search and insert (or copy) link.*
+  _Search and insert (or copy) link._
+
 ---
+
 ## 🧹 Task Sweeper v1.4.6
-> Move Overdue Tasks to selected date. This plugin also adds template functionality to sweep still-open tasks from project notes and previous calendar days into a template file. 
+
+> Move Overdue Tasks to selected date. This plugin also adds template functionality to sweep still-open tasks from project notes and previous calendar days into a template file.
 > Author: Naman Goel & Eduard & dwertheimer [Documentation](tbd)
+
 ### Commands
+
 - /swt [try it](noteplan://x-callback-url/runPlugin?pluginID=nmn.sweep&command=swt)
-  *Move/Reschedule all open tasks in current note to today's Calendar Note*
+  _Move/Reschedule all open tasks in current note to today's Calendar Note_
 - /swa [try it](noteplan://x-callback-url/runPlugin?pluginID=nmn.sweep&command=swa)
-  *Find ALL open tasks & move/reschedule to today's Calendar Note*
+  _Find ALL open tasks & move/reschedule to today's Calendar Note_
 - /sw7 [try it](noteplan://x-callback-url/runPlugin?pluginID=nmn.sweep&command=sw7)
-  *Find all open tasks for last 7 days & silently move/reschedule to today*
+  _Find all open tasks for last 7 days & silently move/reschedule to today_
+
 ---
+
 ## 🧹 Tidy Up v0.9.1 [update to latest version](noteplan://x-callback-url/runPlugin?pluginID=np.plugin-test&command=Install%20Plugin%20and%20Re-Generate%20Listing&arg0=%F0%9F%A7%B9%20Tidy%20Up)
+
 > Tidy up and delete various things in your NotePlan notes
 > Author: jgclark [Documentation](https://github.com/NotePlan/plugins/blob/main/np.Tidy/README.md)
-### Commands
-- /Tidy Up [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Tidy%20Up)
-  *Run as many of the other commands in this plugin as you have configured.*
-- /File root-level notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=File%20root-level%20notes)
-  *For each root-level note, asks which folder you'd like it moved to. (There's a setting for ones to ignore.)*
-- /List conflicted notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=List%20conflicted%20notes)
-  *Creates/updates a note that lists all notes on this device that have conflicts. (Requires NP v3.9.3)*
-- /List duplicate notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=List%20duplicate%20notes)
-  *Creates/updates a note that lists potentially duplicate notes because they have identical titles*
-- /List stubs [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=List%20stubs)
-  *Creates/updates a note that lists all your notes that have note links (wikilinks) that lead nowhere*
-- /Remove @done() markers [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20%40done%28%29%20markers)
-  *Remove @done() markers from recently-updated notes. Can be used with parameters from Template or Callback.*
-- /Remove blank notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20blank%20notes)
-  *Remove notes that are completely empty, or just have a `#` character*
-- /Remove orphaned blockIDs [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20orphaned%20blockIDs)
-  *Remove blockIDs from lines that had been sync'd, but are 'orphans' as the other copies of the blockID have since been deleted.*
-- /Remove time parts from @done() dates [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20time%20parts%20from%20%40done%28%29%20dates)
-  *Remove time parts of @done(date time) from recently-updated notes. Can be used with parameters from Template or Callback.*
-- /Remove section from recent notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20section%20from%20recent%20notes)
-  *Remove a given section (both the heading and its content) from recently-changed notes.
-Can be used with parameters from Template or x-callback.*
-- /Remove section from all notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20section%20from%20all%20notes)
-  *Remove a given section (both the heading and its content) from all notes.
-Can be used with parameters from Template or x-callback.*
-- /Remove triggers from recent calendar notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20triggers%20from%20recent%20calendar%20notes)
-  *Remove one or more triggers from recent (but past) calendar notes.
-Can be used with parameters from Template or x-callback.*
-- /Log notes changed in interval (Tidy) [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Log%20notes%20changed%20in%20interval%20%28Tidy%29)
-  *Write a list of Log notes changed in the last interval of days to the plugin log. It will default to the 'Default Recent Time Interval' setting unless passed as a parameter.*
-- /Remove >today tags from completed todos [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20%3Etoday%20tags%20from%20completed%20todos)
-  *Remove Completed todos that have a >today tag. Can be used with parameters from Template or Callback.*
-- /Tidy: update plugin settings [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Tidy%3A%20update%20plugin%20settings)
-  *Settings interface (even for iOS)*
-- /Tidy: Move top-level tasks in Editor to heading [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Tidy%3A%20Move%20top-level%20tasks%20in%20Editor%20to%20heading)
-  *Tasks at top of active note (prior to any heading) will be placed under a specified heading*
 
+### Commands
+
+- /Tidy Up [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Tidy%20Up)
+  _Run as many of the other commands in this plugin as you have configured._
+- /File root-level notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=File%20root-level%20notes)
+  _For each root-level note, asks which folder you'd like it moved to. (There's a setting for ones to ignore.)_
+- /List conflicted notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=List%20conflicted%20notes)
+  _Creates/updates a note that lists all notes on this device that have conflicts. (Requires NP v3.9.3)_
+- /List duplicate notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=List%20duplicate%20notes)
+  _Creates/updates a note that lists potentially duplicate notes because they have identical titles_
+- /List stubs [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=List%20stubs)
+  _Creates/updates a note that lists all your notes that have note links (wikilinks) that lead nowhere_
+- /Remove @done() markers [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20%40done%28%29%20markers)
+  _Remove @done() markers from recently-updated notes. Can be used with parameters from Template or Callback._
+- /Remove blank notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20blank%20notes)
+  _Remove notes that are completely empty, or just have a `#` character_
+- /Remove orphaned blockIDs [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20orphaned%20blockIDs)
+  _Remove blockIDs from lines that had been sync'd, but are 'orphans' as the other copies of the blockID have since been deleted._
+- /Remove time parts from @done() dates [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20time%20parts%20from%20%40done%28%29%20dates)
+  _Remove time parts of @done(date time) from recently-updated notes. Can be used with parameters from Template or Callback._
+- /Remove section from recent notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20section%20from%20recent%20notes)
+  _Remove a given section (both the heading and its content) from recently-changed notes.
+  Can be used with parameters from Template or x-callback._
+- /Remove section from all notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20section%20from%20all%20notes)
+  _Remove a given section (both the heading and its content) from all notes.
+  Can be used with parameters from Template or x-callback._
+- /Remove triggers from recent calendar notes [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20triggers%20from%20recent%20calendar%20notes)
+  _Remove one or more triggers from recent (but past) calendar notes.
+  Can be used with parameters from Template or x-callback._
+- /Log notes changed in interval (Tidy) [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Log%20notes%20changed%20in%20interval%20%28Tidy%29)
+  _Write a list of Log notes changed in the last interval of days to the plugin log. It will default to the 'Default Recent Time Interval' setting unless passed as a parameter._
+- /Remove >today tags from completed todos [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Remove%20%3Etoday%20tags%20from%20completed%20todos)
+  _Remove Completed todos that have a >today tag. Can be used with parameters from Template or Callback._
+- /Tidy: update plugin settings [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Tidy%3A%20update%20plugin%20settings)
+  _Settings interface (even for iOS)_
+- /Tidy: Move top-level tasks in Editor to heading [try it](noteplan://x-callback-url/runPlugin?pluginID=np.Tidy&command=Tidy%3A%20Move%20top-level%20tasks%20in%20Editor%20to%20heading)
+  _Tasks at top of active note (prior to any heading) will be placed under a specified heading_
