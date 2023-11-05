@@ -240,8 +240,27 @@ export const navigation: Array<NavGroup> = [
   },
   {
     title: 'Plugins',
-    links: [{ title: '🕓 Event Helpers', href: '/eventhelpers' },
+    links: [
+      { title: '🕓 Event Helpers', href: '/eventhelpers' },
       { title: '⏱ Habits & Summaries', href: '/summaries' },
+    ],
+  },
+  {
+    title: 'Templating',
+    links: [
+      { title: 'Introduction', href: '/eventhelpers' },
+      { title: 'Installation', href: '/summaries' },
+      { title: 'Plugin Settings', href: '/summaries' },
+      { title: 'Definitions', href: '/summaries' },
+      { title: 'Commands', href: '/summaries' },
+      { title: 'Examples', href: '/summaries' },
+      { title: 'Modules', href: '/summaries' },
+      { title: 'Usage of Plugins', href: '/summaries' },
+      { title: 'Plugins', href: '/summaries' },
+      { title: 'FAQ', href: '/summaries' },
+      { title: 'Migrating Legacy Templates', href: '/summaries' },
+      { title: 'Community', href: '/summaries' },
+      { title: 'Changelog', href: '/summaries' },
     ],
   },
 ]
