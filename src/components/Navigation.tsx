@@ -136,7 +136,7 @@ function ActivePageMarker({
   return (
     <motion.div
       layout
-      className="absolute left-2 h-6 w-px bg-emerald-500"
+      className="absolute left-2 h-6 w-px bg-amber-600"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { delay: 0.2 } }}
       exit={{ opacity: 0 }}
@@ -249,18 +249,21 @@ export const navigation: Array<NavGroup> = [
     title: 'Templating',
     links: [
       { title: 'Introduction', href: '/eventhelpers' },
-      { title: 'Installation', href: '/summaries' },
-      { title: 'Plugin Settings', href: '/summaries' },
-      { title: 'Definitions', href: '/summaries' },
-      { title: 'Commands', href: '/summaries' },
-      { title: 'Examples', href: '/summaries' },
-      { title: 'Modules', href: '/summaries' },
-      { title: 'Usage of Plugins', href: '/summaries' },
-      { title: 'Plugins', href: '/summaries' },
-      { title: 'FAQ', href: '/summaries' },
-      { title: 'Migrating Legacy Templates', href: '/summaries' },
-      { title: 'Community', href: '/summaries' },
-      { title: 'Changelog', href: '/summaries' },
+      { title: 'Installation', href: '/templating-installation' },
+      { title: 'Plugin Settings', href: '/templating-plugin-settings' },
+      { title: 'Definitions', href: '/templating-definitions' },
+      { title: 'Commands', href: '/templating-commands' },
+      { title: 'Examples', href: '/templating-exmaples' },
+      { title: 'Modules', href: '/templating-modules' },
+      { title: 'Usage of Plugins', href: '/templating-use-of-plugins' },
+      { title: 'Plugins', href: '/templating-plugins' },
+      { title: 'FAQ', href: '/templating-faq' },
+      {
+        title: 'Migrating Legacy Templates',
+        href: '/templating-migrating-legacy-templates',
+      },
+      { title: 'Community', href: '/templating-community' },
+      { title: 'Changelog', href: '/templating-changelog' },
     ],
   },
 ]
