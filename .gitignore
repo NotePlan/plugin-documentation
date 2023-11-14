@@ -23,6 +23,7 @@
 *.swn
 *.swo
 *.bak
+/.history
 
 # OS generated
 .DS_Store
