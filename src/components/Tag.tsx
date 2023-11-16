@@ -6,11 +6,11 @@ const variantStyles = {
 }
 
 const colorStyles = {
-  amber: {
-    small: 'text-amber-600 dark:text-amber-400',
-    medium:
-      'ring-amber-300 dark:ring-amber-400/30 bg-amber-400/10 text-amber-600 dark:text-amber-400',
-  },
+  // amber: {
+  //   small: 'text-amber-600 dark:text-amber-400',
+  //   medium:
+  //     'ring-amber-300 dark:ring-amber-400/30 bg-amber-400/10 text-amber-600 dark:text-amber-400',
+  // },
   sky: {
     small: 'text-sky-500',
     medium:
