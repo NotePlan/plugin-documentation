@@ -5,6 +5,7 @@
 # build artifacts and directories
 /build
 /dist
+/out
 
 # local environment variables
 .env.local

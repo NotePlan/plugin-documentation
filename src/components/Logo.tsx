@@ -16,7 +16,7 @@ export const Logo = () => {
   }, [resolvedTheme])
 
   return (
-    <div>
+    <div className="h-6">
       <img className="-mt-2 h-10" alt="logo" src={source} key={resolvedTheme} />
     </div>
   )
