@@ -1,0 +1,58 @@
+import Link from  'next/link'
+
+# Getting Started
+
+With `np.Templating`, you will be able to create powerful templates to automate common manual tasks.
+
+## Examples
+
+The following examples demonstrate how you create a **template** and use `np.Templating` tags to place dynamic **output**.
+
+### Example 1: Template Definition
+When creating a new template in the "Templates" folder, the template header will be in `frontmatter` format, containing two fields for the template--`title` and `type`-- followed by the template body.
+
+`title` - The title should be a unique name beginning with the folder in which it is located. You can use the same title in multiple templates, provided they are in different folders.
+
+`type` - The type field is used to identify what type of template this is.  There are currently 3 different types of templates
+- `empty-note` will be available when you select the "Template" button in an empty calendar day
+- `quick-note` will be available whenever you invoke the `np:qtn` command
+- `meeting-note` will be available whenever you wish to create a meeting note for any NotePlan calendar event
+- `ignore` will be ignored in all template chooser interfaces
+
+For more information on using Quick Notes and the `np:qtn` command, click [here](/docs/templating-commands/quick-notes/).
+
+
+```markdown
+---
+title: myTemplate
+type: empty-note
+---
+Hello <%- user.first %>
+```
+
+```text
+Hello Michael
+```
+
+
+### Example 2: Using `np.Templating` modules
+In this example, we will use one of the many `np.Templating` module methods, [WebModule](/docs/templating-modules/web-module).
+
+
+```markdown
+---
+title: myTemplate
+type: empty-note
+---
+Today's Weather: <%- web.weather() %>
+```
+
+
+```text
+Todays Weather: Fountain Valley, California, United States: ⛅️  +86°F
+```
+
+The call to `<%- web.weather() %>` will use the format you have defined in `np.Templating` [settings](/docs/settings). In this example, the settings value is blank, thus the default weather format will be used.
+
+For more information about `np.Templating` weather, visit [Templating Modules - WebModule](/docs/templating-modules/web-module).
+

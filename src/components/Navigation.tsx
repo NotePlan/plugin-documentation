@@ -1,36 +1,36 @@
-'use client'
+"use client";
 
-import { useRef } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import clsx from 'clsx'
-import { AnimatePresence, motion, useIsPresent } from 'framer-motion'
+import { useRef } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
+import { AnimatePresence, motion, useIsPresent } from "framer-motion";
 
-import { Button } from '@/components/Button'
-import { useIsInsideMobileNavigation } from '@/components/MobileNavigation'
-import { useSectionStore } from '@/components/SectionProvider'
-import { Tag } from '@/components/Tag'
-import { remToPx } from '@/lib/remToPx'
+import { Button } from "@/components/Button";
+import { useIsInsideMobileNavigation } from "@/components/MobileNavigation";
+import { useSectionStore } from "@/components/SectionProvider";
+import { Tag } from "@/components/Tag";
+import { remToPx } from "@/lib/remToPx";
 
 interface NavGroup {
-  title: string
+  title: string;
   links: Array<{
-    title: string
-    href: string
-  }>
+    title: string;
+    href: string;
+  }>;
 }
 
 function useInitialValue<T>(value: T, condition = true) {
-  let initialValue = useRef(value).current
-  return condition ? initialValue : value
+  let initialValue = useRef(value).current;
+  return condition ? initialValue : value;
 }
 
 function TopLevelNavItem({
   href,
   children,
 }: {
-  href: string
-  children: React.ReactNode
+  href: string;
+  children: React.ReactNode;
 }) {
   return (
     <li className="md:hidden">
@@ -41,7 +41,7 @@ function TopLevelNavItem({
         {children}
       </Link>
     </li>
-  )
+  );
 }
 
 function NavLink({
@@ -51,22 +51,22 @@ function NavLink({
   active = false,
   isAnchorLink = false,
 }: {
-  href: string
-  children: React.ReactNode
-  tag?: string
-  active?: boolean
-  isAnchorLink?: boolean
+  href: string;
+  children: React.ReactNode;
+  tag?: string;
+  active?: boolean;
+  isAnchorLink?: boolean;
 }) {
   return (
     <Link
       href={href}
-      aria-current={active ? 'page' : undefined}
+      aria-current={active ? "page" : undefined}
       className={clsx(
-        'flex justify-between gap-2 py-1 pr-3 text-sm transition',
-        isAnchorLink ? 'pl-7' : 'pl-4',
+        "flex justify-between gap-2 py-1 pr-3 text-sm transition",
+        isAnchorLink ? "pl-7" : "pl-4",
         active
-          ? 'text-zinc-900 dark:text-white'
-          : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white',
+          ? "text-zinc-900 dark:text-white"
+          : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white",
       )}
     >
       <span className="truncate">{children}</span>
@@ -76,15 +76,15 @@ function NavLink({
         </Tag>
       )}
     </Link>
-  )
+  );
 }
 
 function VisibleSectionHighlight({
   group,
   pathname,
 }: {
-  group: NavGroup
-  pathname: string
+  group: NavGroup;
+  pathname: string;
 }) {
   let [sections, visibleSections] = useInitialValue(
     [
@@ -92,22 +92,22 @@ function VisibleSectionHighlight({
       useSectionStore((s) => s.visibleSections),
     ],
     useIsInsideMobileNavigation(),
-  )
+  );
 
-  let isPresent = useIsPresent()
+  let isPresent = useIsPresent();
   let firstVisibleSectionIndex = Math.max(
     0,
-    [{ id: '_top' }, ...sections].findIndex(
+    [{ id: "_top" }, ...sections].findIndex(
       (section) => section.id === visibleSections[0],
     ),
-  )
-  let itemHeight = remToPx(2)
+  );
+  let itemHeight = remToPx(2);
   let height = isPresent
     ? Math.max(1, visibleSections.length) * itemHeight
-    : itemHeight
+    : itemHeight;
   let top =
     group.links.findIndex((link) => link.href === pathname) * itemHeight +
-    firstVisibleSectionIndex * itemHeight
+    firstVisibleSectionIndex * itemHeight;
 
   return (
     <motion.div
@@ -118,20 +118,20 @@ function VisibleSectionHighlight({
       className="absolute inset-x-0 top-0 bg-zinc-800/2.5 will-change-transform dark:bg-white/2.5"
       style={{ borderRadius: 8, height, top }}
     />
-  )
+  );
 }
 
 function ActivePageMarker({
   group,
   pathname,
 }: {
-  group: NavGroup
-  pathname: string
+  group: NavGroup;
+  pathname: string;
 }) {
-  let itemHeight = remToPx(2)
-  let offset = remToPx(0.25)
-  let activePageIndex = group.links.findIndex((link) => link.href === pathname)
-  let top = offset + activePageIndex * itemHeight
+  let itemHeight = remToPx(2);
+  let offset = remToPx(0.25);
+  let activePageIndex = group.links.findIndex((link) => link.href === pathname);
+  let top = offset + activePageIndex * itemHeight;
 
   return (
     <motion.div
@@ -142,30 +142,30 @@ function ActivePageMarker({
       exit={{ opacity: 0 }}
       style={{ top }}
     />
-  )
+  );
 }
 
 function NavigationGroup({
   group,
   className,
 }: {
-  group: NavGroup
-  className?: string
+  group: NavGroup;
+  className?: string;
 }) {
   // If this is the mobile navigation then we always render the initial
   // state, so that the state does not change during the close animation.
   // The state will still update when we re-open (re-render) the navigation.
-  let isInsideMobileNavigation = useIsInsideMobileNavigation()
+  let isInsideMobileNavigation = useIsInsideMobileNavigation();
   let [pathname, sections] = useInitialValue(
     [usePathname(), useSectionStore((s) => s.sections)],
     isInsideMobileNavigation,
-  )
+  );
 
   let isActiveGroup =
-    group.links.findIndex((link) => link.href === pathname) !== -1
+    group.links.findIndex((link) => link.href === pathname) !== -1;
 
   return (
-    <li className={clsx('relative mt-6', className)}>
+    <li className={clsx("relative mt-6", className)}>
       <motion.h2
         layout="position"
         className="text-xs font-semibold text-zinc-900 dark:text-white"
@@ -226,68 +226,72 @@ function NavigationGroup({
         </ul>
       </div>
     </li>
-  )
+  );
 }
 
 export const navigation: Array<NavGroup> = [
   {
-    title: 'Start',
+    title: "Start",
     links: [
-      { title: 'Introduction', href: '/' },
-      { title: 'Plugin List', href: '/pluginlist' },
-      { title: 'Resources', href: '/resources' },
+      { title: "Introduction", href: "/" },
+      { title: "Plugin List", href: "/pluginlist" },
+      { title: "Resources", href: "/resources" },
     ],
   },
   {
-    title: 'Plugins',
+    title: "Plugins",
     links: [
-      { title: '🎛 Dashboard', href: '/jgclark.Dashboard' },
-      { title: '🕓 Event Helpers', href: '/jgclark.EventHelpers' },
-      { title: '📦 Filer', href: '/jgclark.Filer' },
-      { title: '⏱ Habits & Summaries', href: '/jgclark.Summaries' },
-      { title: '💭 Journalling', href: '/jgclark.DailyJournal' },
-      { title: '🔗 Link Creator', href: '/np.CallbackURLs' },
-      { title: '🕸 Map of Contents', href: '/jgclark.MOCs' },
-      { title: '✍️ Meeting Notes', href: '/np.MeetingNotes' },
-      { title: '📙 Note Helpers', href: '/jgclark.NoteHelpers' },
-      { title: '🔢 Note Statistics', href: '/np.statistics' },
-      { title: ' Preview', href: '/np.Preview' },
-      { title: '⚡️ Quick Capture', href: '/jgclark.QuickCapture' },
-      { title: '🔌 Plugin Information & Tester', href: '/np.plugin-test' },
-      { title: '🔬 Projects + Reviews', href: '/jgclark.Reviews' },
-      { title: '🔁 Repeat Extensions', href: '/jgclark.RepeatExtensions' },
-      { title: '🔎 Search Extensions', href: '/jgclark.SearchExtensions' },
-      { title: '📒 Templating', href: '/np.Templating' },
-      { title: '🎨 Theme Chooser', href: '/np.ThemeChooser' },
-      { title: '🧹  Tidy Up', href: '/np.Tidy' },
-      { title: '🌤 Weather Lookup', href: '/np.WeatherLookup' },
-      { title: '🖥️ Window Sets', href: '/jgclark.WindowSets' },
+      { title: "🎛 Dashboard", href: "/jgclark.Dashboard" },
+      { title: "🕓 Event Helpers", href: "/jgclark.EventHelpers" },
+      { title: "📦 Filer", href: "/jgclark.Filer" },
+      { title: "⏱ Habits & Summaries", href: "/jgclark.Summaries" },
+      { title: "💭 Journalling", href: "/jgclark.DailyJournal" },
+      { title: "🔗 Link Creator", href: "/np.CallbackURLs" },
+      { title: "🕸 Map of Contents", href: "/jgclark.MOCs" },
+      { title: "✍️ Meeting Notes", href: "/np.MeetingNotes" },
+      { title: "📙 Note Helpers", href: "/jgclark.NoteHelpers" },
+      { title: "🔢 Note Statistics", href: "/np.statistics" },
+      { title: " Preview", href: "/np.Preview" },
+      { title: "⚡️ Quick Capture", href: "/jgclark.QuickCapture" },
+      { title: "🔌 Plugin Information & Tester", href: "/np.plugin-test" },
+      { title: "🔬 Projects + Reviews", href: "/jgclark.Reviews" },
+      { title: "🔁 Repeat Extensions", href: "/jgclark.RepeatExtensions" },
+      { title: "🔎 Search Extensions", href: "/jgclark.SearchExtensions" },
+      { title: "📒 Templating", href: "/np.Templating" },
+      { title: "🎨 Theme Chooser", href: "/np.ThemeChooser" },
+      { title: "🧹  Tidy Up", href: "/np.Tidy" },
+      { title: "🌤 Weather Lookup", href: "/np.WeatherLookup" },
+      { title: "🖥️ Window Sets", href: "/jgclark.WindowSets" },
     ],
   },
   {
-    title: 'Templating',
+    title: "Templating",
     links: [
-      { title: 'Introduction', href: '/eventhelpers' },
-      { title: 'Installation', href: '/templating-installation' },
-      { title: 'Plugin Settings', href: '/templating-plugin-settings' },
-      { title: 'Definitions', href: '/templating-definitions' },
-      { title: 'Commands', href: '/templating-commands' },
-      { title: 'Examples', href: '/templating-exmaples' },
-      { title: 'Modules', href: '/templating-modules' },
-      { title: 'Usage of Plugins', href: '/templating-use-of-plugins' },
-      { title: 'Plugins', href: '/templating-plugins' },
-      { title: 'FAQ', href: '/templating-faq' },
+      { title: "Introduction", href: "/templating" },
       {
-        title: 'Migrating Legacy Templates',
-        href: '/templating-migrating-legacy-templates',
+        title: "Getting Started",
+        href: "/templating/templating-getting-started",
       },
-      { title: 'Community', href: '/templating-community' },
-      { title: 'Changelog', href: '/templating-changelog' },
+      { title: "Installation", href: "/templating/templating-installation" },
+      { title: "Plugin Settings", href: "/templating-plugin-settings" },
+      { title: "Definitions", href: "/templating-definitions" },
+      { title: "Commands", href: "/templating-commands" },
+      { title: "Examples", href: "/templating-exmaples" },
+      { title: "Modules", href: "/templating-modules" },
+      { title: "Usage of Plugins", href: "/templating-use-of-plugins" },
+      { title: "Plugins", href: "/templating-plugins" },
+      { title: "FAQ", href: "/templating-faq" },
+      {
+        title: "Migrating Legacy Templates",
+        href: "/templating-migrating-legacy-templates",
+      },
+      { title: "Community", href: "/templating-community" },
+      { title: "Changelog", href: "/templating-changelog" },
     ],
   },
-]
+];
 
-export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
+export function Navigation(props: React.ComponentPropsWithoutRef<"nav">) {
   return (
     <nav {...props}>
       <ul role="list">
@@ -298,7 +302,7 @@ export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
           <NavigationGroup
             key={group.title}
             group={group}
-            className={groupIndex === 0 ? 'md:mt-0' : ''}
+            className={groupIndex === 0 ? "md:mt-0" : ""}
           />
         ))}
         <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
@@ -308,5 +312,5 @@ export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
         </li>
       </ul>
     </nav>
-  )
+  );
 }
