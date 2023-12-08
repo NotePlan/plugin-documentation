@@ -31,6 +31,7 @@
     "flexsearch": "^0.7.31",
     "framer-motion": "7.8.1",
     "heroicons": "^2.0.18",
+    "html-react-parser": "^5.0.7",
     "mdast-util-to-string": "^3.2.0",
     "mdx-annotations": "^0.1.1",
     "next": "^14.0.3",
