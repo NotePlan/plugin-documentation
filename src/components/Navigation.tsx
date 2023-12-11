@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
@@ -8,16 +8,63 @@ import { AnimatePresence, motion, useIsPresent } from 'framer-motion'
 
 import { Button } from '@/components/Button'
 import { useIsInsideMobileNavigation } from '@/components/MobileNavigation'
-import { useSectionStore } from '@/components/SectionProvider'
+import { Section, useSectionStore } from '@/components/SectionProvider'
 import { Tag } from '@/components/Tag'
 import { remToPx } from '@/lib/remToPx'
 
-interface NavGroup {
+function ChevronDownIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
+
+function ChevronRightIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7.293 14.707a1 1 0 010-1.414L10.586 10l-3.293-3.293a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
+
+interface NavGroupLink {
   title: string
-  links: Array<{
+  href: string
+  children?: Array<{
     title: string
     href: string
   }>
+}
+
+interface NavGroup {
+  title: string
+  href?: string
+  links: Array<NavGroupLink>
 }
 
 function useInitialValue<T>(value: T, condition = true) {
@@ -188,44 +235,103 @@ function NavigationGroup({
           )}
         </AnimatePresence>
         <ul role="list" className="border-l border-transparent">
-          {group.links.map((link) => (
-            <motion.li key={link.href} layout="position" className="relative">
-              <NavLink href={link.href} active={link.href === pathname}>
-                {link.title}
-              </NavLink>
-              <AnimatePresence mode="popLayout" initial={false}>
-                {link.href === pathname && sections.length > 0 && (
-                  <motion.ul
-                    role="list"
-                    initial={{ opacity: 0 }}
-                    animate={{
-                      opacity: 1,
-                      transition: { delay: 0.1 },
-                    }}
-                    exit={{
-                      opacity: 0,
-                      transition: { duration: 0.15 },
-                    }}
-                  >
-                    {sections.map((section) => (
-                      <li key={section.id}>
-                        <NavLink
-                          href={`${link.href}#${section.id}`}
-                          tag={section.tag}
-                          isAnchorLink
-                        >
-                          {section.title}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
-            </motion.li>
-          ))}
+          <NavigationLinks
+            links={group.links}
+            pathname={pathname}
+            sections={sections}
+          />
         </ul>
       </div>
     </li>
+  )
+}
+
+function NavigationLinks({
+  links,
+  pathname,
+  sections,
+}: {
+  links: Array<NavGroupLink>
+  pathname: string
+  sections: Array<Section>
+}) {
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    const initialCollapseStates: Record<string, boolean> = {}
+    links.forEach((link) => {
+      initialCollapseStates[link.title] = true
+    })
+    return initialCollapseStates
+  })
+
+  const toggleCollapse = (title: string) => {
+    setIsCollapsed((prevState) => ({
+      ...prevState,
+      [title]: !prevState[title],
+    }))
+  }
+
+  return (
+    <>
+      {links.map((link) => (
+        <motion.li key={link.href} layout="position" className="relative">
+          <NavLink href={link.href} active={link.href === pathname}>
+            {/* {link.title} */}
+
+            <button
+              onClick={() => toggleCollapse(link.title)}
+              className="flex items-center "
+            >
+              <span>{link.title}</span>
+              {link.children && (
+                <span>
+                  {!isCollapsed[link.title] ? (
+                    <ChevronDownIcon />
+                  ) : (
+                    <ChevronRightIcon />
+                  )}
+                </span>
+              )}
+            </button>
+
+            {!isCollapsed[link.title] &&
+              link.children &&
+              link.children.map((child) => (
+                <NavLink key={child.href} href={`${child.href}`}>
+                  {child.title}
+                </NavLink>
+              ))}
+          </NavLink>
+          <AnimatePresence mode="popLayout" initial={false}>
+            {link.href === pathname && sections.length > 0 && (
+              <motion.ul
+                role="list"
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                  transition: { delay: 0.1 },
+                }}
+                exit={{
+                  opacity: 0,
+                  transition: { duration: 0.15 },
+                }}
+              >
+                {sections.map((section) => (
+                  <li key={section.id}>
+                    <NavLink
+                      href={`${link.href}#${section.id}`}
+                      tag={section.tag}
+                      isAnchorLink
+                    >
+                      {section.title}
+                    </NavLink>
+                  </li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+        </motion.li>
+      ))}
+    </>
   )
 }
 
@@ -287,8 +393,22 @@ export const navigation: Array<NavGroup> = [
       },
       { title: 'Definitions', href: '/templating-definitions' },
       { title: 'Commands', href: '/templating-commands' },
-      { title: 'Examples', href: '/templating-exmaples' },
-      { title: 'Modules', href: '/templating/templating-modules' },
+      {
+        title: 'Examples',
+        href: '',
+        children: [
+          { title: 'Module 1', href: '/templating/templating-modules-date' },
+          { title: 'Module 2', href: '/templating/module-2' },
+        ],
+      },
+      {
+        title: 'Modules',
+        href: '',
+        children: [
+          { title: 'Module 1', href: '/templating/templating-modules-date' },
+          { title: 'Module 2', href: '/templating/module-2' },
+        ],
+      },
       { title: 'Usage of Plugins', href: '/templating-use-of-plugins' },
       { title: 'Plugins', href: '/templating-plugins' },
       { title: 'FAQ', href: '/templating-faq' },
