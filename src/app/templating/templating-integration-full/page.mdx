@@ -1,17 +1,10 @@
+import Link from  'next/link'
+
 # Example 4: Full Example
 
 In this example, we will show a more complex method (taken from personal daily note command)
 
 *****
-
-{/*
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs>
-  <TabItem value="code" label="Plugin Code" default>
-*/}
-
 
 In this example, I have a custom plugin `codedungeon.NotePlan` which contains a number of commands, one of which is called `cdWeekday` which I invoke each day in my NotePlan Daily Calendar Note.  There is quite a bit to this command, I will try to unpack every that is happening.
 
@@ -180,8 +173,7 @@ The breakdown of this template is as follows (for brevity, I have extracted only
 | 3     | Displays date using `DateModule.format` method, and supply the date using `data.pivotDate` variable       |
 | 7     | Displays current weather using `WebModule.weather` method       |
 | 8     | Displays daily advice using `WebModule.advice` method      |
-| 14    | Displays personal `Bible.votd` method (Bible Plugin , verse of the day)    |
-|       | See [Templating Plugins](/docs/templating-plugins/overview) section for information on creating custom `np.Templating` Plugins    |
+| 14    | Displays personal `Bible.votd` method (Bible Plugin , verse of the day) (See <Link href="templating-custom-plugins-overview">Templating Custom Plugins Overview</Link> section for information on creating custom `np.Templating` Plugins)   |
 | 18    | Task to prepare for current day "Stand Up" (internal work function)    |
 | 21    | Time Block: Link to current day "Stand Up" note    |
 | 22    | Displays daily affirmation using `WebModule.affirmation` method    |

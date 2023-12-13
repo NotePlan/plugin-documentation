@@ -4,13 +4,6 @@ In this example, we will expand second example, adding a custom method which is 
 
 *****
 
-{/*
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs>
-  <TabItem value="code" label="Plugin Code" default>
-*/}
 
 
 For example, if you have an arbitrary plugin method called `sayHello` it could look something like the following
@@ -36,11 +29,6 @@ export async function templatingHelloWorld(): Promise<void> {
 }
 ```
 
-{/*
-  </TabItem>
-
-  <TabItem value="template" label="Template">
-*/}
 
 Then, you will have a templated name `Template (Hello World)` located in your NotePlan template folder with the following
 
@@ -50,11 +38,6 @@ Then, you will have a templated name `Template (Hello World)` located in your No
 <%- sayHello('Mike') %>
 ```
 
-{/*
-  </TabItem>
-
-  <TabItem value="output" label="Output">
-*/}
 
 Would produce the following output when the custom command is invoked
 

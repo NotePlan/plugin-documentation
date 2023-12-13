@@ -1,3 +1,4 @@
+import Callout from '@/components/Callout'
 
 # String Interpolation
 
@@ -5,14 +6,6 @@
 You can use standard JavaScript string interpolation within `np.Templating` tags.
 
 
-{/* commented to not break compile
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-*/}
-
-<Tabs>
-  <TabItem value="code" label="Plugin Code" default>
 
 For example, using the following in your plugin code, you can provide the referenced `fname`, `mname`, and `lname` variables
 
@@ -31,29 +24,20 @@ export async function templatingInterpolation(): Promise<void> {
 }
 ```
 
-  </TabItem>
-  <TabItem value="template" label="Template">
+In your template, you can reference these variables.
 
-In your template, you can reference these variables
-
-:::important INTERPOLATION
-Make sure you use the standard interpolation ticks (`) around the text block which contains desired variables
-:::
+<Callout
+  type="info"
+  title="INTERPOLATION"
+  description="Make sure you use the standard interpolation ticks (`) around the text block which contains desired variables"
+/>
 
   ```markdown
   Full Name:  <%- `${fname} ${mname} ${lname}` %>
   ```
-
-  </TabItem>
-
-  <TabItem value="output" label="Output">
-
+ 
   When your template is rendered, it will appear as
 
   ```markdown
   Full Name: Mike Joseph Erickson
   ```
-
-  </TabItem>
-
-</Tabs>

@@ -1,3 +1,5 @@
+import Callout from '@/components/Callout'
+import Link from  'next/link'
 
 import promptdefault from '@/images/prompt-default.png'
 import prompt2 from '@/images/prompt2.png'
@@ -22,22 +24,28 @@ For example, if you have a display tag `<%@` in your template which is not in yo
 ### Example 2: `prompt` command
 Alternatively, you can use the **`prompt` command**, which can accept optional prompt message and well as choices (for use with choice list prompt)
 
-:::danger PROMPT PLACEHOLDER
-When using `prompt` command, you must supply a valid placeholder name (e.g. `name`) and the variable must contain valid characters
-- must start with an alpha character (a..z, A..Z)
-- may only contain alphanumeric characters (a..z, A..Z, 0..9)
-- may **not** contain spaces
-:::
+<Callout
+  type="warning"
+  title="PROMPT PLACEHOLDER"
+  description={
+  `
+When using <code>prompt</code> command, you must supply a valid placeholder name (e.g. <code>name</code>) and the variable must contain valid characters: 
+<ul>
+<li>must start with an alpha character (a..z, A..Z)</li>  
+<li>may only contain alphanumeric characters (a..z, A..Z, 0..9)</li>
+<li>may <b>not</b> contain spaces</li>
+</ul>
+  `
+  }
+/>
+
 
 Using the following template
 
 ```markdown
 Task Priority: <%- prompt('priority','What is task priority?',['high','medium','low']) %>
-
-Use the same variable anywhere else in template `<%- priority %>`
 ```
-
-When template is rendered, it will display a choice list prompt
+You can then use the same variable anywhere else in template `<%- priority %>`. When the template is rendered, it will display a choice list prompt
 
 <img src={prompt2.src} alt="Prompt" />
 
@@ -63,7 +71,7 @@ Erickson
 ## Asking for dates or date intervals
 There are two further commands available:
 - **`promptDate('question','message')`**, which accepts dates of form `YYYY-MM-DD`
-- **`promptDateInterval('question','message')`**, which accepts date intervals of form `nnn[bdwmqy]`, as used and documented further in the [**Repeat Extensions** plugin](https://github.com/NotePlan/plugins/tree/main/jgclark.RepeatExtensions).
+- **`promptDateInterval('question','message')`**, which accepts date intervals of form `nnn[bdwmqy]`, as used and documented further in the <Link href="../jgclark.RepeatExtensions">Repeat Extensions</Link> plugin.
 
 Both require the first parameter to be 'question', but accept an optional prompt message. They must be placed where the text is to be used.  For example:
 

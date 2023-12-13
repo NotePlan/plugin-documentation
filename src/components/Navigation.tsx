@@ -394,11 +394,23 @@ export const navigation: Array<NavGroup> = [
       { title: 'Definitions', href: '/templating-definitions' },
       { title: 'Commands', href: '/templating-commands' },
       {
-        title: 'Examples',
+        title: 'Further Examples',
         href: '',
         children: [
+          { title: 'Module 0', href: '/templating/templating-modules-overview' },
+          { title: 'Module 2', href: '/templating/templating-modules-frontmatter' },
           { title: 'Module 1', href: '/templating/templating-modules-date' },
-          { title: 'Module 2', href: '/templating/module-2' },
+          { title: 'Module 2', href: '/templating/templating-modules-frontmatter' },
+        ],
+      },
+      {
+        title: 'Test Group',
+        href: '',
+        children: [
+          { title: 'Module 0', href: '/templating/templating-modules-overview' },
+          { title: 'Module 2', href: '/templating/templating-modules-frontmatter' },
+          { title: 'Module 1', href: '/templating/templating-modules-date' },
+          { title: 'Module 2', href: '/templating/templating-modules-frontmatter' },
         ],
       },
       {
@@ -406,7 +418,8 @@ export const navigation: Array<NavGroup> = [
         href: '',
         children: [
           { title: 'Module 1', href: '/templating/templating-modules-date' },
-          { title: 'Module 2', href: '/templating/module-2' },
+          { title: 'Module 2', href: '/templating/templating-modules-frontmatter' },
+          { title: 'Module 1', href: '/templating/templating-modules-date' },
         ],
       },
       { title: 'Usage of Plugins', href: '/templating-use-of-plugins' },

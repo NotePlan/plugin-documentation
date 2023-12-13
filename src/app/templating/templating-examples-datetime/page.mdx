@@ -1,7 +1,15 @@
+import Callout from '@/components/Callout'
 
 # Date and Time
-The `np.Templating` DateModule and TimeModule provide a number of methods which can be used within your templates. The following example demonstrates how to use a variety of these methods. Specifics of date formatting strings can be [found here](https://momentjs.com/docs/#/parsing/string-format/)
+The `np.Templating` DateModule and TimeModule provide a number of methods which can be used within your templates. The following example demonstrates how to use a variety of these methods.
 
+<Callout
+  type="tip"
+  title="FORMATTING DATES"
+  description={
+    'The DateModule uses the JavaScript <code>moment</code> library internally, thus you can use any of the <a href="https://momentjs.com/docs/#/parsing/string-format/" alt="MomentJS String Formats"> Moment.js string formatting options </a> to get the exact date or time format you want.' 
+  }
+/>
 ## Template
 
 ```markdown
@@ -10,10 +18,6 @@ Test (DateModule)
 *****
 #### Templates with date and time
 
-:::tip
-#### Formatting Dates
-The Date Module uses JavaScript `moment` library internally, thus you can use any of the [moment formatting](https://momentjs.com/docs/#/parsing/string-format/) options to get the exact date or time format you want.
-:::
 
 Date now: *<%- np.date.now() %>*
 Date now with format: *<%- np.date.now("Do MMMM YYYY") %>*

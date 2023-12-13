@@ -27,14 +27,6 @@ const templateData = {
 
 *****
 
-{/*
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs>
-  <TabItem value="code" label="Plugin Code" default>
-
-*/}
 For example, if you have an arbitrary plugin method called `showHelloWorld` it could look something like the following
 
   ```javascript
@@ -51,12 +43,6 @@ export async function showHelloWorld(): Promise<void> {
 }
 ```
 
-{/*
-  </TabItem>
-
-  <TabItem value="template" label="Template">
-
-*/}
 Then, you will have a templated name `Template (Hello World)` located in your NotPlan template folder with the following
 
 ```markdown
@@ -82,13 +68,6 @@ The breakdown of this template is as follows
 
 - `line 3`: display current date, using the `DateModule.now()` method
 
-
-{/*
-  </TabItem>
-
-  <TabItem value="output" label="Output">
-
-*/}
 Would produce the following output when the custom command is invoked
 
 ```markdown
@@ -97,7 +76,3 @@ This portion will be used as the template!
 Current Date: *2021-12-24*
 ```
 
-{/*
-  </TabItem>
-</Tabs>
-*/}

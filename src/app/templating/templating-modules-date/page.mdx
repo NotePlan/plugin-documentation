@@ -1,28 +1,26 @@
-{/*
-import momentdateformats from '@/images/moment-date-formats.png'
-*/}
+import Callout from '@/components/Callout'
+import Link from  'next/link'
 
 # Date Module
 
 ## Overview
 The Date Module provides methods and variables which work with dates.
 
-:::info
-Refer to [Time Module](/docs/templating-modules/time-module) for similar methods which work with with time values)
-:::
+<Callout
+  type="info"
+  description={
+    `Refer to the <a href="./templating-modules-time" alt="Time Module"> Time Module </a> page for similar methods which work with with time values. `
+  }
+/>
 
-:::info
-#### Date Module Helpers
+
+### Date Module Helpers
 The Date Module exposes commonly used [helper](/docs/templating-modules/date-module#helpers) methods
-:::
 
-:::tip
-#### Formatting Date Values
+
+### Formatting Date Values
 The Date Module uses JavaScript `moment` library internally, thus you can use any of the [moment formatting](https://momentjs.com/docs/#/parsing/string-format/) options.
 
-{/*
-<img src={momentdateformats.src} alt="Moment Date Formats" />
-*/}
 _Tokens are case-sensitive._
 
 | Input | Example | Description |
@@ -42,7 +40,6 @@ _Tokens are case-sensitive._
 **Example**
 
 If you wish to display date value with 4 digit year and 2 digit month, separated by a dash `-` character, you would use `<%- date.now('YYYY-MM') %>`
-:::
 
 ## Methods
 > namespace: `date`

@@ -1,11 +1,15 @@
+import Callout from '@/components/Callout'
 import noteplanplugininstaller from '@/images/noteplan-plugin-installer.png'
 
 # Installation
 Installing the templating plugin is a simple process.
 
-:::warning REQUIREMENTS
-np.Templating requires NotePlan v3.5 or greater. To get the latest version of NotePlan, visit [NotePlan Website](https://noteplan.co/) or [Setapp Website](https://setapp.com)
-:::
+<Callout
+  type="info"
+  title="REQUIREMENTS"
+  description= {`np.Templating requires NotePlan v3.5 or greater. To get the latest version of NotePlan, visit the <a href="https://noteplan.co/" alt="Noteplan Website"> NotePlan Website </a> or the <a href ="https://setapp.com" alt = "Setapp Website" > Setapp Website </a>.
+` }
+/>
 
 **Step 1:** Open NotePlan Preferences (`NotePlan -> Preferences`) and click the Plugins tab
 
@@ -15,9 +19,13 @@ np.Templating requires NotePlan v3.5 or greater. To get the latest version of No
 
 <img src={noteplanplugininstaller.src} alt="Noteplan Plugin Installer" />
 
-:::caution LEGACY TEMPLATING DISABLED AUTOMATICALLY
-If you had the previous Templates plugin installed, it will be disabled as to not conflict with np.Templating.
+<Callout
+  type="info"
+  title="LEGACY TEMPLATING DISABLED AUTOMATICALLY"
+  description={
+    `If you had the previous Templates plugin installed, it will be disabled as to not conflict with np.Templating.</br>
 
-For more information, see [Legacy Template Migration](/docs/templating-migrating/overview)
-:::
+For more information, see <a href="templating-migrating" alt = "Legacy Template Migration">Legacy Template Migration</a>
+ `}
+/>
 
