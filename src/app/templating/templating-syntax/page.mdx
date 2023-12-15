@@ -1,11 +1,18 @@
+import Callout from '@/components/Callout'
+
 # Syntax
 `np.Templating` templating engine uses standard JavaScript syntax to declare a command. It may take some time to get used to the syntax, but after you have worked with for awhile, you will get the hang of it.
 
 All `np.Templating` variables and methods are JavaScript objects which are invoked using a command.
 
-:::info TEMPLATING TAGS
-For more information on `np.Templating` tags. Visit [`Templating - Definitions -> Template Tags`](/docs/templating-basics/template-tags)
-:::
+<Callout
+  type="info"
+  title="TEMPLATING TAGS"
+  description={`
+For more information on <code>np.Templating</code> tags. Visit <a href="templating-tags" alt="templating tags"> Templating Tags </a>.
+  
+  `}
+/>
 
 ## Command Syntax
 A command **must** have both an opening tag `<%` and closing `%>`, and if you want to show the results when template rendered, the opening tag will be `<%-`.
@@ -22,23 +29,24 @@ The syntax between a variable and method invocation is different, so it's import
 
 For example, `np.firstName` is an internal variable, whereas  `np.date.now()` is a method (method is followed by opening and closing parenthesis)
 
-:::info TEMPLATING MODULES
-More information about the different internal variables/methods is supplied in [Templating - Modules](/docs/templating-modules/overview) section.
+<Callout
+  type="info"
+  title="TEMPLATING MODULES"
+  description={`
+More information about the different internal variables/methods is supplied in <a href="templating-modules-overview" alt="Templating Modules">Templating Modules</a> section.
+  
+  `}
+/>
 :::
 
 #### Variable Reference
-To reference a variable, use the desired module followed by variable name
-
-:::note TEMPLATING VARIABLE
+To reference a variable, use the desired module followed by variable name. For example: 
+```markdown
  `<%- date.DAY_NUMBER_SUNDAY %>`
-:::
+```
 
 #### Method invocation
-To invoke a method, you reference the desired module, followed by the method name with opening and closing parenthesis.
-
-:::note TEMPLATING METHOD
-For example, if you want to get the current date of from the `date` module you would use `date.now()`
-:::
+To invoke a method, you reference the desired module, followed by the method name with opening and closing parenthesis. For example, if you want to get the current date of from the `date` module you would use `date.now()`
 
 A method may contain one or more arguments, which are placed between the opening and closing parenthesis
 

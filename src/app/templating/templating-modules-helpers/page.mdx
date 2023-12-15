@@ -1,3 +1,5 @@
+import Callout from '@/components/Callout'
+
 
 # Helpers
 `np.Templating` includes a variety of helper methods which can be used in your templates. In addition, some of there helpers have been added to `np.Templating` modules.
@@ -24,9 +26,13 @@
 ## NotePlan Plugin Helpers
 In addition to the built-in helper methods, if you are using one of the many NotePlan Plugins, additional helpers may be available
 
-:::danger PLUGIN NOT INSTALLED ERROR
+<Callout
+  type="warning"
+  title="WEATHER TAGS"
+  description={`
 If you you see an error message when referencing a plugin command in your template, make sure the associated plugin is installed.
-:::
+  `}
+/>
 
 | Helper Method | NotePlan Plugin | Usage Example
 |-------------- | ---------- | -----
@@ -63,6 +69,10 @@ export async function templatingHelloWorld(): Promise<void> {
 }
 ```
 
-:::tip
-When using `np.Templating` in NotePlan Plugins, you should use the approach described in [Example 3 - Custom Methods](/docs/templating-integration-plugins/example-3)
-:::
+<Callout
+  type="info"
+  description={`
+When using <code>np.Templating</code> in NotePlan Plugins, you should use the approach described in <a href="templating-integration-method">Example 3 - Custom Methods</a>.
+`}
+/>
+

@@ -1,16 +1,30 @@
+import Callout from '@/components/Callout'
+
+
 # Prompts
 `np.Templating` provides the ability to present user prompts when rendering templates.
 
-:::info TEMPLATING PROMPT EXAMPLES
-For more `np.Templating` prompt examples, refer to the [examples](/docs/templating-examples/prompt) section.
-:::
+<Callout
+  type="info"
+  title="TEMPLATING PROMPT EXAMPLES"
+  description={`
+  
+For more <code>np.Templating</code> prompt examples, refer to the <a href="templating-examples-prompt" alt="templating examples"> examples </a> section.
+  `}
+/>
 
-:::danger PROMPT PLACEHOLDER
-When using `prompt` command, you must supply a valid placeholder name (e.g. `name`) and the variable must contain valid characters
-- must start with an alpha character (a..z, A..Z)
-- may only contain alphanumeric characters (a..z, A..Z, 0..9)
-- may **not** contain spaces
-:::
+<Callout
+  type="warning"
+  title="PROMPT PLACEHOLDER"
+  description={`
+When using the <code>prompt</code> command, you must supply a valid placeholder name (e.g. <code>name</code>) and the variable must contain valid characters.
+<ul>
+<li> must start with an alpha character (a..z, A..Z)</li>
+<li> may only contain alphanumeric characters (a..z, A..Z, 0..9)</li>
+<li>may **not** contain spaces</li>
+</ul>
+  `}
+/>
 
 ## Prompt Options
 `np.Templating` supports four different types of prompts, with no configuration required
@@ -25,9 +39,12 @@ The most common prompting interface is to use the following
 ### Example 2: Using Prompt Tag
 You can use the `<%@` tag to display prompt
 
-:::note
-When using the `<%@` prompt tag, the entered value will always be displayed at that point.  If you want to display a prompt, but do not want it value immediately displayed, use example 2 below
-:::
+<Callout
+  type="info"
+  description={`
+When using the <code><%@</code> prompt tag, the entered value will always be displayed at that point.  If you want to display a prompt, but do not want it value immediately displayed, use example 2 below
+  `}
+/>
 
 ```markdown
 <%@ ('name','Enter Name:')%>

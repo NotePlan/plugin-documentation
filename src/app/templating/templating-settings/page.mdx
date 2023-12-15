@@ -67,9 +67,7 @@ Desired weather format string when referencing web weather (e.g. `<% web.weather
   type="info"
   title="WEATHER TAGS"
   description={
-    `For more detailed information on supported weather tags <img src=` +
-    noteplanpluginsettings.src +
-    `  alt='Noteplan Plugin Settings' /> refer to [weather examples](/docs/templating-modules/web-module/#weather).`
+    `For more detailed information on supported weather tags refer to the <a href="templating-modules-web" alt="weather example">weather examples</a>.`
   }
 />
 
@@ -113,5 +111,9 @@ Each `service` is defined by a unique key (e.g. 'advice') and may contain a sing
 <Callout
   type="info"
   title="WEB MODULE"
-  description="For more information about using web services, refer to [Web Module](/docs/templating-modules/web-module)"
+  description=
+{`
+  For more information about using web services, refer to <a href="templating-modules-web" alt="Web Module"> Web Module </a>.
+
+  `}
 />

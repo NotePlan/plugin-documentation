@@ -1,3 +1,5 @@
+import Callout from '@/components/Callout'
+
 
 import promptdefault from '@/images/prompt-default.png'
 import prompttext from '@/images/prompt-text.png'
@@ -48,9 +50,13 @@ Display prompt during template rendering, providing interface for supplying dyna
 
 - `-> result` - Returns value entered by displayed prompt
 
-:::caution IMPORTANT
-If you have multiple prompts which have the same `placeholder` only the first prompt will be displayed, all further prompts will use value from first prompt.
-:::
+<Callout
+  type="warning"
+  title="IMPORTANT"
+  description={`
+If you have multiple prompts which have the same placeholder only the first prompt will be displayed, all further prompts will use value from first prompt.
+  `}
+/>
 
 **Examples**
 
@@ -84,9 +90,14 @@ The following example will display a choice list prompt
 > #### promptDate(placeholder? : string, question?: string) : string
 Display date prompt during template rendering, providing interface for supplying dynamic data for notes when invoking template.
 
-:::note
-The date must in `yyyy-mm-dd` format
-:::
+<Callout
+  type="info"
+  title="NOTE"
+  description={`
+The date must in <code>YYYY-MM-dd</code> format
+  `}
+/>
+
 
 - `placeholder?` - A unique placeholder which will receive the contents of prompt request
 
@@ -120,9 +131,14 @@ The following example will display date prompt using custom prompt message
 > #### promptDateInterval(placeholder? : string, question?: string) : string
 Display date interval prompt during template rendering, providing interface for supplying dynamic data for notes when invoking template.
 
-:::note
-The date must in `nn[bdwnqy]` format (e.g. 5d, 3w, 2y, etc)
-:::
+<Callout
+  type="info"
+  title="NOTE"
+  description={`
+The date must in <code>nn[bdwnqy]</code> format (e.g. 5d, 3w, 2y, etc)
+  `}
+/>
+
 
 - `placeholder?` - A unique placeholder which will receive the contents of prompt request
 

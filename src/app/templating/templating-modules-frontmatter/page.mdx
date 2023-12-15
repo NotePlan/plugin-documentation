@@ -1,23 +1,40 @@
+import Link from  'next/link'
+
+import Callout from '@/components/Callout'
+
 
 # FrontMatter Module
 
 ## Overview
 The FrontMatter Module can be used to work with templates which are in frontmatter format
 
-:::info
-#### FrontMatter Helpers
-The FrontMatter Module exposes commonly used [helper](/docs/templating-modules/frontmatter-module#helpers) methods
-:::
+<Callout
+  type="info"
+  title="FRONTMATTER HELPERS"
+  description={`
+The FrontMatter Module exposes commonly used <a href="templating-modules-helpers"> helper </a> methods
+  `}
+/>
 
 ## Methods
 
 The following are the methods available in the FrontMatter Module, and they can be used to process frontmatter formatted templates
 
-:::note
-When implementing `NPTemplating.renderTemplate` if template is a valid frontmatter template, they will be rendered automatically without performing any additional frontmatter processing
-:::
+<Callout
+  type="info"
+  description={`
+When implementing <code>NPTemplating.renderTemplate</code> if template is a valid frontmatter template, they will be rendered automatically without performing any additional frontmatter processing.
+  `}
+/>
 
-:::danger
+<Callout
+  type="warning"
+  title="INVALID FRONTMATTER VALUES"
+  description={`
+  
+  `}
+/>
+
 All frontmatter attributes values must start with an alpha character (a..z, A..Z) otherwise must be surrounded with double quotes
 
 **Bad:**
@@ -35,7 +52,6 @@ The following attribute value be properly parsed as it is surrounded in quotes
 attribute: "- invalid character"
 ```
 
-:::
 
 *****
 ### isFrontmatterTemplate
@@ -165,15 +181,20 @@ export async function testFrontmatter(): Promise<void> {
 > #### attributes(templateData : string = '')  : any
 Retrieves frontmatter attributes (tags between template tags `---`)
 
-_Note: Also available as [helper](/docs/templating-modules/frontmatter-module#helpers) method_
+_Note: Also available as <Link href="templates-modules-helpers">helper</Link>
+  method._
 
 - `templateData` - Template data
 
 - `-> result` - Frontmatter template attributes
 
-:::danger
+<Callout
+  type="warning"
+  description={`
 Make sure all attribute values starts with alpha characters (a..z, A..Z) or surrounded with double quotes
-:::
+  `}
+/>
+
 
 **Examples**
 
@@ -294,9 +315,14 @@ newNoteTitle: <%- prompt('newNoteTitle','Enter New Note Title:' %>
 
 When template is rendered, the user will be prompted for `newNoteTitle` with entered value being used for new note
 
-:::tip
-When using any of the following `np.Templating` commands (`np:new`, `np:qtn`), the created note will use the `newNoteTitle` internally
-:::
+<Callout
+  type="info"
+  title="WEATHER TAGS"
+  description={`
+  
+When using any of the following <code>np.Templating</code> commands (<code>np:new</code>, <code>np:qtn</code>), the created note will use the <code>newNoteTitle</code> internally
+  `}
+/>
 
 *****
 

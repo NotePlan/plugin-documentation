@@ -1,3 +1,5 @@
+import Callout from '@/components/Callout'
+import Link from  'next/link'
 
 import templatesquicknotes from '@/images/templates-quick-notes.png'
 import quicknoteschooser from '@/images/quicknotes-chooser.png'
@@ -10,9 +12,13 @@ By default, Quick Notes templates are located in "🗒 Quick Notes" however you 
 
 <img src={templatesquicknotes.src} alt="Quick Notes" />
 
-:::caution
+<Callout
+  type="warning"
+  description={`
 Due to utilization of advanced templating features, Quick Note templates must be using the frontmatter style, legacy templates are **not** supported.
-:::
+  
+  `}
+/>
 
 *****
 
@@ -24,7 +30,7 @@ When you create a Quick Note template, it becomes available via the `np:qtn` com
 
 **Step 1:** Invoke NotePlan Command Bar (`Command-J`)
 
-**Step 2:** Type `np:qtn` (or any of the `qtn` [aliases](/docs/templating-commands/overview/#npqtn))
+**Step 2:** Type `np:qtn` (or any of the `qtn` <Link href="templating-commands" alt="aliases">aliases</Link>)
 
 **Step 3:** Select desired template
 
@@ -45,9 +51,14 @@ Each Quick Note must contain each of the following items:
   - if `folder` has a value of `<current>` new note will be created in the folder of the currently displayed note
   - if `folder` has a value of `<current>` but you are not displaying a NotePlan, new note will be created in selected folder
 
-:::danger ATTRIBUTE NAMING REQUIREMENTS
-All template attributes values must start with an alpha character (a..z, A..Z) and may not include illegal characters such as `#` otherwise must be surrounded with double quotes. To be safe with any frontmatter attribute, it is always a good idea to wrap in quotes as to not lead to issues down the road.
-:::
+<Callout
+  type="warning"
+  title="ATTRIBUTE NAMING REQUIREMENTS "
+  description={`
+All template attributes values must start with an alpha character (a..z, A..Z) and may not include illegal characters such as <code>#</code> otherwise must be surrounded with double quotes. To be safe with any frontmatter attribute, it is always a good idea to wrap in quotes as to not lead to issues down the road.
+  
+  `}
+/>
 
 **Bad:**
 
@@ -64,7 +75,6 @@ The following attribute value be properly parsed as it is surrounded in quotes
 title: "- invalid character #includingHasTag"
 ```
 
-:::
 
 **Example:**
 
