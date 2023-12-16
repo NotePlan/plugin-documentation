@@ -20,7 +20,7 @@ export default function Callout({
   switch (type) {
     case 'warning':
       bgColor = 'bg-yellow-50 dark:bg-yellow-900/20'
-      textColor = 'text-yellow-700 dark:text-yellow-400'
+      textColor = 'text-yellow-800 dark:text-yellow-400'
       break
     case 'critical':
       bgColor = 'bg-red-50 dark:bg-red-900/20'
