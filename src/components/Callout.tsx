@@ -7,10 +7,12 @@ export default function Callout({
   type,
   title,
   description,
+  children,
 }: {
   type: string
   title: string
   description: string
+  children: React.ReactNode
 }) {
   let bgColor = ''
   let textColor = ''
@@ -18,11 +20,11 @@ export default function Callout({
   switch (type) {
     case 'warning':
       bgColor = 'bg-yellow-50 dark:bg-yellow-900/20'
-      textColor = 'text-yellow-50 dark:text-yellow-400'
+      textColor = 'text-yellow-700 dark:text-yellow-400'
       break
     case 'critical':
       bgColor = 'bg-red-50 dark:bg-red-900/20'
-      textColor = 'text-red-50 dark:text-red-400'
+      textColor = 'text-red-700 dark:text-red-400'
       break
     default:
       bgColor = 'bg-blue-50 dark:bg-blue-900/20'
@@ -48,10 +50,22 @@ export default function Callout({
           )}
         </div>
         <div className="ml-3">
-          <h3 className={`m-0 text-sm font-medium ` + textColor}>{title}</h3>
-          <div className={`mt-2 text-sm ` + textColor}>
-            <p className="m-0">{Parser(description)}</p>
-          </div>
+          {title && (
+            <h3 className={`m-0 text-sm font-medium ` + textColor}>{title}</h3>
+          )}
+          {description ? (
+            <div className={`${title ? 'mt-2 ' : ''}text-sm ` + textColor}>
+              <p className="m-0">{Parser(description)}</p>
+            </div>
+          ) : children ? (
+            <div
+              className={
+                `callout-content ${title ? 'mt-2 ' : ''}text-sm ` + textColor
+              }
+            >
+              {children}
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
