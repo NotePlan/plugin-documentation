@@ -4,11 +4,11 @@ export default function typographyStyles({ theme }: PluginUtils) {
   return {
     DEFAULT: {
       css: {
-        '--tw-prose-body': theme('colors.zinc.700'),
+        '--tw-prose-body': theme('colors.zinc.800'),
         '--tw-prose-headings': theme('colors.zinc.900'),
-        '--tw-prose-links': theme('colors.amber.600'),
-        '--tw-prose-links-hover': theme('colors.amber.500'),
-        '--tw-prose-links-underline': theme('colors.amber.500 / 0.3'),
+        '--tw-prose-links': theme('colors.amber.700'),
+        '--tw-prose-links-hover': theme('colors.amber.600'),
+        '--tw-prose-links-underline': theme('colors.amber.600 / 0.3'),
         '--tw-prose-bold': theme('colors.zinc.900'),
         '--tw-prose-counters': theme('colors.zinc.500'),
         '--tw-prose-bullets': theme('colors.zinc.300'),
@@ -22,7 +22,7 @@ export default function typographyStyles({ theme }: PluginUtils) {
         '--tw-prose-th-borders': theme('colors.zinc.300'),
         '--tw-prose-td-borders': theme('colors.zinc.200'),
 
-        '--tw-prose-invert-body': theme('colors.zinc.400'),
+        '--tw-prose-invert-body': theme('colors.zinc.200'),
         '--tw-prose-invert-headings': theme('colors.white'),
         '--tw-prose-invert-links': theme('colors.amber.400'),
         '--tw-prose-invert-links-hover': theme('colors.amber.500'),
@@ -42,7 +42,7 @@ export default function typographyStyles({ theme }: PluginUtils) {
 
         // Base
         color: 'var(--tw-prose-body)',
-        fontSize: theme('fontSize.sm')[0],
+        fontSize: theme('fontSize.base')[0],
         lineHeight: theme('lineHeight.7'),
 
         // Text
