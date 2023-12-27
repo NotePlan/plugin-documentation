@@ -1,7 +1,7 @@
 import Callout from '@/components/Callout'
 
-
 # Prompts
+
 `np.Templating` provides the ability to present user prompts when rendering templates.
 
 <Callout
@@ -15,21 +15,22 @@ For more <code>np.Templating</code> prompt examples, refer to the <a href="templ
 
 <Callout
   type="warning"
-  title="PROMPT PLACEHOLDER"
-  description={`
+  title="PROMPT PLACEHOLDER">
 When using the <code>prompt</code> command, you must supply a valid placeholder name (e.g. <code>name</code>) and the variable must contain valid characters.
 <ul>
 <li> must start with an alpha character (a..z, A..Z)</li>
 <li> may only contain alphanumeric characters (a..z, A..Z, 0..9)</li>
 <li>may **not** contain spaces</li>
 </ul>
-  `}
-/>
+
+</Callout>
 
 ## Prompt Options
+
 `np.Templating` supports four different types of prompts, with no configuration required
 
 ### Example 1: Standard Prompt Interface
+
 The most common prompting interface is to use the following
 
 ```markdown
@@ -37,6 +38,7 @@ The most common prompting interface is to use the following
 ```
 
 ### Example 2: Using Prompt Tag
+
 You can use the `<%@` tag to display prompt
 
 <Callout
@@ -51,6 +53,7 @@ When using the <code><%@</code> prompt tag, the entered value will always be dis
 ```
 
 ### Example 3: Prompting without displaying entered value
+
 If you wish to display a prompt, but do not want to immediately render the entered value, you can use the `<%` (without the output option)
 
 ```markdown
@@ -62,6 +65,7 @@ You can then display the value somewhere further down in your template
 ```
 
 ### Example 4 : Prompt with input or choices
+
 You can also use the `prompt` method in your template, which will display either an input request, or if choice list items are supplied, it will display a choice prompt
 
 ```markdown
@@ -76,4 +80,3 @@ Would render the following (assuming `firstName` = `Mike`, `ageGroup` = `20-29`)
 Mike
 20-29
 ```
-

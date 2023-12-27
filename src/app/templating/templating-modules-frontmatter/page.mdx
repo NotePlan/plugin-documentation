@@ -1,31 +1,29 @@
-import Link from  'next/link'
+import Link from 'next/link'
 
 import Callout from '@/components/Callout'
-
 
 # FrontMatter Module
 
 ## Overview
+
 The FrontMatter Module can be used to work with templates which are in frontmatter format
 
 <Callout
   type="info"
-  title="FRONTMATTER HELPERS"
-  description={`
+  title="FRONTMATTER HELPERS">
 The FrontMatter Module exposes commonly used <a href="templating-modules-helpers"> helper </a> methods
-  `}
-/>
+
+  </Callout>
 
 ## Methods
 
 The following are the methods available in the FrontMatter Module, and they can be used to process frontmatter formatted templates
 
 <Callout
-  type="info"
-  description={`
+  type="info">
 When implementing <code>NPTemplating.renderTemplate</code> if template is a valid frontmatter template, they will be rendered automatically without performing any additional frontmatter processing.
-  `}
-/>
+
+  </Callout>
 
 <Callout
   type="warning"
@@ -40,6 +38,7 @@ All frontmatter attributes values must start with an alpha character (a..z, A..Z
 **Bad:**
 
 The following attribute value will cause any FrontMatter module method to return an empty attribute block
+
 ```
 attribute: - invalid character
 ```
@@ -52,11 +51,13 @@ The following attribute value be properly parsed as it is surrounded in quotes
 attribute: "- invalid character"
 ```
 
+---
 
-*****
 ### isFrontmatterTemplate
-> #### isFrontmatterTemplate(templateData : string = '')  : boolean
-Returns `true | false` if supplied template data is valid frontmatter content
+
+> #### isFrontmatterTemplate(templateData : string = '') : boolean
+>
+> Returns `true | false` if supplied template data is valid frontmatter content
 
 - `templateData` - Template data
 
@@ -81,10 +82,13 @@ export async function testFrontmatter(): Promise<void> {
 }
 ```
 
-*****
+---
+
 ### getFrontmatterBlock
-> #### getFrontmatterBlock(templateData : string = '')  : string
-Returns frontmatter block from `templateData`
+
+> #### getFrontmatterBlock(templateData : string = '') : string
+>
+> Returns frontmatter block from `templateData`
 
 The frontmatter block of a template is content between start `---` and end `---` tags.
 
@@ -111,10 +115,13 @@ export async function testFrontmatter(): Promise<void> {
 }
 ```
 
-*****
+---
+
 ### getFrontmatterText
-> #### getFrontmatterText(templateData : string = '')  : string
-Returns frontmatter text from `templateData`
+
+> #### getFrontmatterText(templateData : string = '') : string
+>
+> Returns frontmatter text from `templateData`
 
 The frontmatter text of a template is content between start `---` and end `---` tags, including `---` characters.
 
@@ -141,10 +148,13 @@ export async function testFrontmatter(): Promise<void> {
 }
 ```
 
-*****
+---
+
 ### parse
-> #### parse(templateData : string = '')  : any
-Parses frontmatter template, returning frontmatter attributes and body
+
+> #### parse(templateData : string = '') : any
+>
+> Parses frontmatter template, returning frontmatter attributes and body
 
 - `templateData` - Template data
 
@@ -176,13 +186,16 @@ export async function testFrontmatter(): Promise<void> {
 }
 ```
 
-*****
+---
+
 ### attributes
-> #### attributes(templateData : string = '')  : any
-Retrieves frontmatter attributes (tags between template tags `---`)
+
+> #### attributes(templateData : string = '') : any
+>
+> Retrieves frontmatter attributes (tags between template tags `---`)
 
 _Note: Also available as <Link href="templates-modules-helpers">helper</Link>
-  method._
+method._
 
 - `templateData` - Template data
 
@@ -194,7 +207,6 @@ _Note: Also available as <Link href="templates-modules-helpers">helper</Link>
 Make sure all attribute values starts with alpha characters (a..z, A..Z) or surrounded with double quotes
   `}
 />
-
 
 **Examples**
 
@@ -216,11 +228,13 @@ export async function testFrontmatter(): Promise<void> {
 }
 ```
 
-*****
+---
 
 ### body
-> #### body(templateData : string = '')  : any
-Retrieves frontmatter body (below closing frontmatter template block `---`)
+
+> #### body(templateData : string = '') : any
+>
+> Retrieves frontmatter body (below closing frontmatter template block `---`)
 
 _Note: Also available as [helper](/docs/templating-modules/frontmatter-module#helpers) method_
 
@@ -248,11 +262,13 @@ export async function testFrontmatter(): Promise<void> {
 }
 ```
 
-*****
+---
 
 ### convertProjectNoteToFrontmatter
-> #### convertProjectNoteToFrontmatter(projectNote : string = '')  : number | string
-Converts the supplied `projectNote` into Frontmatter Format
+
+> #### convertProjectNoteToFrontmatter(projectNote : string = '') : number | string
+>
+> Converts the supplied `projectNote` into Frontmatter Format
 
 - `projectNote` - Project Note
 
@@ -301,9 +317,11 @@ export async function testConvertProjectNote(): Promise<void> {
 ```
 
 ## Using Prompts
+
 If you wish to display prompts in your frontmatter attributes section, you can just use the standard `np.Templating` prompt command
 
 ### Example
+
 Using something like the following, when the template is rendered `np.Templating` will display prompt requesting `newNoteTitle`
 
 ```markdown
@@ -324,18 +342,21 @@ When using any of the following <code>np.Templating</code> commands (<code>np:ne
   `}
 />
 
-*****
+---
 
 ## Helpers
+
 FrontMatterModule exposes commonly used methods as importable helpers
 
 ### getAttributes
+
 > #### getAttributes()
 
 ### getBody
+
 > #### getBody()
 
-*****
+---
 
 **Example:**
 

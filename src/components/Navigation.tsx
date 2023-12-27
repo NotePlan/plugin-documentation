@@ -113,7 +113,7 @@ function NavLink({
         isAnchorLink ? 'pl-7' : 'pl-4',
         active
           ? 'text-zinc-900 dark:text-white'
-          : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white',
+          : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white',
       )}
     >
       <span className="truncate">{children}</span>
@@ -397,20 +397,38 @@ export const navigation: Array<NavGroup> = [
         title: 'Further Examples',
         href: '',
         children: [
-          { title: 'Module 0', href: '/templating/templating-modules-overview' },
-          { title: 'Module 2', href: '/templating/templating-modules-frontmatter' },
+          {
+            title: 'Module 0',
+            href: '/templating/templating-modules-overview',
+          },
+          {
+            title: 'Module 2',
+            href: '/templating/templating-modules-frontmatter',
+          },
           { title: 'Module 1', href: '/templating/templating-modules-date' },
-          { title: 'Module 2', href: '/templating/templating-modules-frontmatter' },
+          {
+            title: 'Module 2',
+            href: '/templating/templating-modules-frontmatter',
+          },
         ],
       },
       {
         title: 'Test Group',
         href: '',
         children: [
-          { title: 'Module 0', href: '/templating/templating-modules-overview' },
-          { title: 'Module 2', href: '/templating/templating-modules-frontmatter' },
+          {
+            title: 'Module 0',
+            href: '/templating/templating-modules-overview',
+          },
+          {
+            title: 'Module 2',
+            href: '/templating/templating-modules-frontmatter',
+          },
           { title: 'Module 1', href: '/templating/templating-modules-date' },
-          { title: 'Module 2', href: '/templating/templating-modules-frontmatter' },
+          {
+            title: 'Module 2',
+            href: '/templating/templating-modules-frontmatter',
+          },
         ],
       },
       {
@@ -418,7 +436,10 @@ export const navigation: Array<NavGroup> = [
         href: '',
         children: [
           { title: 'Module 1', href: '/templating/templating-modules-date' },
-          { title: 'Module 2', href: '/templating/templating-modules-frontmatter' },
+          {
+            title: 'Module 2',
+            href: '/templating/templating-modules-frontmatter',
+          },
           { title: 'Module 1', href: '/templating/templating-modules-date' },
         ],
       },
