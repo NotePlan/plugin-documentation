@@ -357,7 +357,7 @@ export const navigation: Array<NavGroup> = [
       // { title: '✍️ Meeting Notes', href: '/np.MeetingNotes' },
       { title: '📙 Note Helpers', href: '/jgclark.NoteHelpers' },
       { title: '🔢 Note Statistics', href: '/np.statistics' },
-      { title: ' Preview', href: '/np.Preview' },
+      { title: '🖥️ Preview', href: '/np.Preview' },
       { title: '⚡️ Quick Capture', href: '/jgclark.QuickCapture' },
       { title: '🔌 Plugin Information & Tester', href: '/np.plugin-test' },
       { title: '🔬 Projects + Reviews', href: '/jgclark.Reviews' },
