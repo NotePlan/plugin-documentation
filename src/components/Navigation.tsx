@@ -340,31 +340,55 @@ export const navigation: Array<NavGroup> = [
     title: 'Start',
     links: [
       { title: 'Introduction', href: '/' },
-      { title: 'Plugin List', href: '/pluginlist' },
-      { title: 'Resources', href: '/resources' },
+      { title: 'Full Plugin List', href: '/pluginlist' },
     ],
   },
   {
     title: 'Plugins',
     links: [
-      { title: '🎛 Dashboard', href: '/jgclark.Dashboard' },
-      { title: '🕓 Event Helpers', href: '/jgclark.EventHelpers' },
+      {
+        title: 'HTML Plugins',
+        href: '',
+        children: [
+          { title: '🎛 Dashboard', href: '/jgclark.Dashboard' },
+          { title: '🖥️ Preview', href: '/np.Preview' },
+          { title: '🔬 Projects + Reviews', href: '/jgclark.Reviews' },
+        ],
+      },
+
+      {
+        title: 'Note Management',
+        href: '',
+        children: [
+          { title: '📙 Note Helpers', href: '/jgclark.NoteHelpers' },
+          { title: '🔢 Note Statistics', href: '/np.statistics' },
+          { title: '🔎 Search Extensions', href: '/jgclark.SearchExtensions' },
+          { title: '📒 Templating', href: '/np.Templating' },
+          { title: '🎨 Theme Chooser', href: '/np.ThemeChooser' },
+          { title: '🕸 Map of Contents', href: '/jgclark.MOCs' },
+        ],
+      },
+
+      {
+        title: 'Events, Dates and Calendar',
+        href: '',
+        children: [
+          { title: '🕓 Event Helpers', href: '/jgclark.EventHelpers' },
+        ],
+      },
+
       { title: '📦 Filer', href: '/jgclark.Filer' },
       { title: '⏱ Habits & Summaries', href: '/jgclark.Summaries' },
       { title: '💭 Journalling', href: '/jgclark.DailyJournal' },
       { title: '🔗 Link Creator', href: '/np.CallbackURLs' },
-      { title: '🕸 Map of Contents', href: '/jgclark.MOCs' },
+
       // { title: '✍️ Meeting Notes', href: '/np.MeetingNotes' },
-      { title: '📙 Note Helpers', href: '/jgclark.NoteHelpers' },
-      { title: '🔢 Note Statistics', href: '/np.statistics' },
-      { title: '🖥️ Preview', href: '/np.Preview' },
+
       { title: '⚡️ Quick Capture', href: '/jgclark.QuickCapture' },
       { title: '🔌 Plugin Information & Tester', href: '/np.plugin-test' },
-      { title: '🔬 Projects + Reviews', href: '/jgclark.Reviews' },
+
       { title: '🔁 Repeat Extensions', href: '/jgclark.RepeatExtensions' },
-      { title: '🔎 Search Extensions', href: '/jgclark.SearchExtensions' },
-      { title: '📒 Templating', href: '/np.Templating' },
-      { title: '🎨 Theme Chooser', href: '/np.ThemeChooser' },
+
       { title: '🧹  Tidy Up', href: '/np.Tidy' },
       // { title: '🌤 Weather Lookup', href: '/np.WeatherLookup' },
       { title: '🖥️ Window Sets', href: '/jgclark.WindowSets' },
@@ -374,60 +398,82 @@ export const navigation: Array<NavGroup> = [
     title: 'Templating',
     links: [
       { title: 'Introduction', href: '/templating' },
-      {
-        title: 'Getting Started',
-        href: '/templating/templating-getting-started',
-      },
       { title: 'Installation', href: '/templating/templating-installation' },
       { title: 'Plugin Settings', href: '/templating/templating-settings' },
-      { title: 'Miscellaneous', href: '/templating/templating-miscellaneous' },
-      { title: 'Prompts', href: '/templating/templating-examples-prompt' },
-      { title: 'Syntax', href: '/templating/templating-syntax' },
-      { title: 'Tags', href: '/templating/templating-tags' },
-      { title: 'Terminology', href: '/templating/templating-terminology' },
-      { title: 'Quick Notes', href: '/templating/templating-quicknotes' },
-      { title: 'Template Runner', href: '/templating/templating-runner' },
       {
-        title: 'Example-arrays',
-        href: '/templating/templating-examples-arrays',
-      },
-      { title: 'Definitions', href: '/templating-definitions' },
-      { title: 'Commands', href: '/templating-commands' },
-      {
-        title: 'Further Examples',
+        title: 'Definitions',
         href: '',
         children: [
+          { title: 'Anatomy', href: '/templating/templating-anatomy' },
+          { title: 'Tags', href: '/templating/templating-tags' },
+          { title: 'Terminology', href: '/templating/templating-terminology' },
+          { title: 'Modules', href: '/templating/templating-modules' },
+          { title: 'Prompts', href: '/templating/templating-examples-prompt' },
           {
-            title: 'Module 0',
-            href: '/templating/templating-modules-overview',
+            title: 'Miscellaneous',
+            href: '/templating/templating-miscellaneous',
           },
-          {
-            title: 'Module 2',
-            href: '/templating/templating-modules-frontmatter',
-          },
-          { title: 'Module 1', href: '/templating/templating-modules-date' },
-          {
-            title: 'Module 2',
-            href: '/templating/templating-modules-frontmatter',
-          },
+
+          { title: 'Syntax', href: '/templating/templating-syntax' },
         ],
       },
+
       {
-        title: 'Test Group',
+        title: 'Commands',
         href: '',
         children: [
+          { title: 'Overview', href: '/templating/templating-commands' },
+          { title: 'Quick Notes', href: '/templating/templating-quicknotes' },
+        ],
+      },
+
+      {
+        title: 'Examples',
+        href: '',
+        children: [
+          { title: 'Simple', href: '/templating/templating-examples-simple' },
+
           {
-            title: 'Module 0',
-            href: '/templating/templating-modules-overview',
+            title: 'Date & Time',
+            href: '/templating/templating-examples-datetime',
+          },
+          { title: 'Arrays', href: '/templating/templating-examples-arrays' },
+          { title: 'Async', href: '/templating/templating-examples-async' },
+          {
+            title: 'Conditional',
+            href: '/templating/templating-examples-conditional',
+          },
+          { title: 'Looping', href: '/templating/templating-examples-looping' },
+
+          {
+            title: 'Frontmatter',
+            href: '/templating/templating-examples-frontmatter',
+          },
+
+          // missing objects
+
+          {
+            title: 'Custom Plugins',
+            href: '/templating/templating-custom-plugins-example',
+          },
+          { title: 'Prompt', href: '/templating/templating-examples-prompt' },
+
+          {
+            title: 'Displaying Tasks',
+            href: '/templating/templating-examples-tasks',
+          },
+
+          {
+            title: 'String Interpolation',
+            href: '/templating/templating-examples-string-interpolation',
           },
           {
-            title: 'Module 2',
-            href: '/templating/templating-modules-frontmatter',
+            title: 'Web Services',
+            href: '/templating/templating-examples-web',
           },
-          { title: 'Module 1', href: '/templating/templating-modules-date' },
           {
-            title: 'Module 2',
-            href: '/templating/templating-modules-frontmatter',
+            title: 'Using JavaScript in Templates',
+            href: '/templating/templating-examples-js-weather',
           },
         ],
       },
@@ -435,23 +481,75 @@ export const navigation: Array<NavGroup> = [
         title: 'Modules',
         href: '',
         children: [
-          { title: 'Module 1', href: '/templating/templating-modules-date' },
           {
-            title: 'Module 2',
+            title: 'Overview',
+            href: '/templating/templating-modules-overview',
+          },
+          {
+            title: 'Date Module',
+            href: '/templating/templating-modules-date',
+          },
+          { title: 'Time Module', href: '/templating/templating-modules-time' },
+          {
+            title: 'FrontMatter Module',
             href: '/templating/templating-modules-frontmatter',
           },
-          { title: 'Module 1', href: '/templating/templating-modules-date' },
+          {
+            title: 'Note Module',
+            href: '/templating/templating-modules-note',
+          },
+
+          {
+            title: 'System Module',
+            href: '/templating/templating-modules-system',
+          },
+
+          {
+            title: 'Utility Module',
+            href: '/templating/templating-modules-utility',
+          },
+
+          {
+            title: 'Web Module',
+            href: '/templating/templating-modules-web',
+          },
+
+          {
+            title: 'Helpers',
+            href: '/templating/templating-modules-helpers',
+          },
         ],
       },
-      { title: 'Usage of Plugins', href: '/templating-use-of-plugins' },
-      { title: 'Plugins', href: '/templating-plugins' },
-      { title: 'FAQ', href: '/templating-faq' },
       {
-        title: 'Migrating Legacy Templates',
-        href: '/templating-migrating-legacy-templates',
+        title: 'Usage in Plugins',
+        href: '',
+        children: [
+          {
+            title: 'Overview',
+            href: '/templating/templating-integration-overview',
+          },
+
+          {
+            title: 'Example 1: Hello World',
+            href: '/templating/templating-integration-helloworld',
+          },
+
+          {
+            title: 'Example 2: Custom Variables',
+            href: '/templating/templating-integration-variables',
+          },
+
+          {
+            title: 'Example 3: Custom Method',
+            href: '/templating/templating-integration-method',
+          },
+
+          {
+            title: 'Example 4: Full Example',
+            href: '/templating/templating-integration-full',
+          },
+        ],
       },
-      { title: 'Community', href: '/templating-community' },
-      { title: 'Changelog', href: '/templating-changelog' },
     ],
   },
 ]

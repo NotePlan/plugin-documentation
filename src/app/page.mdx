@@ -1,60 +1,52 @@
 import { Guides } from '@/components/Guides'
 import { Resources } from '@/components/Resources'
 import { HeroPattern } from '@/components/HeroPattern'
-import Link from  'next/link'
+import pluginpreferences from '@/app/pluginpreferences.png'
+import runplugin from '@/app/runplugin.gif'
+
+import Link from 'next/link'
 
 export const metadata = {
   title: 'NotePlan Plugins Documentation',
   description: 'Explore and learn how to use NotePlan Plugins.',
 }
 
-export const sections = [
-  { title: 'Guides', id: 'guides' },
-  { title: 'Resources', id: 'resources' },
-]
-
 <HeroPattern />
 
 # NotePlan Plugins Documentation
 
-NotePlan has a powerful plugin architecture that allows for the creation of many useful tools and additional functionality. Here you will find documentation for all of the currently available plugins for NotePlan. 
+NotePlan has a powerful plugin architecture that allows for the creation of many useful tools and additional functionality. Here you will find documentation for all of the currently available plugins for NotePlan.
 
-On the left, you will see a list of pages available. We recommend you start with the <Link href="pluginlist">Plugin List</Link>, or use the search function at the top of the page to find a specific plugin. 
+On the left, you will see a list of pages available. We recommend you start with the <Link href="pluginlist">Plugin List</Link>, or use the search function at the top of the page to find a specific plugin.
 
-## General Plugin Information
-TK stuff here about how to install and launch plugins, the `/` notation, etc. 
-Maybe include the secret dev plugin info?
+Below the Plugin List, you will find the documentation for each individual plugin. And below that find the <a href="http://localhost:3000/templating" target="_blank">Templating</a> documentation.
 
+## How to install plugins?
 
+**On Mac:** Open the preferences of NotePlan and head over to "AI & Plugins". Then let NotePlan load the available plugins.
+
+**On iOS:** Tap on the magnifiying glass icon bottom right and type "/install plugin".
+
+<img
+  src={pluginpreferences.src}
+  width="630px"
+  border="1pt solid"
+  margin="8px"
+  alt="action buttons"
+/>
+
+## How to use plugins?
+
+Once you have the plugin installed, open the command bar and type "/" (slash). All the available commands of every installed plugin will be loaded. Keep typing to search for either a specific plugin or a specific command.
+
+<img
+  src={runplugin.src}
+  width="630px"
+  border="1pt solid"
+  margin="8px"
+  alt="action buttons"
+/>
 
 ## Plugin Development
-TK link here on how to make plugins, maybe? 
 
-{/*
-<div className="not-prose mb-16 mt-6 flex gap-3">
-  <Button href="/quickstart" arrow="right">
-    <>Quickstart</>
-  </Button>
-  <Button href="/sdks" variant="outline">
-    <>Explore SDKs</>
-  </Button>
-</div>
-
-## Getting started {{ anchor: false }}
-
-To get started, create a new application in your [developer settings](#), then read about how to make requests for the resources you need to access using our HTTP APIs or dedicated client SDKs. When your integration is ready to go live, publish it to our [integrations directory](#) to reach the Protocol community. {{ className: 'lead' }}
-
-<div className="not-prose">
-  <Button href="/sdks" variant="text" arrow="right">
-    <>Get your API key</>
-  </Button>
-</div>
-
-
-<Guides />
-
-<Resources />
-
-*/}
-
-
+If you want to develop a plugin and contribute to the community or write a private plugin, head over to our <a href="https://help.noteplan.co/article/67-create-command-bar-plugins" target='_blank'>knowledge base</a> to learn more.
