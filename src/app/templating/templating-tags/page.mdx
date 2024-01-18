@@ -1,7 +1,7 @@
 import Callout from '@/components/Callout'
 
 # Template Tags
-`np.Templating` uses a tagging system to indicate where dynamic content will be generated within template notes.
+`Templating` uses a tagging system to indicate where dynamic content will be generated within template notes.
 
 ## Tags
 - `<%` Script tag to be used when executing any JavaScript command without producing any output
@@ -17,7 +17,7 @@ import Callout from '@/components/Callout'
 When you wish to output anything to the rendered template, you use the output `<%-`
 
 ## Examples
-The following are various examples of `np.Templating` tags in action
+The following are various examples of `Templating` tags in action
 
 ### Standard Flow Control Tag
 The standard flow tag `<%` is used when you want to perform a standard JavaScript action such as [looping](/docs/templating-examples/looping) or [conditionals](/docs/templating-examples/conditional).  In this example, a `getData` method would be called, but the actual output would be displayed in another section of template.
@@ -29,7 +29,7 @@ The standard flow tag `<%` is used when you want to perform a standard JavaScrip
 ```
 
 ### Standard output tag (variable)
-Display `first` name variable contained in `np.Templating` [Plugin Settings](/docs/settings)
+Display `first` name variable contained in `Templating` [Plugin Settings](/docs/settings)
 
 ```markdown
 <%- user.first %>
@@ -43,12 +43,12 @@ Displays current date from [Date Module](/docs/templating-modules/date-module)
 ```
 
 ### Unescaped Output Tag
-Displays result from `templates.services.developerQuote` defined in `np.Templating` [Plugin Settings](/docs/settings)
+Displays result from `templates.services.developerQuote` defined in `Templating` [Plugin Settings](/docs/settings)
 
 <Callout
   type="info"
   description={`
-<code>np.Templating</code> doesn't escape characters by default. When doing web requests, it may be useful to escape dangerous characters. You can escape a command's response characters using the <code><%-</code> tag.
+<code>Templating</code> doesn't escape characters by default. When doing web requests, it may be useful to escape dangerous characters. You can escape a command's response characters using the <code><%-</code> tag.
   
   `}
 />

@@ -44,7 +44,7 @@ If you wish to display date value with 4 digit year and 2 digit month, separated
 ## Methods
 > namespace: `date`
 
-The following are the methods available in the Date Module, and they can be used in any `np.Templating` template, no additional configuration required.
+The following are the methods available in the Date Module, and they can be used in any `Templating` template, no additional configuration required.
 
 :::note
 `pivotDate` - Many of the Date Module methods accept a `pivotDate` argument, which means the date which will be used to perform the appropriate calculation.  When no `pivotDate` is supplied, the current date will be used.
@@ -69,7 +69,7 @@ Returns a string representation current date.
 
 _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) method_
 
-- `format?` - Desired date format. If not supplied, it will use the **Date Format** value in `np.Templating` [Plugin Settings](/docs/settings)
+- `format?` - Desired date format. If not supplied, it will use the **Date Format** value in `Templating` [Plugin Settings](/docs/settings)
 - `offset?` - Offset can be used to add/subtract days, months, weeks, etc. (default: 'days')
 
 **Shorthand Keys:**
@@ -181,7 +181,7 @@ _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) 
 > #### today(format? : string = '') : string
 Returns a string representation current date.
 
-- `format?` - Desired date format. If not supplied, it will use **Date Format** value in `np.Templating` [Plugin Settings](/docs/settings)
+- `format?` - Desired date format. If not supplied, it will use **Date Format** value in `Templating` [Plugin Settings](/docs/settings)
 
 - `-> result` - Returns formatted date string
 
@@ -198,7 +198,7 @@ The following example returns the current date, using default values
 > #### tomorrow(format? : string = '') : string
 Returns a string representation of tomorrow
 
-- `format?` - Desired date format. If not supplied, it will use the **Date Format** value in `np.Templating` [Plugin Settings](/docs/settings)
+- `format?` - Desired date format. If not supplied, it will use the **Date Format** value in `Templating` [Plugin Settings](/docs/settings)
 
 - `-> result` - Returns formatted date
 
@@ -215,7 +215,7 @@ The following example returns tomorrow based on current date
 > #### yesterday(format? : string = '') : string
 Returns a string representation of yesterday
 
-- `format?` - Desired date format. If not supplied, it will use the **Date Format** in `np.Templating` [Plugin Settings](/docs/settings)
+- `format?` - Desired date format. If not supplied, it will use the **Date Format** in `Templating` [Plugin Settings](/docs/settings)
 
 - `-> result` - Returns formatted date
 
@@ -248,7 +248,7 @@ Refer to [moment.js format](https://momentjs.com/docs/#/parsing/string-format/) 
 > #### weekday(format? : string = '', offset? : number = 1, pivotDate? : string = '') : string
 Returns the closest weekday, using the `offset` to add or subtract days
 
-- `format?` - Desired date format. If not supplied, it will use the Date Format value in `np.Templating` [Plugin Settings](/docs/settings)
+- `format?` - Desired date format. If not supplied, it will use the Date Format value in `Templating` [Plugin Settings](/docs/settings)
 - `offset?` - Date offset, using `d`, `w`, `m`, or `y`
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 
@@ -368,7 +368,7 @@ The following returns weekOf value based on `pivotDate`
 > #### startOfWeek(format? string = '', pivotDate? : string = '', firstOfWeek? : number = 0) : string
 Returns start of week date
 
-- `format` - Optional date format, uses `np.Templating` Date Format if not supplied
+- `format` - Optional date format, uses `Templating` Date Format if not supplied
 - `pivotDate?` - Desired date to obtain start of week. If not supplied, it will use current date
 - `firstOfWeek` - Day number for first of week if not 0 (Sunday)
 
@@ -388,7 +388,7 @@ The following returns start of week based on `pivotDate`
 > #### endOfWeek(format? string = '', pivotDate? : string = '', firstOfWeek? : number = 0) : string
 Returns end of week date
 
-- `format` - Optional date format, uses `np.Templating` Date Format if not supplied
+- `format` - Optional date format, uses `Templating` Date Format if not supplied
 - `pivotDate?` - Desired date to obtain end of week. If not supplied, it will use current date
 - `firstOfWeek` - Day number for first of week if not 0 (Sunday)
 
@@ -400,7 +400,7 @@ Returns end of week date
 > #### startOfMonth(format? string = '', pivotDate? : string = '') : string
 Returns start of month date
 
-- `format` - Optional date format, uses `np.Templating` Date Format if not supplied
+- `format` - Optional date format, uses `Templating` Date Format if not supplied
 - `pivotDate?` - Desired date to obtain start of month. If not supplied, it will use current date
 
 - `-> result` Returns start of month
@@ -421,7 +421,7 @@ Returns number of days in month
 > #### endOfMonth(format? string = '', pivotDate? : string = '') : string
 Returns start of month date
 
-- `format` - Optional date format, uses `np.Templating` Date Format if not supplied
+- `format` - Optional date format, uses `Templating` Date Format if not supplied
 - `pivotDate?` - Desired date to obtain start of month. If not supplied, it will use current date
 
 - `-> result` Returns end of month
@@ -563,7 +563,7 @@ The following returns previous business day based on `pivotDate`
 <%- date.previousBusinessDay('2022-01-10') %> // returns 2022-01-07
 ```
 
-*****
+{/* *****
 
 ## Using DateModule in NotePlan Plugins
 In addition to using the Date Module methods in templates, you can also use within your custom NotePlan plugins.
@@ -621,7 +621,7 @@ DateModule exposes commonly used methods as importable helpers
 **Examples:**
 
 ```javascript
-// import np.Templating Library
+// import Templating Library
 import NPTemplating from 'NPTemplating'
 import DateModule from '@templatingModules/DateModule'
 import { now, format, timestamp, date8601 } from '@templatingModules/DateModule'
@@ -638,4 +638,4 @@ const templateData = {
 	const renderedData = NPTemplating.renderTemplate('My Template', data)
 }
 ```
-ƒ
+ƒ */}

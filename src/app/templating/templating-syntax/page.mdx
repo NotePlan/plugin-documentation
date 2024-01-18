@@ -1,15 +1,15 @@
 import Callout from '@/components/Callout'
 
 # Syntax
-`np.Templating` templating engine uses standard JavaScript syntax to declare a command. It may take some time to get used to the syntax, but after you have worked with for awhile, you will get the hang of it.
+`Templating` templating engine uses standard JavaScript syntax to declare a command. It may take some time to get used to the syntax, but after you have worked with for awhile, you will get the hang of it.
 
-All `np.Templating` variables and methods are JavaScript objects which are invoked using a command.
+All `Templating` variables and methods are JavaScript objects which are invoked using a command.
 
 <Callout
   type="info"
   title="TEMPLATING TAGS"
   description={`
-For more information on <code>np.Templating</code> tags. Visit <a href="templating-tags" alt="templating tags"> Templating Tags </a>.
+For more information on <code>Templating</code> tags. Visit <a href="templating-tags" alt="templating tags"> Templating Tags </a>.
   
   `}
 />
@@ -20,9 +20,9 @@ A command **must** have both an opening tag `<%` and closing `%>`, and if you wa
 ## Variable/Method Syntax
 
 ### Objects hierarchy
-All of `np.Templating`s variable and methods, whether it's an internal or custom method, will use a namespace. To access the variable or method of an object, you ues a dot `.` (e.g. `<%- date.now() %>`)
+All of `Templating`s variable and methods, whether it's an internal or custom method, will use a namespace. To access the variable or method of an object, you ues a dot `.` (e.g. `<%- date.now() %>`)
 
-If you are using [prompt interface](/docs/templating-examples/prompt), if you are not immediately displaying prompt result, you should use the `user` namespace, which tells `np.Templating` this is a user variable.
+If you are using [prompt interface](/docs/templating-examples/prompt), if you are not immediately displaying prompt result, you should use the `user` namespace, which tells `Templating` this is a user variable.
 
 ### Object Invocation
 The syntax between a variable and method invocation is different, so it's important to understand the differences.
@@ -67,7 +67,7 @@ There are 5 different types of parameters:
 _Note: The value types are important and must match expected value, otherwise an error will be emitted_
 
 #### Method Syntax
-`np.Templating` syntax for all methods uses a common "signature" syntax, which makes it easier to determine what the arguments expect.
+`Templating` syntax for all methods uses a common "signature" syntax, which makes it easier to determine what the arguments expect.
 
 - `arg` represents a symbolic name for the argument, which the method will use internally
 - `type` represents the expected type for the argument (`string`, `number`, etc)

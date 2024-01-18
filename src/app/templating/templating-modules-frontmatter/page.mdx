@@ -318,11 +318,11 @@ export async function testConvertProjectNote(): Promise<void> {
 
 ## Using Prompts
 
-If you wish to display prompts in your frontmatter attributes section, you can just use the standard `np.Templating` prompt command
+If you wish to display prompts in your frontmatter attributes section, you can just use the standard `Templating` prompt command
 
 ### Example
 
-Using something like the following, when the template is rendered `np.Templating` will display prompt requesting `newNoteTitle`
+Using something like the following, when the template is rendered `Templating` will display prompt requesting `newNoteTitle`
 
 ```markdown
 ---
@@ -338,7 +338,7 @@ When template is rendered, the user will be prompted for `newNoteTitle` with ent
   title="WEATHER TAGS"
   description={`
   
-When using any of the following <code>np.Templating</code> commands (<code>np:new</code>, <code>np:qtn</code>), the created note will use the <code>newNoteTitle</code> internally
+When using any of the following <code>Templating</code> commands (<code>np:new</code>, <code>np:qtn</code>), the created note will use the <code>newNoteTitle</code> internally
   `}
 />
 
@@ -363,7 +363,7 @@ FrontMatterModule exposes commonly used methods as importable helpers
 The following example will get `attributes` and `body` from frontmatter template
 
 ```javascript
-// import np.Templating Library
+// import Templating Library
 import NPTemplating from 'NPTemplating'
 import { getAttributes, getBody } from '@templatingModules/FrontMatterModule'
 

@@ -2,19 +2,19 @@
 # Using JavaScript in Templates
 *Contributed by: @dwertheimer*
 
-`np.Templating` can be configured to execute a wide variety of JavaScript commands, directly in the template.
+`Templating` can be configured to execute a wide variety of JavaScript commands, directly in the template.
 
-Using the leading tag `<%` at the beginning of line will instruct `np.Templating` to interpret whatever comes next as a standard JavaScript command, but will not output anything when the template is rendered, and when combined with the `<%-` tag, you can then output any variable you created previously when the template is rendered.
+Using the leading tag `<%` at the beginning of line will instruct `Templating` to interpret whatever comes next as a standard JavaScript command, but will not output anything when the template is rendered, and when combined with the `<%-` tag, you can then output any variable you created previously when the template is rendered.
 
 **Example**
 
-The following will instruct `np.Templating` to initialize a variable `firstName` with the value of `Mike`
+The following will instruct `Templating` to initialize a variable `firstName` with the value of `Mike`
 
 ```javascript
 <% const firstName = 'Mike' %>
 ```
 
-Then, you can output the value when rendered using one of the `np.Templating` output tags
+Then, you can output the value when rendered using one of the `Templating` output tags
 
 ```javascript
 <%- firstName %> // output Mike

@@ -1,8 +1,8 @@
 
 # Arrays
-The following example demonstrates how to access `templateData` arrays.
+The following example demonstrates how use arrays.
 
-## Setup Arrays in custom method
+{/* ## Setup Arrays in custom method
 
 ```js
 // @flow
@@ -24,17 +24,19 @@ const templateData = {
 const result = await NPTemplating.renderTemplate('Test (Books)', templateData)
 
 Editor.insertTextAtCursor(result)
-```
+``` */}
 
 ## Template
 
 ```markdown
 # Test (Books)
----
+
 Display array of books using JavaScript `.forEach`
+<% const books = [ { title: "book 1", author: "author 1" }, { title: "book 2", author: "author 2" }, { title: "book 3", author: "author 3" }] %>
 <% books.forEach(function(book){ %>
-**<%- book.TITLE %>**: <%- book.AUTHOR %><%
+**<%- book.title %>**: <%- book.author %><%
 }) %>
+
 ```
 
 ## Output
@@ -42,11 +44,7 @@ Display array of books using JavaScript `.forEach`
 ```markdown
 Display array of books using JavaScript `.forEach`
 
-**The Sobbing School: Poems**: Joshua Bennett
-**Ain't No Mo'**: Jordan E. Cooper
-**A Particular Kind of Black Man**: Tope Folarin
-**Where We Stand**: Donnetta Lavinia Grays
-**Invasive species**: Marwa Helal
-**The Sirens of Mars**: Sarah Stewart Johnson
-**The NotePlan Templating Guide**: Mike Erickson
+**book 1**: author 1
+**book 2**: author 2
+**book 3**: author 3
 ```

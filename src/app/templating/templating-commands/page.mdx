@@ -5,15 +5,15 @@ import folderchooser from '@/images/folder-chooser.png'
 import templatingabout from '@/images/templating-about.png'
 
 # Commands Overview
-`np.Templating` provides a suite of default commands which can be executed within any note.
+`Templating` provides a suite of default commands which can be executed within any note.
 
 ### Templating Initialization
-There is a single command for initializing template configuration (will create new `np.Templating` [Plugin Settings](/docs/settings) if it does not exist) with new `np.Templating` configuration information).
+There is a single command for initializing template configuration (will create new `Templating` [Plugin Settings](/docs/settings) if it does not exist) with new `Templating` configuration information).
 
 It will also migrate existing templates in "📋 Templates" to NotePlan "Templates" folder (located in `Smart Folder` section at bottom of list) and migrate `quickNotes` defined in `_configuration` note
 
 ## Templating Creation Commands
-The following default commands are included in `np.Templating` plugin and do not require any configuration
+The following default commands are included in `Templating` plugin and do not require any configuration
 
 <Callout
   type="info"
@@ -23,14 +23,14 @@ See <a href="templating-migrating" alt="migration commands">migration commands</
 />
 
 #### Ignoring Templates
-Any template which has a `type` of `ignore` will not be displayed in any of the `np.Templating` template chooser dialog
+Any template which has a `type` of `ignore` will not be displayed in any of the `Templating` template chooser dialog
 
 ```markdown
 ---
 title: Ignored Template
 type: ignore
 ---
-This template will not be displayed in any of the np.Templating template chooser dialog
+This template will not be displayed in any of the Templating template chooser dialog
 ```
 
 *****
@@ -88,7 +88,7 @@ You must assign a <code>type</code> of <code>quick-note</code> for it to be avai
 
 
 ## Reserved Template Attributes
-When using the `np:new` or `np:qtn` commands, there are two reserved attributes which may be defined in template attributes, that when template rendered, will tell `np.Templating` the name of new note, and folder where new note will be created
+When using the `np:new` or `np:qtn` commands, there are two reserved attributes which may be defined in template attributes, that when template rendered, will tell `Templating` the name of new note, and folder where new note will be created
 
 ### newNoteTitle
 The `newNoteTitle` attribute will be used to define name of new note
@@ -111,7 +111,7 @@ newNoteTitle: "My New Note"
 ```
 
 #### Example 2:
-A more useful example (static notes will just create duplicate notes in the `folder`) we can build up the note using the `np.Templating` [Date Module](/docs/templating-modules/date-module)
+A more useful example (static notes will just create duplicate notes in the `folder`) we can build up the note using the `Templating` [Date Module](/docs/templating-modules/date-module)
 
 ```markdown
 ---
@@ -172,7 +172,7 @@ When rendered, `folder` value will appear something like
 ## Templating Utility Commands
 
 ### np:init
-`np:init` will create or update the `np.Templating` [Plugin Settings](/docs/settings)
+`np:init` will create or update the `Templating` [Plugin Settings](/docs/settings)
 
 ### np:about
 `np:about` will display current version information
@@ -185,7 +185,7 @@ When rendered, `folder` value will appear something like
 <Callout
   type="info"
   description={`
-If you are installing <code>np.Templating</code> for the first time, this migration will happen automatically when <code>np.Templating</code> plugin is installed.
+If you are installing <code>Templating</code> for the first time, this migration will happen automatically when <code>Templating</code> plugin is installed.
   `}
 />
 
@@ -195,6 +195,6 @@ If you are installing <code>np.Templating</code> for the first time, this migrat
 <Callout
   type="info"
   description={`
-If you are installing <code>np.Templating</code> for the first time, this migration will happen automatically when <code>np.Templating</code> plugin is installed.
+If you are installing <code>Templating</code> for the first time, this migration will happen automatically when <code>Templating</code> plugin is installed.
   `}
 />

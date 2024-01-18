@@ -431,19 +431,22 @@ export const navigation: Array<NavGroup> = [
         title: 'Examples',
         href: '',
         children: [
-          { title: 'Simple', href: '/templating/templating-examples-simple' },
+          // { title: 'Simple', href: '/templating/templating-examples-simple' },
 
           {
             title: 'Date & Time',
             href: '/templating/templating-examples-datetime',
           },
-          { title: 'Arrays', href: '/templating/templating-examples-arrays' },
+          // { title: 'Arrays', href: '/templating/templating-examples-arrays' },
           { title: 'Async', href: '/templating/templating-examples-async' },
           {
             title: 'Conditional',
             href: '/templating/templating-examples-conditional',
           },
-          { title: 'Looping', href: '/templating/templating-examples-looping' },
+          {
+            title: 'Looping & Arrays',
+            href: '/templating/templating-examples-looping',
+          },
 
           {
             title: 'Frontmatter',
@@ -452,16 +455,16 @@ export const navigation: Array<NavGroup> = [
 
           // missing objects
 
-          {
-            title: 'Custom Plugins',
-            href: '/templating/templating-custom-plugins-example',
-          },
+          // {
+          //   title: 'Custom Plugins',
+          //   href: '/templating/templating-custom-plugins-example',
+          // },
           { title: 'Prompt', href: '/templating/templating-examples-prompt' },
 
-          {
-            title: 'Displaying Tasks',
-            href: '/templating/templating-examples-tasks',
-          },
+          // {
+          //   title: 'Displaying Tasks',
+          //   href: '/templating/templating-examples-tasks',
+          // },
 
           {
             title: 'String Interpolation',
@@ -490,10 +493,10 @@ export const navigation: Array<NavGroup> = [
             href: '/templating/templating-modules-date',
           },
           { title: 'Time Module', href: '/templating/templating-modules-time' },
-          {
-            title: 'FrontMatter Module',
-            href: '/templating/templating-modules-frontmatter',
-          },
+          // {
+          //   title: 'FrontMatter Module',
+          //   href: '/templating/templating-modules-frontmatter',
+          // },
           {
             title: 'Note Module',
             href: '/templating/templating-modules-note',
@@ -514,42 +517,42 @@ export const navigation: Array<NavGroup> = [
             href: '/templating/templating-modules-web',
           },
 
-          {
-            title: 'Helpers',
-            href: '/templating/templating-modules-helpers',
-          },
+          // {
+          //   title: 'Helpers',
+          //   href: '/templating/templating-modules-helpers',
+          // },
         ],
       },
-      {
-        title: 'Usage in Plugins',
-        href: '',
-        children: [
-          {
-            title: 'Overview',
-            href: '/templating/templating-integration-overview',
-          },
+      // {
+      //   title: 'Usage in Plugins',
+      //   href: '',
+      //   children: [
+      //     {
+      //       title: 'Overview',
+      //       href: '/templating/templating-integration-overview',
+      //     },
 
-          {
-            title: 'Example 1: Hello World',
-            href: '/templating/templating-integration-helloworld',
-          },
+      //     {
+      //       title: 'Example 1: Hello World',
+      //       href: '/templating/templating-integration-helloworld',
+      //     },
 
-          {
-            title: 'Example 2: Custom Variables',
-            href: '/templating/templating-integration-variables',
-          },
+      //     {
+      //       title: 'Example 2: Custom Variables',
+      //       href: '/templating/templating-integration-variables',
+      //     },
 
-          {
-            title: 'Example 3: Custom Method',
-            href: '/templating/templating-integration-method',
-          },
+      //     {
+      //       title: 'Example 3: Custom Method',
+      //       href: '/templating/templating-integration-method',
+      //     },
 
-          {
-            title: 'Example 4: Full Example',
-            href: '/templating/templating-integration-full',
-          },
-        ],
-      },
+      //     {
+      //       title: 'Example 4: Full Example',
+      //       href: '/templating/templating-integration-full',
+      //     },
+      //   ],
+      // },
     ],
   },
 ]

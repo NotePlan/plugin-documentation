@@ -10,7 +10,7 @@ The Web Module provides a suite of methods which provide access to web APIs such
 ## Methods
 > namespace: `web`
 
-The following are the methods available in the Web Module, and they can be used in any `np.Templating` template, no additional configuration.
+The following are the methods available in the Web Module, and they can be used in any `Templating` template, no additional configuration.
 
 *****
 
@@ -34,7 +34,7 @@ Returns random quote
 
 ### service
 > #### service(serviceOrUrl: string = '', key? : string = '') : string
-Returns service information from custom URL or entry from `np.Templating` <Link href="templating-settings">Web Service Settings</Link>
+Returns service information from custom URL or entry from `Templating` <Link href="templating-settings">Web Service Settings</Link>
 
 
 - `serviceOrUrl?` - Value from Settings Web Services or Full API URL
@@ -156,12 +156,12 @@ Returns random Bible verse
 
 ### weather
 > #### weather(format? : string = '') : string
-Returns weather information from <a href="https://wttr.in" alt="wttr.in">wttr.in </a> weather service, using the <Link href="templating-settings">Web Service Settings</Link> from `np.Templating` Settings, or a custom `format` string.
+Returns weather information from <a href="https://wttr.in" alt="wttr.in">wttr.in </a> weather service, using the <Link href="templating-settings">Web Service Settings</Link> from `Templating` Settings, or a custom `format` string.
 
 <Callout
   type="info"
   description={`
-You can set the default weather format in <code>np.Templating</code> <a href="templating-settings" alt="settings">settings</a> which will be used when <code><%- web.weather() %></code> command is executed. If you need to specify location manually, see <a href="templating-examples-js-weather" alt="js weather example">Javascript Weather Example.
+You can set the default weather format in <code>Templating</code> <a href="templating-settings" alt="settings">settings</a> which will be used when <code><%- web.weather() %></code> command is executed. If you need to specify location manually, see <a href="templating-examples-js-weather" alt="js weather example">Javascript Weather Example.
   
   `}
 />
@@ -192,7 +192,7 @@ See the <a href="https://github.com/chubin/wttr.in#different-output-formats" alt
 
 ### Default
 
-The following will use default weather format from `np.Templating` [settings](/docs/settings)
+The following will use default weather format from `Templating` [settings](/docs/settings)
 
 ```markdown
 Weather: <%- np.weather() %>
@@ -213,7 +213,7 @@ This weather module requires no configuration and uses your IP address to estima
 
 ### Custom Format String
 
-The following will override the default weather format from `np.Templating` settings
+The following will override the default weather format from `Templating` settings
 
 ```markdown
 Weather: <%- np.weather( ':icon: :description: :mintempC:-:maxtempC:°C (:areaName:)' ) %>

@@ -2,11 +2,11 @@ import Link from  'next/link'
 
 # Getting Started
 
-With `np.Templating`, you will be able to create powerful templates to automate common manual tasks.
+With `Templating`, you will be able to create powerful templates to automate common manual tasks.
 
 ## Examples
 
-The following examples demonstrate how you create a **template** and use `np.Templating` tags to place dynamic **output**.
+The following examples demonstrate how you create a **template** and use `Templating` tags to place dynamic **output**.
 
 ### Example 1: Template Definition
 When creating a new template in the "Templates" folder, the template header will be in `frontmatter` format, containing two fields for the template--`title` and `type`-- followed by the template body.
@@ -35,8 +35,8 @@ Hello Michael
 ```
 
 
-### Example 2: Using `np.Templating` modules
-In this example, we will use one of the many `np.Templating` module methods, <Link href="templating-modules-web">Templating Web Module.</Link>.
+### Example 2: Using `Templating` modules
+In this example, we will use one of the many `Templating` module methods, <Link href="templating-modules-web">Templating Web Module.</Link>.
 
 
 ```markdown
@@ -52,7 +52,7 @@ Today's Weather: <%- web.weather() %>
 Todays Weather: Fountain Valley, California, United States: ⛅️  +86°F
 ```
 
-The call to `<%- web.weather() %>` will use the format you have defined in `np.Templating` <Link href="templating-settings">settings</Link>. In this example, the settings value is blank, thus the default weather format will be used.
+The call to `<%- web.weather() %>` will use the format you have defined in `Templating` <Link href="templating-settings">settings</Link>. In this example, the settings value is blank, thus the default weather format will be used.
 
-For more information about `np.Templating` weather, visit <Link href="templating-modules-web">Templating Web Module</Link>.
+For more information about `Templating` weather, visit <Link href="templating-modules-web">Templating Web Module</Link>.
 

@@ -2,15 +2,15 @@ import Callout from '@/components/Callout'
 
 # String Interpolation
 
-## Overview
-You can use standard JavaScript string interpolation within `np.Templating` tags.
+{/* ## Overview */}
+You can use standard JavaScript string interpolation within `Templating` tags.
 
 
 
-For example, using the following in your plugin code, you can provide the referenced `fname`, `mname`, and `lname` variables
+{/*For example, using the following in your plugin code, you can provide the referenced `fname`, `mname`, and `lname` variables
 
 
-```javascript
+ ```javascript
 export async function templatingInterpolation(): Promise<void> {
   try {
     const data = { fname: 'Mike', mname: 'Joseph', lname: 'Erickson' }
@@ -22,9 +22,9 @@ export async function templatingInterpolation(): Promise<void> {
     showError(error)
   }
 }
-```
+``` 
 
-In your template, you can reference these variables.
+In your template, you can reference these variables.*/}
 
 <Callout
   type="info"
@@ -33,11 +33,14 @@ In your template, you can reference these variables.
 />
 
   ```markdown
-  Full Name:  <%- `${fname} ${mname} ${lname}` %>
+
+  <% const fname = "Frank" %>
+  <% const lname = "Winter" %>
+  Full Name:  <%- `${fname} ${lname}` %>
   ```
  
   When your template is rendered, it will appear as
 
   ```markdown
-  Full Name: Mike Joseph Erickson
+  Full Name: Frank Winter
   ```

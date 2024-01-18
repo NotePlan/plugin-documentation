@@ -1,6 +1,6 @@
 
 # Template Runner
-`np.templating` includes the `templaterunner` command to allow templates to be invoked from callback URLs. This allows you to to use a template to insert content (including dynamic Templating tag-generated conntent) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor, or actively -- display the note you specify at run-time. Typically, Template Runner templates are activated when a link is clicked from within our outside of NotePlan (e.g. Shortcuts, Keyboard Maestro or wherever). This gives you a way to pass arbitrary information into your notes.
+`Templating` includes the `templaterunner` command to allow templates to be invoked from callback URLs. This allows you to to use a template to insert content (including dynamic Templating tag-generated conntent) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor, or actively -- display the note you specify at run-time. Typically, Template Runner templates are activated when a link is clicked from within our outside of NotePlan (e.g. Shortcuts, Keyboard Maestro or wherever). This gives you a way to pass arbitrary information into your notes.
 ## Required Attributes
 
 At its core. a Template Runner template is a basic template note with frontmatter. There is only one *required* field in the frontmatter:
@@ -159,7 +159,7 @@ You can then use the `Link Creator` plugin to walk through generating link to ap
 At this point, you can opt to have a raw link or a pretty link inserted into your note, which you can then copy and paste elsewhere. The link should look something like this:
 
 ```
-noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=Daily%20Note%20%28Simple%29&arg1=true
+noteplan://x-callback-url/runPlugin?pluginID=Templating&command=templateRunner&arg0=Daily%20Note%20%28Simple%29&arg1=true
 ```
 
 ### Basic Variable-Passing Example
@@ -173,7 +173,7 @@ type: template-runner (this is not necessary, just a reminder to me of what this
 getNoteTitled:  "⭐️ Tasks"
 writeUnderHeading: "fix-its"
 location: append
-exampleSilent: noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=addFixIt&arg1=false&arg2=textVar%3Dsomething
+exampleSilent: noteplan://x-callback-url/runPlugin?pluginID=Templating&command=templateRunner&arg0=addFixIt&arg1=false&arg2=textVar%3Dsomething
 ---
 * <%- textVar %> #fixit
 ```
@@ -189,7 +189,7 @@ title: logWorkout
 openNoteTitle:  <TODAY>
 writeUnderHeading: "Today's Notes & Actions"
 location: append
-exampleURL: noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=logWorkout&arg1=true&arg2=var1%3DVALUE1%3Bvar2%3DVALUE2
+exampleURL: noteplan://x-callback-url/runPlugin?pluginID=Templating&command=templateRunner&arg0=logWorkout&arg1=true&arg2=var1%3DVALUE1%3Bvar2%3DVALUE2
 ---
 <% - date.timestamp() %> #workout <%- var1 %> | <%- var2 %>
 ```
@@ -218,7 +218,7 @@ type: meeting-note
 ---
 ```javascript
 const eventInfoString = `eventTitle=${eventTitle};eventNotes=${eventNotes};eventLink=${eventLink};calendarItemLink=${calendarItemLink};eventAttendees=${eventAttendees};eventAttendeeNames=${eventAttendeeNames};eventLocation=${eventLocation};eventCalendar=${eventCalendar};eventDate=${eventDate('YYYY-MM-DD')};eventStart=${eventDate("YYYY-MM-DD HH:MM")};eventEnd=${eventEndDate("YYYY-MM-DD HH:MM")}`
-await DataStore.invokePluginCommandByName("templateRunner","np.Templating",["Meeting Notes",true,eventInfoString])
+await DataStore.invokePluginCommandByName("templateRunner","Templating",["Meeting Notes",true,eventInfoString])
 ```
 ````
 
@@ -263,11 +263,11 @@ than as a standalone note file.
 ## Template Runner URL Anatomy
 
 A Template Runner URL looks like:
-`noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=logWorkout&arg1=true&arg2=var1%3DVALUE1%3Bvar2%3DVALUE2`
+`noteplan://x-callback-url/runPlugin?pluginID=Templating&command=templateRunner&arg0=logWorkout&arg1=true&arg2=var1%3DVALUE1%3Bvar2%3DVALUE2`
 
 Broken apart, here's what that is comprised of:
 
-`noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner`: This tells NotePlan to call the templateRunner command inside of the np.Templating plugin
+`noteplan://x-callback-url/runPlugin?pluginID=Templating&command=templateRunner`: This tells NotePlan to call the templateRunner command inside of the Templating plugin
 `&`
 `arg0=logWorkout`: The first argument (arg0 is required and) specifies the **title** of the template to run
 `&`

@@ -2,12 +2,12 @@ import Callout from '@/components/Callout'
 
 
 # Helpers
-`np.Templating` includes a variety of helper methods which can be used in your templates. In addition, some of there helpers have been added to `np.Templating` modules.
+`Templating` includes a variety of helper methods which can be used in your templates. In addition, some of there helpers have been added to `Templating` modules.
 
 ## NotePlan Plugin Helper Methods
-`np.Templating` has implemented globally-namespaced methods which were created using `addTag` method in `nmn.Templates/src/templateController.js` method to aid in migrating legacy templates to `np.Templating`. Those methods, provided by other plugins, are therefore still available for use in templates, through being compiled into np.Templating:
+`Templating` has implemented globally-namespaced methods which were created using `addTag` method in `nmn.Templates/src/templateController.js` method to aid in migrating legacy templates to `Templating`. Those methods, provided by other plugins, are therefore still available for use in templates, through being compiled into Templating:
 
-| Helper Method | `np.Templating` Module Method (where applicable) | Comments
+| Helper Method | `Templating` Module Method (where applicable) | Comments
 |-------------- | ---------- | -----------------------------------------
 | `advice` | `<%- web.advice() %>` |
 | `affirmation` | `<%- web.affirmation() %>` |
@@ -72,7 +72,7 @@ export async function templatingHelloWorld(): Promise<void> {
 <Callout
   type="info"
   description={`
-When using <code>np.Templating</code> in NotePlan Plugins, you should use the approach described in <a href="templating-integration-method">Example 3 - Custom Methods</a>.
+When using <code>Templating</code> in NotePlan Plugins, you should use the approach described in <a href="templating-integration-method">Example 3 - Custom Methods</a>.
 `}
 />
 

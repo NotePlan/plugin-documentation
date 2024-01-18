@@ -44,14 +44,14 @@ If you wish to display time value with hour and minute in 24 hour format, separa
 ## Methods
 > namespace: `time`
 
-The following are the methods available in the Time Module, and they can be used in any `np.Templating` template, no additional configuration required.
+The following are the methods available in the Time Module, and they can be used in any `Templating` template, no additional configuration required.
 
 *****
 ### now
 > #### now(format? : string = '') : string
 Returns a string representation current time.
 
-- `format?` - Desired time format. If not supplied, it will use the **Time Format** value in `np.Templating` <Link href="templating-settings" alt="Plugin Settings"> Plugin Settings </Link > 
+- `format?` - Desired time format. If not supplied, it will use the **Time Format** value in `Templating` <Link href="templating-settings" alt="Plugin Settings"> Plugin Settings </Link > 
 
 - `-> result` - Returns formatted time string
 
@@ -92,7 +92,7 @@ The following example returns curren time in 12hr format, with uppercase AM/PM
 > #### currentTime(format? : string = '') : string
 Returns a string representation current time.
 
-- `format?` - Desired time format. If not supplied, it will use the **Time Format** in `np.Templating` <Link href="templating-settings" alt="Plugin Settings"> Plugin Settings </Link > 
+- `format?` - Desired time format. If not supplied, it will use the **Time Format** in `Templating` <Link href="templating-settings" alt="Plugin Settings"> Plugin Settings </Link > 
 
 
 - `-> result` - Returns formatted time string
@@ -143,14 +143,14 @@ Refer to <a href="https://momentjs.com/docs/#/parsing/string-format/" alt="momen
 > #### convertTime12to24(time12hr: string = '')
 Convert 12-hour time to 24-hour time
 
-## Helpers
+{/* ## Helpers
 TimeModule exposes commonly used methods as importable helpers
 
 > #### time
 Returns current time
 
 ```javascript
-// import np.Templating Library
+// import Templating Library
 import NPTemplating from 'NPTemplating'
 import DateModule from '@templatingModules/TimeModule'
 import { time } from '@templatingModules/TimeModule'
@@ -163,4 +163,4 @@ const templateData = {
 
 	const renderedData = NPTemplating.renderTemplate('My Template', data)
 }
-```
+``` */}
