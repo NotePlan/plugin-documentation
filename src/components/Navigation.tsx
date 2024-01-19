@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
@@ -8,16 +8,63 @@ import { AnimatePresence, motion, useIsPresent } from 'framer-motion'
 
 import { Button } from '@/components/Button'
 import { useIsInsideMobileNavigation } from '@/components/MobileNavigation'
-import { useSectionStore } from '@/components/SectionProvider'
+import { Section, useSectionStore } from '@/components/SectionProvider'
 import { Tag } from '@/components/Tag'
 import { remToPx } from '@/lib/remToPx'
 
-interface NavGroup {
+function ChevronDownIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
+
+function ChevronRightIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7.293 14.707a1 1 0 010-1.414L10.586 10l-3.293-3.293a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
+
+interface NavGroupLink {
   title: string
-  links: Array<{
+  href: string
+  children?: Array<{
     title: string
     href: string
   }>
+}
+
+interface NavGroup {
+  title: string
+  href?: string
+  links: Array<NavGroupLink>
 }
 
 function useInitialValue<T>(value: T, condition = true) {
@@ -66,7 +113,7 @@ function NavLink({
         isAnchorLink ? 'pl-7' : 'pl-4',
         active
           ? 'text-zinc-900 dark:text-white'
-          : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white',
+          : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white',
       )}
     >
       <span className="truncate">{children}</span>
@@ -188,44 +235,103 @@ function NavigationGroup({
           )}
         </AnimatePresence>
         <ul role="list" className="border-l border-transparent">
-          {group.links.map((link) => (
-            <motion.li key={link.href} layout="position" className="relative">
-              <NavLink href={link.href} active={link.href === pathname}>
-                {link.title}
-              </NavLink>
-              <AnimatePresence mode="popLayout" initial={false}>
-                {link.href === pathname && sections.length > 0 && (
-                  <motion.ul
-                    role="list"
-                    initial={{ opacity: 0 }}
-                    animate={{
-                      opacity: 1,
-                      transition: { delay: 0.1 },
-                    }}
-                    exit={{
-                      opacity: 0,
-                      transition: { duration: 0.15 },
-                    }}
-                  >
-                    {sections.map((section) => (
-                      <li key={section.id}>
-                        <NavLink
-                          href={`${link.href}#${section.id}`}
-                          tag={section.tag}
-                          isAnchorLink
-                        >
-                          {section.title}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
-            </motion.li>
-          ))}
+          <NavigationLinks
+            links={group.links}
+            pathname={pathname}
+            sections={sections}
+          />
         </ul>
       </div>
     </li>
+  )
+}
+
+function NavigationLinks({
+  links,
+  pathname,
+  sections,
+}: {
+  links: Array<NavGroupLink>
+  pathname: string
+  sections: Array<Section>
+}) {
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    const initialCollapseStates: Record<string, boolean> = {}
+    links.forEach((link) => {
+      initialCollapseStates[link.title] = true
+    })
+    return initialCollapseStates
+  })
+
+  const toggleCollapse = (title: string) => {
+    setIsCollapsed((prevState) => ({
+      ...prevState,
+      [title]: !prevState[title],
+    }))
+  }
+
+  return (
+    <>
+      {links.map((link) => (
+        <motion.li key={link.href} layout="position" className="relative">
+          <NavLink href={link.href} active={link.href === pathname}>
+            {/* {link.title} */}
+
+            <button
+              onClick={() => toggleCollapse(link.title)}
+              className="flex items-center "
+            >
+              <span>{link.title}</span>
+              {link.children && (
+                <span>
+                  {!isCollapsed[link.title] ? (
+                    <ChevronDownIcon />
+                  ) : (
+                    <ChevronRightIcon />
+                  )}
+                </span>
+              )}
+            </button>
+
+            {!isCollapsed[link.title] &&
+              link.children &&
+              link.children.map((child) => (
+                <NavLink key={child.href} href={`${child.href}`}>
+                  {child.title}
+                </NavLink>
+              ))}
+          </NavLink>
+          <AnimatePresence mode="popLayout" initial={false}>
+            {link.href === pathname && sections.length > 0 && (
+              <motion.ul
+                role="list"
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                  transition: { delay: 0.1 },
+                }}
+                exit={{
+                  opacity: 0,
+                  transition: { duration: 0.15 },
+                }}
+              >
+                {sections.map((section) => (
+                  <li key={section.id}>
+                    <NavLink
+                      href={`${link.href}#${section.id}`}
+                      tag={section.tag}
+                      isAnchorLink
+                    >
+                      {section.title}
+                    </NavLink>
+                  </li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+        </motion.li>
+      ))}
+    </>
   )
 }
 
@@ -234,55 +340,236 @@ export const navigation: Array<NavGroup> = [
     title: 'Start',
     links: [
       { title: 'Introduction', href: '/' },
-      { title: 'Plugin List', href: '/pluginlist' },
-      { title: 'Resources', href: '/resources' },
+      { title: 'Full Plugin List', href: '/pluginlist' },
     ],
   },
   {
     title: 'Plugins',
     links: [
-      { title: '🎛 Dashboard', href: '/jgclark.Dashboard' },
-      { title: '🕓 Event Helpers', href: '/jgclark.EventHelpers' },
-      { title: '📦 Filer', href: '/jgclark.Filer' },
-      { title: '⏱ Habits & Summaries', href: '/jgclark.Summaries' },
-      { title: '💭 Journalling', href: '/jgclark.DailyJournal' },
-      { title: '🔗 Link Creator', href: '/np.CallbackURLs' },
-      { title: '🕸 Map of Contents', href: '/jgclark.MOCs' },
+      {
+        title: 'HTML Plugins',
+        href: '',
+        children: [
+          { title: '🎛 Dashboard', href: '/jgclark.Dashboard' },
+          { title: '🖥️ Preview', href: '/np.Preview' },
+          { title: '🔬 Projects + Reviews', href: '/jgclark.Reviews' },
+        ],
+      },
+
+      {
+        title: 'Notes',
+        href: '',
+        children: [
+          { title: '📙 Note Helpers', href: '/jgclark.NoteHelpers' },
+          { title: '🔢 Note Statistics', href: '/np.statistics' },
+          // { title: '📒 Templating', href: '/np.Templating' },
+          { title: '🕸 Map of Contents', href: '/jgclark.MOCs' },
+        ],
+      },
+
+      {
+        title: 'Events, Dates and Calendar',
+        href: '',
+        children: [
+          { title: '🕓 Event Helpers', href: '/jgclark.EventHelpers' },
+        ],
+      },
+
+      {
+        title: 'Utilities',
+        href: '',
+        children: [
+          { title: '🖥️ Window Sets', href: '/jgclark.WindowSets' },
+          { title: '🔗 Link Creator', href: '/np.CallbackURLs' },
+          { title: '🔌 Plugin Information & Tester', href: '/np.plugin-test' },
+          { title: '🎨 Theme Chooser', href: '/np.ThemeChooser' },
+        ],
+      },
+
+      {
+        title: 'Tasks & Paragraphs',
+        href: '',
+        children: [
+          { title: '📦 Filer', href: '/jgclark.Filer' },
+          { title: '⚡️ Quick Capture', href: '/jgclark.QuickCapture' },
+          { title: '🔁 Repeat Extensions', href: '/jgclark.RepeatExtensions' },
+          { title: '🧹  Tidy Up', href: '/np.Tidy' },
+          { title: '🔎 Search Extensions', href: '/jgclark.SearchExtensions' },
+        ],
+      },
+
+      {
+        title: 'Use Cases',
+        href: '',
+        children: [
+          { title: '⏱ Habits & Summaries', href: '/jgclark.Summaries' },
+          { title: '💭 Journalling', href: '/jgclark.DailyJournal' },
+        ],
+      },
+
       // { title: '✍️ Meeting Notes', href: '/np.MeetingNotes' },
-      { title: '📙 Note Helpers', href: '/jgclark.NoteHelpers' },
-      { title: '🔢 Note Statistics', href: '/np.statistics' },
-      { title: ' Preview', href: '/np.Preview' },
-      { title: '⚡️ Quick Capture', href: '/jgclark.QuickCapture' },
-      { title: '🔌 Plugin Information & Tester', href: '/np.plugin-test' },
-      { title: '🔬 Projects + Reviews', href: '/jgclark.Reviews' },
-      { title: '🔁 Repeat Extensions', href: '/jgclark.RepeatExtensions' },
-      { title: '🔎 Search Extensions', href: '/jgclark.SearchExtensions' },
-      { title: '📒 Templating', href: '/np.Templating' },
-      { title: '🎨 Theme Chooser', href: '/np.ThemeChooser' },
-      { title: '🧹  Tidy Up', href: '/np.Tidy' },
       // { title: '🌤 Weather Lookup', href: '/np.WeatherLookup' },
-      { title: '🖥️ Window Sets', href: '/jgclark.WindowSets' },
     ],
   },
   {
     title: 'Templating',
     links: [
-      { title: 'Introduction', href: '/eventhelpers' },
-      { title: 'Installation', href: '/templating-installation' },
-      { title: 'Plugin Settings', href: '/templating-plugin-settings' },
-      { title: 'Definitions', href: '/templating-definitions' },
-      { title: 'Commands', href: '/templating-commands' },
-      { title: 'Examples', href: '/templating-exmaples' },
-      { title: 'Modules', href: '/templating-modules' },
-      { title: 'Usage of Plugins', href: '/templating-use-of-plugins' },
-      { title: 'Plugins', href: '/templating-plugins' },
-      { title: 'FAQ', href: '/templating-faq' },
+      { title: 'Introduction', href: '/templating' },
+      { title: 'Installation', href: '/templating/templating-installation' },
+      { title: 'Plugin Settings', href: '/templating/templating-settings' },
       {
-        title: 'Migrating Legacy Templates',
-        href: '/templating-migrating-legacy-templates',
+        title: 'Definitions',
+        href: '',
+        children: [
+          { title: 'Anatomy', href: '/templating/templating-anatomy' },
+          { title: 'Tags', href: '/templating/templating-tags' },
+          { title: 'Terminology', href: '/templating/templating-terminology' },
+          { title: 'Modules', href: '/templating/templating-modules' },
+          { title: 'Prompts', href: '/templating/templating-examples-prompt' },
+          {
+            title: 'Miscellaneous',
+            href: '/templating/templating-miscellaneous',
+          },
+
+          { title: 'Syntax', href: '/templating/templating-syntax' },
+        ],
       },
-      { title: 'Community', href: '/templating-community' },
-      { title: 'Changelog', href: '/templating-changelog' },
+
+      {
+        title: 'Commands',
+        href: '',
+        children: [
+          { title: 'Overview', href: '/templating/templating-commands' },
+          { title: 'Quick Notes', href: '/templating/templating-quicknotes' },
+        ],
+      },
+
+      {
+        title: 'Examples',
+        href: '',
+        children: [
+          // { title: 'Simple', href: '/templating/templating-examples-simple' },
+
+          {
+            title: 'Date & Time',
+            href: '/templating/templating-examples-datetime',
+          },
+          // { title: 'Arrays', href: '/templating/templating-examples-arrays' },
+          { title: 'Async', href: '/templating/templating-examples-async' },
+          {
+            title: 'Conditional',
+            href: '/templating/templating-examples-conditional',
+          },
+          {
+            title: 'Looping & Arrays',
+            href: '/templating/templating-examples-looping',
+          },
+
+          {
+            title: 'Frontmatter',
+            href: '/templating/templating-examples-frontmatter',
+          },
+
+          // missing objects
+
+          // {
+          //   title: 'Custom Plugins',
+          //   href: '/templating/templating-custom-plugins-example',
+          // },
+          { title: 'Prompt', href: '/templating/templating-examples-prompt' },
+
+          // {
+          //   title: 'Displaying Tasks',
+          //   href: '/templating/templating-examples-tasks',
+          // },
+
+          {
+            title: 'String Interpolation',
+            href: '/templating/templating-examples-string-interpolation',
+          },
+          {
+            title: 'Web Services',
+            href: '/templating/templating-examples-web',
+          },
+          {
+            title: 'Using JavaScript in Templates',
+            href: '/templating/templating-examples-js-weather',
+          },
+        ],
+      },
+      {
+        title: 'Modules',
+        href: '',
+        children: [
+          {
+            title: 'Overview',
+            href: '/templating/templating-modules-overview',
+          },
+          {
+            title: 'Date Module',
+            href: '/templating/templating-modules-date',
+          },
+          { title: 'Time Module', href: '/templating/templating-modules-time' },
+          // {
+          //   title: 'FrontMatter Module',
+          //   href: '/templating/templating-modules-frontmatter',
+          // },
+          {
+            title: 'Note Module',
+            href: '/templating/templating-modules-note',
+          },
+
+          {
+            title: 'System Module',
+            href: '/templating/templating-modules-system',
+          },
+
+          {
+            title: 'Utility Module',
+            href: '/templating/templating-modules-utility',
+          },
+
+          {
+            title: 'Web Module',
+            href: '/templating/templating-modules-web',
+          },
+
+          // {
+          //   title: 'Helpers',
+          //   href: '/templating/templating-modules-helpers',
+          // },
+        ],
+      },
+      // {
+      //   title: 'Usage in Plugins',
+      //   href: '',
+      //   children: [
+      //     {
+      //       title: 'Overview',
+      //       href: '/templating/templating-integration-overview',
+      //     },
+
+      //     {
+      //       title: 'Example 1: Hello World',
+      //       href: '/templating/templating-integration-helloworld',
+      //     },
+
+      //     {
+      //       title: 'Example 2: Custom Variables',
+      //       href: '/templating/templating-integration-variables',
+      //     },
+
+      //     {
+      //       title: 'Example 3: Custom Method',
+      //       href: '/templating/templating-integration-method',
+      //     },
+
+      //     {
+      //       title: 'Example 4: Full Example',
+      //       href: '/templating/templating-integration-full',
+      //     },
+      //   ],
+      // },
     ],
   },
 ]

@@ -1,0 +1,76 @@
+import Callout from '@/components/Callout'
+
+import Link from  'next/link'
+ 
+import templatesuninstall from '@/images/templates-uninstall.png'
+
+# Legacy Template Migration
+`Templating` is a brand new templating plugin for NotePlan, which has been designed to be an upgrade to the current `nmn.Templates` templating plugin.
+
+The following guide provides steps necessary for migrating from `Templates` (aka `nmn.Templates`) to `Templating`
+
+<Callout
+  type="warning"
+  title="LEGACY TEMPLATING DISABLED AUTOMATICALLY"
+  description={`
+  
+If you have installed <code>Templating</code> (see <a href="templating-installation" alt="installation">installation</a> for more information), the legacy version of Templates will be disabled automatically, no further action is required.</br>
+
+It is strongly recommended that you allow <code>Templating</code> to migrate all your existing templates and disable legacy templating plugin as it assures most cases have been covered.
+  `}
+/>
+#
+## Upgrading Manually
+If you have chosen to perform migration manually and have not installed `Templating`, you can still prepare your templates to work with `Templating`
+
+The first step will be to validate your templates have migrated successfully when `Templating` was installed.
+
+<Callout
+  type="info"
+  description={`
+During the <code>Templating</code> installation process, all your templates which were located in your "📋 Templates" folder were migrated and converted to the <code>Templating</code> syntax. If you wish to run templating migration process manually, use the <code>np:migrate-templates</code> command.
+  `}
+/>
+
+If you have templates which were not migrated correctly (we have attempted to cover all the possible templates, but there may be ones that `Templating` was not able to convert).
+
+The following steps should be followed to convert your templates to `Templating` format.
+
+### Step 1: Change Template Tags
+`Templating` uses `<%-` and `%>` as opening and closing template tags (see <Link href="templating-tags">Template Tags</Link> for more information).
+
+For example, if you are using something like the following:
+
+```js
+{{formattedDateTime({format: '%A, %B %d, %Y'})}}
+```
+
+Replace with
+
+```js
+<%- formattedDateTime({format: '%A, %B %d, %Y'}) %>
+```
+
+## Disable Legacy Templates
+The final step will be disabling Legacy Templates plugin
+
+### Step 1: Open NotePlan Preferences
+`NotePlan -> Preferences...`
+
+### Step 2: Select Plugins Tab
+
+### Step 3: Disable Templates
+Uncheck `Templates` checkbox to uninstall legacy Templates
+
+<img src={templatesuninstall.src} alt="Template Uninstall Dialogue" />
+
+### Step 4: Install `Templating`
+For information on installing `Templating` see the <Link href="templating-installation">Templating Installation</Link>. 
+
+### Step 5: Quit & Relaunch NotePlan
+While it might not be necessary, it is safe to Quit & Relaunch NotePlan
+
+### Step 6: Enjoy `Templating`
+It is recommended that you read the remainder of the `Templating` documentation. Who reads docs, yes I too often skip this step, but there is a lot packed into `Templating` so it is good to get an overview of what's available!
+
+At a minimum, have a look at all the <Link href="templating-examples-simple">examples</Link>. We have attempted all the various features of `Templating`. If you have any questions or issues, feel free to reach out to us!

@@ -1,0 +1,97 @@
+import noteplanevent from '@/images/noteplan-event.png'
+import linknote from '@/images/noteplan-link-note.png'
+import choosetemplate from '@/images/noteplan-choose-template.png'
+import meetingnotetemplate from '@/images/noteplan-meeting-note-template.png'
+import meetingnote from '@/images/noteplan-meeting-note.png'
+import templatechooser from '@/images/template-chooser.png'
+import Link from  'next/link'
+import Callout from '@/components/Callout'
+
+# Templating Introduction
+
+`Templating` is a template language plugin for NotePlan that lets you insert variables and method results into your notes. It will also let you execute custom JavaScript constructed in the templates providing a rich note taking system.
+
+## Why Use Templates
+
+Templates enables you to create structured and consistent notes for repetitive tasks. When invoked by one of the many `Templating` commands (e.g. `np:new`, `np:append`) the templating plugin replaces placeholders in a template file with actual values, and transforms the template into a NotePlan note. This approach makes it easier to create notes in your day-to-day work.
+
+- Encourages consistent notes (data generation is separate from presentation code).
+- Output generation is more expressive (template syntax doesn't require a sea of string concatenation)
+- Better productivity (common problems such as output encoding, iterating, conditionals, etc. have been handled).
+
+### Example
+For example, one of the unique features of NotePlan is the ability to combine normal note taking features (the _Note_) with an integrated calendar environment (the _Plan_) which provides a terrific place to manage a big part of your day-to-day work.
+
+When viewing the meeting in the NotePlan Calendar View, you may wish to link the event to a NotePlan Meeting note
+
+<img src={noteplanevent.src} alt="NotePlan Event" />
+
+Clicking on the "Link Note" button at the top of the event
+
+<img src={linknote.src} alt="NotePlan Event" />
+
+You may select from one of the `meeting-note` templates in the "Templates" folder
+
+<Callout
+  type="info"
+  description={`
+Any template which contains a type of <code>meeting-note</code> will be available in the NotePlan Meeting Note template chooser.
+  `}
+/>
+
+<img src={choosetemplate.src} alt="NotePlan Event" />
+
+When you select the desired template and click "Create Meeting Note", NotePlan will generate a new note, replacing template placeholders with information from the selected event, using a template such as the following
+
+<img src={meetingnotetemplate.src} alt="NotePlan Event" />
+
+The end result will be a new note, which has a consistent format, making it easy to identify the important parts when you review notes in the future. Each of the placeholders (e.g. `<%- calendarItemLink %>` or `<%- eventNotes %>`) will be replaced with event attributes where applicable
+
+<img src={meetingnote.src} alt="NotePlan Event" />
+
+
+## Configuration
+
+`Templating` has a number of <Link href="templating-settings" alt="settings">settings</Link> which you can use to control how data is supplied and formatted when rendering templates.
+
+<Callout
+  type="info"
+  description={`
+For more information on <code>Templating</code> settings, visit <a href="templating-settings" alt="settings">settings</a>.
+  `}
+/>
+## Using Templating Commands
+
+`Templating` provides a variety of built-in commands which can be invoked using NotePlan Plugin Command Bar (`Command-J`)
+
+### Appending or Inserting Template
+
+**Step 1:** Invoke NotePlan Command Bar (`Command-J`)
+
+**Step 2:** Select `np:append` or `np:insert`
+
+**Step 3:** Choose a template to use
+
+<img src={templatechooser.src} alt="Template Chooser" />
+
+{/* ### Advanced: Integrating into your plugins (for developers)
+
+You can also use the Templating functions from within a custom plugin you are developing. For example:
+
+```javascript
+import NPTemplating from "NPTemplating";
+
+export async function templatingHelloWorld(): Promise<void> {
+  try {
+    const result = await NPTemplating.renderTemplate(
+      "Template - Hello World",
+      {}
+    );
+
+    Editor.insertTextAtCursor(result);
+  } catch (error) {
+    console.log("templatingHelloWorld", error);
+  }
+}
+``` */}
+

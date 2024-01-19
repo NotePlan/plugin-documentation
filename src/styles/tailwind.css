@@ -19,3 +19,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.callout-content p {
+  @apply mb-0 mt-0;
+}
