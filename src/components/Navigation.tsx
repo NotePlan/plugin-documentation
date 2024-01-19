@@ -357,14 +357,12 @@ export const navigation: Array<NavGroup> = [
       },
 
       {
-        title: 'Note Management',
+        title: 'Notes',
         href: '',
         children: [
           { title: '📙 Note Helpers', href: '/jgclark.NoteHelpers' },
           { title: '🔢 Note Statistics', href: '/np.statistics' },
-          { title: '🔎 Search Extensions', href: '/jgclark.SearchExtensions' },
-          { title: '📒 Templating', href: '/np.Templating' },
-          { title: '🎨 Theme Chooser', href: '/np.ThemeChooser' },
+          // { title: '📒 Templating', href: '/np.Templating' },
           { title: '🕸 Map of Contents', href: '/jgclark.MOCs' },
         ],
       },
@@ -377,21 +375,40 @@ export const navigation: Array<NavGroup> = [
         ],
       },
 
-      { title: '📦 Filer', href: '/jgclark.Filer' },
-      { title: '⏱ Habits & Summaries', href: '/jgclark.Summaries' },
-      { title: '💭 Journalling', href: '/jgclark.DailyJournal' },
-      { title: '🔗 Link Creator', href: '/np.CallbackURLs' },
+      {
+        title: 'Utilities',
+        href: '',
+        children: [
+          { title: '🖥️ Window Sets', href: '/jgclark.WindowSets' },
+          { title: '🔗 Link Creator', href: '/np.CallbackURLs' },
+          { title: '🔌 Plugin Information & Tester', href: '/np.plugin-test' },
+          { title: '🎨 Theme Chooser', href: '/np.ThemeChooser' },
+        ],
+      },
+
+      {
+        title: 'Tasks & Paragraphs',
+        href: '',
+        children: [
+          { title: '📦 Filer', href: '/jgclark.Filer' },
+          { title: '⚡️ Quick Capture', href: '/jgclark.QuickCapture' },
+          { title: '🔁 Repeat Extensions', href: '/jgclark.RepeatExtensions' },
+          { title: '🧹  Tidy Up', href: '/np.Tidy' },
+          { title: '🔎 Search Extensions', href: '/jgclark.SearchExtensions' },
+        ],
+      },
+
+      {
+        title: 'Use Cases',
+        href: '',
+        children: [
+          { title: '⏱ Habits & Summaries', href: '/jgclark.Summaries' },
+          { title: '💭 Journalling', href: '/jgclark.DailyJournal' },
+        ],
+      },
 
       // { title: '✍️ Meeting Notes', href: '/np.MeetingNotes' },
-
-      { title: '⚡️ Quick Capture', href: '/jgclark.QuickCapture' },
-      { title: '🔌 Plugin Information & Tester', href: '/np.plugin-test' },
-
-      { title: '🔁 Repeat Extensions', href: '/jgclark.RepeatExtensions' },
-
-      { title: '🧹  Tidy Up', href: '/np.Tidy' },
       // { title: '🌤 Weather Lookup', href: '/np.WeatherLookup' },
-      { title: '🖥️ Window Sets', href: '/jgclark.WindowSets' },
     ],
   },
   {
