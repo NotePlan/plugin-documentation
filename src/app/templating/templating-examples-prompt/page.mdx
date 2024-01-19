@@ -8,25 +8,27 @@ import prompt2 from '@/images/prompt2.png'
 
 `Templating` provides the ability to ask the user questions through prompts when rendering templates.
 
-## Asking for general text
+<Callout
+  type="warning"
+  title="Single Quotes">
 
-`Templating` supports four types of prompts, with no configuration required.
+Use single quotes inside the prompt command, like `prompt('question')`. 
 
-By default, `Templating` will present a prompt consecutively as it processes the template for any missing variable contained in your template.
+</Callout>
 
-### Example 1: from display tags
+### Example 1: Simple text input `prompt`
 
 For example, if you have a display tag `<%@` in your template which is not in your template data, a prompt will be displayed
 
 ```markdown
-<%@ firstName &>
+<%- prompt('What is your first name?') %>
 ```
 
 <img src={promptdefault.src} alt="Prompt Default" />
 
-### Example 2: `prompt` command
+### Example 2: `prompt` with list of choices
 
-Alternatively, you can use the **`prompt` command**, which can accept optional prompt message and well as choices (for use with choice list prompt)
+Alternatively, the **`prompt` command** can accept optional prompt message and well as choices (for use with choice list prompt)
 
 <Callout
   type="warning"

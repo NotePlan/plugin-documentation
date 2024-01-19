@@ -1,9 +1,14 @@
 
 # Frontmatter
-`Templating` provides support for using frontmatter formatted templates. The frontmatter content is between `--` separators
+`Templating` provides support for using frontmatter formatted templates. The frontmatter content is between `--` separators and follows the frontmatter of the template.
+
+In the following example the template frontmatter is at the top between `---` (three dashes) while the frontmatter that gets copied into the note is defined with only `--` (two dashes) just below:
 
 ```markdown
-# Test (Frontmatter)
+---
+title: template name
+type: meeting-note, empty-note 
+---
 --
 name: Mike Erickson
 phone: 714.555.1212
@@ -14,11 +19,11 @@ The rest of the template content follows...
 ## Expanding tags in frontmatter header
 When frontmatter templates are rendered, the content between frontmatter tags `--` use alternate start `{%` and end `%}` tags, which can then accessed outside the frontmatter tags.  You can then access the frontmatter tags within rest of template
 
+*In the following examples we omit the template frontmatter between `---` for brevity.*
+
 ```markdown
 --
-...
 modified: {%= date.now('YYYY-MM-DD h:mm A') %}
-...
 --
 ```
 
@@ -38,8 +43,7 @@ modified: *2021-12-31 10:36 AM*
 The following example demonstates a complete frontmatter format template
 
 ```markdown
-# Test (Frontmatter)
-￼--
+--
 name: Mike Erickson
 phone: 714.555.1212
 modified: {%= date.now('YYYY-MM-DD h:mm A') %}
