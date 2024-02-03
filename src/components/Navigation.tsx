@@ -340,7 +340,7 @@ export const navigation: Array<NavGroup> = [
     title: 'Start',
     links: [
       { title: 'Introduction', href: '/' },
-      { title: 'Full Plugin List', href: '/pluginlist' },
+      // { title: 'Full Plugin List', href: '/pluginlist' },
     ],
   },
   {
