@@ -31,18 +31,16 @@ created: <%- date.now('dddd MMMM Do, YYYY HH:mm A') %>
 And the remainder of the template will be display here ...
 ```
 
-### Using Dynamic Keys
-If you wish to have dynamic templates which use frontmatter tags, you can use the following syntax:
+### Using Dynamic Keys in Frontmatter
+The key+value pairs in frontmatter can be used in other parts of your template. In fact, frontmatter fields can be calculated using Templating tags and then used dynamically in other parts of your template.
 
-- Use `{%` and `%}` template tags in desired frontmatter attribute (see `modified`)
-- Use `<%- frontmatter.attributeName %>` syntax to access frontmatter attributes within template content (see `modified` reference in template)
-
+For example:
 ```markdown
 ---
 title: Dynamic Template
-modified: "{%= date.now('YYYY-MM-DD h:mm A') %}"
+modified: <%- date.now('YYYY-MM-DD h:mm A') %>
 ---
 
-This is read from frontmatter
-modified: *<%- frontmatter.modified %>*
+This is read from frontmatter:
+contents of the calculated "modified" field: <%- modified %>
 ```
