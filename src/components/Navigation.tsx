@@ -340,7 +340,7 @@ export const navigation: Array<NavGroup> = [
     title: 'Start',
     links: [
       { title: 'Introduction', href: '/' },
-      { title: 'Full Plugin List', href: '/pluginlist' },
+      // { title: 'Full Plugin List', href: '/pluginlist' },
     ],
   },
   {
@@ -383,6 +383,7 @@ export const navigation: Array<NavGroup> = [
           { title: '🔗 Link Creator', href: '/np.CallbackURLs' },
           { title: '🔌 Plugin Information & Tester', href: '/np.plugin-test' },
           { title: '🎨 Theme Chooser', href: '/np.ThemeChooser' },
+          { title: '🤝 Shared Resources', href: '/np.Shared' },
         ],
       },
 
@@ -415,6 +416,7 @@ export const navigation: Array<NavGroup> = [
     title: 'Templating',
     links: [
       { title: 'Introduction', href: '/templating' },
+      { title: 'Getting Started', href: '/templating/templating-intro' },
       { title: 'Installation', href: '/templating/templating-installation' },
       { title: 'Plugin Settings', href: '/templating/templating-settings' },
       {
