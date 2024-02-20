@@ -4,7 +4,24 @@ RewriteEngine on
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Redirect all requests to index.html except for actual files or directories
+# Set the base directory to /plugins
+RewriteBase /plugins/
+
+# Redirect server errors to the custom error page (adjust the path as needed)
+ErrorDocument 404 /plugins/404.html
+
+# Try to serve file, folder, or default to 404.html
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [L]
+RewriteCond %{REQUEST_URI} !/plugins/404.html
+RewriteRule ^(.*)$ $1.html [L]
+RewriteRule ^(.*)/$ $1 [L]
+
+# If the blog is also under /plugins, adjust the rule accordingly
+# Rewrite /plugins/blog/something to /plugins/blog/something.html
+# Adjust the rule if your blog is located elsewhere
+RewriteRule ^blog/(.+)$ blog/$1.html [L]
+
+# Ensure internal requests for 404.html do not result in a redirect loop
+RewriteCond %{ENV:REDIRECT_STATUS} 200
+RewriteRule ^404\.html$ - [L]
