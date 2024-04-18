@@ -263,7 +263,8 @@ function NavigationLinks({
     return initialCollapseStates
   })
 
-  const toggleCollapse = (title: string) => {
+  const toggleCollapse = (event: React.MouseEvent, title: string) => {
+    event.preventDefault()
     setIsCollapsed((prevState) => ({
       ...prevState,
       [title]: !prevState[title],
@@ -278,7 +279,7 @@ function NavigationLinks({
             {/* {link.title} */}
 
             <button
-              onClick={() => toggleCollapse(link.title)}
+              onClick={(event) => toggleCollapse(event, link.title)}
               className="flex items-center "
             >
               <span>{link.title}</span>
