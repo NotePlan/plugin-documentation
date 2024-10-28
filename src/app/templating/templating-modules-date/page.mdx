@@ -244,7 +244,7 @@ Refer to [moment.js format](https://momentjs.com/docs/#/parsing/string-format/) 
 :::
 
 *****
-### weekday
+{/* ### weekday
 > #### weekday(format? : string = '', offset? : number = 1, pivotDate? : string = '') : string
 Returns the closest weekday, using the `offset` to add or subtract days
 
@@ -283,7 +283,7 @@ The following returns the closest weekday 2 days in advance using current date
 
 ```javascript
 <%- date.weekNumber('2021-12-15') %> // the following will return 50
-```
+``` */}
 
 *****
 ### dayNumber
@@ -446,7 +446,7 @@ If `startDate` or `endDate` are not supplied, an error string ("Invalid Start Da
 The following returns number of days between `2022-05-01` and `2022-06-31` (returns `31`)
 
 ```javascript
-<%- date.daysBewteeen('2022-05-01', '2022-06-01') %> // returns 31
+<%- date.daysBewteen('2022-05-01', '2022-06-01') %> // returns 31
 ```
 
 *****
@@ -466,7 +466,7 @@ Adds `numDays` days.  You can also supply `pivotDate` and date `format`
 The following adds 7 days, using current date
 
 ```javascript
-<%- date.add(7, '2022-01-07') %> // returns 2022-01-14
+<%- date.add('2022-01-07', 7) %> // returns 2022-01-14
 ```
 
 *****
@@ -505,7 +505,7 @@ Subtracts `numDays` days.  You can also supply `pivotDate` and date `format`
 The following subtracts 7 days, using current date
 
 ```javascript
-<%- date.subtract(7, '2022-01-12') %> // returns 2022-01-05
+<%- date.subtract('2022-01-12', 7) %> // returns 2022-01-05
 ```
 
 *****
@@ -524,7 +524,7 @@ Subtracts `numDays` business days.  You can also supply `pivotDate` and date `fo
 The following subtracts 3 business days, using current date
 
 ```javascript
-<%- date.businessSubtract(3, '2022-01-12') %> // returns 2022-01-07
+<%- date.businessSubtract('2022-01-12', 3) %> // returns 2022-01-07
 ```
 
 *****
