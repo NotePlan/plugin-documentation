@@ -21,8 +21,8 @@ const nextConfig = {
 }
 
 if (isExport) {
-  nextConfig.basePath = '/templating'
-  nextConfig.assetPrefix = '/templating'
+  nextConfig.basePath = '/templates/docs'
+  nextConfig.assetPrefix = '/templates/docs'
 }
 
 export default withSearch(withMDX(nextConfig))
