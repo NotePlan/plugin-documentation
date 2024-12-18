@@ -344,97 +344,28 @@ export const navigation: Array<NavGroup> = [
       // { title: 'Full Plugin List', href: '/pluginlist' },
     ],
   },
-  {
-    title: 'Plugins',
-    links: [
-      {
-        title: 'HTML Plugins',
-        href: '',
-        children: [
-          { title: '🎛 Dashboard', href: '/jgclark.Dashboard' },
-          { title: '🖥️ Preview', href: '/np.Preview' },
-          { title: '🔬 Projects + Reviews', href: '/jgclark.Reviews' },
-        ],
-      },
-
-      {
-        title: 'Notes',
-        href: '',
-        children: [
-          { title: '📙 Note Helpers', href: '/jgclark.NoteHelpers' },
-          { title: '🔢 Note Statistics', href: '/np.statistics' },
-          // { title: '📒 Templating', href: '/np.Templating' },
-          { title: '🕸 Map of Contents', href: '/jgclark.MOCs' },
-        ],
-      },
-
-      {
-        title: 'Events, Dates and Calendar',
-        href: '',
-        children: [
-          { title: '🕓 Event Helpers', href: '/jgclark.EventHelpers' },
-        ],
-      },
-
-      {
-        title: 'Utilities',
-        href: '',
-        children: [
-          { title: '🖥️ Window Sets', href: '/jgclark.WindowSets' },
-          { title: '🔗 Link Creator', href: '/np.CallbackURLs' },
-          { title: '🔌 Plugin Information & Tester', href: '/np.plugin-test' },
-          { title: '🎨 Theme Chooser', href: '/np.ThemeChooser' },
-          { title: '🤝 Shared Resources', href: '/np.Shared' },
-        ],
-      },
-
-      {
-        title: 'Tasks & Paragraphs',
-        href: '',
-        children: [
-          { title: '📦 Filer', href: '/jgclark.Filer' },
-          { title: '⚡️ Quick Capture', href: '/jgclark.QuickCapture' },
-          { title: '🔁 Repeat Extensions', href: '/jgclark.RepeatExtensions' },
-          { title: '🧹  Tidy Up', href: '/np.Tidy' },
-          { title: '🔎 Search Extensions', href: '/jgclark.SearchExtensions' },
-        ],
-      },
-
-      {
-        title: 'Use Cases',
-        href: '',
-        children: [
-          { title: '⏱ Habits & Summaries', href: '/jgclark.Summaries' },
-          { title: '💭 Journalling', href: '/jgclark.DailyJournal' },
-        ],
-      },
-
-      // { title: '✍️ Meeting Notes', href: '/np.MeetingNotes' },
-      // { title: '🌤 Weather Lookup', href: '/np.WeatherLookup' },
-    ],
-  },
+  
   {
     title: 'Templating',
     links: [
-      { title: 'Introduction', href: '/templating' },
-      { title: 'Getting Started', href: '/templating/templating-intro' },
-      { title: 'Installation', href: '/templating/templating-installation' },
-      { title: 'Plugin Settings', href: '/templating/templating-settings' },
+      { title: 'Getting Started', href: '/templating-intro' },
+      { title: 'Installation', href: '/templating-installation' },
+      { title: 'Plugin Settings', href: '/templating-settings' },
       {
         title: 'Definitions',
         href: '',
         children: [
-          { title: 'Anatomy', href: '/templating/templating-anatomy' },
-          { title: 'Tags', href: '/templating/templating-tags' },
-          { title: 'Terminology', href: '/templating/templating-terminology' },
-          { title: 'Modules', href: '/templating/templating-modules' },
-          { title: 'Prompts', href: '/templating/templating-examples-prompt' },
+          { title: 'Anatomy', href: '/templating-anatomy' },
+          { title: 'Tags', href: '/templating-tags' },
+          { title: 'Terminology', href: '/templating-terminology' },
+          { title: 'Modules', href: '/templating-modules' },
+          { title: 'Prompts', href: '/templating-examples-prompt' },
           {
             title: 'Miscellaneous',
-            href: '/templating/templating-miscellaneous',
+            href: '/templating-miscellaneous',
           },
 
-          { title: 'Syntax', href: '/templating/templating-syntax' },
+          { title: 'Syntax', href: '/templating-syntax' },
         ],
       },
 
@@ -442,8 +373,8 @@ export const navigation: Array<NavGroup> = [
         title: 'Commands',
         href: '',
         children: [
-          { title: 'Overview', href: '/templating/templating-commands' },
-          { title: 'Quick Notes', href: '/templating/templating-quicknotes' },
+          { title: 'Overview', href: '/templating-commands' },
+          { title: 'Quick Notes', href: '/templating-quicknotes' },
         ],
       },
 
@@ -451,52 +382,52 @@ export const navigation: Array<NavGroup> = [
         title: 'Examples',
         href: '',
         children: [
-          // { title: 'Simple', href: '/templating/templating-examples-simple' },
+          // { title: 'Simple', href: '/templating-examples-simple' },
 
           {
             title: 'Date & Time',
-            href: '/templating/templating-examples-datetime',
+            href: '/templating-examples-datetime',
           },
-          // { title: 'Arrays', href: '/templating/templating-examples-arrays' },
-          { title: 'Async', href: '/templating/templating-examples-async' },
+          // { title: 'Arrays', href: '/templating-examples-arrays' },
+          { title: 'Async', href: '/templating-examples-async' },
           {
             title: 'Conditional',
-            href: '/templating/templating-examples-conditional',
+            href: '/templating-examples-conditional',
           },
           {
             title: 'Looping & Arrays',
-            href: '/templating/templating-examples-looping',
+            href: '/templating-examples-looping',
           },
 
           {
             title: 'Frontmatter',
-            href: '/templating/templating-examples-frontmatter',
+            href: '/templating-examples-frontmatter',
           },
 
           // missing objects
 
           // {
           //   title: 'Custom Plugins',
-          //   href: '/templating/templating-custom-plugins-example',
+          //   href: '/templating-custom-plugins-example',
           // },
-          { title: 'Prompt', href: '/templating/templating-examples-prompt' },
+          { title: 'Prompt', href: '/templating-examples-prompt' },
 
           // {
           //   title: 'Displaying Tasks',
-          //   href: '/templating/templating-examples-tasks',
+          //   href: '/templating-examples-tasks',
           // },
 
           {
             title: 'String Interpolation',
-            href: '/templating/templating-examples-string-interpolation',
+            href: '/templating-examples-string-interpolation',
           },
           {
             title: 'Web Services',
-            href: '/templating/templating-examples-web',
+            href: '/templating-examples-web',
           },
           {
             title: 'Using JavaScript in Templates',
-            href: '/templating/templating-examples-js-weather',
+            href: '/templating-examples-js-weather',
           },
         ],
       },
@@ -506,40 +437,40 @@ export const navigation: Array<NavGroup> = [
         children: [
           {
             title: 'Overview',
-            href: '/templating/templating-modules-overview',
+            href: '/templating-modules-overview',
           },
           {
             title: 'Date Module',
-            href: '/templating/templating-modules-date',
+            href: '/templating-modules-date',
           },
-          { title: 'Time Module', href: '/templating/templating-modules-time' },
+          { title: 'Time Module', href: '/templating-modules-time' },
           // {
           //   title: 'FrontMatter Module',
-          //   href: '/templating/templating-modules-frontmatter',
+          //   href: '/templating-modules-frontmatter',
           // },
           {
             title: 'Note Module',
-            href: '/templating/templating-modules-note',
+            href: '/templating-modules-note',
           },
 
           {
             title: 'System Module',
-            href: '/templating/templating-modules-system',
+            href: '/templating-modules-system',
           },
 
           {
             title: 'Utility Module',
-            href: '/templating/templating-modules-utility',
+            href: '/templating-modules-utility',
           },
 
           {
             title: 'Web Module',
-            href: '/templating/templating-modules-web',
+            href: '/templating-modules-web',
           },
 
           // {
           //   title: 'Helpers',
-          //   href: '/templating/templating-modules-helpers',
+          //   href: '/templating-modules-helpers',
           // },
         ],
       },
@@ -549,27 +480,27 @@ export const navigation: Array<NavGroup> = [
       //   children: [
       //     {
       //       title: 'Overview',
-      //       href: '/templating/templating-integration-overview',
+      //       href: '/templating-integration-overview',
       //     },
 
       //     {
       //       title: 'Example 1: Hello World',
-      //       href: '/templating/templating-integration-helloworld',
+      //       href: '/templating-integration-helloworld',
       //     },
 
       //     {
       //       title: 'Example 2: Custom Variables',
-      //       href: '/templating/templating-integration-variables',
+      //       href: '/templating-integration-variables',
       //     },
 
       //     {
       //       title: 'Example 3: Custom Method',
-      //       href: '/templating/templating-integration-method',
+      //       href: '/templating-integration-method',
       //     },
 
       //     {
       //       title: 'Example 4: Full Example',
-      //       href: '/templating/templating-integration-full',
+      //       href: '/templating-integration-full',
       //     },
       //   ],
       // },
