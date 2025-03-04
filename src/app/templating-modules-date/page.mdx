@@ -452,10 +452,11 @@ The following returns number of days between `2022-05-01` and `2022-06-31` (retu
 *****
 
 ### add
-> #### add(numDays : number = 1, pivotDate? : string = '', format? : string = '') : string
+> #### add(pivotDate? : string = '', numDays : number = 1, timeframe : string = '', format? : string = 'YYYY-MM-DD') : string
 Adds `numDays` days.  You can also supply `pivotDate` and date `format`
 
 - `numDays` - Number of days to add (default: 1)
+- `timeframe` - 'days', 'weeks', 'months', 'years'
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 - `format?` - Optional format string
 
@@ -466,7 +467,7 @@ Adds `numDays` days.  You can also supply `pivotDate` and date `format`
 The following adds 7 days, using current date
 
 ```javascript
-<%- date.add('2022-01-07', 7) %> // returns 2022-01-14
+<%- date.add('2022-01-07', 7, 'days', 'YYYY-MM-DD') %> // returns 2022-01-14
 ```
 
 *****
@@ -486,15 +487,16 @@ Adds `numDays` business days.  You can also supply `pivotDate` and date `format`
 The following adds 3 business days, using current date
 
 ```javascript
-<%- date.businessAdd(3, '2022-01-07') %> // returns 2022-01-12
+<%- date.businessAdd(3, '2022-01-07', 'YYYY-MM-DD') %> // returns 2022-01-12
 ```
 
 *****
 ### subtract
-> #### subtract(numDays : number = 1, pivotDate? : string = '', format? : string = '') : string
+> #### subtract(pivotDate? : string = '', numDays : number = 1, timeframme : string = '', format? : string = '') : string
 Subtracts `numDays` days.  You can also supply `pivotDate` and date `format`
 
 - `numDays` - Number of days to add (default: 1)
+- `timeframe` - 'days', 'weeks', 'months', 'years'
 - `pivotDate?` - Desired date to subtract from. If not supplied, it will use current date
 - `format?` - Optional format string
 
@@ -505,7 +507,7 @@ Subtracts `numDays` days.  You can also supply `pivotDate` and date `format`
 The following subtracts 7 days, using current date
 
 ```javascript
-<%- date.subtract('2022-01-12', 7) %> // returns 2022-01-05
+<%- date.subtract('2022-01-12', 7, 'days', 'YYYY-MM-DD') %> // returns 2022-01-05
 ```
 
 *****
@@ -524,7 +526,7 @@ Subtracts `numDays` business days.  You can also supply `pivotDate` and date `fo
 The following subtracts 3 business days, using current date
 
 ```javascript
-<%- date.businessSubtract('2022-01-12', 3) %> // returns 2022-01-07
+<%- date.businessSubtract(3, '2022-01-12', 'YYYY-MM-DD') %> // returns 2022-01-07
 ```
 
 *****
