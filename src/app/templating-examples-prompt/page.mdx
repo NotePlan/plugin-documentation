@@ -153,22 +153,22 @@ Priority: <%- promptKey('priority', 'Set priority:', 'All', false, '', false, ['
 
 Basic usage:
 ```markdown
-#<%- promptTag('Select a hashtag:') %>
+<%- promptTag('Select a hashtag:') %>
 ```
 
 Filter tags to include only those containing "project":
 ```markdown
-#<%- promptTag('Select a project tag:', 'project') %>
+<%- promptTag('Select a project tag:', 'project') %>
 ```
 
 Filter to include "priority" tags and exclude "low" tags:
 ```markdown
-#<%- promptTag('Select priority:', 'priority', 'low') %>
+<%- promptTag('Select priority:', 'priority', 'low') %>
 ```
 
 Don't allow creating new tags:
 ```markdown
-#<%- promptTag('Select from existing tags only:', '', '', false) %>
+<%- promptTag('Select from existing tags only:', '', '', false) %>
 ```
 
 ### promptMention
@@ -192,22 +192,22 @@ Don't allow creating new tags:
 
 Basic usage:
 ```markdown
-@<%- promptMention('Select a person:') %>
+<%- promptMention('Select a person:') %>
 ```
 
 Filter mentions to include only those containing "team":
 ```markdown
-@<%- promptMention('Select a team member:', 'team') %>
+<%- promptMention('Select a team member:', 'team') %>
 ```
 
 Filter to include "client" mentions and exclude "former" clients:
 ```markdown
-@<%- promptMention('Select client:', 'client', 'former') %>
+<%- promptMention('Select client:', 'client', 'former') %>
 ```
 
 Don't allow creating new mentions:
 ```markdown
-@<%- promptMention('Select from existing mentions only:', '', '', false) %>
+<%- promptMention('Select from existing mentions only:', '', '', false) %>
 ```
 
 ## Usage Tips
