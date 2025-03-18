@@ -468,7 +468,10 @@ export const navigation: Array<NavGroup> = [
             title: 'Web Module',
             href: '/templating-modules-web',
           },
-
+          {
+            title: 'Miscellaneous Helpers/Shortcuts',
+            href: '/templating-modules-miscellaneous',
+          },
           // {
           //   title: 'Helpers',
           //   href: '/templating-modules-helpers',
