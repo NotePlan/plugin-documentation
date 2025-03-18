@@ -121,7 +121,8 @@ Project status: <%- promptKey('projectStatus', 'Select project status:') %>
 
 With folder restriction and case sensitivity:
 ```markdown
-Tag: <%- promptKey('tags', 'Select a tag:', 'Notes', true, '/Projects') %>
+Tag: <%- promptKey('tags', 'Select a tag:', 'Notes', true, 'Projects') %>
+Tag: <%- promptKey('tags', 'Select a tag:', 'Notes', true, 'Work/Projects/Clients', true) %>
 ```
 
 With predefined options:
@@ -211,6 +212,5 @@ Don't allow creating new mentions:
 
 ## Usage Tips
 
-- Both `promptTag` and `promptMention` will automatically handle the `#` and `@` prefixes, respectively. You only need to add them in your template if needed for formatting.
 - When using `includePattern` and `excludePattern`, these are converted to regular expressions, so you can use regex syntax for more advanced filtering.
 - The `allowCreate` parameter is particularly useful when you want to limit selections to existing values only. 
