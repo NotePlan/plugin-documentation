@@ -1,5 +1,7 @@
 # NOTE: THIS IS THE TEMPLATING DOCUMENTATION, NOT THE PLUGIN DOCUMENTATION AS THE NAME WOULD SUGGEST
 
+For other plugins, `noteplan.co/plugins` pulls the docs from the github repo automatically (plugin.json+README).
+
 # Protocol
 
 Protocol is a [Tailwind UI](https://tailwindui.com) site template built using [Tailwind CSS](https://tailwindcss.com) and [Next.js](https://nextjs.org).
