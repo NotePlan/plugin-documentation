@@ -1,7 +1,7 @@
 import Callout from '@/components/Callout'
 
 # Template Runner
-`np.templating` includes the `templaterunner` command to allow templates to be invoked from callback URLs. This allows you to to use a template to insert content (including dynamic Templating tag-generated conntent) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor, or actively -- display the note you specify at run-time. Typically, Template Runner templates are activated when a link is clicked from within our outside of NotePlan (e.g. Shortcuts, Keyboard Maestro or wherever). This gives you a way to pass arbitrary information into your notes.
+`Templating` includes the `templaterunner` command to allow templates to be invoked from callback URLs. This allows you to to use a template to insert content (including dynamic Templating tag-generated conntent) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor, or actively -- display the note you specify at run-time. Typically, Template Runner templates are activated when a link is clicked from within our outside of NotePlan (e.g. Shortcuts, Keyboard Maestro or wherever). This gives you a way to pass arbitrary information into your notes.
 ## Required Attributes
 
 At its core. a Template Runner template is a basic template note with frontmatter. There is only one *required* field in the frontmatter:
@@ -74,6 +74,7 @@ The `location` attribute tells Template Runner where/how to place the template c
 - `prepend` - (the default) - prepends content directly under the heading if *writeUnderHeading* is set, otherwise prepends content at the top of the note itself if *writeUnderHeading* is omitted.
 - `append` - appends content directly under the heading if *writeUnderHeading* is set, otherwise appends content at the top of the note itself if *writeUnderHeading* is omitted.
 - `replace` - will replace any text under the heading with the new text from the template, leaving the rest of the note intact. **Note:** Beware: This uses NotePlan's definition of where a heading's content starts/ends. This will replace all text until either (a) a heading of the same or greater heading level is located, or (b) two empty lines are reached. So if you have "---" horizontal rules, etc. they will be replaced.
+- `cursor` - if the `getNoteTitled` is set to `<current>` then you can insert at the `cursor` position
 
 > *Tip*:
 Make sure your target note has another heading of the same or higher level underneath it. If necessary, you can even put in a blank heading, e.g.:
@@ -268,7 +269,7 @@ A Template Runner URL looks like:
 
 Broken apart, here's what that is comprised of:
 
-`noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner`: This tells NotePlan to call the templateRunner command inside of the np.Templating plugin
+`noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner`: This tells NotePlan to call the templateRunner command inside of the Templating plugin
 `&`
 `arg0=logWorkout`: The first argument (arg0 is required and) specifies the **title** of the template to run
 `&`

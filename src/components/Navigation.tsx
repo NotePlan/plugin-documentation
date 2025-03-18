@@ -375,6 +375,7 @@ export const navigation: Array<NavGroup> = [
         children: [
           { title: 'Overview', href: '/templating-commands' },
           { title: 'Quick Notes', href: '/templating-quicknotes' },
+          { title: 'Template Runner', href: '/templating-templateRunner' },
         ],
       },
 
