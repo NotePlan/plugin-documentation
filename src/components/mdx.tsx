@@ -20,10 +20,40 @@ export function wrapper({ children }: { children: React.ReactNode }) {
   )
 }
 
+export const h1 = function H1(
+  props: Omit<React.ComponentPropsWithoutRef<typeof Heading>, 'level'>,
+) {
+  return <Heading level={1} {...props} />
+}
+
 export const h2 = function H2(
   props: Omit<React.ComponentPropsWithoutRef<typeof Heading>, 'level'>,
 ) {
   return <Heading level={2} {...props} />
+}
+
+export const h3 = function H3(
+  props: Omit<React.ComponentPropsWithoutRef<typeof Heading>, 'level'>,
+) {
+  return <Heading level={3} {...props} />
+}
+
+export const h4 = function H4(
+  props: Omit<React.ComponentPropsWithoutRef<typeof Heading>, 'level'>,
+) {
+  return <Heading level={4} {...props} />
+}
+
+export const h5 = function H5(
+  props: Omit<React.ComponentPropsWithoutRef<typeof Heading>, 'level'>,
+) {
+  return <Heading level={5} {...props} />
+}
+
+export const h6 = function H6(
+  props: Omit<React.ComponentPropsWithoutRef<typeof Heading>, 'level'>,
+) {
+  return <Heading level={6} {...props} />
 }
 
 function InfoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {

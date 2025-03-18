@@ -55,7 +55,9 @@ function rehypeSlugify() {
   return (tree) => {
     let slugify = slugifyWithCounter()
     visit(tree, 'element', (node) => {
-      if (node.tagName === 'h2' && !node.properties.id) {
+      if ((node.tagName === 'h1' || node.tagName === 'h2' || node.tagName === 'h3' || 
+           node.tagName === 'h4' || node.tagName === 'h5' || node.tagName === 'h6') && 
+          !node.properties.id) {
         node.properties.id = slugify(toString(node))
       }
     })

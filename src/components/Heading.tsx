@@ -66,7 +66,7 @@ function Anchor({
   )
 }
 
-export function Heading<Level extends 2 | 3>({
+export function Heading<Level extends 1 | 2 | 3 | 4 | 5 | 6>({
   children,
   tag,
   label,
@@ -81,7 +81,7 @@ export function Heading<Level extends 2 | 3>({
   anchor?: boolean
 }) {
   level = level ?? (2 as Level)
-  let Component = `h${level}` as 'h2' | 'h3'
+  let Component = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   let ref = useRef<HTMLHeadingElement>(null)
   let registerHeading = useSectionStore((s) => s.registerHeading)
 
