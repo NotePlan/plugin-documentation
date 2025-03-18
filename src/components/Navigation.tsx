@@ -411,7 +411,7 @@ export const navigation: Array<NavGroup> = [
           //   title: 'Custom Plugins',
           //   href: '/templating-custom-plugins-example',
           // },
-          { title: 'Prompt', href: '/templating-examples-prompt' },
+          { title: 'Prompts', href: '/templating-examples-prompt' },
 
           // {
           //   title: 'Displaying Tasks',
