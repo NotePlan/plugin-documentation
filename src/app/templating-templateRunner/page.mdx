@@ -53,6 +53,10 @@ replaceNoteContents: true
 
 The `writeUnderHeading` attribute tells Template Runner *under which heading* to place the template content if you are not replacing all the note's contents.  By default, content will be prepended (immediately following the heading). If a heading that you specify here does not exist in the *getNotetitled* note, the heading and content will be created and added to the end of the note.
 
+<Callout>
+IMPORTANT NOTE: writeUnderHeading uses NotePlan's definition of a block, replacing all text from the header specified until another header of the same or greater value. So if your heading is a ## level and you have ### level headings directly under it, those items will be replaced. Make sure to have a heading of level ## or # underneath. If you want, you can use the @Stacey trick and place a line with just a blank ` # `, which will be treated as an H1 when the replacer hits it and nothing beneath that line will be overwritten.
+</Callout>
+
 The `writeUnderHeading` attribute can be either:
 - a heading name 
 - `<choose>` - will dynamically ask the user to choose a heading to insert the content under at run-time.
@@ -73,7 +77,7 @@ The `location` attribute tells Template Runner where/how to place the template c
 
 - `prepend` - (the default) - prepends content directly under the heading if *writeUnderHeading* is set, otherwise prepends content at the top of the note itself if *writeUnderHeading* is omitted.
 - `append` - appends content directly under the heading if *writeUnderHeading* is set, otherwise appends content at the top of the note itself if *writeUnderHeading* is omitted.
-- `replace` - will replace any text under the heading with the new text from the template, leaving the rest of the note intact. **Note:** Beware: This uses NotePlan's definition of where a heading's content starts/ends. This will replace all text until either (a) a heading of the same or greater heading level is located, or (b) two empty lines are reached. So if you have "---" horizontal rules, etc. they will be replaced.
+- `replace` - will replace any text under the heading with the new text from the template, leaving the rest of the note intact. **Note:** Beware: As mentioned above, this uses NotePlan's definition of where a heading's content starts/ends. This will replace all text until either (a) a heading of the same or greater heading level is located, or (b) two empty lines are reached. So if you have "---" horizontal rules, etc. they will be replaced.
 - `cursor` - if the `getNoteTitled` is set to `<current>` then you can insert at the `cursor` position
 
 > *Tip*:
