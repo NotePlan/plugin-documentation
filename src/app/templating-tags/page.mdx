@@ -6,10 +6,10 @@ import Callout from '@/components/Callout'
 ## Tags
 - `<%` Script tag to be used when executing any JavaScript command without producing any output
 - `<%-` Outputs the value into the template
-- `<%_` ‘Whitespace Slurping’ Template tag, strips all whitespace before it ([example](#strip-whitespace))
+- `<%_` 'Whitespace Slurping' Template tag, strips all whitespace before it ([example](#strip-whitespace))
 - `<%#` Comment tag, no execution, no output
 - `<%%` Outputs a literal `<%`
-- `-%>` ‘Whitespace Slurping’ Template tag, strips all whitespace after it ([example](#strip-whitespace))
+- `-%>` 'Whitespace Slurping' Template tag, strips all whitespace after it ([example](#strip-whitespace))
 - `%>` Plain ending tag
 
 ## Output Tags
@@ -19,7 +19,7 @@ When you wish to output anything to the rendered template, you use the output `<
 The following are various examples of `Templating` tags in action
 
 ### JavaScript / Flow Control Tag
-The basic flow control tag `<%` is used when you want to perform a standard JavaScript action such as setting a variable, doing a calculation, [looping](/docs/templating-examples/looping) or [conditionals](/docs/templating-examples/conditional).  In this example, a `getData` method would be called, but the actual output would be displayed in another section of template. If you have many lines of JavaScript, you may want to consider the ([templatejs code block](#templatejs-code-block)).
+The basic flow control tag `<%` is used when you want to perform a standard JavaScript action such as setting a variable, doing a calculation, [looping](/docs/templating-examples/looping) or [conditionals](/docs/templating-examples/conditional).  In this example, a `getData` method would be called, but the actual output would be displayed in another section of template. If you have many lines of JavaScript, you may want to consider the [templatejs code block](#templatejs-code-block).
 
 ```markdown
 <% const data = getData() // the variable is set in this tag %>
@@ -27,10 +27,10 @@ The basic flow control tag `<%` is used when you want to perform a standard Java
 <%- data // the output is output later in this tag %>
 ```
 
-<Callout>
+```markdown
 Note that flow control tags, like all other tags are on a line by themselves. This means there is a return at the end of the line. When the template is rendered, the tag will be processed and deleted, but the return at the end of the line will show up in your rendered template as a blank line. If you don't want the returns, use the minus (slurping tag) at the end of each flow control line, e.g. 
-  `<% const myVar = note.title // there will be no blank line when this is processed because of --> -%>`
-</Callout>
+  <% const myVar = note.title // there will be no blank line when this is processed because of the dash: -%>
+```
 
 
 ### Standard output tag (variable)
@@ -79,13 +79,15 @@ name: Mike
 ### templatejs Code Block
 
 <p>To make coding in templates easier, you can add a code block with the language "templatejs", and use all the variables that are generated in this code block inside your template. You can use JavaScript in this code block and have full access to the <a href="//help.noteplan.co/article/70-javascript-plugin-api" target="_blank">JavaScript Plugin API</a>, and templating modules. An embedded code block helps if you have a lot of JavaScript code like in <a href="//help.noteplan.co/article/162-meistertask-integration-template-get-all-open-tasks" target="_blank">this example</a>.</p>
-<p><img src="//d33v4339jhl8k0.cloudfront.net/docs/assets/6081f7f4c9133261f23f4b41/images/679d5efdac3b8d27c40957ee/file-c6X87YJ3ze.png"></p>
+<p><img src="//d33v4339jhl8k0.cloudfront.net/docs/assets/6081f7f4c9133261f23f4b41/images/679d5efdac3b8d27c40957ee/file-c6X87YJ3ze.png"></img></p>
 <p>For example:</p>
-<pre>---
+```markdown
+---
 title: Overdue Tasks
 type: meeting-note, empty-note 
 ---
-```templatejs
+```
+```markdown
 // Get all overdue tasks
 const overdues = await DataStore.listOverdueTasks()
 
@@ -93,7 +95,7 @@ const overdues = await DataStore.listOverdueTasks()
 const overdueCount = overdues.length
 
 // Get the latest overdue task
-const latestTask = overdueCount &gt; 0 ? overdues[0] : undefined
+const latestTask = overdueCount > 0 ? overdues[0] : undefined
 
 // Create a variable that holds the content if there is a latest task
 let taskContent = ""
@@ -103,6 +105,6 @@ if(latestTask) {
 ```
 Overdue Tasks: &lt;%- overdueCount %&gt;
 &lt;%- taskContent %&gt;&lt;br&gt;
-</pre>
 <p>This will print the amount of overdue tasks and the latest overdue task below.&nbsp;</p>
 <p><a href="//help.noteplan.co/article/148-run-javascript-code-in-your-templates" target="_blank">Learn here</a> about how you can use JavaScript in general in your templates, and if you don't have that many lines of code (means you don't need a code block).</p>
+
