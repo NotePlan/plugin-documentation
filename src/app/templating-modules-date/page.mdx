@@ -1,59 +1,62 @@
 import Callout from '@/components/Callout'
-import Link from  'next/link'
+import Link from 'next/link'
 
 # Date Module
 
 ## Overview
+
 The Date Module provides methods and variables which work with dates.
 
 <Callout
   type="info"
-  description={
-    `Refer to the <a href="./templating-modules-time" alt="Time Module"> Time Module </a> page for similar methods which work with with time values. `
-  }
+  description={`Refer to the <a href="./templating-modules-time" alt="Time Module"> Time Module </a> page for similar methods which work with with time values. `}
 />
 
-
 ### Date Module Helpers
+
 The Date Module exposes commonly used [helper](/docs/templating-modules/date-module#helpers) methods
 
-
 ### Formatting Date Values
+
 The Date Module uses JavaScript `moment` library internally, thus you can use any of the [moment formatting](https://momentjs.com/docs/#/parsing/string-format/) options.
 
 _Tokens are case-sensitive._
 
-| Input | Example | Description |
-| --- | --- | --- |
-| `YYYY` | `2014` | 4 or 2 digit year. Note: Only 4 digit can be parsed on `strict` mode |
-| `YY` | `14` | 2 digit year |
-| `Y` | `-25` | Year with any number of digits and sign |
-| `Q` | `1..4` | Quarter of year. Sets month to first month in quarter. |
-| `M MM` | `1..12` | Month number |
-| `MMM MMMM` | `Jan..December` | Month name in locale set by `moment.locale()` |
-| `D DD` | `1..31` | Day of month |
-| `Do` | `1st..31st` | Day of month with ordinal |
-| `DDD DDDD` | `1..365` | Day of year |
-| `X` | `1410715640.579` | Unix timestamp |
-| `x` | `1410715640579` | Unix ms timestamp |
+| Input      | Example          | Description                                                          |
+| ---------- | ---------------- | -------------------------------------------------------------------- |
+| `YYYY`     | `2014`           | 4 or 2 digit year. Note: Only 4 digit can be parsed on `strict` mode |
+| `YY`       | `14`             | 2 digit year                                                         |
+| `Y`        | `-25`            | Year with any number of digits and sign                              |
+| `Q`        | `1..4`           | Quarter of year. Sets month to first month in quarter.               |
+| `M MM`     | `1..12`          | Month number                                                         |
+| `MMM MMMM` | `Jan..December`  | Month name in locale set by `moment.locale()`                        |
+| `D DD`     | `1..31`          | Day of month                                                         |
+| `Do`       | `1st..31st`      | Day of month with ordinal                                            |
+| `DDD DDDD` | `1..365`         | Day of year                                                          |
+| `X`        | `1410715640.579` | Unix timestamp                                                       |
+| `x`        | `1410715640579`  | Unix ms timestamp                                                    |
 
 **Example**
 
 If you wish to display date value with 4 digit year and 2 digit month, separated by a dash `-` character, you would use `<%- date.now('YYYY-MM') %>`
 
 ## Methods
+
 > namespace: `date`
 
 The following are the methods available in the Date Module, and they can be used in any `Templating` template, no additional configuration required.
 
 :::note
-`pivotDate` - Many of the Date Module methods accept a `pivotDate` argument, which means the date which will be used to perform the appropriate calculation.  When no `pivotDate` is supplied, the current date will be used.
+`pivotDate` - Many of the Date Module methods accept a `pivotDate` argument, which means the date which will be used to perform the appropriate calculation. When no `pivotDate` is supplied, the current date will be used.
 :::
 
-*****
+---
+
 ### createDateTime
-> #### createDateTime(pivotDate? : string = '')  : date
-Creates JavaScript `Date` object based on user supplied `pivotDate`.
+
+> #### createDateTime(pivotDate? : string = '') : date
+>
+> Creates JavaScript `Date` object based on user supplied `pivotDate`.
 
 This is necessary due to the way NotePlan handles dates. If you are passing a date string to any NotePlan method, you will need to first create a native JavaScript `date` value.
 
@@ -61,11 +64,13 @@ This is necessary due to the way NotePlan handles dates. If you are passing a da
 
 - `-> result` - Returns JavaScript `date` object
 
-*****
+---
 
 ### now
+
 > #### now(format? : string = '', offset? : string = '') : string
-Returns a string representation current date.
+>
+> Returns a string representation current date.
 
 _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) method_
 
@@ -75,13 +80,13 @@ _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) 
 **Shorthand Keys:**
 In addition to add/subtract days, you can `offset` may contain shorthand values
 
-| Shorthand | Description
-| --- | ---
-| y | years
-| Q | quarters
-| M | months
-| w | weeks
-| d | days
+| Shorthand | Description |
+| --------- | ----------- |
+| y         | years       |
+| Q         | quarters    |
+| M         | months      |
+| w         | weeks       |
+| d         | days        |
 
 - `-> result` - Returns formatted date string
 
@@ -135,11 +140,13 @@ The following example uses the `now` helper
 <%- now() %>
 ```
 
+---
 
-*****
 ### timestamp
+
 > #### timestamp(format? : string = '') : string
-Returns date/time timestamp with optional format
+>
+> Returns date/time timestamp with optional format
 
 _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) method_
 
@@ -167,19 +174,25 @@ The following example uses the `timestamp` helper
 <%- timestamp() %>
 ```
 
-*****
+---
+
 ### date8601
+
 > #### date8601() : string
-Returns current date 8601 format
+>
+> Returns current date 8601 format
 
 _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) method_
 
 - `-> result` - Returns current date in 8601 format
 
-*****
+---
+
 ### today
+
 > #### today(format? : string = '') : string
-Returns a string representation current date.
+>
+> Returns a string representation current date.
 
 - `format?` - Desired date format. If not supplied, it will use **Date Format** value in `Templating` [Plugin Settings](/docs/settings)
 
@@ -193,10 +206,13 @@ The following example returns the current date, using default values
 <%- date.today() %>
 ```
 
-*****
+---
+
 ### tomorrow
+
 > #### tomorrow(format? : string = '') : string
-Returns a string representation of tomorrow
+>
+> Returns a string representation of tomorrow
 
 - `format?` - Desired date format. If not supplied, it will use the **Date Format** value in `Templating` [Plugin Settings](/docs/settings)
 
@@ -210,10 +226,13 @@ The following example returns tomorrow based on current date
 <%- date.tomorrow() %>
 ```
 
-*****
+---
+
 ### yesterday
+
 > #### yesterday(format? : string = '') : string
-Returns a string representation of yesterday
+>
+> Returns a string representation of yesterday
 
 - `format?` - Desired date format. If not supplied, it will use the **Date Format** in `Templating` [Plugin Settings](/docs/settings)
 
@@ -227,10 +246,13 @@ The following example returns yesterday based on current date
 <%- date.yesterday() %>
 ```
 
-*****
+---
+
 ### format
+
 > #### format(format : string = '', pivotDate? : string = '') : string
-Formats `pivotDate` using supplied `format`
+>
+> Formats `pivotDate` using supplied `format`
 
 _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) method_
 
@@ -243,10 +265,13 @@ _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) 
 Refer to [moment.js format](https://momentjs.com/docs/#/parsing/string-format/) for available formatting options
 :::
 
-*****
-{/* ### weekday
+---
+
+### weekday
+
 > #### weekday(format? : string = '', offset? : number = 1, pivotDate? : string = '') : string
-Returns the closest weekday, using the `offset` to add or subtract days
+>
+> Returns the closest weekday, using the `offset` to add or subtract days
 
 - `format?` - Desired date format. If not supplied, it will use the Date Format value in `Templating` [Plugin Settings](/docs/settings)
 - `offset?` - Date offset, using `d`, `w`, `m`, or `y`
@@ -268,10 +293,13 @@ The following returns the closest weekday 2 days in advance using fixed date
 <%- date.weekday('', 2, '2021-12-15') %> // returns 2021-12-17
 ```
 
-*****
+---
+
 ### weekNumber
+
 > #### weekNumber(pivotDate? : string = '') : number
-Returns the week number based on `pivotDate`
+>
+> Returns the week number based on `pivotDate`
 
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 
@@ -281,9 +309,9 @@ Returns the week number based on `pivotDate`
 
 The following returns the closest weekday 2 days in advance using current date
 
-```javascript
+````javascript
 <%- date.weekNumber('2021-12-15') %> // the following will return 50
-``` */}
+```
 
 *****
 ### dayNumber
@@ -310,12 +338,15 @@ The following returns the closest weekday 2 days in advance using current date
 
 ```javascript
 <%- date.dayNumber('2021-12-15') %> // the following will return 3
-```
+````
 
-*****
+---
+
 ### isWeekday
+
 > #### isWeekday(pivotDate? : string = '') : boolean
-Returns true if `pivotDate` is on weekday
+>
+> Returns true if `pivotDate` is on weekday
 
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 
@@ -329,10 +360,13 @@ The following returns true or false if `pivotDate` is weekday
 <%- date.isWeekday('2021-12-15') %> // the following will return true
 ```
 
-*****
+---
+
 ### isWeekend
+
 > #### isWeekend(pivotDate? : string = '') : boolean
-Returns true if `pivotDate` is on weekend
+>
+> Returns true if `pivotDate` is on weekend
 
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 - `-> result` - Returns true or false
@@ -345,10 +379,13 @@ The following returns true or false if `pivotDate` is weekend
 <%- date.isWeekend('2021-12-15') %> // the following will return false
 ```
 
-*****
+---
+
 ### weekOf
+
 > #### weekOf(pivotDate? : string = '') : string
-Returns formatted weekOf based on `pivotDate`
+>
+> Returns formatted weekOf based on `pivotDate`
 
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 
@@ -362,11 +399,13 @@ The following returns weekOf value based on `pivotDate`
 <%- date.weekOf('2021-12-01') %> // the following will W48 (2021-11-28..2021-12-03)
 ```
 
-*****
+---
 
 ### startOfWeek
+
 > #### startOfWeek(format? string = '', pivotDate? : string = '', firstOfWeek? : number = 0) : string
-Returns start of week date
+>
+> Returns start of week date
 
 - `format` - Optional date format, uses `Templating` Date Format if not supplied
 - `pivotDate?` - Desired date to obtain start of week. If not supplied, it will use current date
@@ -382,11 +421,13 @@ The following returns start of week based on `pivotDate`
 <%- date.startOfWeek('2021-12-01') %> // the following return 2021-11-29
 ```
 
-*****
+---
 
 ### endOfWeek
+
 > #### endOfWeek(format? string = '', pivotDate? : string = '', firstOfWeek? : number = 0) : string
-Returns end of week date
+>
+> Returns end of week date
 
 - `format` - Optional date format, uses `Templating` Date Format if not supplied
 - `pivotDate?` - Desired date to obtain end of week. If not supplied, it will use current date
@@ -394,43 +435,51 @@ Returns end of week date
 
 - `-> result` Returns end of week
 
-*****
+---
 
 ### startOfMonth
+
 > #### startOfMonth(format? string = '', pivotDate? : string = '') : string
-Returns start of month date
+>
+> Returns start of month date
 
 - `format` - Optional date format, uses `Templating` Date Format if not supplied
 - `pivotDate?` - Desired date to obtain start of month. If not supplied, it will use current date
 
 - `-> result` Returns start of month
 
-*****
+---
 
 ### daysInMonth
+
 > #### daysInMonth(pivotDate? : string = '') : number
-Returns number of days in month
+>
+> Returns number of days in month
 
 - `pivotDate?` - Desired date to obtain days in month. If not supplied, it will use current date
 
 - `-> result` Returns days in month
 
-*****
+---
 
 ### endOfMonth
+
 > #### endOfMonth(format? string = '', pivotDate? : string = '') : string
-Returns start of month date
+>
+> Returns start of month date
 
 - `format` - Optional date format, uses `Templating` Date Format if not supplied
 - `pivotDate?` - Desired date to obtain start of month. If not supplied, it will use current date
 
 - `-> result` Returns end of month
 
-*****
+---
 
 ### daysBetween
+
 > #### daysBetween(startDate : string = '', endDate: string = '') : number | string
-Returns days between two dates.
+>
+> Returns days between two dates.
 
 - `startDate` - Desired start date
 - `endDate` - Desired end date
@@ -449,11 +498,13 @@ The following returns number of days between `2022-05-01` and `2022-06-31` (retu
 <%- date.daysBewteen('2022-05-01', '2022-06-01') %> // returns 31
 ```
 
-*****
+---
 
 ### add
+
 > #### add(pivotDate? : string = '', numDays : number = 1, timeframe : string = '', format? : string = 'YYYY-MM-DD') : string
-Adds `numDays` days.  You can also supply `pivotDate` and date `format`
+>
+> Adds `numDays` days. You can also supply `pivotDate` and date `format`
 
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 - `numDays` - Number of days to add (default: 1)
@@ -470,11 +521,13 @@ The following adds 7 days, using current date
 <%- date.add('2022-01-07', 7, 'days', 'YYYY-MM-DD') %> // returns 2022-01-14
 ```
 
-*****
+---
 
 ### businessAdd
+
 > #### businessAdd(numDays : number = 1, pivotDate? : string = '', format? : string = '') : string
-Adds `numDays` business days.  You can also supply `pivotDate` and date `format`
+>
+> Adds `numDays` business days. You can also supply `pivotDate` and date `format`
 
 - `numDays` - Number of days to add (default: 1)
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
@@ -490,10 +543,13 @@ The following adds 3 business days, using current date
 <%- date.businessAdd(3, '2022-01-07', 'YYYY-MM-DD') %> // returns 2022-01-12
 ```
 
-*****
+---
+
 ### subtract
+
 > #### subtract(pivotDate? : string = '', numDays : number = 1, timeframme : string = '', format? : string = '') : string
-Subtracts `numDays` days.  You can also supply `pivotDate` and date `format`
+>
+> Subtracts `numDays` days. You can also supply `pivotDate` and date `format`
 
 - `numDays` - Number of days to add (default: 1)
 - `timeframe` - 'days', 'weeks', 'months', 'years'
@@ -510,10 +566,13 @@ The following subtracts 7 days, using current date
 <%- date.subtract('2022-01-12', 7, 'days', 'YYYY-MM-DD') %> // returns 2022-01-05
 ```
 
-*****
+---
+
 ### businessSubtract
+
 > #### businessSubtract(numDays : number = 1, pivotDate? : string = '', format? : string = '') : string
-Subtracts `numDays` business days.  You can also supply `pivotDate` and date `format`
+>
+> Subtracts `numDays` business days. You can also supply `pivotDate` and date `format`
 
 - `numDays` - Number of business days to subtract (default: 1)
 - `pivotDate?` - Desired date to obtain subtract from. If not supplied, it will use current date
@@ -529,10 +588,13 @@ The following subtracts 3 business days, using current date
 <%- date.businessSubtract(3, '2022-01-12', 'YYYY-MM-DD') %> // returns 2022-01-07
 ```
 
-*****
+---
+
 ### nextBusinessDay
+
 > #### nextBusinessDay(pivotDate? : string = '', format? : string = '') : string
-Returns next business day, based on `pivotDate`.  You can also supply date `format`
+>
+> Returns next business day, based on `pivotDate`. You can also supply date `format`
 
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 - `format?` - Optional format string
@@ -547,10 +609,13 @@ The following returns next business day based on `pivotDate`
 <%- date.nextBusinessDay('2022-01-12') %> // returns 2022-01-13
 ```
 
-*****
+---
+
 ### previousBusinessDay
+
 > #### previousBusinessDay(pivotDate? : string = '', format? : string = '') : string
-Returns previous business day, based on `pivotDate`.  You can also supply date `format`
+>
+> Returns previous business day, based on `pivotDate`. You can also supply date `format`
 
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 - `format?` - Optional format string
@@ -565,12 +630,12 @@ The following returns previous business day based on `pivotDate`
 <%- date.previousBusinessDay('2022-01-10') %> // returns 2022-01-07
 ```
 
-{/* *****
-
 ## Using DateModule in NotePlan Plugins
+
 In addition to using the Date Module methods in templates, you can also use within your custom NotePlan plugins.
 
 ### Date Module Methods
+
 The following examples demonstrates how you can use some of the Date Module methods
 
 #### previousBusinessDay
@@ -606,18 +671,23 @@ export async testNextBusinessDay() : Promise<string> {
 ```
 
 ## Helpers
+
 DateModule exposes commonly used methods as importable helpers
 
 ### now
+
 > #### now() -> current date
 
 ### format
+
 > #### format(format : string = '') -> formatted date
 
 ### date8601
+
 > #### date8601() -> returns current date in 8601 format
 
 ### timestamp
+
 > #### timestamp() -> returns current date time
 
 **Examples:**
@@ -640,4 +710,3 @@ const templateData = {
 	const renderedData = NPTemplating.renderTemplate('My Template', data)
 }
 ```
-
