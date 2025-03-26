@@ -1,6 +1,26 @@
 # Note Module
 
-## Overview
+### getNote
+
+Even though this is not technically part of the Note Module, it is relevant to Notes, so included here.
+This is a general-purpose method that can be used to get a note object for a given title or filename (calendar or regular note).
+
+> #### getNote(titleOrFilename: string) : TNote
+>
+> Returns a note object for the given title or filename (calendar or regular note).
+
+**Examples:**
+
+The following will return the note object for the note with a title of "My Note"
+
+```javascript
+const note = await note.getNote('My Note')
+const note = await note.getNote('this is a test.md')
+const note = await note.getNote('20220529')
+const note = await note.getNote('2024-01-01')
+```
+
+## Note Module Overview
 
 The Note Module provides a suite of methods which provide access to the current note (calendar or project note). If there is no current note, each method will return an empty value
 
