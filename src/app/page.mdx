@@ -4,33 +4,45 @@ import choosetemplate from '@/images/noteplan-choose-template.png'
 import meetingnotetemplate from '@/images/noteplan-meeting-note-template.png'
 import meetingnote from '@/images/noteplan-meeting-note.png'
 import templatechooser from '@/images/template-chooser.png'
-import Link from  'next/link'
+import Link from 'next/link'
 import Callout from '@/components/Callout'
 
-# Templating Introduction
+# Templating Documentation
+
+Welcome to the NotePlan Templating documentation! This guide will help you understand and use the powerful templating system in NotePlan.
+
+## What is Templating?
 
 `Templating` is a template language plugin for NotePlan that lets you insert variables and method results into your notes. It will also let you execute custom JavaScript constructed in the templates providing a rich note taking system.
 
-## Why Use Templates
+## Why Use Templates?
 
 Templates enables you to create structured and consistent notes for repetitive tasks. When invoked by one of the many `Templating` commands (e.g. `np:new`, `np:append`) the templating plugin replaces placeholders in a template file with actual values, and transforms the template into a NotePlan note. This approach makes it easier to create notes in your day-to-day work.
 
-- Encourages consistent notes (data generation is separate from presentation code).
+- Encourages consistent notes (data generation is separate from presentation code)
 - Output generation is more expressive (template syntax doesn't require a sea of string concatenation)
-- Better productivity (common problems such as output encoding, iterating, conditionals, etc. have been handled).
+- Better productivity (common problems such as output encoding, iterating, conditionals, etc. have been handled)
 
-### Example
-For example, one of the unique features of NotePlan is the ability to combine normal note taking features (the _Note_) with an integrated calendar environment (the _Plan_) which provides a terrific place to manage a big part of your day-to-day work.
+## Quick Start
 
-When viewing the meeting in the NotePlan Calendar View, you may wish to link the event to a NotePlan Meeting note
+1. [Install the Templating plugin](/getting-started/templating-installation)
+2. [Learn the basic concepts](/getting-started/templating-terminology)
+3. [Create your first template](/core-features/templating-anatomy)
+4. [Explore built-in modules](/built-in-modules/templating-modules-date)
+
+## Example: Meeting Notes
+
+One of the unique features of NotePlan is the ability to combine normal note taking features (the _Note_) with an integrated calendar environment (the _Plan_) which provides a terrific place to manage a big part of your day-to-day work.
+
+When viewing the meeting in the NotePlan Calendar View, you may wish to link the event to a NotePlan Meeting note:
 
 <img src={noteplanevent.src} alt="NotePlan Event" />
 
-Clicking on the "Link Note" button at the top of the event
+Clicking on the "Link Note" button at the top of the event:
 
 <img src={linknote.src} alt="NotePlan Event" />
 
-You may select from one of the `meeting-note` templates in the "Templates" folder
+You may select from one of the `meeting-note` templates in the "Templates" folder:
 
 <Callout
   type="info"
@@ -41,57 +53,65 @@ Any template which contains a type of <code>meeting-note</code> will be availabl
 
 <img src={choosetemplate.src} alt="NotePlan Event" />
 
-When you select the desired template and click "Create Meeting Note", NotePlan will generate a new note, replacing template placeholders with information from the selected event, using a template such as the following
+When you select the desired template and click "Create Meeting Note", NotePlan will generate a new note, replacing template placeholders with information from the selected event, using a template such as the following:
 
 <img src={meetingnotetemplate.src} alt="NotePlan Event" />
 
-The end result will be a new note, which has a consistent format, making it easy to identify the important parts when you review notes in the future. Each of the placeholders (e.g. `<%- calendarItemLink %>` or `<%- eventNotes %>`) will be replaced with event attributes where applicable
+The end result will be a new note, which has a consistent format, making it easy to identify the important parts when you review notes in the future. Each of the placeholders (e.g. `&lt;%- calendarItemLink &gt;%` or `&lt;%- eventNotes &gt;%`) will be replaced with event attributes where applicable:
 
 <img src={meetingnote.src} alt="NotePlan Event" />
 
+## Documentation Sections
 
-## Configuration
+Our documentation is organized into the following sections:
 
-`Templating` has a number of <Link href="templating-settings" alt="settings">settings</Link> which you can use to control how data is supplied and formatted when rendering templates.
+### Getting Started
 
-<Callout
-  type="info"
-  description={`
-For more information on <code>Templating</code> settings, visit <a href="templating-settings" alt="settings">settings</a>.
-  `}
-/>
-## Using Templating Commands
+- [Introduction](/getting-started/templating-intro)
+- [Installation](/getting-started/templating-installation)
+- [Basic Concepts](/getting-started/templating-terminology)
+- [Common Use Cases](/getting-started/templating-miscellaneous)
 
-`Templating` provides a variety of built-in commands which can be invoked using NotePlan Plugin Command Bar (`Command-J`)
+### Core Features
 
-### Appending or Inserting Template
+- [Template Anatomy](/core-features/templating-anatomy)
+- [Template Syntax](/core-features/templating-syntax)
+- [Template Tags](/core-features/templating-tags)
+- [Template Commands](/core-features/templating-commands)
 
-**Step 1:** Invoke NotePlan Command Bar (`Command-J`)
+### Built-in Modules
 
-**Step 2:** Select `np:append` or `np:insert`
+- [Date Module](/built-in-modules/templating-modules-date)
+- [Time Module](/built-in-modules/templating-modules-time)
+- [Note Module](/built-in-modules/templating-modules-note)
+- [System Module](/built-in-modules/templating-modules-system)
+- [Web Module](/built-in-modules/templating-modules-web)
+- [Utility Module](/built-in-modules/templating-modules-utility)
+- [Miscellaneous Module](/built-in-modules/templating-modules-miscellaneous)
 
-**Step 3:** Choose a template to use
+### Advanced Features
 
-<img src={templatechooser.src} alt="Template Chooser" />
+- [Async Operations](/advanced-features/templating-examples-async)
+- [Conditional Logic](/advanced-features/templating-examples-conditional)
+- [Looping](/advanced-features/templating-examples-looping)
+- [Frontmatter](/advanced-features/templating-examples-frontmatter)
+- [String Interpolation](/advanced-features/templating-examples-string-interpolation)
 
-{/* ### Advanced: Integrating into your plugins (for developers)
+### Examples & Templates
 
-You can also use the Templating functions from within a custom plugin you are developing. For example:
+- [Weather Integration](/examples-templates/templating-examples-js-weather)
+- [Web Scraping](/examples-templates/templating-examples-web)
+- [Prompt Interface](/examples-templates/templating-examples-prompt)
+- [Date/Time Examples](/examples-templates/templating-examples-datetime)
+- [Quick Notes](/examples-templates/templating-quicknotes)
 
-```javascript
-import NPTemplating from "NPTemplating";
+### Configuration
 
-export async function templatingHelloWorld(): Promise<void> {
-  try {
-    const result = await NPTemplating.renderTemplate(
-      "Template - Hello World",
-      {}
-    );
+- [Plugin Settings](/configuration/templating-settings)
 
-    Editor.insertTextAtCursor(result);
-  } catch (error) {
-    console.log("templatingHelloWorld", error);
-  }
-}
-``` */}
+### Developer Guide
 
+- [Plugin Integration](/developer-guide/templating-examples-js-weather)
+- [Custom Modules](/developer-guide/templating-examples-web)
+- [Best Practices](/developer-guide/templating-examples-prompt)
+- [Troubleshooting](/developer-guide/templating-examples-datetime)

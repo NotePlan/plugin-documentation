@@ -55,9 +55,15 @@ function rehypeSlugify() {
   return (tree) => {
     let slugify = slugifyWithCounter()
     visit(tree, 'element', (node) => {
-      if ((node.tagName === 'h1' || node.tagName === 'h2' || node.tagName === 'h3' || 
-           node.tagName === 'h4' || node.tagName === 'h5' || node.tagName === 'h6') && 
-          !node.properties.id) {
+      if (
+        (node.tagName === 'h1' ||
+          node.tagName === 'h2' ||
+          node.tagName === 'h3' ||
+          node.tagName === 'h4' ||
+          node.tagName === 'h5' ||
+          node.tagName === 'h6') &&
+        !node.properties.id
+      ) {
         node.properties.id = slugify(toString(node))
       }
     })
@@ -96,13 +102,14 @@ function rehypeAddMDXExports(getExports) {
 
 function getSections(node) {
   let sections = []
+  let slugify = slugifyWithCounter()
 
   for (let child of node.children ?? []) {
     if (child.type === 'element' && child.tagName === 'h2') {
       sections.push(`{
         title: ${JSON.stringify(toString(child))},
-        id: ${JSON.stringify(child.properties.id)},
-        ...${child.properties.annotation}
+        id: ${JSON.stringify(child.properties.id || slugify(toString(child)))},
+        ...${child.properties.annotation || '{}'}
       }`)
     } else if (child.children) {
       sections.push(...getSections(child))

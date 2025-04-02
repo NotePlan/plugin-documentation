@@ -1,0 +1,28 @@
+
+# Web Services
+
+## Overview
+`Templating` provides a variety of methods which are designed to work with web servers (aka APIs) and will require an active internet connection to complete operation, something that is common place for applications these days.
+
+## Examples
+The following are some examples using the `Templating` WebModule
+
+### Get Random Advice
+In addition to the `np:advice` command, you can also get a random quote within any template
+
+```javascript
+&lt;%- web.advice() &gt;%
+```
+
+### Get Random Quote
+
+```javascript
+&lt;%- web.quote() &gt;%
+```
+
+### Accessing Web Service
+Using the `web.service()` method, you an access can item in the _TODO_ `Web Services` in Templating Settings (NotePlan -> Preferences -> Plugins -> Settings). For complete details, please refer to [Templating Modules | Web Module](/docs/templating-modules/web-module)
+
+```javascript
+&lt;%- web.service('developerQuote') &gt;%
+```

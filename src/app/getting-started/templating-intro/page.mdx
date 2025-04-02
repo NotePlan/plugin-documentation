@@ -1,0 +1,73 @@
+import Link from 'next/link'
+
+# Getting Started
+
+With `Templating`, you will be able to create powerful templates to automate common manual tasks.
+
+## Examples
+
+The following examples demonstrate how you create a **template** and use `Templating` tags to place dynamic **output**.
+
+### Example 1: Template Definition
+
+When creating a new template in the "Templates" folder, the template header will be in `frontmatter` format, containing two fields for the template--`title` and `type`-- followed by the template body.
+
+`title` - The title should be a unique name beginning with the folder in which it is located. You can use the same title in multiple templates, provided they are in different folders.
+
+`type` - The type field is used to identify what type of template this is. There are currently 3 different types of templates
+
+- `empty-note` will be available when you select the "Template" button in an empty calendar day
+- `quick-note` will be available whenever you invoke the `np:qtn` command
+- `meeting-note` will be available whenever you wish to create a meeting note for any NotePlan calendar event
+- `ignore` will be ignored in all template chooser interfaces
+
+For more information on using Quick Notes and the `np:qtn` command, see <Link href="templating-quicknotes">here</Link>.
+
+```markdown
+---
+title: myTemplate
+type: empty-note
+---
+
+Hello &lt;%- user.first &gt;%
+```
+
+```text
+Hello Michael
+```
+
+### Example 2: Using `Templating` modules
+
+In this example, we will use one of the many `Templating` module methods, <Link href="templating-modules-web">Templating Web Module.</Link>.
+
+```markdown
+---
+title: myTemplate
+type: empty-note
+---
+
+Today's Weather: &lt;%- web.weather() &gt;%
+```
+
+```text
+Todays Weather: Fountain Valley, California, United States: ⛅️  +86°F
+```
+
+The call to `&lt;%- web.weather() &gt;%` will use the format you have defined in `Templating` <Link href="templating-settings">settings</Link>. In this example, the settings value is blank, thus the default weather format will be used.
+
+For more information about `Templating` weather, visit <Link href="templating-modules-web">Templating Web Module</Link>.
+
+export const sections = [
+  {
+    title: 'Examples',
+    id: 'examples',
+  },
+  {
+    title: 'Example 1: Template Definition',
+    id: 'example-1-template-definition',
+  },
+  {
+    title: 'Example 2: Using `Templating` modules',
+    id: 'example-2-using-templating-modules',
+  },
+]

@@ -25,6 +25,10 @@ function excludeObjectExpressions(tree) {
   return filter(tree, (node) => !isObjectExpression(node))
 }
 
+function escapeTemplateTags(content) {
+  return content.replace(/<%/g, '&lt;%').replace(/%>/g, '%&gt;')
+}
+
 function extractSections() {
   return (tree, { sections }) => {
     slugify.reset()
@@ -32,6 +36,7 @@ function extractSections() {
     visit(tree, (node) => {
       if (node.type === 'heading' || node.type === 'paragraph') {
         let content = toString(excludeObjectExpressions(node))
+        content = escapeTemplateTags(content)
         if (node.type === 'heading') {
           let hash = node.depth === 1 ? null : slugify(content)
           if (node.depth <= 2) {
@@ -64,6 +69,7 @@ export default function (nextConfig = {}) {
             let data = files.map((file) => {
               let url = '/' + file.replace(/(^|\/)page\.mdx$/, '')
               let mdx = fs.readFileSync(path.join(appDir, file), 'utf8')
+              mdx = escapeTemplateTags(mdx)
 
               let sections = []
 
@@ -101,6 +107,7 @@ export default function (nextConfig = {}) {
 
               for (let { url, sections } of data) {
                 for (let [title, hash, content] of sections) {
+                  console.log(title, hash, content)
                   sectionIndex.add({
                     url: url + (hash ? ('#' + hash) : ''),
                     title,

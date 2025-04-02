@@ -108,13 +108,13 @@ function NavLink({
     <Link
       href={href}
       aria-current={active ? 'page' : undefined}
-      className={clsx(
-        'flex justify-between gap-2 py-1 pr-3 text-sm transition',
-        isAnchorLink ? 'pl-7' : 'pl-4',
+      className={`flex justify-between gap-2 ${
+        isAnchorLink ? 'pl-7' : 'pl-4'
+      } rounded-lg py-2 pr-3 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 ${
         active
           ? 'text-zinc-900 dark:text-white'
-          : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white',
-      )}
+          : 'text-zinc-600 dark:text-zinc-400'
+      }`}
     >
       <span className="truncate">{children}</span>
       {tag && (
@@ -133,13 +133,10 @@ function VisibleSectionHighlight({
   group: NavGroup
   pathname: string
 }) {
-  let [sections, visibleSections] = useInitialValue(
-    [
-      useSectionStore((s) => s.sections),
-      useSectionStore((s) => s.visibleSections),
-    ],
-    useIsInsideMobileNavigation(),
-  )
+  let [sections, visibleSections] = useSectionStore((state) => [
+    state.sections,
+    state.visibleSections,
+  ])
 
   let isPresent = useIsPresent()
   let firstVisibleSectionIndex = Math.max(
@@ -148,13 +145,13 @@ function VisibleSectionHighlight({
       (section) => section.id === visibleSections[0],
     ),
   )
+
   let itemHeight = remToPx(2)
-  let height = isPresent
-    ? Math.max(1, visibleSections.length) * itemHeight
-    : itemHeight
+  let height = isPresent ? Math.max(1, visibleSections.length) * itemHeight : 0
   let top =
-    group.links.findIndex((link) => link.href === pathname) * itemHeight +
-    firstVisibleSectionIndex * itemHeight
+    isPresent && visibleSections.length > 0
+      ? remToPx(2) + firstVisibleSectionIndex * itemHeight
+      : 0
 
   return (
     <motion.div
@@ -162,7 +159,7 @@ function VisibleSectionHighlight({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { delay: 0.2 } }}
       exit={{ opacity: 0 }}
-      className="absolute inset-x-0 top-0 bg-zinc-800/2.5 will-change-transform dark:bg-white/2.5"
+      className="absolute inset-x-4 top-0 bg-zinc-50 will-change-transform dark:bg-zinc-800/50"
       style={{ borderRadius: 8, height, top }}
     />
   )
@@ -199,15 +196,14 @@ function NavigationGroup({
   group: NavGroup
   className?: string
 }) {
-  // If this is the mobile navigation then we always render the initial
-  // state, so that the state does not change during the close animation.
-  // The state will still update when we re-open (re-render) the navigation.
-  let isInsideMobileNavigation = useIsInsideMobileNavigation()
-  let [pathname, sections] = useInitialValue(
-    [usePathname(), useSectionStore((s) => s.sections)],
-    isInsideMobileNavigation,
-  )
+  // If this is the mobile navigation, we don't want the active section highlight
+  let isInsideMobileNavigation = useRef(false)
 
+  let [sections, visibleSections] = useSectionStore((state) => [
+    state.sections,
+    state.visibleSections,
+  ])
+  let pathname = usePathname()
   let isActiveGroup =
     group.links.findIndex((link) => link.href === pathname) !== -1
 
@@ -220,11 +216,9 @@ function NavigationGroup({
         {group.title}
       </motion.h2>
       <div className="relative mt-3 pl-2">
-        <AnimatePresence initial={!isInsideMobileNavigation}>
-          {isActiveGroup && (
-            <VisibleSectionHighlight group={group} pathname={pathname} />
-          )}
-        </AnimatePresence>
+        {!isInsideMobileNavigation.current && (
+          <VisibleSectionHighlight group={group} pathname={pathname} />
+        )}
         <motion.div
           layout
           className="absolute inset-y-0 left-2 w-px bg-zinc-900/10 dark:bg-white/5"
@@ -234,283 +228,196 @@ function NavigationGroup({
             <ActivePageMarker group={group} pathname={pathname} />
           )}
         </AnimatePresence>
-        <ul role="list" className="border-l border-transparent">
-          <NavigationLinks
-            links={group.links}
-            pathname={pathname}
-            sections={sections}
-          />
-        </ul>
+        <AnimatePresence initial={false}>
+          <motion.ul
+            role="list"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: { delay: 0.1 },
+            }}
+            exit={{ opacity: 0 }}
+            className="border-l border-transparent"
+          >
+            {group.links.map((link) => (
+              <motion.li key={link.href} layout="position" className="relative">
+                <NavLink href={link.href} active={link.href === pathname}>
+                  {link.title}
+                </NavLink>
+                {link.href === pathname && sections.length > 0 && (
+                  <motion.ul
+                    role="list"
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: 1,
+                      transition: { delay: 0.1 },
+                    }}
+                    exit={{ opacity: 0 }}
+                  >
+                    {sections.map((section) => (
+                      <motion.li key={section.id} layout="position">
+                        <NavLink
+                          href={`${link.href}#${section.id}`}
+                          tag={section.tag}
+                          isAnchorLink
+                          active={visibleSections.includes(section.id)}
+                        >
+                          {section.title}
+                        </NavLink>
+                      </motion.li>
+                    ))}
+                  </motion.ul>
+                )}
+              </motion.li>
+            ))}
+          </motion.ul>
+        </AnimatePresence>
       </div>
     </li>
   )
 }
 
-function NavigationLinks({
-  links,
-  pathname,
-  sections,
-}: {
-  links: Array<NavGroupLink>
-  pathname: string
-  sections: Array<Section>
-}) {
-  const [isCollapsed, setIsCollapsed] = useState(() => {
-    const initialCollapseStates: Record<string, boolean> = {}
-    links.forEach((link) => {
-      initialCollapseStates[link.title] = true
-    })
-    return initialCollapseStates
-  })
-
-  const toggleCollapse = (event: React.MouseEvent, title: string) => {
-    event.preventDefault()
-    setIsCollapsed((prevState) => ({
-      ...prevState,
-      [title]: !prevState[title],
-    }))
-  }
-
-  return (
-    <>
-      {links.map((link) => (
-        <motion.li key={link.href} layout="position" className="relative">
-          <NavLink href={link.href} active={link.href === pathname}>
-            {/* {link.title} */}
-
-            <button
-              onClick={(event) => toggleCollapse(event, link.title)}
-              className="flex items-center "
-            >
-              <span>{link.title}</span>
-              {link.children && (
-                <span>
-                  {!isCollapsed[link.title] ? (
-                    <ChevronDownIcon />
-                  ) : (
-                    <ChevronRightIcon />
-                  )}
-                </span>
-              )}
-            </button>
-
-            {!isCollapsed[link.title] &&
-              link.children &&
-              link.children.map((child) => (
-                <NavLink key={child.href} href={`${child.href}`}>
-                  {child.title}
-                </NavLink>
-              ))}
-          </NavLink>
-          <AnimatePresence mode="popLayout" initial={false}>
-            {link.href === pathname && sections.length > 0 && (
-              <motion.ul
-                role="list"
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: { delay: 0.1 },
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: { duration: 0.15 },
-                }}
-              >
-                {sections.map((section) => (
-                  <li key={section.id}>
-                    <NavLink
-                      href={`${link.href}#${section.id}`}
-                      tag={section.tag}
-                      isAnchorLink
-                    >
-                      {section.title}
-                    </NavLink>
-                  </li>
-                ))}
-              </motion.ul>
-            )}
-          </AnimatePresence>
-        </motion.li>
-      ))}
-    </>
-  )
-}
-
-export const navigation: Array<NavGroup> = [
+const navigation: Array<NavGroup> = [
   {
-    title: 'Start',
+    title: 'Getting Started',
     links: [
-      { title: 'Introduction', href: '/' },
-      // { title: 'Full Plugin List', href: '/pluginlist' },
+      { title: 'Introduction', href: '/getting-started/templating-intro' },
+      {
+        title: 'Installation',
+        href: '/getting-started/templating-installation',
+      },
+      {
+        title: 'Basic Concepts',
+        href: '/getting-started/templating-terminology',
+      },
+      {
+        title: 'Common Use Cases',
+        href: '/getting-started/templating-miscellaneous',
+      },
     ],
   },
-  
   {
-    title: 'Templating',
+    title: 'Core Features',
     links: [
-      { title: 'Getting Started', href: '/templating-intro' },
-      { title: 'Installation', href: '/templating-installation' },
-      { title: 'Plugin Settings', href: '/templating-settings' },
+      { title: 'Template Anatomy', href: '/core-features/templating-anatomy' },
+      { title: 'Template Syntax', href: '/core-features/templating-syntax' },
+      { title: 'Template Tags', href: '/core-features/templating-tags' },
       {
-        title: 'Definitions',
-        href: '',
-        children: [
-          { title: 'Anatomy', href: '/templating-anatomy' },
-          { title: 'Tags', href: '/templating-tags' },
-          { title: 'Terminology', href: '/templating-terminology' },
-          { title: 'Modules', href: '/templating-modules' },
-          { title: 'Prompts', href: '/templating-examples-prompt' },
-          {
-            title: 'Miscellaneous',
-            href: '/templating-miscellaneous',
-          },
-
-          { title: 'Syntax', href: '/templating-syntax' },
-        ],
+        title: 'Template Commands',
+        href: '/core-features/templating-commands',
       },
-
+    ],
+  },
+  {
+    title: 'Built-in Modules',
+    links: [
       {
-        title: 'Commands',
-        href: '',
-        children: [
-          { title: 'Overview', href: '/templating-commands' },
-          { title: 'Quick Notes', href: '/templating-quicknotes' },
-          { title: 'Template Runner', href: '/templating-templateRunner' },
-        ],
-      },
-
-      {
-        title: 'Examples',
-        href: '',
-        children: [
-          // { title: 'Simple', href: '/templating-examples-simple' },
-
-          {
-            title: 'Date & Time',
-            href: '/templating-examples-datetime',
-          },
-          // { title: 'Arrays', href: '/templating-examples-arrays' },
-          { title: 'Async', href: '/templating-examples-async' },
-          {
-            title: 'Conditional',
-            href: '/templating-examples-conditional',
-          },
-          {
-            title: 'Looping & Arrays',
-            href: '/templating-examples-looping',
-          },
-
-          {
-            title: 'Frontmatter',
-            href: '/templating-examples-frontmatter',
-          },
-
-          // missing objects
-
-          // {
-          //   title: 'Custom Plugins',
-          //   href: '/templating-custom-plugins-example',
-          // },
-          { title: 'Prompts', href: '/templating-examples-prompt' },
-
-          // {
-          //   title: 'Displaying Tasks',
-          //   href: '/templating-examples-tasks',
-          // },
-
-          {
-            title: 'String Interpolation',
-            href: '/templating-examples-string-interpolation',
-          },
-          {
-            title: 'Web Services',
-            href: '/templating-examples-web',
-          },
-          {
-            title: 'Using JavaScript in Templates',
-            href: '/templating-examples-js-weather',
-          },
-        ],
+        title: 'Date Module',
+        href: '/built-in-modules/templating-modules-date',
       },
       {
-        title: 'Modules',
-        href: '',
-        children: [
-          {
-            title: 'Overview',
-            href: '/templating-modules-overview',
-          },
-          {
-            title: 'Date Module',
-            href: '/templating-modules-date',
-          },
-          { title: 'Time Module', href: '/templating-modules-time' },
-          // {
-          //   title: 'FrontMatter Module',
-          //   href: '/templating-modules-frontmatter',
-          // },
-          {
-            title: 'Note Module',
-            href: '/templating-modules-note',
-          },
-
-          {
-            title: 'System Module',
-            href: '/templating-modules-system',
-          },
-
-          {
-            title: 'Utility Module',
-            href: '/templating-modules-utility',
-          },
-
-          {
-            title: 'Web Module',
-            href: '/templating-modules-web',
-          },
-          {
-            title: 'Miscellaneous Helpers/Shortcuts',
-            href: '/templating-modules-miscellaneous',
-          },
-          // {
-          //   title: 'Helpers',
-          //   href: '/templating-modules-helpers',
-          // },
-        ],
+        title: 'Time Module',
+        href: '/built-in-modules/templating-modules-time',
       },
-      // {
-      //   title: 'Usage in Plugins',
-      //   href: '',
-      //   children: [
-      //     {
-      //       title: 'Overview',
-      //       href: '/templating-integration-overview',
-      //     },
-
-      //     {
-      //       title: 'Example 1: Hello World',
-      //       href: '/templating-integration-helloworld',
-      //     },
-
-      //     {
-      //       title: 'Example 2: Custom Variables',
-      //       href: '/templating-integration-variables',
-      //     },
-
-      //     {
-      //       title: 'Example 3: Custom Method',
-      //       href: '/templating-integration-method',
-      //     },
-
-      //     {
-      //       title: 'Example 4: Full Example',
-      //       href: '/templating-integration-full',
-      //     },
-      //   ],
-      // },
+      {
+        title: 'Note Module',
+        href: '/built-in-modules/templating-modules-note',
+      },
+      {
+        title: 'System Module',
+        href: '/built-in-modules/templating-modules-system',
+      },
+      { title: 'Web Module', href: '/built-in-modules/templating-modules-web' },
+      {
+        title: 'Utility Module',
+        href: '/built-in-modules/templating-modules-utility',
+      },
+      {
+        title: 'Miscellaneous Module',
+        href: '/built-in-modules/templating-modules-miscellaneous',
+      },
+    ],
+  },
+  {
+    title: 'Advanced Features',
+    links: [
+      {
+        title: 'Async Operations',
+        href: '/advanced-features/templating-examples-async',
+      },
+      {
+        title: 'Conditional Logic',
+        href: '/advanced-features/templating-examples-conditional',
+      },
+      {
+        title: 'Looping',
+        href: '/advanced-features/templating-examples-looping',
+      },
+      {
+        title: 'Frontmatter',
+        href: '/advanced-features/templating-examples-frontmatter',
+      },
+      {
+        title: 'String Interpolation',
+        href: '/advanced-features/templating-examples-string-interpolation',
+      },
+    ],
+  },
+  {
+    title: 'Examples & Templates',
+    links: [
+      {
+        title: 'Weather Integration',
+        href: '/examples-templates/templating-examples-js-weather',
+      },
+      {
+        title: 'Web Scraping',
+        href: '/examples-templates/templating-examples-web',
+      },
+      {
+        title: 'Prompt Interface',
+        href: '/examples-templates/templating-examples-prompt',
+      },
+      {
+        title: 'Date/Time Examples',
+        href: '/examples-templates/templating-examples-datetime',
+      },
+      {
+        title: 'Quick Notes',
+        href: '/examples-templates/templating-quicknotes',
+      },
+    ],
+  },
+  {
+    title: 'Configuration',
+    links: [
+      { title: 'Plugin Settings', href: '/configuration/templating-settings' },
+    ],
+  },
+  {
+    title: 'Developer Guide',
+    links: [
+      {
+        title: 'Plugin Integration',
+        href: '/developer-guide/templating-examples-js-weather',
+      },
+      {
+        title: 'Custom Modules',
+        href: '/developer-guide/templating-examples-web',
+      },
+      {
+        title: 'Best Practices',
+        href: '/developer-guide/templating-examples-prompt',
+      },
+      {
+        title: 'Troubleshooting',
+        href: '/developer-guide/templating-examples-datetime',
+      },
     ],
   },
 ]
+
+export { navigation }
 
 export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
   return (
@@ -519,12 +426,8 @@ export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
         <TopLevelNavItem href="/">API</TopLevelNavItem>
         <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
         <TopLevelNavItem href="#">Support</TopLevelNavItem>
-        {navigation.map((group, groupIndex) => (
-          <NavigationGroup
-            key={group.title}
-            group={group}
-            className={groupIndex === 0 ? 'md:mt-0' : ''}
-          />
+        {navigation.map((group) => (
+          <NavigationGroup key={group.title} group={group} />
         ))}
         <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
           <Button href="#" variant="filled" className="w-full">

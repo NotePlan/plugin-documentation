@@ -1,0 +1,42 @@
+
+# Conditionals
+
+#### if logic
+
+```markdown
+&lt;%if (1 > 0) { &gt;%
+// Do something with more than 1 recipe
+&lt;% } &gt;%
+```
+
+#### if/else logic
+
+```markdown
+&lt;%if (1 > 0) { &gt;%
+ true
+&lt;% } else { &gt;%
+ else
+&lt;% } &gt;%
+```
+
+#### if logic (single line)
+*note: the next line will only appear if the current day is Saturday*
+
+```javascript
+&lt;%if (date.dayNumber(`${np.pivotDate}`) === 6) { &gt;%do stuff on Saturday&lt;% } &gt;%
+```
+
+#### if/else logic (single line)
+
+```javascript
+&lt;%if (1 > 0) { &gt;%true&lt;% } else { &gt;%else&lt;% } &gt;%
+```
+
+#### ternary logic
+
+```javascript
+true: &lt;%- true ? 'pass' : 'fail' &gt;%
+false: &lt;%- false ? 'pass' : 'fail' &gt;%
+
+&lt;%- date.dayNumber(`${np.pivotDate}`) === 0 ? '> 📖 [Refuge CCHB](https://refugehb.online.church/)' : '' &gt;%
+```

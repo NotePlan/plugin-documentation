@@ -353,7 +353,6 @@ export function Code({
   ...props
 }: React.ComponentPropsWithoutRef<'code'>) {
   let isGrouped = useContext(CodeGroupContext)
-
   if (isGrouped) {
     if (typeof children !== 'string') {
       throw new Error(
