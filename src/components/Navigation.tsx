@@ -206,7 +206,7 @@ function NavigationGroup({
     group.links.findIndex((link) => link.href === pathname) !== -1
 
   return (
-    <li className={clsx('relative mt-6', className)}>
+    <li className={clsx('relative mt-0', className)}>
       <motion.h2
         layout="position"
         className="text-xs font-semibold text-zinc-900 dark:text-white"
