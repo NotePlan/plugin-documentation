@@ -7,17 +7,17 @@ import { CodeGroup, Code } from '@/components/Code'
 
 ## Tags
 
-- `&lt;%` Script tag to be used when executing any JavaScript command without producing any output
-- `&lt;%-` Outputs the value into the template
-- `&lt;%_` 'Whitespace Slurping' Template tag, strips all whitespace before it ([example](#strip-whitespace))
-- `&lt;%#` Comment tag, no execution, no output
-- `&lt;%%` Outputs a literal `&lt;%`
-- `-&gt;%` 'Whitespace Slurping' Template tag, strips all whitespace after it ([example](#strip-whitespace))
-- `&gt;%` Plain ending tag
+- `<%` Script tag to be used when executing any JavaScript command without producing any output
+- `<%-` Outputs the value into the template
+- `<%_` 'Whitespace Slurping' Template tag, strips all whitespace before it ([example](#strip-whitespace))
+- `<%#` Comment tag, no execution, no output
+- `<%%` Outputs a literal `<%`
+- `-%>` 'Whitespace Slurping' Template tag, strips all whitespace after it ([example](#strip-whitespace))
+- `%>` Plain ending tag
 
 ## Output Tags
 
-When you wish to output anything to the rendered template, you use the output `&lt;%-`
+When you wish to output anything to the rendered template, you use the output `<%-`
 
 ## Examples
 
@@ -25,13 +25,13 @@ The following are various examples of `Templating` tags in action
 
 ### JavaScript / Flow Control Tag
 
-The basic flow control tag `&lt;%` is used when you want to perform a standard JavaScript action such as setting a variable, doing a calculation, [looping](/docs/templating-examples/looping) or [conditionals](/docs/templating-examples/conditional). In this example, a `getData` method would be called, but the actual output would be displayed in another section of template. If you have many lines of JavaScript, you may want to consider the [templatejs code block](#templatejs-code-block).
+The basic flow control tag `<%` is used when you want to perform a standard JavaScript action such as setting a variable, doing a calculation, [looping](/docs/templating-examples/looping) or [conditionals](/docs/templating-examples/conditional). In this example, a `getData` method would be called, but the actual output would be displayed in another section of template. If you have many lines of JavaScript, you may want to consider the [templatejs code block](#templatejs-code-block).
 
 <Code
   language="markdown"
-  code={`&lt;% const data = getData() // the variable is set in this tag %&gt;
+  code={`<% const data = getData() // the variable is set in this tag %>
 ...
-&lt;%- data // the output is output later in this tag %&gt;`}
+<%- data // the output is output later in this tag %>`}
 />
 
 <Callout type="warning">
@@ -46,20 +46,20 @@ The basic flow control tag `&lt;%` is used when you want to perform a standard J
 <Code
   language="markdown"
   code={`Note that flow control tags, like all other tags are on a line by themselves. This means there is a return at the end of the line. When the template is rendered, the tag will be processed and deleted, but the return at the end of the line will show up in your rendered template as a blank line. If you don't want the returns, use the minus (slurping tag) at the end of each flow control line, e.g.
-&lt;% const myVar = note.title // there will be no blank line when this is processed because of the dash: -%&gt;`}
+<% const myVar = note.title // there will be no blank line when this is processed because of the dash: -%>`}
 />
 
 ### Standard output tag (variable)
 
 Display `first` name variable contained in `Templating` [Plugin Settings](/docs/settings)
 
-<Code language="markdown" code={`&lt;%- user.first %&gt;`} />
+<Code language="markdown" code={`<%- user.first %>`} />
 
 ### Standard output tag (module method)
 
 Displays current date from [Date Module](/docs/templating-modules/date-module)
 
-<Code language="markdown" code={`&lt;%- date.now() %&gt;`} />
+<Code language="markdown" code={`<%- date.now() %>`} />
 
 ### Unescaped Output Tag
 
@@ -69,12 +69,12 @@ Displays result from `templates.services.developerQuote` defined in `Templating`
   type="info"
   language="markdown"
   description={`
-<pre>Templating</pre> doesn't escape characters by default. When doing web requests, it may be useful to escape dangerous characters. You can escape a command's response characters using the <pre>&lt;%-</pre> tag.
+<pre>Templating</pre> doesn't escape characters by default. When doing web requests, it may be useful to escape dangerous characters. You can escape a command's response characters using the <pre><%-</pre> tag.
   
   `}
 />
 
-<Code language="markdown" code={`&lt;%- web.service('developerQuote') %&gt;`} />
+<Code language="markdown" code={`<%- web.service('developerQuote') %>`} />
 
 ### Strip Whitespace
 
@@ -82,8 +82,8 @@ When you have have process tags (this which do no produce output), it is recomme
 
 <Code
   language="markdown"
-  code={`&lt;%\_ const testName = 'Mike' -%&gt;
-name: &lt;%- testName %&gt;`}
+  code={`<%\_ const testName = 'Mike' -%>
+name: <%- testName %>`}
 />
 
 will produce the following output
@@ -117,8 +117,8 @@ taskContent = latestTask.rawContent
 }`} />
 
 Results:
-Overdue Tasks: &lt;%- overdueCount %&gt;
-&lt;%- taskContent %&gt;
+Overdue Tasks: `<%- overdueCount %>`
+`<%- taskContent %>`
 
 This will print the amount of overdue tasks and the latest overdue task below.
 

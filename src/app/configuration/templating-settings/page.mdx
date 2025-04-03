@@ -27,48 +27,46 @@ The locale which is used when creating date or time formats
 
 ### First Name
 
-Your first name, used when referencing user object (e.g. `&lt;%- user.first &gt;%`)
+Your first name, used when referencing user object (e.g. `<%- user.first %>`)
 
 ### Last Name
 
-Your last name, used when referencing user object (e.g. `&lt;%- user.last &gt;%`)
+Your last name, used when referencing user object (e.g. `<%- user.last %>`)
 
 ### Email
 
-Your email, used when referencing user object (e.g. `&lt;%- user.email &gt;%`)
+Your email, used when referencing user object (e.g. `<%- user.email %>`)
 
 ### Phone
 
-Your phone number, used when referencing user object (e.g. `&lt;%- user.phone &gt;%`)
+Your phone number, used when referencing user object (e.g. `<%- user.phone %>`)
 
 ### Date Format
 
 Default: `<system>`
 
-Desired date format, used when referencing date object (e.g. `&lt;%- date.now() %`)
+Desired date format, used when referencing date object (e.g. `<%- date.now() %`)
 
 ### Time Format
 
 Default: `<system>`
 
-Desired date format, used when referencing time object (e.g. `&lt;% time.now() %`)
+Desired date format, used when referencing time object (e.g. `<% time.now() %`)
 
 ### Timestamp Format
 
 Default: `<system>`
 
-Desired timestamp format, used when referencing timestamp object (e.g. `&lt;% date.timestamp() %`)
+Desired timestamp format, used when referencing timestamp object (e.g. `<% date.timestamp() %`)
 
 ### Weather Format
 
-Desired weather format string when referencing web weather (e.g. `&lt;% web.weather() %`)
+Desired weather format string when referencing web weather (e.g. `<% web.weather() %`)
 
 <Callout
   type="info"
   title="WEATHER TAGS"
-  description={
-    `For more detailed information on supported weather tags refer to the <a href="templating-modules-web" alt="weather example">weather examples</a>.`
-  }
+  description={`For more detailed information on supported weather tags refer to the <a href="templating-modules-web" alt="weather example">weather examples</a>.`}
 />
 
 ### Web Services
@@ -85,7 +83,7 @@ The following is an example of how `web services` should be defined
 Each `service` is defined by a unique key (e.g. 'advice') and may contain a single value which is the desire `url` or an object which has `url` and `keys` properties
 
 ```markdown
-&lt;%- web.services('serviceName') &gt;%
+<%- web.services('serviceName') %>
 ```
 
 ```json
@@ -115,5 +113,5 @@ Each `service` is defined by a unique key (e.g. 'advice') and may contain a sing
 {`
   For more information about using web services, refer to <a href="templating-modules-web" alt="Web Module"> Web Module </a>.
 
-  `}
+`}
 />

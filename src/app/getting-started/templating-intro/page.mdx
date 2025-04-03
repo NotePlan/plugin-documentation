@@ -29,7 +29,7 @@ title: myTemplate
 type: empty-note
 ---
 
-Hello &lt;%- user.first &gt;%
+Hello <%- user.first %>
 ```
 
 ```text
@@ -46,14 +46,14 @@ title: myTemplate
 type: empty-note
 ---
 
-Today's Weather: &lt;%- web.weather() &gt;%
+Today's Weather: <%- web.weather() %>
 ```
 
 ```text
 Todays Weather: Fountain Valley, California, United States: ⛅️  +86°F
 ```
 
-The call to `&lt;%- web.weather() &gt;%` will use the format you have defined in `Templating` <Link href="templating-settings">settings</Link>. In this example, the settings value is blank, thus the default weather format will be used.
+The call to `<%- web.weather() %>` will use the format you have defined in `Templating` <Link href="templating-settings">settings</Link>. In this example, the settings value is blank, thus the default weather format will be used.
 
 For more information about `Templating` weather, visit <Link href="templating-modules-web">Templating Web Module</Link>.
 

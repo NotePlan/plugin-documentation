@@ -26,7 +26,7 @@ function excludeObjectExpressions(tree) {
 }
 
 function escapeTemplateTags(content) {
-  return content.replace(/<%/g, '&lt;%').replace(/%>/g, '%&gt;')
+  return content.replace(/<%/g, '<%').replace(/%>/g, '%>')
 }
 
 function extractSections() {

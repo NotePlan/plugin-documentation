@@ -1,11 +1,12 @@
-import Link from  'next/link'
+import Link from 'next/link'
 
 import Callout from '@/components/Callout'
 
 # Miscellaneous
 
 ## Escaping
-By default, `Templating` will escape all data, which under certain circumstances, may produce unexpected results. In these cases, you can use the `&lt;%-` tag, which instructs `Templating` to render data as it has been received.
+
+By default, `Templating` will escape all data, which under certain circumstances, may produce unexpected results. In these cases, you can use the `<%-` tag, which instructs `Templating` to render data as it has been received.
 
 <Callout
   type="info"
@@ -16,12 +17,13 @@ For more information on <code>Templating</code> tags. Visit <a href="templating-
 />
 
 ### Example 1
+
 You can create output tags which will not auto escape data, but return the raw value in output.
 
 In the following example, data is retrieved from a quote service, and depending on the result, may sometimes include quote marks `'` in output.
 
 ```markdown
-"&lt;%- web.quote() &gt;%"
+"<%- web.quote() %>"
 ```
 
 Could produce something like
@@ -31,10 +33,11 @@ Could produce something like
 ```
 
 ### Example 2
-Using the same example, if you would like to display raw (unescaped text) you can use `&lt;%-` tag as follows
+
+Using the same example, if you would like to display raw (unescaped text) you can use `<%-` tag as follows
 
 ```markdown
-"&lt;%- web.quote() &gt;%"
+"<%- web.quote() %>"
 ```
 
 ```markdown

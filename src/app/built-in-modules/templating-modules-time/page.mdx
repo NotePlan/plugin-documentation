@@ -1,10 +1,10 @@
-import Link from  'next/link'
+import Link from 'next/link'
 import Callout from '@/components/Callout'
-
 
 # Time Module
 
 ## Overview
+
 The Time Module provides methods and variables which work with dates.
 
 <Callout
@@ -25,33 +25,39 @@ Each time token has a single or double token, with the double token being used t
 />
 
 #### Formatting Time Values
+
 _Tokens are case-sensitive._
 
-| Input | Example | Description |
-| --- | --- | --- |
-| `H HH` | `0..23` | Hours (24 hour time) |
-| `h hh` | `1..12` | Hours (12 hour time used with `a A`.) |
-| `k kk` | `1..24` | Hours (24 hour time from 1 to 24) |
-| `a A` | `am pm` | Post or ante meridiem (Note the one character `a p` are also considered valid) |
-| `m mm` | `0..59` | Minutes |
-| `s ss` | `0..59` | Seconds |
-| `S SS SSS ... SSSSSSSSS` | `0..999999999` | Fractional seconds |
-| `Z ZZ` | `+12:00` | Offset from UTC as `+-HH:mm`, `+-HHmm`, or `Z` |
+| Input                    | Example        | Description                                                                    |
+| ------------------------ | -------------- | ------------------------------------------------------------------------------ |
+| `H HH`                   | `0..23`        | Hours (24 hour time)                                                           |
+| `h hh`                   | `1..12`        | Hours (12 hour time used with `a A`.)                                          |
+| `k kk`                   | `1..24`        | Hours (24 hour time from 1 to 24)                                              |
+| `a A`                    | `am pm`        | Post or ante meridiem (Note the one character `a p` are also considered valid) |
+| `m mm`                   | `0..59`        | Minutes                                                                        |
+| `s ss`                   | `0..59`        | Seconds                                                                        |
+| `S SS SSS ... SSSSSSSSS` | `0..999999999` | Fractional seconds                                                             |
+| `Z ZZ`                   | `+12:00`       | Offset from UTC as `+-HH:mm`, `+-HHmm`, or `Z`                                 |
 
 ### Example
-If you wish to display time value with hour and minute in 24 hour format, separated by a colon`:` character, you would use `&lt;%- date.now('H:mm') &gt;%`
+
+If you wish to display time value with hour and minute in 24 hour format, separated by a colon`:` character, you would use `<%- date.now('H:mm') %>`
 
 ## Methods
+
 > namespace: `time`
 
 The following are the methods available in the Time Module, and they can be used in any `Templating` template, no additional configuration required.
 
-*****
-### now
-> #### now(format? : string = '') : string
-Returns a string representation current time.
+---
 
-- `format?` - Desired time format. If not supplied, it will use the **Time Format** value in `Templating` <Link href="templating-settings" alt="Plugin Settings"> Plugin Settings </Link > 
+### now
+
+> #### now(format? : string = '') : string
+>
+> Returns a string representation current time.
+
+- `format?` - Desired time format. If not supplied, it will use the **Time Format** value in `Templating` <Link href="templating-settings" alt="Plugin Settings"> Plugin Settings </Link >
 
 - `-> result` - Returns formatted time string
 
@@ -60,40 +66,42 @@ Returns a string representation current time.
 The following example returns the current time, using default values
 
 ```markdown
-&lt;%- time.now() &gt;%
+<%- time.now() %>
 ```
 
 The following example returns current time using custom format, using 12hr format.
 
 ```javascript
-&lt;%- time.now("h:mm") &gt;%  // returns 7:22 (no leading zero)
+<%- time.now("h:mm") %>  // returns 7:22 (no leading zero)
 ```
 
 The following example returns current time using custom format, using 24hr format, each displayed with leading zeros
 
 ```javascript
-&lt;%- time.now("HH:mm") &gt;%  // returns 07:22
+<%- time.now("HH:mm") %>  // returns 07:22
 ```
 
 The following example returns curren time in 12hr format, with lowercase am/pm
 
 ```javascript
-&lt;%- time.now("hh:mm a") &gt;%  // returns 07:22 am
+<%- time.now("hh:mm a") %>  // returns 07:22 am
 ```
 
 The following example returns curren time in 12hr format, with uppercase AM/PM
 
 ```javascript
-&lt;%- time.now("hh:mm A") &gt;%  // returns 07:22 AM
+<%- time.now("hh:mm A") %>  // returns 07:22 AM
 ```
 
-*****
+---
+
 ### currentTime
+
 > #### currentTime(format? : string = '') : string
-Returns a string representation current time.
+>
+> Returns a string representation current time.
 
-- `format?` - Desired time format. If not supplied, it will use the **Time Format** in `Templating` <Link href="templating-settings" alt="Plugin Settings"> Plugin Settings </Link > 
-
+- `format?` - Desired time format. If not supplied, it will use the **Time Format** in `Templating` <Link href="templating-settings" alt="Plugin Settings"> Plugin Settings </Link >
 
 - `-> result` - Returns formatted time string
 
@@ -102,25 +110,28 @@ Returns a string representation current time.
 The following example returns the current time, using default values
 
 ```markdown
-&lt;%- time.currentTime() &gt;%
+<%- time.currentTime() %>
 ```
 
 The following example returns current time using custom format
 
 ```markdown
-&lt;%- time.currentTime("h:mm") &gt;%
+<%- time.currentTime("h:mm") %>
 ```
 
 The following example uses the `currentTime` helper
 
 ```markdown
-&lt;%- currentTime() &gt;%
+<%- currentTime() %>
 ```
 
-*****
+---
+
 ### format
+
 > #### format(format : string = '', pivotDate? : string = '') : string
-Formats `pivotDate` using supplied `format`.
+>
+> Formats `pivotDate` using supplied `format`.
 
 _Note: Also available as a <Link href="templating-modules-helpers"> helper method </Link >_
 
@@ -138,18 +149,23 @@ Refer to <a href="https://momentjs.com/docs/#/parsing/string-format/" alt="momen
   `}
 />
 
-*****
-### convertTime12to24
-> #### convertTime12to24(time12hr: string = '')
-Convert 12-hour time to 24-hour time
+---
 
+### convertTime12to24
+
+> #### convertTime12to24(time12hr: string = '')
+>
+> Convert 12-hour time to 24-hour time
+
+{/* prettier-ignore */}
 {/* ## Helpers
 TimeModule exposes commonly used methods as importable helpers
 
 > #### time
-Returns current time
+>
+> Returns current time
 
-```javascript
+````javascript
 // import Templating Library
 import NPTemplating from 'NPTemplating'
 import DateModule from '@templatingModules/TimeModule'
@@ -164,3 +180,4 @@ const templateData = {
 	const renderedData = NPTemplating.renderTemplate('My Template', data)
 }
 ``` */}
+````

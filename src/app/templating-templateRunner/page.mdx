@@ -52,7 +52,7 @@ Example:
 getNoteTitled: My Tasks Document Title
 replaceNoteContents: true
 ---
-&lt;% - date.timestamp() &gt;% This line will be the text in the document after the link is clicked`}
+<% - date.timestamp() %> This line will be the text in the document after the link is clicked`}
 />
 
 ### writeUnderHeading
@@ -82,7 +82,7 @@ Example:
 getNoteTitled: <today>
 writeUnderHeading: My Daily Journal
 ---
-- &lt;% - date.timestamp() &gt;% This text will appear in my daily note under the heading *My Daily Journal*`}
+- <% - date.timestamp() %> This text will appear in my daily note under the heading *My Daily Journal*`}
 />
 
 ### location
@@ -108,7 +108,7 @@ getNoteTitled: <thisweek>
 writeUnderHeading: Thoughts for the week
 location: append
 ---
-- &lt;% - date.timestamp() &gt;% This text will appear in my daily note under the heading *Thoughts for the week*, but underneath any text that has been written before`}
+- <% - date.timestamp() %> This text will appear in my daily note under the heading *Thoughts for the week*, but underneath any text that has been written before`}
 />
 
 ### Other variables (of your choosing)
@@ -124,7 +124,7 @@ getNoteTitled: <thisweek>
 writeUnderHeading: Thoughts for the week
 location: append
 ---
-- &lt;% - date.timestamp() &gt;% &lt;%- var1 &gt;%`}
+- <% - date.timestamp() %> <%- var1 %>`}
 />
 
 Notice how in this example, `var1` is not set in the frontmatter. This is a variable value that is passed through in your callback link, in this example, perhaps you passed through some thoughts that you dictated (and encoded using Shortcuts) as `...var1=My%20Thoughts%etc`. Template Runner passses through all the variables it receives to the Templating Engine to include in values just as if you had included those values in frontmatter.
@@ -153,8 +153,8 @@ documentation: https://help.noteplan.co/article/136-templates
 
 ## Journal
 
-- How did it go yesterday (&lt;%= np.date.yesterday("Do MMMM YYYY") &gt;%)?:
-- Today's (&lt;%= np.date.now("Do MMMM YYYY") &gt;%) goal is: `} />
+- How did it go yesterday (<%= np.date.yesterday("Do MMMM YYYY") %>)?:
+- Today's (<%= np.date.now("Do MMMM YYYY") %>) goal is: `} />
 
 In the frontmatter section, add the following properties:
 
@@ -197,7 +197,7 @@ writeUnderHeading: "fix-its"
 location: append
 exampleSilent: noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=addFixIt&arg1=false&arg2=textVar%3Dsomething
 ---
-* &lt;%- textVar &gt;% #fixit`}
+* <%- textVar %> #fixit`}
 />
 
 As you can probably tell, what this does is add a todo item underneath the heading "fix-its" in my note "⭐️ Tasks". arg2 is set to `false` so the text will be added behind the scenes, and will not change the note currently in the Editor. The variable "textVar" is set to the word "something" in this example, but in my real use of this link, _something_ is replaced with the URL Encoded text that I dicated into a Shortcut.
@@ -215,7 +215,7 @@ writeUnderHeading: "Today's Notes & Actions"
 location: append
 exampleURL: noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=logWorkout&arg1=true&arg2=var1%3DVALUE1%3Bvar2%3DVALUE2
 ---
-&lt;% - date.timestamp() &gt;% #workout &lt;%- var1 &gt;% | &lt;%- var2 &gt;%`}
+<% - date.timestamp() %> #workout <%- var1 %> | <%- var2 %>`}
 />
 
 In this example, I passed two variables (var1 and var2) corresponding to two prompts I use in Shortcuts. All variables are passed in as arg2 in the form of:
@@ -265,6 +265,6 @@ getNoteTitle:  <TODAY>
 writeUnderHeading: "Today's Notes"
 location: append
 ---
-### &lt;%- eventTitle &gt;% - &lt;%- eventDate &gt;%
-**Event:**  &lt;%- calendarItemLink &gt;%`}
+### <%- eventTitle %> - <%- eventDate %>
+**Event:**  <%- calendarItemLink %>`}
 />

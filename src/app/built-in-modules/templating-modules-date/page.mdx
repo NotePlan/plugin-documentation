@@ -38,7 +38,7 @@ _Tokens are case-sensitive._
 
 **Example**
 
-If you wish to display date value with 4 digit year and 2 digit month, separated by a dash `-` character, you would use `&lt;%- date.now('YYYY-MM') &gt;%`
+If you wish to display date value with 4 digit year and 2 digit month, separated by a dash `-` character, you would use `<%- date.now('YYYY-MM') %>`
 
 ## Methods
 
@@ -95,49 +95,49 @@ In addition to add/subtract days, you can `offset` may contain shorthand values
 The following example returns the current date, using default values
 
 ```javascript
-&lt;%- date.now() &gt;%
+<%- date.now() %>
 ```
 
 The following example returns current date using custom format
 
 ```javascript
-&lt;%- date.now("dddd Do MMMM YYY") &gt;%
+<%- date.now("dddd Do MMMM YYY") %>
 ```
 
 The following example will subtract 90 days
 
 ```javascript
-&lt;%- date.now('', -90) &gt;%
+<%- date.now('', -90) %>
 ```
 
 The following example will add 10 days
 
 ```javascript
-&lt;%- date.now('', 10) &gt;%
+<%- date.now('', 10) %>
 ```
 
 The following example will subtract 2 months
 
 ```javascript
-&lt;%- date.now('', '-2M') &gt;%
+<%- date.now('', '-2M') %>
 ```
 
 The following example will subtract 2 weeks
 
 ```javascript
-&lt;%- date.now('', '-2w') &gt;%
+<%- date.now('', '-2w') %>
 ```
 
 The following example will subtract 2 years
 
 ```javascript
-&lt;%- date.now('', '-2y') &gt;%
+<%- date.now('', '-2y') %>
 ```
 
 The following example uses the `now` helper
 
 ```javascript
-&lt;%- now() &gt;%
+<%- now() %>
 ```
 
 ---
@@ -159,19 +159,19 @@ _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) 
 The following example returns the current date, using default values
 
 ```javascript
-&lt;%- date.timestamp() &gt;%
+<%- date.timestamp() %>
 ```
 
 The following example returns current date using custom format
 
 ```javascript
-&lt;%- date.timestamp("dddd Do MMMM YYY") &gt;%
+<%- date.timestamp("dddd Do MMMM YYY") %>
 ```
 
 The following example uses the `timestamp` helper
 
 ```javascript
-&lt;%- timestamp() &gt;%
+<%- timestamp() %>
 ```
 
 ---
@@ -203,7 +203,7 @@ _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) 
 The following example returns the current date, using default values
 
 ```javascript
-&lt;%- date.today() &gt;%
+<%- date.today() %>
 ```
 
 ---
@@ -223,7 +223,7 @@ The following example returns the current date, using default values
 The following example returns tomorrow based on current date
 
 ```javascript
-&lt;%- date.tomorrow() &gt;%
+<%- date.tomorrow() %>
 ```
 
 ---
@@ -243,7 +243,7 @@ The following example returns tomorrow based on current date
 The following example returns yesterday based on current date
 
 ```javascript
-&lt;%- date.yesterday() &gt;%
+<%- date.yesterday() %>
 ```
 
 ---
@@ -284,13 +284,13 @@ Refer to [moment.js format](https://momentjs.com/docs/#/parsing/string-format/) 
 The following returns the closest weekday 2 days in advance using current date
 
 ```javascript
-&lt;%- date.weekday('', 2) &gt;%
+<%- date.weekday('', 2) %>
 ```
 
 The following returns the closest weekday 2 days in advance using fixed date
 
 ```javascript
-&lt;%- date.weekday('', 2, '2021-12-15') &gt;% // returns 2021-12-17
+<%- date.weekday('', 2, '2021-12-15') %> // returns 2021-12-17
 ```
 
 ---
@@ -310,7 +310,7 @@ The following returns the closest weekday 2 days in advance using fixed date
 The following returns the closest weekday 2 days in advance using current date
 
 ````javascript
-&lt;%- date.weekNumber('2021-12-15') &gt;% // the following will return 50
+<%- date.weekNumber('2021-12-15') %> // the following will return 50
 ```
 
 *****
@@ -337,7 +337,7 @@ Day number will be one of following
 The following returns the closest weekday 2 days in advance using current date
 
 ```javascript
-&lt;%- date.dayNumber('2021-12-15') &gt;% // the following will return 3
+<%- date.dayNumber('2021-12-15') %> // the following will return 3
 ````
 
 ---
@@ -357,7 +357,7 @@ The following returns the closest weekday 2 days in advance using current date
 The following returns true or false if `pivotDate` is weekday
 
 ```javascript
-&lt;%- date.isWeekday('2021-12-15') &gt;% // the following will return true
+<%- date.isWeekday('2021-12-15') %> // the following will return true
 ```
 
 ---
@@ -376,7 +376,7 @@ The following returns true or false if `pivotDate` is weekday
 The following returns true or false if `pivotDate` is weekend
 
 ```javascript
-&lt;%- date.isWeekend('2021-12-15') &gt;% // the following will return false
+<%- date.isWeekend('2021-12-15') %> // the following will return false
 ```
 
 ---
@@ -396,7 +396,7 @@ The following returns true or false if `pivotDate` is weekend
 The following returns weekOf value based on `pivotDate`
 
 ```javascript
-&lt;%- date.weekOf('2021-12-01') &gt;% // the following will W48 (2021-11-28..2021-12-03)
+<%- date.weekOf('2021-12-01') %> // the following will W48 (2021-11-28..2021-12-03)
 ```
 
 ---
@@ -418,7 +418,7 @@ The following returns weekOf value based on `pivotDate`
 The following returns start of week based on `pivotDate`
 
 ```javascript
-&lt;%- date.startOfWeek('2021-12-01') &gt;% // the following return 2021-11-29
+<%- date.startOfWeek('2021-12-01') %> // the following return 2021-11-29
 ```
 
 ---
@@ -495,7 +495,7 @@ If `startDate` or `endDate` are not supplied, an error string ("Invalid Start Da
 The following returns number of days between `2022-05-01` and `2022-06-31` (returns `31`)
 
 ```javascript
-&lt;%- date.daysBewteen('2022-05-01', '2022-06-01') &gt;% // returns 31
+<%- date.daysBewteen('2022-05-01', '2022-06-01') %> // returns 31
 ```
 
 ---
@@ -518,7 +518,7 @@ The following returns number of days between `2022-05-01` and `2022-06-31` (retu
 The following adds 7 days, using current date
 
 ```javascript
-&lt;%- date.add('2022-01-07', 7, 'days', 'YYYY-MM-DD') &gt;% // returns 2022-01-14
+<%- date.add('2022-01-07', 7, 'days', 'YYYY-MM-DD') %> // returns 2022-01-14
 ```
 
 ---
@@ -540,7 +540,7 @@ The following adds 7 days, using current date
 The following adds 3 business days, using current date
 
 ```javascript
-&lt;%- date.businessAdd(3, '2022-01-07', 'YYYY-MM-DD') &gt;% // returns 2022-01-12
+<%- date.businessAdd(3, '2022-01-07', 'YYYY-MM-DD') %> // returns 2022-01-12
 ```
 
 ---
@@ -563,7 +563,7 @@ The following adds 3 business days, using current date
 The following subtracts 7 days, using current date
 
 ```javascript
-&lt;%- date.subtract('2022-01-12', 7, 'days', 'YYYY-MM-DD') &gt;% // returns 2022-01-05
+<%- date.subtract('2022-01-12', 7, 'days', 'YYYY-MM-DD') %> // returns 2022-01-05
 ```
 
 ---
@@ -585,7 +585,7 @@ The following subtracts 7 days, using current date
 The following subtracts 3 business days, using current date
 
 ```javascript
-&lt;%- date.businessSubtract(3, '2022-01-12', 'YYYY-MM-DD') &gt;% // returns 2022-01-07
+<%- date.businessSubtract(3, '2022-01-12', 'YYYY-MM-DD') %> // returns 2022-01-07
 ```
 
 ---
@@ -606,7 +606,7 @@ The following subtracts 3 business days, using current date
 The following returns next business day based on `pivotDate`
 
 ```javascript
-&lt;%- date.nextBusinessDay('2022-01-12') &gt;% // returns 2022-01-13
+<%- date.nextBusinessDay('2022-01-12') %> // returns 2022-01-13
 ```
 
 ---
@@ -627,7 +627,7 @@ The following returns next business day based on `pivotDate`
 The following returns previous business day based on `pivotDate`
 
 ```javascript
-&lt;%- date.previousBusinessDay('2022-01-10') &gt;% // returns 2022-01-07
+<%- date.previousBusinessDay('2022-01-10') %> // returns 2022-01-07
 ```
 
 ## Using DateModule in NotePlan Plugins

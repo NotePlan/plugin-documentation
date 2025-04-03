@@ -1,6 +1,7 @@
 import Callout from '@/components/Callout'
 
 # Syntax
+
 `Templating` templating engine uses standard JavaScript syntax to declare a command. It may take some time to get used to the syntax, but after you have worked with for awhile, you will get the hang of it.
 
 All `Templating` variables and methods are JavaScript objects which are invoked using a command.
@@ -15,19 +16,22 @@ For more information on <code>Templating</code> tags. Visit <a href="templating-
 />
 
 ## Command Syntax
-A command **must** have both an opening tag `&lt;%` and closing `&gt;%`, and if you want to show the results when template rendered, the opening tag will be `&lt;%-`.
+
+A command **must** have both an opening tag `<%` and closing `%>`, and if you want to show the results when template rendered, the opening tag will be `<%-`.
 
 ## Variable/Method Syntax
 
 ### Objects hierarchy
-All of `Templating`s variable and methods, whether it's an internal or custom method, will use a namespace. To access the variable or method of an object, you ues a dot `.` (e.g. `&lt;%- date.now() &gt;%`)
+
+All of `Templating`s variable and methods, whether it's an internal or custom method, will use a namespace. To access the variable or method of an object, you ues a dot `.` (e.g. `<%- date.now() %>`)
 
 If you are using [prompt interface](/docs/templating-examples/prompt), if you are not immediately displaying prompt result, you should use the `user` namespace, which tells `Templating` this is a user variable.
 
 ### Object Invocation
+
 The syntax between a variable and method invocation is different, so it's important to understand the differences.
 
-For example, `np.firstName` is an internal variable, whereas  `np.date.now()` is a method (method is followed by opening and closing parenthesis)
+For example, `np.firstName` is an internal variable, whereas `np.date.now()` is a method (method is followed by opening and closing parenthesis)
 
 <Callout
   type="info"
@@ -40,12 +44,15 @@ More information about the different internal variables/methods is supplied in <
 :::
 
 #### Variable Reference
-To reference a variable, use the desired module followed by variable name. For example: 
+
+To reference a variable, use the desired module followed by variable name. For example:
+
 ```markdown
- `&lt;%- date.DAY_NUMBER_SUNDAY &gt;%`
+`<%- date.DAY_NUMBER_SUNDAY %>`
 ```
 
 #### Method invocation
+
 To invoke a method, you reference the desired module, followed by the method name with opening and closing parenthesis. For example, if you want to get the current date of from the `date` module you would use `date.now()`
 
 A method may contain one or more arguments, which are placed between the opening and closing parenthesis
@@ -67,6 +74,7 @@ There are 5 different types of parameters:
 _Note: The value types are important and must match expected value, otherwise an error will be emitted_
 
 #### Method Syntax
+
 `Templating` syntax for all methods uses a common "signature" syntax, which makes it easier to determine what the arguments expect.
 
 - `arg` represents a symbolic name for the argument, which the method will use internally
@@ -89,12 +97,11 @@ date.businessAdd(numDays?: integer = 1, pivotDate?:string = '', format?: string 
 You could then use this method in your template like
 
 ```javascript
-&lt;%- date.businessAdd() &gt;%  // would return next business day using default `numDays` and `pivotDate`
+<%- date.businessAdd() %>  // would return next business day using default `numDays` and `pivotDate`
 
-&lt;%- date.businessAdd(1) &gt;%  // would return next business day using `pivotDate`
+<%- date.businessAdd(1) %>  // would return next business day using `pivotDate`
 
-&lt;%- date.businessAdd(1,'2021-12-22') &gt;% // would return next business day using supplied `pivotDate`
+<%- date.businessAdd(1,'2021-12-22') %> // would return next business day using supplied `pivotDate`
 
-&lt;%- date.businessAdd(1,'','MM/DD/YYYY')> // would return next business day, using a custom format
+<%- date.businessAdd(1,'','MM/DD/YYYY')> // would return next business day, using a custom format
 ```
-

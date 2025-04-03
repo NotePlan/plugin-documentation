@@ -1,41 +1,49 @@
-import Link from  'next/link'
+import Link from 'next/link'
 import Callout from '@/components/Callout'
-
 
 # Web Module
 
 ## Overview
+
 The Web Module provides a suite of methods which provide access to web APIs such as advice, affirmation or weather.
 
 ## Methods
+
 > namespace: `web`
 
 The following are the methods available in the Web Module, and they can be used in any `Templating` template, no additional configuration.
 
-*****
+---
 
 ### advice
-> #### advice() : string
-Returns random advice
 
-*****
+> #### advice() : string
+>
+> Returns random advice
+
+---
 
 ### affirmation
-> #### affirmation() : string
-Returns random affirmation
 
-*****
+> #### affirmation() : string
+>
+> Returns random affirmation
+
+---
 
 ### quote
-> #### quote() : string
-Returns random quote
 
-*****
+> #### quote() : string
+>
+> Returns random quote
+
+---
 
 ### service
-> #### service(serviceOrUrl: string = '', key? : string = '') : string
-Returns service information from custom URL or entry from `Templating` <Link href="templating-settings">Web Service Settings</Link>
 
+> #### service(serviceOrUrl: string = '', key? : string = '') : string
+>
+> Returns service information from custom URL or entry from `Templating` <Link href="templating-settings">Web Service Settings</Link>
 
 - `serviceOrUrl?` - Value from Settings Web Services or Full API URL
 - `key?` - Array of API result index, keys or formatting values (see example below)
@@ -44,7 +52,7 @@ Returns service information from custom URL or entry from `Templating` <Link hre
 The following example will return API information for `developerQuote` setting from settings
 
 ```markdown
-&lt;%- await web.services('developerQuote') &gt;%
+<%- await web.services('developerQuote') %>
 ```
 
 🙆 “I say looking on the bright side of life never killed anybody.”
@@ -53,36 +61,36 @@ The following example will return API information for `developerQuote` setting f
 The following example will retrieve value from defined API endpoint
 
 ```markdown
-&lt;%- await web.services('https://random-data-api.com/api/address/random_address',['street_address', '\n','secondary_address', '\n', 'city', ', ', 'state_abbr',' ','zip_code']) &gt;%
+<%- await web.services('https://random-data-api.com/api/address/random_address',['street_address', '\n','secondary_address', '\n', 'city', ', ', 'state_abbr',' ','zip_code']) %>
 ```
 
 API request returns following JSON data
 
 ```json
 {
-"id": 9861,
-"uid": "fe3fe033-db73-474b-bb29-ae6ae7bf67ae",
-"city": "East Glenna",
-"street_name": "Houston Roads",
-"street_address": "34157 Purdy Island",
-"secondary_address": "Apt. 660",
-"building_number": "35118",
-"mail_box": "PO Box 2474",
-"community": "Summer Place",
-"zip_code": "07215-2642",
-"zip": "59694",
-"postcode": "14367",
-"time_zone": "America/Caracas",
-"street_suffix": "Viaduct",
-"city_suffix": "mouth",
-"city_prefix": "West",
-"state": "Alaska",
-"state_abbr": "PA",
-"country": "Poland",
-"country_code": "TK",
-"latitude": 38.36868710203052,
-"longitude": 137.08981449317662,
-"full_address": "96697 McGlynn Tunnel, Powlowskihaven, AL 38836-5753"
+  "id": 9861,
+  "uid": "fe3fe033-db73-474b-bb29-ae6ae7bf67ae",
+  "city": "East Glenna",
+  "street_name": "Houston Roads",
+  "street_address": "34157 Purdy Island",
+  "secondary_address": "Apt. 660",
+  "building_number": "35118",
+  "mail_box": "PO Box 2474",
+  "community": "Summer Place",
+  "zip_code": "07215-2642",
+  "zip": "59694",
+  "postcode": "14367",
+  "time_zone": "America/Caracas",
+  "street_suffix": "Viaduct",
+  "city_suffix": "mouth",
+  "city_prefix": "West",
+  "state": "Alaska",
+  "state_abbr": "PA",
+  "country": "Poland",
+  "country_code": "TK",
+  "latitude": 38.36868710203052,
+  "longitude": 137.08981449317662,
+  "full_address": "96697 McGlynn Tunnel, Powlowskihaven, AL 38836-5753"
 }
 ```
 
@@ -99,7 +107,17 @@ Second parameter will build result, using array of indexes, keys and formatting 
 - Use `zip_code` key
 
 ```javascript
-['street_address', '\n','secondary_address', '\n', 'city', ', ', 'state_abbr',' ','zip_code']
+;[
+  'street_address',
+  '\n',
+  'secondary_address',
+  '\n',
+  'city',
+  ', ',
+  'state_abbr',
+  ' ',
+  'zip_code',
+]
 ```
 
 And will produce something like
@@ -113,25 +131,25 @@ East Glenna, PA 07215-2642
 Web request that returns array of results
 
 ```javascript
-&lt;%- await web.services('https://zenquotes.io/api/random',['[0].q', ', ', '[0].a']) &gt;%
+<%- await web.services('https://zenquotes.io/api/random',['[0].q', ', ', '[0].a']) %>
 ```
 
 Returns an array of quotes
 
 ```json
 [
-	{
-		"q": "A clever person turns great troubles into little ones, and little ones into none at all. ",
-		"a": "Chinese Proverb",
-		"h": "<blockquote>&ldquo;A clever person turns great troubles into little ones, and little ones into none at all. &rdquo; &mdash; <footer>Chinese Proverb</footer></blockquote>"
-	}
+  {
+    "q": "A clever person turns great troubles into little ones, and little ones into none at all. ",
+    "a": "Chinese Proverb",
+    "h": "<blockquote>&ldquo;A clever person turns great troubles into little ones, and little ones into none at all. &rdquo; &mdash; <footer>Chinese Proverb</footer></blockquote>"
+  }
 ]
 ```
 
 And piece together using `key`
 
 ```javascript
-['[0].q', ', ', '--', '[0].a']
+;['[0].q', ', ', '--', '[0].a']
 ```
 
 - Access first array element, grabbing `q` key
@@ -145,23 +163,26 @@ Will produce the following
 A clever person turns great troubles into little ones, and little ones into none at all.
 
 -- Chinese Proverb
-``` 
+```
 
-*****
+---
 
 > #### verse() : string
-Returns random Bible verse
+>
+> Returns random Bible verse
 
-*****
+---
 
 ### weather
+
 > #### weather(format? : string = '') : string
-Returns weather information from <a href="https://wttr.in" alt="wttr.in">wttr.in </a> weather service, using the <Link href="templating-settings">Web Service Settings</Link> from `Templating` Settings, or a custom `format` string.
+>
+> Returns weather information from <a href="https://wttr.in" alt="wttr.in">wttr.in </a> weather service, using the <Link href="templating-settings">Web Service Settings</Link> from `Templating` Settings, or a custom `format` string.
 
 <Callout
   type="info"
   description={`
-You can set the default weather format in <code>Templating</code> <a href="templating-settings" alt="settings">settings</a> which will be used when <code>&lt;%- web.weather() &gt;%</code> command is executed. If you need to specify location manually, see <a href="templating-examples-js-weather" alt="js weather example">Javascript Weather Example.
+You can set the default weather format in <code>Templating</code> <a href="templating-settings" alt="settings">settings</a> which will be used when <code><%- web.weather() %></code> command is executed. If you need to specify location manually, see <a href="templating-examples-js-weather" alt="js weather example">Javascript Weather Example.
   
   `}
 />
@@ -171,6 +192,7 @@ You can set the default weather format in <code>Templating</code> <a href="templ
 Each placeholder must be surrounded colons before and after key (e.g. `:FeelsLikeF:`)
 
 #### Additional Keys
+
 In addition to `current_condition` keys, the following placeholders available from elsewhere in the harder-to-access parts of the JSON response:
 
 - `mintempC` and `maxtempC` for the current day in Celsius
@@ -195,12 +217,12 @@ See the <a href="https://github.com/chubin/wttr.in#different-output-formats" alt
 The following will use default weather format from `Templating` [settings](/docs/settings)
 
 ```markdown
-Weather: &lt;%- np.weather() &gt;%
+Weather: <%- np.weather() %>
 ```
 
 and produce something like
 
-Fountain Valley, California, United States: ⛅️  +55°F
+Fountain Valley, California, United States: ⛅️ +55°F
 
 <Callout
   type="info"
@@ -209,30 +231,30 @@ This weather module requires no configuration and uses your IP address to estima
   `}
 />
 
-*****
+---
 
 ### Custom Format String
 
 The following will override the default weather format from `Templating` settings
 
 ```markdown
-Weather: &lt;%- np.weather( ':icon: :description: :mintempC:-:maxtempC:°C (:areaName:)' ) &gt;%
+Weather: <%- np.weather( ':icon: :description: :mintempC:-:maxtempC:°C (:areaName:)' ) %>
 ```
 
 and will produce something like
 
 Weather: ☀️ Sunny 6-16°C (Basingstoke)
 
-*****
+---
+
 The following is a more verbose example using addition placeholders
 
 ```markdown
-Weather: &lt;%- np.weather( ':icon: :description: :FeelsLikeF:°F [low/high: :mintempF:-:maxtempF:°F, wind: :winddir16Point: :windspeedMiles:mph] (:areaName:, :region:) ' ) &gt;%
+Weather: <%- np.weather( ':icon: :description: :FeelsLikeF:°F [low/high: :mintempF:-:maxtempF:°F, wind: :winddir16Point: :windspeedMiles:mph] (:areaName:, :region:) ' ) %>
 ```
 
 and will produce something like
 
 ☁️ Partly cloudy 64°F [low/high: 58-68°F, wind: WSW 15mph] (Fountain Valley, California)
 
-
-*****
+---

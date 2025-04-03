@@ -12,16 +12,16 @@ import prompt2 from '@/images/prompt2.png'
   type="warning"
   title="Single Quotes">
 
-Use single quotes inside the prompt command, like `prompt('question')`. 
+Use single quotes inside the prompt command, like `prompt('question')`.
 
 </Callout>
 
 ### Example 1: Simple text input `prompt`
 
-For example, if you have a display tag `&lt;%@` in your template which is not in your template data, a prompt will be displayed
+For example, if you have a display tag `<%@` in your template which is not in your template data, a prompt will be displayed
 
 ```markdown
-&lt;%- prompt('What is your first name?') &gt;%
+<%- prompt('What is your first name?') %>
 ```
 
 <img src={promptdefault.src} alt="Prompt Default" />
@@ -49,10 +49,10 @@ When using <code>prompt</code> command, you must supply a valid placeholder name
 Using the following template
 
 ```markdown
-Task Priority: &lt;%- prompt('priority','What is task priority?',['high','medium','low']) &gt;%
+Task Priority: <%- prompt('priority','What is task priority?',['high','medium','low']) %>
 ```
 
-You can then use the same variable anywhere else in template `&lt;%- priority &gt;%`. When the template is rendered, it will display a choice list prompt
+You can then use the same variable anywhere else in template `<%- priority %>`. When the template is rendered, it will display a choice list prompt
 
 <img src={prompt2.src} alt="Prompt" />
 
@@ -61,11 +61,11 @@ You can then use the same variable anywhere else in template `&lt;%- priority &g
 The following example demonstrates how you can place prompts at the top of templates, and then use somewhere else in the template
 
 ```markdown
-&lt;% prompt('lastName','What is your last name?') -&gt;%
+<% prompt('lastName','What is your last name?') -%>
 
 The rest of this could be your template code
 And then finally use the `lastName` variable
-&lt;%- lastName &gt;%
+<%- lastName %>
 ```
 
 The template would render as follows, with the `lastName` value result from prompt on first line (assuming entered `lastName` Erickson)
@@ -86,8 +86,8 @@ There are two further commands available:
 Both require the first parameter to be 'question', but accept an optional prompt message. They must be placed where the text is to be used. For example:
 
 ```markdown
-Project start date: &lt;%- promptDate('question','Enter start date:') &gt;%
-Review frequency: &lt;%- promptDateInterval('question','Enter review interval:') &gt;%
+Project start date: <%- promptDate('question','Enter start date:') %>
+Review frequency: <%- promptDateInterval('question','Enter review interval:') %>
 ```
 
 ## Working with Frontmatter Keys and Values
@@ -99,7 +99,7 @@ Review frequency: &lt;%- promptDateInterval('question','Enter review interval:')
 #### Syntax
 
 ```markdown
-&lt;%- promptKey('key', 'message', 'noteType', caseSensitive, 'folder', fullPathMatch, ['options']) &gt;%
+<%- promptKey('key', 'message', 'noteType', caseSensitive, 'folder', fullPathMatch, ['options']) %>
 ```
 
 #### Parameters
@@ -115,19 +115,22 @@ Review frequency: &lt;%- promptDateInterval('question','Enter review interval:')
 #### Examples
 
 Basic usage:
+
 ```markdown
-Project status: &lt;%- promptKey('projectStatus', 'Select project status:') &gt;%
+Project status: <%- promptKey('projectStatus', 'Select project status:') %>
 ```
 
 With folder restriction and case sensitivity:
+
 ```markdown
-Tag: &lt;%- promptKey('tags', 'Select a tag:', 'Notes', true, 'Projects') &gt;%
-Tag: &lt;%- promptKey('tags', 'Select a tag:', 'Notes', true, 'Work/Projects/Clients', true) &gt;%
+Tag: <%- promptKey('tags', 'Select a tag:', 'Notes', true, 'Projects') %>
+Tag: <%- promptKey('tags', 'Select a tag:', 'Notes', true, 'Work/Projects/Clients', true) %>
 ```
 
 With predefined options:
+
 ```markdown
-Priority: &lt;%- promptKey('priority', 'Set priority:', 'All', false, '', false, ['High', 'Medium', 'Low']) &gt;%
+Priority: <%- promptKey('priority', 'Set priority:', 'All', false, '', false, ['High', 'Medium', 'Low']) %>
 ```
 
 ## Working with Tags and Mentions
@@ -139,7 +142,7 @@ Priority: &lt;%- promptKey('priority', 'Set priority:', 'All', false, '', false,
 #### Syntax
 
 ```markdown
-&lt;%- promptTag('Select a hashtag:', 'includePattern', 'excludePattern', allowCreate) &gt;%
+<%- promptTag('Select a hashtag:', 'includePattern', 'excludePattern', allowCreate) %>
 ```
 
 #### Parameters
@@ -152,23 +155,27 @@ Priority: &lt;%- promptKey('priority', 'Set priority:', 'All', false, '', false,
 #### Examples
 
 Basic usage:
+
 ```markdown
-&lt;%- promptTag('Select a hashtag:') &gt;%
+<%- promptTag('Select a hashtag:') %>
 ```
 
 Filter tags to include only those containing "project":
+
 ```markdown
-&lt;%- promptTag('Select a project tag:', 'project') &gt;%
+<%- promptTag('Select a project tag:', 'project') %>
 ```
 
 Filter to include "priority" tags and exclude "low" tags:
+
 ```markdown
-&lt;%- promptTag('Select priority:', 'priority', 'low') &gt;%
+<%- promptTag('Select priority:', 'priority', 'low') %>
 ```
 
 Don't allow creating new tags:
+
 ```markdown
-&lt;%- promptTag('Select from existing tags only:', '', '', false) &gt;%
+<%- promptTag('Select from existing tags only:', '', '', false) %>
 ```
 
 ### promptMention
@@ -178,7 +185,7 @@ Don't allow creating new tags:
 #### Syntax
 
 ```markdown
-&lt;%- promptMention('Select a mention:', 'includePattern', 'excludePattern', allowCreate) &gt;%
+<%- promptMention('Select a mention:', 'includePattern', 'excludePattern', allowCreate) %>
 ```
 
 #### Parameters
@@ -191,26 +198,30 @@ Don't allow creating new tags:
 #### Examples
 
 Basic usage:
+
 ```markdown
-&lt;%- promptMention('Select a person:') &gt;%
+<%- promptMention('Select a person:') %>
 ```
 
 Filter mentions to include only those containing "team":
+
 ```markdown
-&lt;%- promptMention('Select a team member:', 'team') &gt;%
+<%- promptMention('Select a team member:', 'team') %>
 ```
 
 Filter to include "client" mentions and exclude "former" clients:
+
 ```markdown
-&lt;%- promptMention('Select client:', 'client', 'former') &gt;%
+<%- promptMention('Select client:', 'client', 'former') %>
 ```
 
 Don't allow creating new mentions:
+
 ```markdown
-&lt;%- promptMention('Select from existing mentions only:', '', '', false) &gt;%
+<%- promptMention('Select from existing mentions only:', '', '', false) %>
 ```
 
 ## Usage Tips
 
 - When using `includePattern` and `excludePattern`, these are converted to regular expressions, so you can use regex syntax for more advanced filtering.
-- The `allowCreate` parameter is particularly useful when you want to limit selections to existing values only. 
+- The `allowCreate` parameter is particularly useful when you want to limit selections to existing values only.

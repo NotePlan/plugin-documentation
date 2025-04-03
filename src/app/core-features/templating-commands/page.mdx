@@ -134,7 +134,7 @@ A more useful example (static notes will just create duplicate notes in the `fol
 ```markdown
 ---
 title: Sample
-newNoteTitle: "&lt;%- prompt('meetingSummary','What would you like to discuss') &gt;% &lt;%- date.now() &gt;%"
+newNoteTitle: "<%- prompt('meetingSummary','What would you like to discuss') %> <%- date.now() %>"
 ---
 ```
 
@@ -184,7 +184,7 @@ The following construct the `folder` location using using fixed values first par
 ```markdown
 ---
 title: Custom Folder
-folder: "- 🛠 Projects/00 - 👨🏽‍💻codedungeon/📆 Meetings/&lt;%- date.now('YYYY-MM') &gt;%"
+folder: "- 🛠 Projects/00 - 👨🏽‍💻codedungeon/📆 Meetings/<%- date.now('YYYY-MM') %>"
 ---
 ```
 

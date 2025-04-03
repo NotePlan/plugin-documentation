@@ -1,42 +1,42 @@
-
 # Conditionals
 
 #### if logic
 
 ```markdown
-&lt;%if (1 > 0) { &gt;%
+<%if (1 > 0) { %>
 // Do something with more than 1 recipe
-&lt;% } &gt;%
+<% } %>
 ```
 
 #### if/else logic
 
 ```markdown
-&lt;%if (1 > 0) { &gt;%
- true
-&lt;% } else { &gt;%
- else
-&lt;% } &gt;%
+<%if (1 > 0) { %>
+true
+<% } else { %>
+else
+<% } %>
 ```
 
 #### if logic (single line)
-*note: the next line will only appear if the current day is Saturday*
+
+_note: the next line will only appear if the current day is Saturday_
 
 ```javascript
-&lt;%if (date.dayNumber(`${np.pivotDate}`) === 6) { &gt;%do stuff on Saturday&lt;% } &gt;%
+<%if (date.dayNumber(`${np.pivotDate}`) === 6) { %>do stuff on Saturday<% } %>
 ```
 
 #### if/else logic (single line)
 
 ```javascript
-&lt;%if (1 > 0) { &gt;%true&lt;% } else { &gt;%else&lt;% } &gt;%
+<%if (1 > 0) { %>true<% } else { %>else<% } %>
 ```
 
 #### ternary logic
 
 ```javascript
-true: &lt;%- true ? 'pass' : 'fail' &gt;%
-false: &lt;%- false ? 'pass' : 'fail' &gt;%
+true: <%- true ? 'pass' : 'fail' %>
+false: <%- false ? 'pass' : 'fail' %>
 
-&lt;%- date.dayNumber(`${np.pivotDate}`) === 0 ? '> 📖 [Refuge CCHB](https://refugehb.online.church/)' : '' &gt;%
+<%- date.dayNumber(`${np.pivotDate}`) === 0 ? '> 📖 [Refuge CCHB](https://refugehb.online.church/)' : '' %>
 ```

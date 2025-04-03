@@ -45,7 +45,7 @@ The following example will return the filename for the current calendar note.
 Assuming the current note is May 29, 2022, the value returned will be `20220529.md`
 
 ```javascript
-&lt;%- note.filename() &gt;% // returns 20220529.md
+<%- note.filename() %> // returns 20220529.md
 ```
 
 The following example will return the filename for the current project note
@@ -53,7 +53,7 @@ The following example will return the filename for the current project note
 Assuming the current note has a title of "# Todo List" located in the "Projects", the value returned will be `Projects/Todo List.md`
 
 ```javascript
-&lt;%- note.filename() &gt;% // returns Projects/Todo List.md
+<%- note.filename() %> // returns Projects/Todo List.md
 ```
 
 ---
@@ -76,7 +76,7 @@ The following will return the note title.
 Assuming the current note is May 29, 2022, the value returned will be `2022-05-29`
 
 ```javascript
-&lt;%- note.title() &gt;% // returns 2022-05-29
+<%- note.title() %> // returns 2022-05-29
 ```
 
 The following example will return the filename for the current project note
@@ -84,7 +84,7 @@ The following example will return the filename for the current project note
 Assuming the current note has a title of "# Todo List" the value returned will be `Todo List`
 
 ```javascript
-&lt;%- note.title() &gt;% // returns Todo List
+<%- note.title() %> // returns Todo List
 ```
 
 ---
@@ -103,7 +103,7 @@ Assuming the current note has a title of "# Todo List" the value returned will b
 The following will return the content of current note
 
 ```javascript
-&lt;%- note.content() &gt;% // Markdown formatted content of current note
+<%- note.content() %> // Markdown formatted content of current note
 ```
 
 ---
@@ -125,7 +125,7 @@ The following will return the note date (calendar note only).
 Assuming the current note is May 29, 2022, the value returned will be `Sun May 29 2022 00:00:00 GMT-0700 (PDT)`
 
 ```javascript
-&lt;%- note.date() &gt;% // Sun May 29 2022 00:00:00 GMT-0700 (PDT)*
+<%- note.date() %> // Sun May 29 2022 00:00:00 GMT-0700 (PDT)*
 ```
 
 The following will return the note date (calendar note only).
@@ -133,7 +133,7 @@ The following will return the note date (calendar note only).
 Assuming the current note is May 29, 2022, the value returned will be `2022-05-29`
 
 ```javascript
-&lt;%- note.date('YYYY-MM-DD') &gt;% // returns 2022-05-29
+<%- note.date('YYYY-MM-DD') %> // returns 2022-05-29
 ```
 
 ---
@@ -153,13 +153,13 @@ Assuming the current note is May 29, 2022, the value returned will be `2022-05-2
 The following will return the note created date.
 
 ```javascript
-&lt;%- note.createdDate() &gt;% // Sun May 29 2022 00:00:00 GMT-0700 (PDT)*
+<%- note.createdDate() %> // Sun May 29 2022 00:00:00 GMT-0700 (PDT)*
 ```
 
 The following will return the created date using supplied format.
 
 ```javascript
-&lt;%- note.createdDate('YYYY-MM-DD') &gt;% // returns 2022-05-29
+<%- note.createdDate('YYYY-MM-DD') %> // returns 2022-05-29
 ```
 
 ---
@@ -179,13 +179,13 @@ The following will return the created date using supplied format.
 The following will return the note changed date.
 
 ```javascript
-&lt;%- note.changedDate() &gt;% // Sun May 29 2022 00:00:00 GMT-0700 (PDT)*
+<%- note.changedDate() %> // Sun May 29 2022 00:00:00 GMT-0700 (PDT)*
 ```
 
 The following will return the changed date using supplied format.
 
 ```javascript
-&lt;%- note.changedDate('YYYY-MM-DD') &gt;% // returns 2022-05-29
+<%- note.changedDate('YYYY-MM-DD') %> // returns 2022-05-29
 ```
 
 ---
@@ -203,7 +203,7 @@ The following will return the changed date using supplied format.
 The following will comma separated list of hashtags
 
 ```javascript
-&lt;%- note.hashtags() &gt;% // #tag1, #tag2, ...
+<%- note.hashtags() %> // #tag1, #tag2, ...
 ```
 
 ---
@@ -221,7 +221,7 @@ The following will comma separated list of hashtags
 The following will return comma separated list of mentions
 
 ```javascript
-&lt;%- note.mentions() &gt;% // #tag1, #tag2, ...
+<%- note.mentions() %> // #tag1, #tag2, ...
 ```
 
 ---
@@ -256,10 +256,10 @@ Each object in paragraph array will contain the following keys
 The following will iterate through all paragraph objects for the current note.
 
 ```javascript
-&lt;% const paragraphs = await note.paragraphs() -&gt;%
-&lt;% paragraphs.map(item => { -&gt;%
-&lt;%- item.key + ' : ' + item.value &gt;%
-&lt;%}) -&gt;%
+<% const paragraphs = await note.paragraphs() -%>
+<% paragraphs.map(item => { -%>
+<%- item.key + ' : ' + item.value %>
+<%}) -%>
 ```
 
 ---
@@ -290,7 +290,7 @@ The headings of the linked paragraphs are also listed here, although they don't 
 
 ### openTasks
 
-> #### openTasks() : Array&lt;TParagraph&gt;
+> #### openTasks() : `Array<TParagraph>`
 >
 > Returns an array of open task paragraphs in the current note. This includes tasks in the current note and tasks from other notes that are scheduled for today (in case of a calendar note).
 
@@ -301,7 +301,7 @@ The headings of the linked paragraphs are also listed here, although they don't 
 The following will return the array of open tasks in the current note
 
 ```javascript
-&lt;%- note.openTasks() &gt;% // returns array of open task paragraph objects
+<%- note.openTasks() %> // returns array of open task paragraph objects
 ```
 
 ---
@@ -319,14 +319,14 @@ The following will return the array of open tasks in the current note
 The following will return the number of open tasks in the current note
 
 ```javascript
-&lt;%- note.openTaskCount() &gt;% // returns number of open tasks (e.g., 5)
+<%- note.openTaskCount() %> // returns number of open tasks (e.g., 5)
 ```
 
 ---
 
 ### completedTasks
 
-> #### completedTasks() : Array&lt;TParagraph&gt;
+> #### completedTasks() : `Array<TParagraph>`
 >
 > Returns an array of completed task paragraphs in the current note. This includes tasks in the current note and completed tasks from other notes that were scheduled for today (in case of a calendar note).
 
@@ -337,7 +337,7 @@ The following will return the number of open tasks in the current note
 The following will return the array of completed tasks in the current note
 
 ```javascript
-&lt;%- note.completedTasks() &gt;% // returns array of completed task paragraph objects
+<%- note.completedTasks() %> // returns array of completed task paragraph objects
 ```
 
 ---
@@ -355,14 +355,14 @@ The following will return the array of completed tasks in the current note
 The following will return the number of completed tasks in the current note
 
 ```javascript
-&lt;%- note.completedTaskCount() &gt;% // returns number of completed tasks (e.g., 3)
+<%- note.completedTaskCount() %> // returns number of completed tasks (e.g., 3)
 ```
 
 ---
 
 ### openChecklists
 
-> #### openChecklists() : Array&lt;TParagraph&gt;
+> #### openChecklists() : `Array<TParagraph>`
 >
 > Returns an array of open checklist paragraph objects in the current note.
 
@@ -373,7 +373,7 @@ The following will return the number of completed tasks in the current note
 The following will return the array of open checklists in the current note
 
 ```javascript
-&lt;%- note.openChecklists() &gt;% // returns array of open checklist paragraph objects
+<%- note.openChecklists() %> // returns array of open checklist paragraph objects
 ```
 
 ---
@@ -391,14 +391,14 @@ The following will return the array of open checklists in the current note
 The following will return the number of open checklists in the current note
 
 ```javascript
-&lt;%- note.openChecklistCount() &gt;% // returns number of open checklists (e.g., 2)
+<%- note.openChecklistCount() %> // returns number of open checklists (e.g., 2)
 ```
 
 ---
 
 ### completedChecklists
 
-> #### completedChecklists() : Array&lt;TParagraph&gt;
+> #### completedChecklists() : `Array<TParagraph>`
 >
 > Returns an array of completed checklist paragraph objects in the current note.
 
@@ -409,7 +409,7 @@ The following will return the number of open checklists in the current note
 The following will return the array of completed checklists in the current note
 
 ```javascript
-&lt;%- note.completedChecklists() &gt;% // returns array of completed checklist paragraph objects
+<%- note.completedChecklists() %> // returns array of completed checklist paragraph objects
 ```
 
 ---
@@ -427,7 +427,7 @@ The following will return the array of completed checklists in the current note
 The following will return the number of completed checklists in the current note
 
 ```javascript
-&lt;%- note.completedChecklistCount() &gt;% // returns number of completed checklists (e.g., 1)
+<%- note.completedChecklistCount() %> // returns number of completed checklists (e.g., 1)
 ```
 
 ---
@@ -446,7 +446,7 @@ The following will return the number of completed checklists in the current note
 The following will return the line number where the active content starts
 
 ```javascript
-&lt;%- note.contentStartIndex() &gt;% // returns line number (e.g., 3)
+<%- note.contentStartIndex() %> // returns line number (e.g., 3)
 ```
 
 ---
@@ -467,5 +467,5 @@ The following will return the line number where the active content starts
 The following will return the line number where the active content ends
 
 ```javascript
-&lt;%- note.contentEndIndex() &gt;% // returns line number (e.g., 25)
+<%- note.contentEndIndex() %> // returns line number (e.g., 25)
 ```

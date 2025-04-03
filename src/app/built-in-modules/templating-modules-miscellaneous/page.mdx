@@ -3,138 +3,154 @@ import Link from 'next/link'
 
 # Miscellaneous Template Commands
 
-The Templating plugin provides various utility commands that can be used in your templates beyond the prompt commands. These commands can be used with the `&lt;%-` template tag syntax to include dynamic content in your templates.
+The Templating plugin provides various utility commands that can be used in your templates beyond the prompt commands. These commands can be used with the `<%-` template tag syntax to include dynamic content in your templates.
 
 ## Content Generation
 
 ### Inspirational Content
 
 ```markdown
-&lt;%- affirmation() &gt;%
+<%- affirmation() %>
 ```
+
 Returns a random affirmation.
 
 ```markdown
-&lt;%- advice() &gt;%
+<%- advice() %>
 ```
+
 Returns a random piece of advice.
 
 ```markdown
-&lt;%- quote() &gt;%
+<%- quote() %>
 ```
+
 Returns the daily quote.
 
 ```markdown
-&lt;%- wotd() &gt;%
+<%- wotd() %>
 ```
+
 Returns the word of the day.
 
 ## Weather Information
 
 ```markdown
-&lt;%- weather() &gt;%
+<%- weather() %>
 ```
+
 Returns weather information using the default format configured in settings.
 
 ```markdown
-&lt;%- weather('format') &gt;%
+<%- weather('format') %>
 ```
+
 Returns weather information using the specified format.
 
 ## Date and Time
 
 ```markdown
-&lt;%- now() &gt;%
+<%- now() %>
 ```
+
 Returns the current date.
 
 ```markdown
-&lt;%- timestamp() &gt;%
+<%- timestamp() %>
 ```
+
 Returns the current timestamp.
 
 ```markdown
-&lt;%- currentTime() &gt;%
+<%- currentTime() %>
 ```
+
 Returns the current time.
 
 ```markdown
-&lt;%- currentDate() &gt;%
+<%- currentDate() %>
 ```
+
 Returns the current date (alias for `now()`).
 
 ```markdown
-&lt;%- date8601() &gt;%
+<%- date8601() %>
 ```
+
 Returns the current date in ISO 8601 format (YYYY-MM-DD).
 
 ```markdown
-&lt;%- formattedDateTime({ format: 'format string' }) &gt;%
+<%- formattedDateTime({ format: 'format string' }) %>
 ```
+
 or
+
 ```markdown
-&lt;%- formattedDateTime('format string') &gt;%
+<%- formattedDateTime('format string') %>
 ```
+
 Returns the current date/time in the specified format.
 
 ```markdown
-&lt;%- weekDates(params) &gt;%
+<%- weekDates(params) %>
 ```
+
 Returns a list of dates for the current week. Accepts parameters to customize the output.
-
-<Callout type="info" title="Deprecated Commands">
-The following commands are deprecated and should be replaced with their newer alternatives:
-
-- `pickDate()` - Use `promptDate()` instead.
-- `pickDateInterval()` - Use `promptDateInterval()` instead.
-</Callout>
 
 ## Calendar Events
 
 ```markdown
-&lt;%- events(params) &gt;%
+<%- events(params) %>
 ```
+
 Lists events for a specified day. Parameters can control which events are displayed and how they are formatted.
 
 ```markdown
-&lt;%- listTodaysEvents(params) &gt;%
+<%- listTodaysEvents(params) %>
 ```
+
 Lists today's events with optional formatting parameters.
 
 ```markdown
-&lt;%- matchingEvents(params) &gt;%
+<%- matchingEvents(params) %>
 ```
+
 Lists events matching specified criteria.
 
 ```markdown
-&lt;%- listMatchingEvents(params) &gt;%
+<%- listMatchingEvents(params) %>
 ```
+
 Alias for `matchingEvents()`.
 
 ## Project Management
 
 ```markdown
-&lt;%- progressUpdate(params) &gt;%
+<%- progressUpdate(params) %>
 ```
+
 Shows progress update information using the Summaries plugin.
 
 ```markdown
-&lt;%- todayProgressFromTemplate(params) &gt;%
+<%- todayProgressFromTemplate(params) %>
 ```
+
 Shows today's progress from a template using the Summaries plugin.
 
 ## Frontmatter Utilities
 
 ```markdown
-&lt;%- getValuesForKey('keyName') &gt;%
+<%- getValuesForKey('keyName') %>
 ```
+
 Returns all values found in frontmatter across all notes for the specified key. Returns them as an array of strings, e.g. ["apple","banana"]
 
 ## Editor Utilities
 
 ```markdown
-&lt;%- selection() &gt;%
+<%- selection() %>
 ```
+
 Returns the currently selected text in the editor. Useful for incorporating selected content into templates.
 
 ## Parameter Formats
@@ -142,11 +158,11 @@ Returns the currently selected text in the editor. Useful for incorporating sele
 Many of these commands accept parameters in JSON format to customize their behavior. For example:
 
 ```markdown
-&lt;%- events({ 
-  "days": 1, 
-  "calendars": ["Work", "Personal"],
-  "format": "- $title ($start-$end)" 
-}) &gt;%
+<%- events({
+"days": 1,
+"calendars": ["Work", "Personal"],
+"format": "- $title ($start-$end)"
+}) %>
 ```
 
 This would list events for the next day from the "Work" and "Personal" calendars, formatted as "- Event Name (start time-end time)".
@@ -154,40 +170,48 @@ This would list events for the next day from the "Work" and "Personal" calendars
 <Callout type="warning" title="Plugin Dependencies">
 Some commands require other NotePlan plugins to be installed:
 
-- `events()`, `listTodaysEvents()`, `matchingEvents()`, and `listMatchingEvents()` require the EventHelpers plugin.
-- `progressUpdate()` and `todayProgressFromTemplate()` require the Summaries plugin.
-- `sweepTasks()` requires the Sweep plugin.
-- `date8601()` and `weekDates()` require the DateAutomations plugin.
-</Callout>
+`events()`, `listTodaysEvents()`, `matchingEvents()`, and `listMatchingEvents()` require the EventHelpers plugin.
+`progressUpdate()` and `todayProgressFromTemplate()` require the Summaries plugin.
+`date8601()` and `weekDates()` require the DateAutomations plugin.
+
+  </Callout>
 
 ## Examples
 
 Here are some example uses of these commands in templates:
 
 ### Daily Note Template
+
 ```markdown
-# Daily Note for &lt;%- now() &gt;%
+# Daily Note for <%- now() %>
 
 ## Weather
-&lt;%- weather() &gt;%
+
+<%- weather() %>
 
 ## Quote of the Day
-&lt;%- quote() &gt;%
+
+<%- quote() %>
 
 ## Today's Events
-&lt;%- listTodaysEvents() &gt;%
+
+<%- listTodaysEvents() %>
 
 ## Tasks
-&lt;%- sweepTasks({ source: "/Inbox", destination: "## Tasks" }) &gt;%
+
+<%- sweepTasks({ source: "/Inbox", destination: "## Tasks" }) %>
 ```
 
 ### Weekly Review Template
+
 ```markdown
-# Weekly Review: &lt;%- weekDates({ format: "MMM D" }) &gt;%
+# Weekly Review: <%- weekDates({ format: "MMM D" }) %>
 
 ## Progress this Week
-&lt;%- progressUpdate({ period: "week" }) &gt;%
+
+<%- progressUpdate({ period: "week" }) %>
 
 ## Upcoming Week
-&lt;%- events({ days: 7, format: "### $date\n$events" }) &gt;%
-``` 
+
+<%- events({ days: 7, format: "### $date\n$events" }) %>
+```

@@ -1,6 +1,5 @@
 import Callout from '@/components/Callout'
 
-
 import promptdefault from '@/images/prompt-default.png'
 import prompttext from '@/images/prompt-text.png'
 import promptchoices from '@/images/prompt-choices.png'
@@ -12,39 +11,47 @@ import intervalprompt2 from '@/images/date-interval-prompt-e2.png'
 # System Module
 
 ## Overview
+
 The System Module provides a suite of methods which provide access to system level commands such as clipboard or current selection
 
 ## Methods
+
 > namespace: `system`
 
 The following are the methods available in the System Module, and they can be used in any `Templating` template, no additional configuration.
 
-*****
+---
 
 ### clipboard
+
 > #### clipboard() : void
-Insert contents of system clipboard
+>
+> Insert contents of system clipboard
 
 **Example:**
 
 The following example will insert the contents of the clipboard within template
 
 ```markdown
-&lt;%- system.clipboard() &gt;%
+<%- system.clipboard() %>
 ```
 
-*****
+---
 
 ### prompt
+
 > #### prompt(placeholder: string = '', promptMessage?: string = '', options?: string|array = null) : void
-Display prompt during template rendering, providing interface for supplying dynamic data for notes when invoking template.
+>
+> Display prompt during template rendering, providing interface for supplying dynamic data for notes when invoking template.
 
 - `placeholder` - A unique placeholder which will receive the contents of prompt request
 
 - `promptMessage?` - An optional prompt message.
+
   - If not supplied, the prompt message will be created automatically using the `placeholder` (e.g, `Enter {placeholder}`)
 
 - `options?` - Prompt options
+
   - If string is supplied, it will be prompt title
   - If an array of strings is supplied, they will be used as prompt choices
 
@@ -63,7 +70,7 @@ If you have multiple prompts which have the same placeholder only the first prom
 The following example will display a prompt message
 
 ```markdown
-&lt;%- prompt('first_name','What is your first name?') &gt;%
+<%- prompt('first_name','What is your first name?') %>
 ```
 
 <img src={promptdefault.src} alt="Default Prompt" />
@@ -71,7 +78,7 @@ The following example will display a prompt message
 The following example will display a prompt message including prompt title
 
 ```markdown
-&lt;%- prompt('overview','What is meeting about?','Meeting Note') &gt;%
+<%- prompt('overview','What is meeting about?','Meeting Note') %>
 ```
 
 <img src={prompttext.src} alt="Prompt Text" />
@@ -79,16 +86,18 @@ The following example will display a prompt message including prompt title
 The following example will display a choice list prompt
 
 ```markdown
-&lt;%- prompt('color','What is your favorite color?',['red','green','blue','purple']) &gt;%
+<%- prompt('color','What is your favorite color?',['red','green','blue','purple']) %>
 ```
 
 <img src={promptchoices.src} alt="Prompt Choices" />
 
-*****
+---
 
 ### promptDate
+
 > #### promptDate(placeholder? : string, question?: string) : string
-Display date prompt during template rendering, providing interface for supplying dynamic data for notes when invoking template.
+>
+> Display date prompt during template rendering, providing interface for supplying dynamic data for notes when invoking template.
 
 <Callout
   type="info"
@@ -98,21 +107,20 @@ The date must in <code>YYYY-MM-dd</code> format
   `}
 />
 
-
 - `placeholder?` - A unique placeholder which will receive the contents of prompt request
 
 - `promptMessage?` - An optional prompt message.
+
   - If not supplied, default message 'Enter Date:' will be used
 
 - `-> result` - Entered date value, if `Cancel` is clicked, result will be empty
-
 
 **Example:**
 
 The following example will display default date prompt
 
 ```markdown
-&lt;%- system.datePrompt() &gt;%
+<%- system.datePrompt() %>
 ```
 
 <img src={dateprompt.src} alt="Date Prompt" />
@@ -120,16 +128,18 @@ The following example will display default date prompt
 The following example will display date prompt using custom prompt message
 
 ```markdown
-&lt;%- system.datePrompt('Please enter start date:') &gt;%
+<%- system.datePrompt('Please enter start date:') %>
 ```
 
 <img src={dateprompt2.src} alt="Date Prompt" />
 
-*****
+---
 
 ### promptDateInterval
+
 > #### promptDateInterval(placeholder? : string, question?: string) : string
-Display date interval prompt during template rendering, providing interface for supplying dynamic data for notes when invoking template.
+>
+> Display date interval prompt during template rendering, providing interface for supplying dynamic data for notes when invoking template.
 
 <Callout
   type="info"
@@ -139,10 +149,10 @@ The date must in <code>nn[bdwnqy]</code> format (e.g. 5d, 3w, 2y, etc)
   `}
 />
 
-
 - `placeholder?` - A unique placeholder which will receive the contents of prompt request
 
 - `promptMessage?` - An optional prompt message.
+
   - If not supplied, default message 'Enter Date Interval:' will be used
 
 - `-> result` - Entered date value, if `Cancel` is clicked, result will be empty
@@ -152,7 +162,7 @@ The date must in <code>nn[bdwnqy]</code> format (e.g. 5d, 3w, 2y, etc)
 The following example will display default date interval prompt
 
 ```markdown
-&lt;%- system.promptDateInterval() &gt;%
+<%- system.promptDateInterval() %>
 ```
 
 <img src={intervalprompt.src} alt="Interval Prompt" />
@@ -160,21 +170,23 @@ The following example will display default date interval prompt
 The following example will display date interval prompt using custom prompt message
 
 ```markdown
-&lt;%- system.promptDateInterval('Date interval to use:') &gt;%
+<%- system.promptDateInterval('Date interval to use:') %>
 ```
 
 <img src={intervalprompt2.src} alt="Interval Prompt" />
 
-*****
+---
 
 ### selection
+
 > #### selection() : void
-Insert contents of selected text before invoking any of the `Templating` render commands
+>
+> Insert contents of selected text before invoking any of the `Templating` render commands
 
 **Example:**
 
 The following example will insert the contents of selected text when render command was invoked.
 
 ```markdown
-&lt;%- system.selection() &gt;%
+<%- system.selection() %>
 ```

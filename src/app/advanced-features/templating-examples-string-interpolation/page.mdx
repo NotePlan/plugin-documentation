@@ -5,25 +5,24 @@ import Callout from '@/components/Callout'
 {/* ## Overview */}
 You can use standard JavaScript string interpolation within `Templating` tags.
 
-
-
+{/* prettier-ignore */}
 {/*For example, using the following in your plugin code, you can provide the referenced `fname`, `mname`, and `lname` variables
 
-
- ```javascript
+```javascript
 export async function templatingInterpolation(): Promise<void> {
-  try {
-    const data = { fname: 'Mike', mname: 'Joseph', lname: 'Erickson' }
+ try {
+   const data = { fname: 'Mike', mname: 'Joseph', lname: 'Erickson' }
 
-    const result = await NPTemplating.renderTemplate('Test (Interpolation)', data)
+   const result = await NPTemplating.renderTemplate('Test (Interpolation)', data)
 
-    Editor.insertTextAtCursor(result)
-  } catch (error) {
-    showError(error)
-  }
+   Editor.insertTextAtCursor(result)
+ } catch (error) {
+   showError(error)
+ }
 }
-``` 
+```
 
+{/* prettier-ignore */}
 In your template, you can reference these variables.*/}
 
 <Callout
@@ -32,15 +31,14 @@ In your template, you can reference these variables.*/}
   description="Make sure you use the standard interpolation ticks (`) around the text block which contains desired variables"
 />
 
-  ```markdown
+```markdown
+<% const fname = "Frank" %>
+<% const lname = "Winter" %>
+Full Name: <%- `${fname} ${lname}` %>
+```
 
-  &lt;% const fname = "Frank" &gt;%
-  &lt;% const lname = "Winter" &gt;%
-  Full Name:  &lt;%- `${fname} ${lname}` &gt;%
-  ```
- 
-  When your template is rendered, it will appear as
+When your template is rendered, it will appear as
 
-  ```markdown
-  Full Name: Frank Winter
-  ```
+```markdown
+Full Name: Frank Winter
+```

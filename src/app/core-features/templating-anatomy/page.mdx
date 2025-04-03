@@ -25,10 +25,10 @@ type: empty-note
 Everything below the second `---` will be template content
 
 --
-created: &lt;%- date.now('dddd MMMM Do, YYYY HH:mm A') %&gt;
+created: <%- date.now('dddd MMMM Do, YYYY HH:mm A') %>
 --
 
-&lt; -- [[&lt;%- date.yesterday('YYYY-MM-DD') %&gt;]] | [[&lt;%- date.tomorrow('YYYY-MM-DD') %&gt;]] -- &gt;
+&-- [[<%- date.yesterday('YYYY-MM-DD') %>]] | [[<%- date.tomorrow('YYYY-MM-DD') %>]] -- >
 
 And the remainder of the template will be display here ...
 ```
@@ -42,9 +42,9 @@ For example:
 ```markdown
 ---
 title: Dynamic Template
-modified: &lt;%- date.now('YYYY-MM-DD h:mm A') %&gt;
+modified: <%- date.now('YYYY-MM-DD h:mm A') %>
 ---
 
 This is read from frontmatter:
-contents of the calculated "modified" field: &lt;%- modified %&gt;
+contents of the calculated "modified" field: <%- modified %>
 ```
