@@ -1,0 +1,446 @@
+import Callout from '@/components/Callout'
+
+# Overview
+
+While `np.Templating` includes a number of commands for NotePlan users, the real power of `np.Templating` is the ability to integrate into custom NotePlan plugins.
+
+## Templating Configuration
+
+`np.Templating` has a suite of methods which can be used in your custom NotePlan plugins.
+
+## Templating Methods
+
+The following methods are available in the `NPTemplating` plugin
+
+---
+
+### renderTemplate
+
+> #### renderTemplate(templateName : string = '', templateData? : any = {}, options? : any = {}) : string
+>
+> Renders template located in `@Templates` folder
+
+- `templateName` - Desired template name (don't include `@Templates`)
+- `templateData` - Object containing user data and methods
+- `options` - Object containing options
+- `-> result` - Returns rendered template
+
+**Example**
+
+The following example will render template, which contains tag for name `<%- name %>`
+
+```javascript
+import NPTemplating from 'NPTemplating'
+import { logError } from '@helpers/dev'
+
+export async function templatingRenderTemplate(): Promise<void> {
+  try {
+    const templateData = {
+      data: {
+        name: 'Mike'
+      }
+    }
+    const result = await NPTemplating.renderTemplate('Hello World Template', templateData)
+
+    Editor.insertTextAtCursor(result)
+  } catch (error) {
+   logError('templatingRenderTemplate', error)
+  }
+}
+```
+
+---
+
+### render
+
+> #### render(templateContent : string = '', templateData? : any = {}, options? : any = {}) : string
+>
+> Renders template using `templateContent`. Similar to `renderTemplate` except you pass template content directly.
+
+- `templateContent` - Template Content
+- `templateData` - Object containing user data and methods
+- `options` - Object containing options
+- `-> result` - Returns rendered template
+
+**Example**
+
+The following example will render template using supplied content.
+
+```javascript
+import NPTemplating from 'NPTemplating'
+import { logError } from '@helpers/dev'
+
+export async function templatingRender(): Promise<void> {
+  try {
+    const templateData = {
+      data: {
+        name: 'Mike'
+      }
+    }
+    const result = await NPTemplating.render('<%- name %>', templateData)  // returns Mike
+
+    Editor.insertTextAtCursor(result)
+  } catch (error) {
+   logError('templatingRender', error)
+  }
+}
+```
+
+---
+
+### preRender
+
+> #### preRender(template : string = '', userData? : any = {}, options? : any = {}) : string
+>
+> Renders template using `templateContent` and process any template tags in template attributes
+
+<Callout
+  type="warning"
+  title="IMPORTANT"
+  description="Assumes template content is frontmatter format, otherwise `frontmatterBody` property will contain `'INVALID TEMPLATE'` and `frontmatterAttributes` property will be an empty object"
+/>
+
+<Callout
+  type="info"
+  title="TIP"
+  description="Templating header attributes may contain any supported `np.Templating` tags such as `<%- date.now() %>` or prompts such as `<%- prompt('name','What is your name') %>`"
+/>
+
+For example, this could be your `Meeting Template`
+
+```yaml
+---
+title: Standard Meeting Note
+newNoteTitle: <%- prompt('newNoteTitle','Enter Note Title') %>
+folder: "🗓 Meeting Notes/<%- date.now('YYYY-MM') %>"
+type: meeting-note
+---
+```
+
+And when rendered, it will ask for `newNoteTitle` name using the `np.Templating` prompt system, and note will be created in "🗓 Meeting Notes/2022-04" as example if current date is "2022-04-07"
+
+- `template` - Template content (use `getTemplate` to load template content from template name)
+- `userData` - Object containing user data and methods which may be used when rendering template attributes
+- `-> result` - Returns frontmatter object containing `frontmatterBody: string` and `frontmatterAttributes: object`
+
+```javascript
+return {
+  frontmatterBody: string,
+  frontmatterAttributes: object,
+}
+```
+
+**Example**
+
+The following example snippet from `templateQuickNote` method will pre render template, return final frontmatter body and attributes
+
+```javascript
+import NPTemplating from 'NPTemplating'
+
+// load template
+const templateData = await NPTemplating.getTemplate('Meeting Note')
+
+// pre render template, processing any template tags in frontmatter attributes
+const { frontmatterBody, frontmatterAttributes } = await NPTemplating.preRender(
+  templateData,
+)
+
+// using the template body from frontmatter style template and rendered attributes, perform final render
+const finalRenderedData = await NPTemplating.render(
+  frontmatterBody,
+  frontmatterAttributes,
+)
+```
+
+---
+
+### getTemplate
+
+> #### getTemplate(templateName : string = '') : string
+>
+> Returns template content in `@Templates` folder, using for desired template
+
+- `templateName` - Desired template name (don't include `@Templates`)
+- `-> result` - Returns template content
+
+**Example**
+
+The following example will get template defined by `templateName`, which will be used by `render` method
+
+```javascript
+import NPTemplating from 'NPTemplating'
+import { logError } from '@helpers/dev'
+
+export async function templatingRender(): Promise<void> {
+  try {
+    const templateData = {/* templateData */}
+    const templateContent = NPTemplating.getTemplate('Template Name')
+    const result = await NPTemplating.render(templateContent, templateData)
+
+    Editor.insertTextAtCursor(result)
+  } catch (error) {
+   logError('templatingRender', error)
+  }
+}
+```
+
+---
+
+### getTemplateList
+
+> #### getTemplateList(templateTypes?: string | array = '\*')
+>
+> Returns array of templates that match the template type
+
+`templateTypes` - Array or comma separated string list of template types to include or exclude
+
+- If you wish to include all template types, pass `*` as one of the options (see example)
+- If you wish to suppress certain template types, precede type with `!` character (e.g. `!quick-note`)
+- If no template type provided, it will default to all (`*`) templates
+- `-> result` - Returns template content
+
+**Example**
+
+```javascript
+const selectedTemplate = await NPTemplating.getTemplateList([
+  '*',
+  '!quick-note',
+]) // returns all templates, except `quick=note`
+```
+
+---
+
+### chooseTemplate
+
+> #### chooseTemplate(templateTypes?: string | array = '\*', promptMessage? : string = 'Choose Template')
+>
+> Displays template chooser interface (using `@helpers/userInput.js :: chooseOption method`)
+
+`templateTypes` - Array or comma separated string list of template types to include or exclude
+
+- If you wish to include all template types, pass `*` as one of the options (see example)
+- If you wish to suppress certain template types, precede type with `!` character (e.g. `!quick-note`).
+- If no template type provided, it will default to all (`*`) templates
+
+`promptMessage` - Desired prompt message when chooser interface is displayed
+
+- `-> result` - Returns template content
+
+**Example**
+
+```javascript
+const selectedTemplate = await NPTemplating.chooseTemplate(['*', '!quick-note']) // include all templates, except `quick=note`
+if (selectedTemplate) {
+  const result = await NPTemplating.renderTemplate(selectedTemplate)
+}
+```
+
+---
+
+### createTemplate
+
+> #### createTemplate(templateName: string = '', metaData: obj, templateContent : string = '')
+>
+> Creates new template
+
+`templateName` - Path to new template
+`metaData` - Object containing additional template tags (`title` will be created automatically using `templateName`)
+`templateContent` - Template content (after template tags)
+
+- `-> result` - Returns formatted date string
+
+**Example**
+
+The following example will create a new template in "🧰 Dungeon" folder, with title "New Template"
+
+```javascript
+const templateName = '🧰 Dungeon/New Template`
+const metaData = {
+  section: 'Header'
+}
+const result = NPTemplating.createTemplate(templateName, metaData, 'Hello World')
+```
+
+The new template would appear as
+
+```yaml
+---
+title: New Template
+section: Header
+---
+Hello World
+```
+
+## Integrating into NotePlan plugin
+
+- Import NPTemplating Plugin
+- Setup NPTemplating data object
+
+### Import NPTemplating Plugin
+
+The first step, you will need to `import` the `NPTemplating` plugin into your source file
+
+```javascript
+import NPTemplating from 'NPTemplating'
+```
+
+### Setup NPTemplating data object
+
+The next setup will be to define a templateData object
+
+<Callout
+  type="info"
+  title="NOTE"
+  description="If you do not intend to include custom variables or methods, this step can be ignored"
+/>
+
+```javascript
+const templateData = {
+  data: {
+    /* your data object goes here */
+  },
+  methods: {
+    /* your method object here */
+  },
+}
+```
+
+For example, if your `templateData` object contains two variables (data) and two methods, it would look like this
+
+```javascript
+const templateData = {
+      data: {
+        fname: 'Mike',
+        lname: 'Erickson'
+      },
+      methods: {
+        uppercase: (str : string = '') => {
+          return str.toUpperCase()
+        },
+        lowercase: (str : string = '') => {
+          return str.toLowerCase()
+        }
+      }
+    }
+```
+
+### Invoke `NPTemplating.renderTemplate` method
+
+The next step (yes, it is that easy) is to call the `NPTemplating.renderTemplate` method which will load the `templateName` and pass in the `templateData` object
+
+```javascript
+const result = await NPTemplating.renderTemplate('templateName', templateData)
+```
+
+### Insert result into NotePlan Note
+
+The final step, insert the result into NotePlan note (project or calendar note)
+
+```javascript
+Editor.insertTextAtCursor(result)
+```
+
+## Upgrading from Legacy Templating
+
+The legacy NotePlan templating plugin, `nmn.Templates` does things a bit differently from `np.Templating`.
+
+The following information will help you migrate from `nmn.Templates` to `np.Templating`
+
+## Plugin Refactor
+
+The following example will convert a portion of `jgClark.DailyJournal` into `np.Templating` syntax
+
+### Refactor `dailyStart` method
+
+In this example, we will refactor the `jgClark.DailyJournal.dailyStart` command.
+
+```javascript
+// Start the currently open daily note with the user's Daily Note Template
+export async function dayStart(today: boolean = false) {
+  if (today) {
+    // open today's date in the main window, and read content
+    await Editor.openNoteByDate(new Date(), false)
+    // $FlowIgnore[incompatible-call]
+    console.log(`Opened: ${displayTitle(Editor.note)}`)
+  } else {
+    // apply daily template in the currently open daily note
+    if (Editor.note == null || Editor.type !== 'Calendar') {
+      await showMessage('Please run again with a calendar note open.')
+      return
+    }
+  }
+  await applyNamedTemplate(pref_templateTitle)
+}
+```
+
+#### Modified `jgclark.DailyJournal.dailyStart` method
+
+The following is the modified method (only modified 3 lines of code)
+
+- import `NPTemplating` plugi
+  n
+- Remove `applyNamedTemplate` method
+- Call `NPTemplating.renderTemplate` method
+- Insert result to current cursor in NotePlan note
+
+```javascript
+import NPTemplating from "NPTemplating"
+
+// Start the currently open daily note with the user's Daily Note Template
+export async function dayStart(today: boolean = false) {
+  if (today) {
+    // open today's date in the main window, and read content
+    await Editor.openNoteByDate(new Date(), false)
+    // $FlowIgnore[incompatible-call]
+    console.log(`Opened: ${displayTitle(Editor.note)}`)
+  } else {
+    // apply daily template in the currently open daily note
+    if (Editor.note == null || Editor.type !== 'Calendar') {
+      await showMessage('Please run again with a calendar note open.')
+      return
+    }
+  }
+  const result = await NPTemplating.renderTemplate('Daily Note Template', templateData)
+  Editor.insertTextAtCursor(result)
+}
+```
+
+### Add Template Methods
+
+When using `nmn.Templates` there is an `addTag` method which is included in the `nmn.Templates.templateController/src/processTemplate` method. You can use the `np.Templating.globals` method, which provides a mapping to current `nmn.Templates.addTag` method.
+
+<Callout
+  type="info"
+  title="INFO"
+  description="At time of release, all existing global methods which have been added to `nmn.Templates.templateController` using `addTag` method have been added to `np.Templating/lib/globals.js`"
+/>
+
+### Daily Note Template Modification
+
+The final step will be to modify the existing `Daily Note Template` to reference `np.Templating` variables and methods.
+
+```yaml
+# Extended Daily Note Template
+---
+
+<%-formattedDateTime({format: '%A, %B %d, %Y'}) %>
+
+## Today's events:
+{{listTodaysEvents({template:"- *|START|*-*|END|*: *|TITLE|*",allday_template:"- *|TITLE|*"})}}
+
+---
+
+## Tasks
+{{sweepTasks({limit:{ "unit": "day", "num": 7 },includeHeadings:false, ignoreFolders:['@Templates','_TEST','zDELETEME']})}}
+---
+## Notes
+
+
+---
+{{weather()}}
+
+### Things to think about:
+- "{{affirmation()}}."
+- "{{advice()}}"
+- {{quote()}}
+```

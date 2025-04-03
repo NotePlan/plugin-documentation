@@ -44,7 +44,7 @@ The following example will insert the contents of the clipboard within template
 >
 > Display prompt during template rendering, providing interface for supplying dynamic data for notes when invoking template.
 
-- `placeholder` - A unique placeholder which will receive the contents of prompt request
+- `placeholder` - A unique placeholder (stored variable) which will receive the contents of prompt request
 
 - `promptMessage?` - An optional prompt message.
 
@@ -59,9 +59,9 @@ The following example will insert the contents of the clipboard within template
 
 <Callout
   type="warning"
-  title="IMPORTANT"
+  title="WARNING"
   description={`
-If you have multiple prompts which have the same placeholder only the first prompt will be displayed, all further prompts will use value from first prompt.
+If you have multiple prompts which have the same placeholder (variable name), only the first prompt will be displayed, all further prompts will use value from first prompt. So it's important to use unique placeholder names for each prompt.
   `}
 />
 
@@ -107,7 +107,7 @@ The date must in <code>YYYY-MM-dd</code> format
   `}
 />
 
-- `placeholder?` - A unique placeholder which will receive the contents of prompt request
+- `placeholder?` - A unique placeholder (stored variable) which will receive the contents of prompt request
 
 - `promptMessage?` - An optional prompt message.
 
@@ -149,7 +149,7 @@ The date must in <code>nn[bdwnqy]</code> format (e.g. 5d, 3w, 2y, etc)
   `}
 />
 
-- `placeholder?` - A unique placeholder which will receive the contents of prompt request
+- `placeholder?` - A unique placeholder (stored variable) which will receive the contents of prompt request
 
 - `promptMessage?` - An optional prompt message.
 
@@ -162,7 +162,7 @@ The date must in <code>nn[bdwnqy]</code> format (e.g. 5d, 3w, 2y, etc)
 The following example will display default date interval prompt
 
 ```markdown
-<%- system.promptDateInterval() %>
+<%- promptDateInterval() %>
 ```
 
 <img src={intervalprompt.src} alt="Interval Prompt" />
@@ -170,7 +170,7 @@ The following example will display default date interval prompt
 The following example will display date interval prompt using custom prompt message
 
 ```markdown
-<%- system.promptDateInterval('Date interval to use:') %>
+<%- promptDateInterval('Date interval to use:') %>
 ```
 
 <img src={intervalprompt2.src} alt="Interval Prompt" />

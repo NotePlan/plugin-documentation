@@ -1,0 +1,175 @@
+import Callout from '@/components/Callout'
+
+# Prompts
+
+The `prompt` method is a powerful feature that allows you to create interactive templates that gather information from users. This method displays a prompt dialog to the user and returns their input, which can then be used in your template.
+
+## Basic Usage
+
+The basic syntax for the `prompt` method is:
+
+```javascript
+<%- prompt('variableName', 'Prompt message') %>
+```
+
+For example:
+
+```yaml
+---
+title: Meeting Note
+attendees: <%- prompt('attendees', 'Who is attending this meeting?') %>
+date: <%- date.now() %>
+---
+# Meeting with <%= attendees %>
+
+## Agenda
+1.
+2.
+3.
+## Notes
+
+## Action Items
+```
+
+When this template is rendered, it will:
+
+1. Show a prompt dialog asking "Who is attending this meeting?"
+2. Store the user's response in the `attendees` variable
+3. Use that value in the template where `<%= attendees %>` appears
+
+## Advanced Options
+
+The `prompt` method also accepts an options object as a third parameter:
+
+```javascript
+<%- prompt('variableName', 'Prompt message', {
+  default: 'Default value',
+  placeholder: 'Placeholder text',
+  type: 'text' | 'select' | 'multiselect',
+  options: ['Option 1', 'Option 2', 'Option 3'] // For select/multiselect types
+}) %>
+```
+
+### Text Input
+
+```yaml
+---
+title: Project Note
+projectName: <%- prompt('projectName', 'What is the project name?', {
+  default: 'New Project',
+  placeholder: 'Enter project name'
+}) %>
+---
+
+# <%= projectName %>
+```
+
+### Select Input
+
+```yaml
+---
+title: Task Note
+priority: <%- prompt('priority', 'Select priority level:', {
+  type: 'select',
+  options: ['High', 'Medium', 'Low']
+}) %>
+---
+
+# Task
+Priority: <%= priority %>
+```
+
+### Multiselect Input
+
+```yaml
+---
+title: Meeting Note
+tags: <%- prompt('tags', 'Select relevant tags:', {
+  type: 'multiselect',
+  options: ['Planning', 'Development', 'Review', 'Documentation']
+}) %>
+---
+
+# Meeting
+Tags: <%= tags.join(', ') %>
+```
+
+## Best Practices
+
+<Callout
+  type="info"
+  title="TIP"
+  description="Use clear, concise prompt messages that clearly indicate what information is needed from the user."
+/>
+
+<Callout
+  type="warning"
+  title="IMPORTANT"
+  description="Always provide meaningful default values or placeholders when appropriate to guide users."
+/>
+
+## Examples
+
+### Meeting Note Template
+
+```yaml
+---
+title: Meeting Note
+meetingType: <%- prompt('meetingType', 'What type of meeting is this?', {
+  type: 'select',
+  options: ['Daily Standup', 'Sprint Planning', 'Code Review', 'Client Meeting']
+}) %>
+attendees: <%- prompt('attendees', 'Who is attending? (comma-separated)') %>
+duration: <%- prompt('duration', 'How long is the meeting?', {
+  default: '1 hour',
+  placeholder: 'e.g., 1 hour, 30 minutes'
+}) %>
+---
+
+# <%= meetingType %> Meeting
+
+**Date:** <%= date.now() %>
+**Duration:** <%= duration %>
+**Attendees:** <%= attendees %>
+
+## Agenda
+1.
+2.
+3.
+
+## Notes
+
+## Action Items
+```
+
+### Project Setup Template
+
+```yaml
+---
+title: Project Setup
+projectName: <%- prompt('projectName', 'Project name:', {
+  placeholder: 'Enter project name'
+}) %>
+projectType: <%- prompt('projectType', 'Project type:', {
+  type: 'select',
+  options: ['Web App', 'Mobile App', 'Desktop App', 'API', 'Library']
+}) %>
+technologies: <%- prompt('technologies', 'Select technologies:', {
+  type: 'multiselect',
+  options: ['React', 'Node.js', 'TypeScript', 'Python', 'Java', 'Go']
+}) %>
+---
+
+# <%= projectName %>
+
+**Type:** <%= projectType %>
+**Technologies:** <%= technologies.join(', ') %>
+
+## Project Overview
+
+## Requirements
+
+## Timeline
+
+## Resources
+```

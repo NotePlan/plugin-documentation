@@ -32,9 +32,15 @@ export function Header() {
       </div>
       <div className="flex items-center gap-x-6">
         <div className="hidden md:flex md:gap-x-6">
-          <TopLevelNavItem href="/">Documentation</TopLevelNavItem>
-          <TopLevelNavItem href="/api">API</TopLevelNavItem>
-          <TopLevelNavItem href="/support">Support</TopLevelNavItem>
+          <TopLevelNavItem href="https://noteplan.co/templates">
+            Template Gallery
+          </TopLevelNavItem>
+          <TopLevelNavItem href="https://help.noteplan.co/article/70-javascript-plugin-api">
+            NotePlan API
+          </TopLevelNavItem>
+          <TopLevelNavItem href="https://discord.gg/D4268MT">
+            Support
+          </TopLevelNavItem>
         </div>
         <div className="flex items-center gap-x-4 sm:gap-x-6">
           <div className="-ml-0.5">

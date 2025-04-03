@@ -10,7 +10,7 @@ The Time Module provides methods and variables which work with dates.
 <Callout
   type="info"
   description={`
-Refer to <a href="templating-modules-date" alt="Date Module">Date Modules</a> for similar methods which work with with date values.
+Refer to <a href="/built-in-modules/templating-modules-date" alt="Date Module">Date Modules</a> for similar methods which work with with date values.
   
   `}
 />
@@ -57,7 +57,7 @@ The following are the methods available in the Time Module, and they can be used
 >
 > Returns a string representation current time.
 
-- `format?` - Desired time format. If not supplied, it will use the **Time Format** value in `Templating` <Link href="templating-settings" alt="Plugin Settings"> Plugin Settings </Link >
+- `format?` - Desired time format. If not supplied, it will use the **Time Format** value in `Templating` <Link href="/configuration/templating-settings" alt="Plugin Settings"> Plugin Settings </Link >
 
 - `-> result` - Returns formatted time string
 
@@ -101,7 +101,7 @@ The following example returns curren time in 12hr format, with uppercase AM/PM
 >
 > Returns a string representation current time.
 
-- `format?` - Desired time format. If not supplied, it will use the **Time Format** in `Templating` <Link href="templating-settings" alt="Plugin Settings"> Plugin Settings </Link >
+- `format?` - Desired time format. If not supplied, it will use the **Time Format** in `Templating` <Link href="/configuration/templating-settings" alt="Plugin Settings"> Plugin Settings </Link >
 
 - `-> result` - Returns formatted time string
 
@@ -133,7 +133,7 @@ The following example uses the `currentTime` helper
 >
 > Formats `pivotDate` using supplied `format`.
 
-_Note: Also available as a <Link href="templating-modules-helpers"> helper method </Link >_
+_Note: Also available as a <Link href="/built-in-modules/templating-modules-helpers"> helper method </Link >_
 
 - `format?` - A valid time format string
 - `pivotDate?` - Desired date to format. If not supplied, it will use current date.
@@ -148,36 +148,3 @@ Refer to <a href="https://momentjs.com/docs/#/parsing/string-format/" alt="momen
   
   `}
 />
-
----
-
-### convertTime12to24
-
-> #### convertTime12to24(time12hr: string = '')
->
-> Convert 12-hour time to 24-hour time
-
-{/* prettier-ignore */}
-{/* ## Helpers
-TimeModule exposes commonly used methods as importable helpers
-
-> #### time
->
-> Returns current time
-
-````javascript
-// import Templating Library
-import NPTemplating from 'NPTemplating'
-import DateModule from '@templatingModules/TimeModule'
-import { time } from '@templatingModules/TimeModule'
-
-const templateData = {
-	data: {
-		testTime: new TimeModule().now(), // returns current date using .now module method
-		myTime: time(), // returns current time, using default format h:mm A
-	}
-
-	const renderedData = NPTemplating.renderTemplate('My Template', data)
-}
-``` */}
-````

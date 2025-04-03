@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
@@ -104,9 +104,18 @@ function NavLink({
   active?: boolean
   isAnchorLink?: boolean
 }) {
+  const handleClick = (e: React.MouseEvent) => {
+    // Store the current scroll position
+    const nav = document.querySelector('nav')
+    if (nav) {
+      localStorage.setItem('navScrollPosition', nav.scrollTop.toString())
+    }
+  }
+
   return (
     <Link
       href={href}
+      onClick={handleClick}
       aria-current={active ? 'page' : undefined}
       className={`flex justify-between gap-2 ${
         isAnchorLink ? 'pl-7' : 'pl-4'
@@ -298,6 +307,7 @@ const navigation: Array<NavGroup> = [
         title: 'Template Commands',
         href: '/core-features/templating-commands',
       },
+      { title: 'Prompts', href: '/core-features/templating-prompts' },
     ],
   },
   {
@@ -359,16 +369,12 @@ const navigation: Array<NavGroup> = [
     title: 'Examples & Templates',
     links: [
       {
-        title: 'Weather Integration',
+        title: 'Javascript in Templates',
         href: '/examples-templates/templating-examples-js-weather',
       },
       {
         title: 'Web Scraping',
         href: '/examples-templates/templating-examples-web',
-      },
-      {
-        title: 'Prompt Interface',
-        href: '/examples-templates/templating-examples-prompt',
       },
       {
         title: 'Date/Time Examples',
@@ -391,19 +397,19 @@ const navigation: Array<NavGroup> = [
     links: [
       {
         title: 'Plugin Integration',
-        href: '/developer-guide/templating-examples-js-weather',
+        href: '/developer-guide/plugin-integration',
       },
       {
-        title: 'Custom Modules',
-        href: '/developer-guide/templating-examples-web',
+        title: 'Example 1: Hello World',
+        href: '/developer-guide/plugin-integration/example-1',
       },
       {
-        title: 'Best Practices',
-        href: '/developer-guide/templating-examples-prompt',
+        title: 'Example 2: Using Variables',
+        href: '/developer-guide/plugin-integration/example-2',
       },
       {
-        title: 'Troubleshooting',
-        href: '/developer-guide/templating-examples-datetime',
+        title: 'Example 3: Using Methods',
+        href: '/developer-guide/plugin-integration/example-3',
       },
     ],
   },
@@ -412,12 +418,28 @@ const navigation: Array<NavGroup> = [
 export { navigation }
 
 export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
+  // Restore scroll position on mount
+  useEffect(() => {
+    const nav = document.querySelector('nav')
+    if (nav) {
+      const savedPosition = localStorage.getItem('navScrollPosition')
+      if (savedPosition) {
+        nav.scrollTop = parseInt(savedPosition)
+        localStorage.removeItem('navScrollPosition')
+      }
+    }
+  }, [])
+
   return (
     <nav {...props}>
       <ul role="list">
-        <TopLevelNavItem href="/">API</TopLevelNavItem>
-        <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
-        <TopLevelNavItem href="#">Support</TopLevelNavItem>
+        <TopLevelNavItem href="/">Home</TopLevelNavItem>
+        <TopLevelNavItem href="/getting-started/templating-intro">
+          Documentation
+        </TopLevelNavItem>
+        <TopLevelNavItem href="/developer-guide/plugin-integration">
+          API
+        </TopLevelNavItem>
         {navigation.map((group) => (
           <NavigationGroup key={group.title} group={group} />
         ))}

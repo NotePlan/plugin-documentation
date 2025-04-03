@@ -9,7 +9,7 @@ The Date Module provides methods and variables which work with dates.
 
 <Callout
   type="info"
-  description={`Refer to the <a href="./templating-modules-time" alt="Time Module"> Time Module </a> page for similar methods which work with with time values. `}
+  description={`Refer to the <a href="/built-in-modules/templating-modules-time" alt="Time Module"> Time Module </a> page for similar methods which work with with time values. `}
 />
 
 ### Date Module Helpers
@@ -309,14 +309,17 @@ The following returns the closest weekday 2 days in advance using fixed date
 
 The following returns the closest weekday 2 days in advance using current date
 
-````javascript
+```javascript
 <%- date.weekNumber('2021-12-15') %> // the following will return 50
 ```
 
-*****
+---
+
 ### dayNumber
+
 > #### dayNumber(pivotDate? : string = '') : number
-Returns the day number based on `pivotDate`
+>
+> Returns the day number based on `pivotDate`
 
 Day number will be one of following
 
@@ -338,7 +341,7 @@ The following returns the closest weekday 2 days in advance using current date
 
 ```javascript
 <%- date.dayNumber('2021-12-15') %> // the following will return 3
-````
+```
 
 ---
 

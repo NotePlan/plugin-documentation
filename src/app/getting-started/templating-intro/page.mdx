@@ -1,6 +1,12 @@
 import Link from 'next/link'
+import Callout from '@/components/Callout'
 
 # Getting Started
+
+<Callout
+  type="info"
+  description="If you haven't yet read the <a href='https://help.noteplan.co/article/136-templates' target='_blank' rel='noopener noreferrer'>Introduction to Templates</a>, please start there."
+/>
 
 With `Templating`, you will be able to create powerful templates to automate common manual tasks.
 
@@ -21,7 +27,7 @@ When creating a new template in the "Templates" folder, the template header will
 - `meeting-note` will be available whenever you wish to create a meeting note for any NotePlan calendar event
 - `ignore` will be ignored in all template chooser interfaces
 
-For more information on using Quick Notes and the `np:qtn` command, see <Link href="templating-quicknotes">here</Link>.
+For more information on using Quick Notes and the `np:qtn` command, see <Link href="/examples-templates/templating-quicknotes">here</Link>.
 
 ```markdown
 ---
@@ -38,7 +44,7 @@ Hello Michael
 
 ### Example 2: Using `Templating` modules
 
-In this example, we will use one of the many `Templating` module methods, <Link href="templating-modules-web">Templating Web Module.</Link>.
+In this example, we will use one of the many `Templating` module methods, <Link href="/built-in-modules/templating-modules-web">Templating Web Module.</Link>.
 
 ```markdown
 ---
@@ -53,9 +59,12 @@ Today's Weather: <%- web.weather() %>
 Todays Weather: Fountain Valley, California, United States: ⛅️  +86°F
 ```
 
-The call to `<%- web.weather() %>` will use the format you have defined in `Templating` <Link href="templating-settings">settings</Link>. In this example, the settings value is blank, thus the default weather format will be used.
+The call to `<%- web.weather() %>` will use the format you have defined in `Templating` <Link href="/configuration/templating-settings">settings</Link>. In this example, the settings value is blank, thus the default weather format will be used.
 
-For more information about `Templating` weather, visit <Link href="templating-modules-web">Templating Web Module</Link>.
+<Callout
+  type="info"
+  description="Now that you know the basics, you may want to have a look at the <a href='https://noteplan.co/templates' target='_blank' rel='noopener noreferrer'>Template Gallery</a>."
+/>
 
 export const sections = [
   {

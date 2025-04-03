@@ -1,0 +1,79 @@
+# Example 2: Using Variables
+
+In this example, we will demonstrate how to use custom variables in a template.
+
+## Step 1: Create Template
+
+First, create a new template in your `@Templates` folder named `User Info Template` with the following content:
+
+```yaml
+---
+title: User Info Template
+type: quick-note
+---
+
+Hello <%- name %>!
+
+Your email is: <%- email %>
+Your role is: <%- role %>
+
+Current Date: <%- date.now() %>
+```
+
+## Step 2: Create Command
+
+Next, create a new command file (e.g., `src/commands/templatingUserInfo.js`) with the following content:
+
+```javascript
+import NPTemplating from 'NPTemplating'
+import { logError } from '@helpers/dev'
+
+export async function templatingUserInfo(): Promise<void> {
+  try {
+    const templateData = {
+      data: {
+        name: 'John Doe',
+        email: 'john@example.com',
+        role: 'Developer'
+      }
+    }
+    const result = await NPTemplating.renderTemplate('User Info Template', templateData)
+    Editor.insertTextAtCursor(result)
+  } catch (error) {
+    logError('templatingUserInfo', error)
+  }
+}
+```
+
+## Step 3: Register Command
+
+Finally, register the command in your plugin's `plugin.json`:
+
+```json
+{
+  "commands": [
+    {
+      "name": "Templating: User Info",
+      "identifier": "templating.user.info",
+      "script": "./src/commands/templatingUserInfo.js"
+    }
+  ]
+}
+```
+
+## Explanation
+
+- We define a `templateData` object with a `data` property containing our custom variables
+- The template uses these variables with the `<%- variableName %>` syntax
+- The variables are replaced with their values when the template is rendered
+
+Would produce the following output when the custom command is invoked
+
+```
+Hello John Doe!
+
+Your email is: john@example.com
+Your role is: Developer
+
+Current Date: *2021-12-24*
+```

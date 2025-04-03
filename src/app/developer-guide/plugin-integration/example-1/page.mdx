@@ -1,0 +1,66 @@
+# Example 1: Hello World
+
+In this example, we will expose the `NPTemplating` module to create a simple "Hello World" template.
+
+## Step 1: Create Template
+
+First, create a new template in your `@Templates` folder named `Hello World Template` with the following content:
+
+```yaml
+---
+title: Hello World Template
+type: quick-note
+---
+
+This portion will be used as the template!
+
+Current Date: <%- date.now() %>
+```
+
+## Step 2: Create Command
+
+Next, create a new command file (e.g., `src/commands/templatingHelloWorld.js`) with the following content:
+
+```javascript
+import NPTemplating from 'NPTemplating'
+import { logError } from '@helpers/dev'
+
+export async function templatingHelloWorld(): Promise<void> {
+  try {
+    const result = await NPTemplating.renderTemplate('Hello World Template')
+    Editor.insertTextAtCursor(result)
+  } catch (error) {
+    logError('templatingHelloWorld', error)
+  }
+}
+```
+
+## Step 3: Register Command
+
+Finally, register the command in your plugin's `plugin.json`:
+
+```json
+{
+  "commands": [
+    {
+      "name": "Templating: Hello World",
+      "identifier": "templating.hello.world",
+      "script": "./src/commands/templatingHelloWorld.js"
+    }
+  ]
+}
+```
+
+## Explanation
+
+- `line 1`: display some static text
+- `line 2`: display a blank line
+- `line 3`: display current date, using the `DateModule.now()` method
+
+Would produce the following output when the custom command is invoked
+
+```
+This portion will be used as the template!
+
+Current Date: *2021-12-24*
+```
