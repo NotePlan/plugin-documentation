@@ -7,7 +7,7 @@ import clsx from 'clsx'
 import { AnimatePresence, motion, useIsPresent } from 'framer-motion'
 
 import { Button } from '@/components/Button'
-import { useIsInsideMobileNavigation } from '@/components/MobileNavigation'
+import { useMobileNavigationStore } from '@/components/MobileNavigation'
 import { Section, useSectionStore } from '@/components/SectionProvider'
 import { Tag } from '@/components/Tag'
 import { remToPx } from '@/lib/remToPx'
@@ -196,9 +196,7 @@ function NavigationGroup({
   group: NavGroup
   className?: string
 }) {
-  // If this is the mobile navigation, we don't want the active section highlight
-  let isInsideMobileNavigation = useRef(false)
-
+  let { isOpen } = useMobileNavigationStore()
   let [sections, visibleSections] = useSectionStore((state) => [
     state.sections,
     state.visibleSections,
@@ -216,7 +214,7 @@ function NavigationGroup({
         {group.title}
       </motion.h2>
       <div className="relative mt-3 pl-2">
-        {!isInsideMobileNavigation.current && (
+        {!isOpen && (
           <VisibleSectionHighlight group={group} pathname={pathname} />
         )}
         <motion.div
@@ -286,14 +284,8 @@ const navigation: Array<NavGroup> = [
         title: 'Installation',
         href: '/getting-started/templating-installation',
       },
-      {
-        title: 'Basic Concepts',
-        href: '/getting-started/templating-terminology',
-      },
-      {
-        title: 'Common Use Cases',
-        href: '/getting-started/templating-miscellaneous',
-      },
+      { title: 'Basic Concepts', href: '/templating-terminology' },
+      { title: 'Common Use Cases', href: '/templating-miscellaneous' },
     ],
   },
   {
