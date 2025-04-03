@@ -2,174 +2,205 @@ import Callout from '@/components/Callout'
 
 # Prompts
 
-The `prompt` method is a powerful feature that allows you to create interactive templates that gather information from users. This method displays a prompt dialog to the user and returns their input, which can then be used in your template.
+`Templating` provides the ability to ask the user questions through prompts when rendering templates.
 
 ## Basic Usage
 
-The basic syntax for the `prompt` method is:
+### Example 1: Simple text input prompt
 
-```javascript
-<%- prompt('variableName', 'Prompt message') %>
+```markdown
+<%- prompt('What is your first name?') %>
 ```
 
-For example:
+Will prompt the user to enter their first name and then display it at the location of the prompt in the template.
 
-```yaml
----
-title: Meeting Note
-attendees: <%- prompt('attendees', 'Who is attending this meeting?') %>
-date: <%- date.now() %>
----
-# Meeting with <%= attendees %>
+### Example 2: Prompt with list of choices
 
-## Agenda
-1.
-2.
-3.
-## Notes
+The `prompt` command can accept optional prompt message and choices (for use with choice list prompt):
 
-## Action Items
+```markdown
+Task Priority: <%- prompt('priority','What is task priority?',['high','medium','low']) %>
 ```
 
-When this template is rendered, it will:
+<Callout
+  type="warning"
+  title="PROMPT PLACEHOLDER/VARIABLE NAME"
+  description="When using `prompt` command with anything other than a simple text input, you must supply a valid placeholder (variable) name (e.g. `name`) for the first parameter. You can use this variable name in your template to access the results of the prompt. The placeholder/variable name must contain valid characters:
+  - must start with an alpha character (a..z, A..Z)
+  - may only contain alphanumeric characters (a..z, A..Z, 0..9)
+  - may **not** contain spaces
+  Also, the variable name must be unique in the template, so if you use multiple prompts, make sure they use different variable names."
+/>
 
-1. Show a prompt dialog asking "Who is attending this meeting?"
-2. Store the user's response in the `attendees` variable
-3. Use that value in the template where `<%= attendees %>` appears
+### Example: Define early; use later
 
-## Advanced Options
+The following example demonstrates how you can place prompts at the top of templates, and then use somewhere else in the template:
 
-The `prompt` method also accepts an options object as a third parameter:
+```markdown
+<% prompt('lastName','What is your last name?') -%>
 
-```javascript
-<%- prompt('variableName', 'Prompt message', {
-  default: 'Default value',
-  placeholder: 'Placeholder text',
-  type: 'text' | 'select' | 'multiselect',
-  options: ['Option 1', 'Option 2', 'Option 3'] // For select/multiselect types
-}) %>
+The rest of this could be your template code
+And then finally use the `lastName` variable
+<%- lastName %>
 ```
 
-### Text Input
+The template would render as follows, with the `lastName` value result from prompt on first line (assuming entered `lastName` Erickson):
 
-```yaml
----
-title: Project Note
-projectName: <%- prompt('projectName', 'What is the project name?', {
-  default: 'New Project',
-  placeholder: 'Enter project name'
-}) %>
----
-
-# <%= projectName %>
+```markdown
+The rest of this could be your template code
+And then finally use the `lastName` variable
+Erickson
 ```
 
-### Select Input
+## Asking for dates or date intervals
 
-```yaml
----
-title: Task Note
-priority: <%- prompt('priority', 'Select priority level:', {
-  type: 'select',
-  options: ['High', 'Medium', 'Low']
-}) %>
----
+There are two further commands available:
 
-# Task
-Priority: <%= priority %>
+- **`promptDate('question','message')`**, which accepts dates of form `YYYY-MM-DD`
+- **`promptDateInterval('question','message')`**, which accepts date intervals of form `nnn[bdwmqy]`, as used and documented further in the Repeat Extensions plugin.
+
+Both require the first parameter to be 'question', but accept an optional prompt message. They must be placed where the text is to be used. For example:
+
+```markdown
+Project start date: <%- promptDate('question','Enter start date:') %>
+Review frequency: <%- promptDateInterval('question','Enter review interval:') %>
 ```
 
-### Multiselect Input
+## Working with Frontmatter Keys and Values
 
-```yaml
----
-title: Meeting Note
-tags: <%- prompt('tags', 'Select relevant tags:', {
-  type: 'multiselect',
-  options: ['Planning', 'Development', 'Review', 'Documentation']
-}) %>
----
+### promptKey
 
-# Meeting
-Tags: <%= tags.join(', ') %>
+`promptKey` allows you to prompt the user to select a value from existing frontmatter keys in your notes.
+
+#### Syntax
+
+```markdown
+<%- promptKey('key', 'message', 'noteType', caseSensitive, 'folder', fullPathMatch, ['options']) %>
 ```
 
-## Best Practices
+#### Parameters
+
+- **key** (string): The frontmatter key to search for values (required)
+- **message** (string): Custom prompt message to display to the user (optional)
+- **noteType** (string): Type of notes to search - 'Notes', 'Calendar', or 'All' (default: 'All')
+- **caseSensitive** (boolean): Whether to perform case-sensitive search (default: false)
+- **folder** (string): Folder to limit search to (optional)
+- **fullPathMatch** (boolean): Whether to match the full path (default: false)
+- **options** (array): Array of predefined options to show instead of extracting from frontmatter (optional)
+
+#### Examples
+
+Basic usage:
+
+```markdown
+Project status: <%- promptKey('projectStatus', 'Select project status:') %>
+```
+
+With folder restriction and case sensitivity:
+
+```markdown
+Tag: <%- promptKey('tags', 'Select a tag:', 'Notes', true, 'Projects') %>
+Tag: <%- promptKey('tags', 'Select a tag:', 'Notes', true, 'Work/Projects/Clients', true) %>
+```
+
+With predefined options:
+
+```markdown
+Priority: <%- promptKey('priority', 'Set priority:', 'All', false, '', false, ['High', 'Medium', 'Low']) %>
+```
+
+## Working with Tags and Mentions (**coming soon in Templating 2.0**)
+
+### promptTag
+
+`promptTag` allows you to prompt the user to select from existing hashtags in your notes or create a new one.
+
+#### Syntax
+
+```markdown
+<%- promptTag('Select a hashtag:', 'includePattern', 'excludePattern', allowCreate) %>
+```
+
+#### Parameters
+
+- **promptMessage** (string): The message to display in the prompt (required)
+- **includePattern** (string): Regex pattern to include only matching hashtags (optional)
+- **excludePattern** (string): Regex pattern to exclude matching hashtags (optional)
+- **allowCreate** (boolean): Whether to allow creating a new hashtag if not found (default: true)
+
+#### Examples
+
+Basic usage:
+
+```markdown
+<%- promptTag('Select a hashtag:') %>
+```
+
+Filter tags to include only those containing "project":
+
+```markdown
+<%- promptTag('Select a project tag:', 'project') %>
+```
+
+Filter to include "priority" tags and exclude "low" tags:
+
+```markdown
+<%- promptTag('Select priority:', 'priority', 'low') %>
+```
+
+Don't allow creating new tags:
+
+```markdown
+<%- promptTag('Select from existing tags only:', '', '', false) %>
+```
+
+### promptMention
+
+`promptMention` allows you to prompt the user to select from existing @ mentions in your notes or create a new one.
+
+#### Syntax
+
+```markdown
+<%- promptMention('Select a mention:', 'includePattern', 'excludePattern', allowCreate) %>
+```
+
+#### Parameters
+
+- **promptMessage** (string): The message to display in the prompt (required)
+- **includePattern** (string): Regex pattern to include only matching mentions (optional)
+- **excludePattern** (string): Regex pattern to exclude matching mentions (optional)
+- **allowCreate** (boolean): Whether to allow creating a new mention if not found (default: true)
+
+#### Examples
+
+Basic usage:
+
+```markdown
+<%- promptMention('Select a person:') %>
+```
+
+Filter mentions to include only those containing "team":
+
+```markdown
+<%- promptMention('Select a team member:', 'team') %>
+```
+
+Filter to include "client" mentions and exclude "former" clients:
+
+```markdown
+<%- promptMention('Select client:', 'client', 'former') %>
+```
+
+Don't allow creating new mentions:
+
+```markdown
+<%- promptMention('Select from existing mentions only:', '', '', false) %>
+```
+
+## Usage Tips
 
 <Callout
   type="info"
   title="TIP"
-  description="Use clear, concise prompt messages that clearly indicate what information is needed from the user."
+  description="When using `includePattern` and `excludePattern`, these are converted to regular expressions, so you can use regex syntax for more advanced filtering. The `allowCreate` parameter is particularly useful when you want to limit selections to existing values only."
 />
-
-<Callout
-  type="warning"
-  title="IMPORTANT"
-  description="Always provide meaningful default values or placeholders when appropriate to guide users."
-/>
-
-## Examples
-
-### Meeting Note Template
-
-```yaml
----
-title: Meeting Note
-meetingType: <%- prompt('meetingType', 'What type of meeting is this?', {
-  type: 'select',
-  options: ['Daily Standup', 'Sprint Planning', 'Code Review', 'Client Meeting']
-}) %>
-attendees: <%- prompt('attendees', 'Who is attending? (comma-separated)') %>
-duration: <%- prompt('duration', 'How long is the meeting?', {
-  default: '1 hour',
-  placeholder: 'e.g., 1 hour, 30 minutes'
-}) %>
----
-
-# <%= meetingType %> Meeting
-
-**Date:** <%= date.now() %>
-**Duration:** <%= duration %>
-**Attendees:** <%= attendees %>
-
-## Agenda
-1.
-2.
-3.
-
-## Notes
-
-## Action Items
-```
-
-### Project Setup Template
-
-```yaml
----
-title: Project Setup
-projectName: <%- prompt('projectName', 'Project name:', {
-  placeholder: 'Enter project name'
-}) %>
-projectType: <%- prompt('projectType', 'Project type:', {
-  type: 'select',
-  options: ['Web App', 'Mobile App', 'Desktop App', 'API', 'Library']
-}) %>
-technologies: <%- prompt('technologies', 'Select technologies:', {
-  type: 'multiselect',
-  options: ['React', 'Node.js', 'TypeScript', 'Python', 'Java', 'Go']
-}) %>
----
-
-# <%= projectName %>
-
-**Type:** <%= projectType %>
-**Technologies:** <%= technologies.join(', ') %>
-
-## Project Overview
-
-## Requirements
-
-## Timeline
-
-## Resources
-```
