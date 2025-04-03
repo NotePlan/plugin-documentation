@@ -1,0 +1,6 @@
+{
+  "[mdx]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null
+  }
+}

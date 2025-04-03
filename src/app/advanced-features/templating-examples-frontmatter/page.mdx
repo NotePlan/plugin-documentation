@@ -1,23 +1,26 @@
-# Frontmatter
+# Creating Notes with Properties/Frontmatter
 
-`Templating` provides support for using frontmatter formatted templates. The frontmatter content is between `--` separators and follows the frontmatter of the template.
+`Templating` provides support for templates which create notes with properties/frontmatter. The note properties/frontmatter content is placed at the top of the template, between `--` separators and follows the frontmatter of the template.
 
-In the following example the template frontmatter is at the top between `---` (three dashes) while the frontmatter that gets copied into the note is defined with only `--` (two dashes) just below:
+In the following example, the template frontmatter is at the top between `---` (three dashes) while the note frontmatter (that gets copied into the note) is defined between the two dashes ("--") just below:
 
 ```markdown
 ---
-title: template name
+title: this is my template title
 type: meeting-note, empty-note
+note: These properties are only relevant to the template, not the note
 ---
-
 --
+note: These items will become the new note's properties/frontmatter
 name: Mike Erickson
 phone: 714.555.1212
+icon: hammer
+icon-color: red-500
 --
-The rest of the template content follows...
+Any other template content you want to be in the generated note can be placed here...
 ```
 
-## Expanding tags in frontmatter header
+## Expanding tags in the note's frontmatter header
 
 When frontmatter templates are rendered, the content between frontmatter tags `--` use alternate start `{%` and end `%}` tags, which can then accessed outside the frontmatter tags. You can then access the frontmatter tags within rest of template
 
