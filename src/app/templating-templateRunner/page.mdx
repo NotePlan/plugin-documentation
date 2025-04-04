@@ -3,7 +3,11 @@ import { CodeGroup, Code } from '@/components/Code'
 
 # Template Runner
 
-`Templating` includes the `templaterunner` command to allow templates to be invoked from callback URLs. This allows you to to use a template to insert content (including dynamic Templating tag-generated conntent) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor, or actively -- display the note you specify at run-time. Typically, Template Runner templates are activated when a link is clicked from within our outside of NotePlan (e.g. Shortcuts, Keyboard Maestro or wherever). This gives you a way to pass arbitrary information into your notes.
+`Templating` includes the `templateRunner` command to allow templates to be invoked from callback URLs. This allows you to to use a template to insert content (including dynamic Templating tag-generated conntent) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor, or actively -- display the note you specify at run-time. Typically, Template Runner templates are activated when a link is clicked from within our outside of NotePlan (e.g. Shortcuts, Keyboard Maestro or wherever). This gives you a way to pass arbitrary information into your notes.
+
+<Callout type="info">
+Template Runner is a hidden command to be run from a callback URL. It is not a command that you can call from the Command Bar.
+</Callout>
 
 ## Required Attributes
 

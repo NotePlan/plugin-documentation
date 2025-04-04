@@ -26,6 +26,12 @@ type Result = {
   url: string
   title: string
   pageTitle?: string
+  preview?: {
+    text: string
+    matchStart: number
+    matchEnd: number
+  }
+  isTitleMatch: boolean
 }
 
 type Autocomplete = AutocompleteApi<
@@ -180,6 +186,29 @@ function SearchButton(props: React.ComponentPropsWithoutRef<'button'>) {
   )
 }
 
+function HighlightedText({
+  text,
+  matchStart,
+  matchEnd,
+}: {
+  text: string
+  matchStart: number
+  matchEnd: number
+}) {
+  if (!text) return null
+  if (matchStart === -1) return <>{text}</>
+
+  return (
+    <>
+      {text.slice(0, matchStart)}
+      <strong className="font-semibold text-zinc-800 dark:text-zinc-200">
+        {text.slice(matchStart, matchEnd)}
+      </strong>
+      {text.slice(matchEnd)}
+    </>
+  )
+}
+
 function SearchDialog({
   open,
   setOpen,
@@ -253,7 +282,7 @@ function SearchDialog({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="mx-auto overflow-hidden rounded-lg bg-zinc-50 shadow-xl ring-1 ring-zinc-900/7.5 dark:bg-zinc-900 dark:ring-zinc-800 sm:max-w-xl">
+            <Dialog.Panel className="mx-auto overflow-hidden rounded-lg bg-zinc-50 shadow-xl ring-1 ring-zinc-900/7.5 dark:bg-zinc-900 dark:ring-zinc-800 sm:max-w-3xl">
               <div {...autocomplete.getRootProps({})}>
                 <form
                   ref={formRef}
@@ -299,7 +328,7 @@ function SearchDialog({
 
                           return items.map((item, itemIndex) => (
                             <div
-                              className="p-4"
+                              className="p-4 hover:bg-zinc-50 dark:hover:bg-zinc-800/50"
                               {...autocomplete.getItemProps({
                                 item,
                                 source: collection.source,
@@ -313,12 +342,23 @@ function SearchDialog({
                               )}
                               <div
                                 className={clsx(
-                                  'text-sm text-zinc-600 dark:text-zinc-400',
-                                  item.pageTitle && 'mt-1',
+                                  'text-sm font-semibold text-zinc-900 dark:text-white',
+                                  !item.pageTitle && 'text-base',
+                                  item.pageTitle &&
+                                    'mt-1 font-normal text-zinc-600 dark:text-zinc-400',
                                 )}
                               >
                                 {item.title}
                               </div>
+                              {item.preview && (
+                                <div className="mt-1 line-clamp-2 text-sm text-zinc-600 dark:text-zinc-400">
+                                  <HighlightedText
+                                    text={item.preview.text}
+                                    matchStart={item.preview.matchStart}
+                                    matchEnd={item.preview.matchEnd}
+                                  />
+                                </div>
+                              )}
                             </div>
                           ))
                         },
