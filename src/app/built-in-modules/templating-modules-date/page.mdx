@@ -418,10 +418,10 @@ The following returns weekOf value based on `pivotDate`
 
 **Example**
 
-The following returns start of week based on `pivotDate`
+The following returns start of week based on `pivotDate` and `firstOfWeek` of 1 (Monday), and returns it in the format (YYYY-MM-DD)
 
 ```javascript
-<%- date.startOfWeek('2021-12-01') %> // the following return 2021-11-29
+<%- date.startOfWeek('YYYY-MM-DD', '2021-12-01', 1) %> // the following return 2021-11-29
 ```
 
 ---
@@ -436,7 +436,7 @@ The following returns start of week based on `pivotDate`
 - `pivotDate?` - Desired date to obtain end of week. If not supplied, it will use current date
 - `firstOfWeek` - Day number for first of week if not 0 (Sunday)
 
-- `-> result` Returns end of week
+- `-> result` Returns end of week (see example above)
 
 ---
 
