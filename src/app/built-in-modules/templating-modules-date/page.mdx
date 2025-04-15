@@ -386,10 +386,14 @@ The following returns true or false if `pivotDate` is weekend
 
 ### weekOf
 
-> #### weekOf(pivotDate? : string = '') : string
+> #### weekOf(startDay, endDay, pivotDate) : string 
+or
+> #### weekOf(pivotDate? : string = '') : string 
 >
 > Returns formatted weekOf based on `pivotDate`
 
+- startDay - Day number for start of week if not 0 (Sunday)
+- endDay - Day number for end of week if not 6 (Saturday)
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 
 - `-> result` Returns formatted weekOf using following syntax `Wnn (YYYY-MM-DD..YYYY-MM-DD)`
@@ -400,6 +404,11 @@ The following returns weekOf value based on `pivotDate`
 
 ```javascript
 <%- date.weekOf('2021-12-01') %> // the following will W48 (2021-11-28..2021-12-03)
+```
+or if you like to use Monday as the start of the week:
+
+```javascript
+<%- date.weekOf(1,7,"2024-04-14") %> // will return W16 (2025-04-14..2025-04-20)
 ```
 
 ---
