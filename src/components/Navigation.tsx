@@ -363,6 +363,15 @@ const navigation: Array<NavGroup> = [
         title: 'String Interpolation',
         href: '/advanced-features/templating-examples-string-interpolation',
       },
+      {
+        title: 'Advanced Features',
+        href: '/advanced-features',
+      },
+      {
+        title: 'Import/Include code or content',
+        href: '/advanced-features/import-include',
+      },
+      { title: 'File Blocks', href: '/advanced-features/file-blocks' },
     ],
   },
   {

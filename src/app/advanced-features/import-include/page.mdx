@@ -1,0 +1,144 @@
+import Callout from '@/components/Callout'
+import { Code } from '@/components/Code'
+
+# Include (content) vs. Import (template code)
+
+Templating offers two very powerful commands, `include()` and `import()`, for bringing content from other notes or templates into your current template in a reusable way. While they sound similar, they serve distinct purposes. Understanding the difference helps you reuse content and build more powerful templates.
+
+## `include(template_title)` 
+
+### Purpose
+
+Use `include()` when you want to insert the **final, rendered content** of another template or the **entire content** of a regular note into your current template.
+
+*   **For Templates:** `include()` processes the target template first – it runs any template tags and uses its frontmatter – and then inserts the resulting text.
+*   **For Regular Notes:** `include()` simply grabs the full text of the note you specify and inserts it.
+
+Think of `include()` as asking NotePlan to fully prepare the content from the other file *before* placing it in your current template. 
+
+### Outcome
+
+The `include()` tag is replaced by either:
+
+*   The **rendered result** of the target template.
+*   The **full text content** of the target note.
+
+<Callout>
+This is especially useful if the template you are including has frontmatter attributes that you want to use in your current template.
+</Callout>
+
+### Example: Including the contents of another template
+
+Imagine a super simple template named `MyTemplateToInclude.md` that has a frontmatter attribute `headerTextVariable`:
+
+```markdown
+---
+title: MyTemplateToInclude
+headerTextVariable: "Some text from the included template"
+---
+# <%- headerTextVariable %>`
+```
+
+Using `include()` in another template lets you insert this content from the other template into your current template:
+
+```
+---
+title: New Template
+---
+<% include('MyTemplateToInclude') %>
+Some main content here.
+```
+
+The output shows the processed other template, including the `#` from the included template:
+
+```
+# Some text from the included template
+Some main content here.
+```
+
+### Example: Including a regular note
+
+Similarly, you have a regular note titled `MyNote` containing:
+```
+# Just some plain text.
+```
+
+Including it will insert the note's content verbatim:
+
+```
+---
+title: New Template including some plain text
+---
+<% include('MyNote') %>
+```
+
+Results in:
+
+```
+# Just some plain text.
+```
+
+
+## `import(template_title)`
+
+### Purpose
+
+Use `import()` when you want to insert the **raw, unprocessed text** and potentially **template tags** from the *body* of another template file directly into your current template. The frontmatter of the imported template is ignored.
+
+This is ideal for reusing static snippets of text, markdown, or code that you don't want NotePlan to interpret or change during the import step. Any template tags inside the imported text will be processed later, as if they were simply part of the main template.
+
+Think of `import()` as copy-pasting a block of text from another template's body into your current one.
+
+### Outcome
+
+The `import()` tag is replaced by the **raw text/markdown content** from the **body** of the target template file (everything after the `---` frontmatter lines).
+
+### Example: Importing template code from another template
+
+Using the same `MyTemplateToInclude.md` template from the `include()` example above:
+
+```markdown
+---
+title: MyTemplateToInclude
+headerTextVariable: "Some text from the included template"
+---
+# <%- headerTextVariable %>`
+```
+
+If you use `import()` in your main template:
+
+```
+---
+title: New Template Using Import
+headerTextVariable: "Text from the *main* template"
+---
+<% import('MyTemplateToInclude') %>
+Main content.`
+```
+
+The output includes the *literal text* (the template code) from the body of `MyTemplateToInclude`, which is rendered as if it were part of the main template. The frontmatter of `MyTemplateToInclude.md` is ignored entirely.
+So only the template code is inserted, not the frontmatter, as if the new template held the following:
+```
+# <%- headerTextVariable %>
+Main content.
+```
+
+When this is rendered, the `headerTextVariable` tag is processed using the `headerTextVariable` defined in the *main* template (`New Template Using Import`), resulting in:
+
+```
+# Text from the *main* template
+Main content.
+```
+
+<Callout>
+Notice the `<%- headerTextVariable %>` tag was inserted exactly as it appeared in `MyTemplateToInclude`. It wasn't processed using the `headerTextVariable` from the imported file's frontmatter. So, NotePlan will render this tag using the `headerTextVariable` defined in the *main* template (`New Template Using Import`).
+</Callout>
+
+## Why the Difference? (What should you use?)
+
+Choose the command based on what you need to insert:
+
+*   **`include()`:** For inserting *dynamic, processed content* from another template, or the *entire content* of a regular note. It's like running the included file and using its output.
+*   **`import()`:** For inserting *static, reusable blocks of text* or code from a template's body *without* processing them first. It's like copying and pasting raw text.
+
+This gives you control over how you reuse different kinds of content within your templates. 
