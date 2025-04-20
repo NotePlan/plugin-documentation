@@ -45,7 +45,7 @@ Using `include()` in another template lets you insert this content from the othe
 ---
 title: New Template
 ---
-<% include('MyTemplateToInclude') %>
+<%- include('MyTemplateToInclude') %>
 Some main content here.
 ```
 
@@ -69,7 +69,7 @@ Including it will insert the note's content verbatim:
 ---
 title: New Template including some plain text
 ---
-<% include('MyNote') %>
+<%- include('MyNote') %>
 ```
 
 Results in:

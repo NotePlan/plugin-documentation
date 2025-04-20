@@ -10,8 +10,6 @@ import prompt2 from '@/images/prompt2.png'
 
 ### Example 1: Simple text input `prompt`
 
-For example, if you have a display tag `<%@` in your template which is not in your template data, a prompt will be displayed
-
 ```markdown
 <%- prompt('What is your first name?') %>
 ```
@@ -21,6 +19,17 @@ For example, if you have a display tag `<%@` in your template which is not in yo
 ### Example 2: `prompt` with list of choices
 
 Alternatively, the **`prompt` command** can accept optional prompt message and well as choices (for use with choice list prompt)
+
+
+Using the following template
+
+```markdown
+Task Priority: <%- prompt('priority','What is task priority?',['high','medium','low']) %>
+```
+
+You can then use the same variable anywhere else in template `<%- priority %>`. When the template is rendered, it will display a choice list prompt
+
+<img src={prompt2.src} alt="Prompt" />
 
 <Callout
   type="warning"
@@ -38,16 +47,6 @@ When using <code>prompt</code> command, you must supply a valid placeholder name
 
 </Callout>
 
-Using the following template
-
-```markdown
-Task Priority: <%- prompt('priority','What is task priority?',['high','medium','low']) %>
-```
-
-You can then use the same variable anywhere else in template `<%- priority %>`. When the template is rendered, it will display a choice list prompt
-
-<img src={prompt2.src} alt="Prompt" />
-
 ### Example: Define early; use later
 
 The following example demonstrates how you can place prompts at the top of templates, and then use somewhere else in the template
@@ -55,6 +54,7 @@ The following example demonstrates how you can place prompts at the top of templ
 ```markdown
 <% prompt('lastName','What is your last name?') -%>
 
+This will prompt the user for the value of the `lastName` key, and will store that value in the placeholder/variable `lastName`, and in this example, use that value in the template output.
 The rest of this could be your template code
 And then finally use the `lastName` variable
 <%- lastName %>
@@ -63,10 +63,29 @@ And then finally use the `lastName` variable
 The template would render as follows, with the `lastName` value result from prompt on first line (assuming entered `lastName` Erickson)
 
 ```markdown
+This will prompt the user for the value of the `lastName` key, and will store that value in the placeholder/variable `lastName`, and in this example, use that value in the template output.
 The rest of this could be your template code
 And then finally use the `lastName` variable
 Erickson
 ```
+
+## Using prompts in frontmatter
+
+You can use prompts in frontmatter/properties to set the value of a frontmatter key of the template as it is rendered.
+
+```markdown
+---
+title: My Template with Prompt in Frontmatter
+lastName: <%- prompt('lastName', 'What is your last name?') %>
+---
+User entered last name: <%- lastName %>
+```
+
+This will prompt the user for the value of the `lastName` key, and will store that value in the frontmatter of the template, and in this example, use that value in the template output.
+
+<Callout>
+Note that this stores the value in the frontmatter of the template, to be used in the template output. This does not affect the frontmatter of a note that is being rendered. If you want to set the frontmatter of a note that is being rendered, see [Creating Notes with Properties/Frontmatter](/advanced-features/templating-examples-frontmatter).
+</Callout>
 
 ## Asking for dates or date intervals
 
