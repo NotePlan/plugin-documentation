@@ -20,6 +20,21 @@ icon-color: red-500
 Any other template content you want to be in the generated note can be placed here...
 ```
 
+## Prompting for values to be used in the note's frontmatter
+
+You can use prompts in frontmatter/properties to set the value of a frontmatter key of the template as it is rendered.
+
+```markdown
+---
+title: My Template with Prompt for New Note's Frontmatter
+---
+--
+priority: <%- prompt('priority','What is the new note's priority?',['high','medium','low']) %>
+--
+```
+
+When the template is rendered, it will display a choice list prompt for the `priority` key, and the value entered will be used as the value of the `priority` key in the new note's frontmatter.
+
 ## Expanding tags in the note's frontmatter header
 
 When frontmatter templates are rendered, the content between frontmatter tags `--` use alternate start `{%` and end `%}` tags, which can then accessed outside the frontmatter tags. You can then access the frontmatter tags within rest of template
