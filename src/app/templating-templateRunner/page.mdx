@@ -148,7 +148,8 @@ In this example, we will start with a simple daily notes template and convert th
 
 Let's start with the sample Daily Template that is included with NotePlan:
 
-<Code language="yaml" code={`---
+```markdown
+---
 title: Daily Note (Simple)
 type: empty-note
 documentation: https://help.noteplan.co/article/136-templates
@@ -160,13 +161,14 @@ documentation: https://help.noteplan.co/article/136-templates
 - How did it go yesterday (<%= np.date.yesterday("Do MMMM YYYY") %>)?:
 - Today's (<%= np.date.now("Do MMMM YYYY") %>) goal is: `} />
 
+```
+
 In the frontmatter section, add the following properties:
 
-<Code
-  language="yaml"
-  code={`getNoteTitled: <TODAY>
-location: append`}
-/>
+```markdown
+getNoteTitled: <TODAY>
+location: append
+```
 
 This will tell `templateRunner` to open today's daily note and append the content of the template to the note. In this example, we are not passing any additional variables with the URL. We are just using Template Runner to run the template on our daily note.
 
@@ -182,18 +184,16 @@ You can then use the `Link Creator` plugin to walk through generating link to ap
 
 At this point, you can opt to have a raw link or a pretty link inserted into your note, which you can then copy and paste elsewhere. The link should look something like this:
 
-<Code
-  language="text"
-  code={`noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=Daily%20Note%20%28Simple%29&arg1=true`}
-/>
+```markdown
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=Daily%20Note%20%28Simple%29&arg1=true
+```
 
 ### Basic Variable-Passing Example
 
 In this example, I use Template Runner to add a house "fix-it" item to my weekend chore list whenever the need arises (using my template named _addFixIt_):
 
-<Code
-  language="yaml"
-  code={`---
+```markdown
+---
 title: addFixIt
 type: template-runner (this is not necessary, just a reminder to me of what this template is)
 getNoteTitled:  "⭐️ Tasks"
@@ -201,8 +201,8 @@ writeUnderHeading: "fix-its"
 location: append
 exampleSilent: noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=addFixIt&arg1=false&arg2=textVar%3Dsomething
 ---
-* <%- textVar %> #fixit`}
-/>
+* <%- textVar %> #fixit
+```
 
 As you can probably tell, what this does is add a todo item underneath the heading "fix-its" in my note "⭐️ Tasks". arg2 is set to `false` so the text will be added behind the scenes, and will not change the note currently in the Editor. The variable "textVar" is set to the word "something" in this example, but in my real use of this link, _something_ is replaced with the URL Encoded text that I dicated into a Shortcut.
 
@@ -210,17 +210,16 @@ As you can probably tell, what this does is add a todo item underneath the headi
 
 This is a Shortcut I use to log a workout during the day under my "Today's Notes & Actions" heading:
 
-<Code
-  language="yaml"
-  code={`---
+```markdown
+---
 title: logWorkout
 openNoteTitle:  <TODAY>
 writeUnderHeading: "Today's Notes & Actions"
 location: append
 exampleURL: noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=logWorkout&arg1=true&arg2=var1%3DVALUE1%3Bvar2%3DVALUE2
 ---
-<% - date.timestamp() %> #workout <%- var1 %> | <%- var2 %>`}
-/>
+<% - date.timestamp() %> #workout <%- var1 %> | <%- var2 %>
+```
 
 In this example, I passed two variables (var1 and var2) corresponding to two prompts I use in Shortcuts. All variables are passed in as arg2 in the form of:
 `arg1=VALUE1;arg2=VALUE2` (template variables are separated by semicolons)
@@ -240,15 +239,14 @@ When this template is invoked, it will run the JavaScript code. The first line o
 
 The second line of code calls the templateRunner command, and passes in both a target template, and the list of parameters just constructed. In this example, the target template is called **Meeting Notes**. If you want to change the name of the target template, make sure to update this code as well.
 
-<Code
-  language="javascript"
-  code={`---
+```markdown
+---
 title: Inline Meeting Notes
 type: meeting-note
 ---
 const eventInfoString = \`eventTitle=\${eventTitle};eventNotes=\${eventNotes};eventLink=\${eventLink};calendarItemLink=\${calendarItemLink};eventAttendees=\${eventAttendees};eventAttendeeNames=\${eventAttendeeNames};eventLocation=\${eventLocation};eventCalendar=\${eventCalendar};eventDate=\${eventDate('YYYY-MM-DD')};eventStart=\${eventDate("YYYY-MM-DD HH:MM")};eventEnd=\${eventEndDate("YYYY-MM-DD HH:MM")}\`
-await DataStore.invokePluginCommandByName("templateRunner","np.Templating",["Meeting Notes",true,eventInfoString])`}
-/>
+await DataStore.invokePluginCommandByName("templateRunner","np.Templating",["Meeting Notes",true,eventInfoString])
+```
 
 #### Second Template
 
@@ -261,14 +259,13 @@ In this case, we're telling templateRunner to do the following:
 3. Append the content of the template within this heading (newer notes at
    the bottom)
 
-<Code
-  language="yaml"
-  code={`---
+```markdown
+---
 title: Meeting Notes
 getNoteTitle:  <TODAY>
 writeUnderHeading: "Today's Notes"
 location: append
 ---
 ### <%- eventTitle %> - <%- eventDate %>
-**Event:**  <%- calendarItemLink %>`}
-/>
+**Event:**  <%- calendarItemLink %>
+```
