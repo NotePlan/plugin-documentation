@@ -50,14 +50,13 @@ If `replaceNoteContents` is true, then `location` and `writeUnderHeading` are ig
 
 Example:
 
-<Code
-  language="yaml"
-  code={`---
+```markdown
+---
 getNoteTitled: My Tasks Document Title
 replaceNoteContents: true
 ---
-<% - date.timestamp() %> This line will be the text in the document after the link is clicked`}
-/>
+<% - date.timestamp() %> This line will be the text in the document after the link is clicked
+```
 
 ### writeUnderHeading
 
@@ -80,14 +79,13 @@ The `writeUnderHeading` attribute can be either:
 
 Example:
 
-<Code
-  language="yaml"
-  code={`---
+```markdown
+---
 getNoteTitled: <today>
 writeUnderHeading: My Daily Journal
 ---
-- <% - date.timestamp() %> This text will appear in my daily note under the heading *My Daily Journal*`}
-/>
+- <% - date.timestamp() %> This text will appear in my daily note under the heading *My Daily Journal*
+```
 
 ### location
 
@@ -105,15 +103,14 @@ The `location` attribute tells Template Runner where/how to place the template c
 
 Example:
 
-<Code
-  language="yaml"
-  code={`---
+```markdown
+---
 getNoteTitled: <thisweek>
 writeUnderHeading: Thoughts for the week
 location: append
 ---
-- <% - date.timestamp() %> This text will appear in my daily note under the heading *Thoughts for the week*, but underneath any text that has been written before`}
-/>
+- <% - date.timestamp() %> This text will appear in my daily note under the heading *Thoughts for the week*, but underneath any text that has been written before
+```
 
 ### Other variables (of your choosing)
 
@@ -121,15 +118,14 @@ The real power of Template Runner Templates comes from including dynamic variabl
 
 Example (basically the same as above, but with variable content)
 
-<Code
-  language="yaml"
-  code={`---
+```markdown
+---
 getNoteTitled: <thisweek>
 writeUnderHeading: Thoughts for the week
 location: append
 ---
-- <% - date.timestamp() %> <%- var1 %>`}
-/>
+- <% - date.timestamp() %> <%- var1 %>
+```
 
 Notice how in this example, `var1` is not set in the frontmatter. This is a variable value that is passed through in your callback link, in this example, perhaps you passed through some thoughts that you dictated (and encoded using Shortcuts) as `...var1=My%20Thoughts%etc`. Template Runner passses through all the variables it receives to the Templating Engine to include in values just as if you had included those values in frontmatter.
 

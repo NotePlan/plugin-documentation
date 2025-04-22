@@ -44,6 +44,19 @@ _aliases: npa, append, at_
 
 _aliases: npi, insert, it_
 
+### np:new (/New note from template)
+
+`np:new` will show a list of all templates in the `Templates` folder, then create a new project note using supplied note name.
+
+_aliases: npn, new, nn_
+
+Note that you can also call this command from Shortcuts using the following parameters:
+  1. Template Name
+  2. Folder
+  3. New Note Title
+  4. An optional list of variables to pass to the template in JSON format. For example: ` {"foo":"bar"} ` then you could use ` <%- foo %> ` in the template to insert the value "bar" into the new note.
+
+
 ### np:invoke
 
 `np:invoke` will show a list of all templates in the `Templates` folder, and will render template in current note based on the `location` attribute value in template.
@@ -68,12 +81,6 @@ location: cursor
 ---
 This content will be placed in current note using the `location` attribute
 ```
-
-### np:new
-
-`np:new` will show a list of all templates in the `Templates` folder, then create a new project note using supplied note name.
-
-_aliases: npn, new, nn_
 
 ### np:qtn
 
