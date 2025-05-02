@@ -92,15 +92,22 @@ Review frequency: <%- promptDateInterval('question','Enter review interval:') %>
 
 Basic usage:
 
+The following example prompts the user to select a project status from the frontmatter/property values `projectStatus` that exist in all notes:
+
 ```markdown
 Project status: <%- promptKey('projectStatus', 'Select project status:') %>
 ```
 
-With folder restriction and case sensitivity:
+With folder restriction and case sensitivity (only project status values from notes in any folder containing 'Projects'):
 
 ```markdown
-Tag: <%- promptKey('tags', 'Select a tag:', 'Notes', true, 'Projects') %>
-Tag: <%- promptKey('tags', 'Select a tag:', 'Notes', true, 'Work/Projects/Clients', true) %>
+Project status: <%- promptKey('projectStatus', 'Select project status:', 'Notes', true, 'Projects') %>
+```
+
+With folder restriction and case sensitivity (only project status values from notes only in the specific folder 'Work/Projects/Clients' folder are shown):
+
+```
+Project status: <%- promptKey('projectStatus', 'Select project status:', 'Notes', true, 'Work/Projects/Clients', true) %>
 ```
 
 With predefined options:
