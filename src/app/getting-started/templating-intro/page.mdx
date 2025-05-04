@@ -18,14 +18,15 @@ The following examples demonstrate how you create a **template** and use `Templa
 
 When creating a new template in the "Templates" folder, the template header will be in `frontmatter` format, containing two fields for the template--`title` and `type`-- followed by the template body.
 
-`title` - The title should be a unique name beginning with the folder in which it is located. You can use the same title in multiple templates, provided they are in different folders.
+`title` - The title is the name of this template (not the name of any notes that will be created from it). You can use the same title in multiple templates, provided they are in different folders. However, it makes it easier to find the right template later if the title is unique and descriptive.
 
 `type` - The type field is used to identify what type of template this is. There are currently 3 different types of templates
 
 - `empty-note` will be available when you select the "Template" button in an empty calendar day
 - `quick-note` will be available whenever you invoke the `np:qtn` command
 - `meeting-note` will be available whenever you wish to create a meeting note for any NotePlan calendar event
-- `ignore` will be ignored in all template chooser interfaces
+- `template-runner` will be available whenever you use the `templateRunner` command
+- `ignore` will be ignored in all template chooser interfaces -- use this for templates you want to keep around but not use right now
 
 For more information on using Quick Notes and the `np:qtn` command, see <Link href="/examples-templates/templating-quicknotes">here</Link>.
 
