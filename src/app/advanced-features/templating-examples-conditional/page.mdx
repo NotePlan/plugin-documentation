@@ -3,7 +3,7 @@
 #### if logic
 
 ```markdown
-<%if (1 > 0) { %>
+<% if (recipes > 0) { %>
 // Do something with more than 1 recipe
 <% } %>
 ```
@@ -11,7 +11,7 @@
 #### if/else logic
 
 ```markdown
-<%if (1 > 0) { %>
+<% if (recipes > 0) { %>
 true
 <% } else { %>
 else
@@ -23,13 +23,13 @@ else
 _note: the next line will only appear if the current day is Saturday_
 
 ```javascript
-<%if (date.dayNumber(`${np.pivotDate}`) === 6) { %>do stuff on Saturday<% } %>
+<% if (date.dayNumber(`${np.pivotDate}`) === 6) { %>do stuff on Saturday<% } %>
 ```
 
 #### if/else logic (single line)
 
 ```javascript
-<%if (1 > 0) { %>true<% } else { %>else<% } %>
+<% if (recipes > 0) { %>true<% } else { %>else<% } %>
 ```
 
 #### ternary logic

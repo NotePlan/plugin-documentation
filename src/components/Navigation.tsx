@@ -344,8 +344,8 @@ const navigation: Array<NavGroup> = [
     title: 'Advanced Features',
     links: [
       {
-        title: 'Async Operations',
-        href: '/advanced-features/templating-examples-async',
+        title: 'Javascript in Templates',
+        href: '/advanced-features/javascript-in-templates',
       },
       {
         title: 'Conditional Logic',
@@ -364,8 +364,8 @@ const navigation: Array<NavGroup> = [
         href: '/advanced-features/templating-examples-string-interpolation',
       },
       {
-        title: 'Advanced Features',
-        href: '/advanced-features',
+        title: 'Async Operations',
+        href: '/advanced-features/templating-examples-async',
       },
       {
         title: 'Import/Include code or content',
@@ -382,7 +382,7 @@ const navigation: Array<NavGroup> = [
         href: '/examples-templates/templating-examples-js-weather',
       },
       {
-        title: 'Web Scraping',
+        title: 'Web Services',
         href: '/examples-templates/templating-examples-web',
       },
       {

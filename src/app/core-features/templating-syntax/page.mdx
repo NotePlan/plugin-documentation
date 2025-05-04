@@ -17,7 +17,20 @@ For more information on <code>Templating</code> tags. Visit <a href="/core-featu
 
 ## Command Syntax
 
-A command **must** have both an opening tag `<%` and closing `%>`, and if you want to show the results when template rendered, the opening tag will be `<%-`.
+A command **must** have both an opening tag `<%` and closing `%>`, and if you want to show the results when template rendered, the opening tag will be `<%-`. If you want to suppress the newline at the end of a line, you can use a `-%>` to suppress the output, e.g. 
+```javascript
+<%- firstName -%>,
+<%- lastName %>
+```
+This will output:
+```markdown
+Mike, Erickson
+```
+(all on the same line, because the minus sign `-` suppresses the next newline after the first template tag)
+
+<Callout type="warning">
+If you find that your templates are adding a lot of extra returns/newlines when you have lots of tags (especially JavaScript code), it's probably because you are not using the `-%>` to suppress the newline after your tags.
+</Callout>
 
 ## Variable/Method Syntax
 
