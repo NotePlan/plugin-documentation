@@ -11,8 +11,8 @@ Templating offers two very powerful commands, `include()` and `import()`, for br
 
 Use `include()` when you want to insert the **final, rendered content** of another template or the **entire content** of a regular note into your current template.
 
-*   **For Templates:** `include()` processes the target template first – it runs any template tags and uses its frontmatter – and then inserts the resulting text.
-*   **For Regular Notes:** `include()` simply grabs the full text of the note you specify and inserts it.
+*   **For Templates:** `include()` processes the target template first – it runs any template tags and uses the included template's frontmatter in the processing – and then inserts the resulting text.
+*   **For Regular Notes or Calendar Notes:** `include()` simply grabs the full text of the note you specify and inserts it.
 
 Think of `include()` as asking NotePlan to fully prepare the content from the other file *before* placing it in your current template. 
 
@@ -78,6 +78,22 @@ Results in:
 # Just some plain text.
 ```
 
+### Example: Including the contents of a Calendar Note
+
+Imagine you have a calendar note that contains a list of things you did on a given date. You want to include this list of events in another note.
+
+```
+---
+title: My Day Summary Note
+---
+## What I did on 2025-05-02
+
+<% include('2025-05-02') %>
+```
+
+<Callout type="info">
+A calendar note can be included by either YYYY-MM-DD or in the format YYYYMMDD.
+</Callout>
 
 ## `import(template_title)`
 
