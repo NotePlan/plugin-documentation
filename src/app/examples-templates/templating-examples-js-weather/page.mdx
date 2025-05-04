@@ -1,6 +1,7 @@
-# Using JavaScript in Templates
 
-_Contributed by: @dwertheimer_
+import Callout from '@/components/Callout'
+
+# Using JavaScript in Templates
 
 `Templating` can be configured to execute a wide variety of JavaScript commands, directly in the template.
 
@@ -19,6 +20,10 @@ Then, you can output the value when rendered using one of the `Templating` outpu
 ```javascript
 <%- firstName %> // output Mike
 ```
+
+<Callout type="info">
+Keep in mind that the line `<% const firstName = 'Mike' %>` will not output any text, but it is on a line by itself with a return/newline at the end which will be output as part of the rendered template. You can suppress this by adding a `-` to the template tag, e.g. `<% const firstName = 'Mike' -%>` This will set the variable but not output anything at all.
+</Callout>
 
 ## Complex Example
 
