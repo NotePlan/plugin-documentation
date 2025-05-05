@@ -56,14 +56,14 @@ Erickson
 
 There are two further commands available:
 
-- **`promptDate('question','message')`**, which accepts dates of form `YYYY-MM-DD`
-- **`promptDateInterval('question','message')`**, which accepts date intervals of form `nnn[bdwmqy]`, as used and documented further in the Repeat Extensions plugin.
+- **`promptDate('variableName','message')`**, which accepts dates of form `YYYY-MM-DD`
+- **`promptDateInterval('variableName','message')`**, which accepts date intervals of form `nnn[bdwmqy]`, as used and documented further in the Repeat Extensions plugin.
 
 Both require the first parameter to be 'question', but accept an optional prompt message. They must be placed where the text is to be used. For example:
 
 ```markdown
-Project start date: <%- promptDate('question','Enter start date:') %>
-Review frequency: <%- promptDateInterval('question','Enter review interval:') %>
+Project start date: <%- promptDate('startDate','Enter start date:') %>
+Review frequency: <%- promptDateInterval('reviewInterval','Enter review interval:') %>
 ```
 
 ## Working with Frontmatter Keys and Values
