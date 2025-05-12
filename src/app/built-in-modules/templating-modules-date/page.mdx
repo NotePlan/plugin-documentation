@@ -35,6 +35,12 @@ _Tokens are case-sensitive._
 | `DDD DDDD` | `1..365`         | Day of year                                                          |
 | `X`        | `1410715640.579` | Unix timestamp                                                       |
 | `x`        | `1410715640579`  | Unix ms timestamp                                                    |
+| L	09/04/1986	Date (in local format)
+| LL	|	September 4 1986	|	Month name, day of month, year |
+| LLL	|	September 4 1986 8:30 PM	|	Month name, day of month, year, time	|
+| LLLL	|	Thursday, September 4 1986 8:30 PM	|	Day of week, month name, day of month, year, time	|
+| LT	|	8:30 PM	|	Time (without seconds) |
+| LTS	|	8:30:00 PM	|	Time (with seconds)|
 
 **Example**
 
@@ -250,9 +256,10 @@ The following example returns yesterday based on current date
 
 ### format
 
-> #### format(format : string = '', pivotDate? : string = '') : string
+> #### format(format : string = '', pivotDate? : string = new Date()) : string
 >
 > Formats `pivotDate` using supplied `format`
+> If no pivotDate is provided, it formats the date/time as of this moment (basically the same as `now()`
 
 _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) method_
 
