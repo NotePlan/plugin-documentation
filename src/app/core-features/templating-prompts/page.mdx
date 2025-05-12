@@ -56,13 +56,15 @@ Erickson
 
 There are two further commands available:
 
-- **`promptDate('variableName','message')`**, which accepts dates of form `YYYY-MM-DD`
+- **`promptDate('variableName','message', defaultValue, canBeEmpty)`**, which accepts dates of form `YYYY-MM-DD`, the first two parameters are required, the third is optional and defaults to an empty string, the fourth is optional and defaults to true
 - **`promptDateInterval('variableName','message')`**, which accepts date intervals of form `nnn[bdwmqy]`, as used and documented further in the Repeat Extensions plugin.
 
 Both require the first parameter to be 'question', but accept an optional prompt message. They must be placed where the text is to be used. For example:
 
 ```markdown
 Project start date: <%- promptDate('startDate','Enter start date:') %>
+Project start date: <%- promptDate('startDate','Enter start date:', '2024-01-01') %> // including default value
+Project start date: <%- promptDate('startDate','Enter start date:', '', true) %> // no default value and allowing empty value
 Review frequency: <%- promptDateInterval('reviewInterval','Enter review interval:') %>
 ```
 
