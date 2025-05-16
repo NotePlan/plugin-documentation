@@ -364,10 +364,6 @@ const navigation: Array<NavGroup> = [
         href: '/advanced-features/templating-examples-string-interpolation',
       },
       {
-        title: 'Async Operations',
-        href: '/advanced-features/templating-examples-async',
-      },
-      {
         title: 'Import/Include code or content',
         href: '/advanced-features/import-include',
       },
