@@ -22,25 +22,77 @@ The Date Module uses JavaScript `moment` library internally, thus you can use an
 
 _Tokens are case-sensitive._
 
-| Input      | Example          | Description                                                          |
-| ---------- | ---------------- | -------------------------------------------------------------------- |
-| `YYYY`     | `2014`           | 4 or 2 digit year. Note: Only 4 digit can be parsed on `strict` mode |
-| `YY`       | `14`             | 2 digit year                                                         |
-| `Y`        | `-25`            | Year with any number of digits and sign                              |
-| `Q`        | `1..4`           | Quarter of year. Sets month to first month in quarter.               |
-| `M MM`     | `1..12`          | Month number                                                         |
-| `MMM MMMM` | `Jan..December`  | Month name in locale set by `moment.locale()`                        |
-| `D DD`     | `1..31`          | Day of month                                                         |
-| `Do`       | `1st..31st`      | Day of month with ordinal                                            |
-| `DDD DDDD` | `1..365`         | Day of year                                                          |
-| `X`        | `1410715640.579` | Unix timestamp                                                       |
-| `x`        | `1410715640579`  | Unix ms timestamp                                                    |
-| L	09/04/1986	Date (in local format)
-| LL	|	September 4 1986	|	Month name, day of month, year |
-| LLL	|	September 4 1986 8:30 PM	|	Month name, day of month, year, time	|
-| LLLL	|	Thursday, September 4 1986 8:30 PM	|	Day of week, month name, day of month, year, time	|
-| LT	|	8:30 PM	|	Time (without seconds) |
-| LTS	|	8:30:00 PM	|	Time (with seconds)|
+| Category          | Token                | Example                                           | Description                                                                  |
+| ----------------- | -------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------- |
+| **Month**         | `M`                  | 1 2 ... 11 12                                     | Month number                                                                 |
+|                   | `Mo`                 | 1st 2nd ... 11th 12th                             | Month number with ordinal                                                    |
+|                   | `MM`                 | 01 02 ... 11 12                                   | Month number, zero-padded                                                    |
+|                   | `MMM`                | Jan Feb ... Nov Dec                               | Month name, short                                                            |
+|                   | `MMMM`               | January February ... November December            | Month name, full                                                             |
+| **Quarter**       | `Q`                  | 1 2 3 4                                           | Quarter of year                                                              |
+|                   | `Qo`                 | 1st 2nd 3rd 4th                                   | Quarter of year with ordinal                                                 |
+| **Day of Month**  | `D`                  | 1 2 ... 30 31                                     | Day of month                                                                 |
+|                   | `Do`                 | 1st 2nd ... 30th 31st                             | Day of month with ordinal                                                    |
+|                   | `DD`                 | 01 02 ... 30 31                                   | Day of month, zero-padded                                                    |
+| **Day of Year**   | `DDD`                | 1 2 ... 364 365                                   | Day of year                                                                  |
+|                   | `DDDo`               | 1st 2nd ... 364th 365th                           | Day of year with ordinal                                                     |
+|                   | `DDDD`               | 001 002 ... 364 365                               | Day of year, zero-padded (3 digits)                                          |
+| **Day of Week**   | `d`                  | 0 1 ... 5 6                                       | Day of week (Sunday as 0, Saturday as 6)                                     |
+|                   | `do`                 | 0th 1st ... 5th 6th                               | Day of week with ordinal                                                     |
+|                   | `dd`                 | Su Mo ... Fr Sa                                   | Day of week, min                                                             |
+|                   | `ddd`                | Sun Mon ... Fri Sat                               | Day of week, short                                                           |
+|                   | `dddd`               | Sunday Monday ... Friday Saturday                 | Day of week, full                                                            |
+| **Day of Week (Locale)** | `e`           | 0 1 ... 5 6                                       | Day of week (locale specific, e.g. 0 may be Monday)                        |
+| **Day of Week (ISO)** | `E`              | 1 2 ... 6 7                                       | Day of week (ISO 8601, Monday as 1, Sunday as 7)                             |
+| **Week of Year**  | `w`                  | 1 2 ... 52 53                                     | Week of year (locale specific)                                               |
+|                   | `wo`                 | 1st 2nd ... 52nd 53rd                             | Week of year with ordinal (locale specific)                                  |
+|                   | `ww`                 | 01 02 ... 52 53                                   | Week of year, zero-padded (locale specific)                                  |
+| **Week of Year (ISO)** | `W`             | 1 2 ... 52 53                                     | Week of year (ISO 8601)                                                      |
+|                   | `Wo`                 | 1st 2nd ... 52nd 53rd                             | Week of year with ordinal (ISO 8601)                                         |
+|                   | `WW`                 | 01 02 ... 52 53                                   | Week of year, zero-padded (ISO 8601)                                         |
+| **Year**          | `YY`                 | 70 71 ... 29 30                                   | Year, 2-digits                                                               |
+|                   | `YYYY`               | 1970 1971 ... 2029 2030                           | Year, 4-digits                                                               |
+|                   | `Y`                  | 1970 ... 9999 +10000                              | Year (ISO 8601, handles years > 9999)                                        |
+|                   | `YYYYYY`             | -001970 ... +001970                               | Year, expanded (±6 digits)                                                   |
+| **Era Year**      | `y`                  | 1 2 ... 2020 ...                                  | Year of era                                                                  |
+| **Era**           | `N`, `NN`, `NNN`     | BC AD                                             | Era name, abbreviated                                                        |
+|                   | `NNNN`               | Before Christ, Anno Domini                        | Era name, full                                                               |
+|                   | `NNNNN`              | BC AD                                             | Era name, narrow                                                             |
+| **Week Year (Locale)** | `gg`           | 70 71 ... 29 30                                   | Week year, 2-digits (locale specific)                                        |
+|                   | `gggg`               | 1970 1971 ... 2029 2030                           | Week year, 4-digits (locale specific)                                        |
+| **Week Year (ISO)** | `GG`              | 70 71 ... 29 30                                   | Week year, 2-digits (ISO 8601)                                               |
+|                   | `GGGG`               | 1970 1971 ... 2029 2030                           | Week year, 4-digits (ISO 8601)                                               |
+| **AM/PM**         | `A`                  | AM PM                                             | Uppercase AM/PM                                                              |
+|                   | `a`                  | am pm                                             | Lowercase am/pm                                                              |
+|                   | `H`                  | 0 1 ... 22 23                                     | Hour (0-23)                                                                  |
+|                   | `HH`                 | 00 01 ... 22 23                                   | Hour, zero-padded (00-23)                                                    |
+|                   | `h`                  | 1 2 ... 11 12                                     | Hour (1-12)                                                                  |
+|                   | `hh`                 | 01 02 ... 11 12                                   | Hour, zero-padded (01-12)                                                    |
+|                   | `k`                  | 1 2 ... 23 24                                     | Hour (1-24)                                                                  |
+|                   | `kk`                 | 01 02 ... 23 24                                   | Hour, zero-padded (01-24)                                                    |
+| **Minute**        | `m`                  | 0 1 ... 58 59                                     | Minute                                                                       |
+|                   | `mm`                 | 00 01 ... 58 59                                   | Minute, zero-padded                                                          |
+| **Second**        | `s`                  | 0 1 ... 58 59                                     | Second                                                                       |
+|                   | `ss`                 | 00 01 ... 58 59                                   | Second, zero-padded                                                          |
+| **Fractional Second** | `S`              | 0 1 ... 8 9                                       | Tenths of a second                                                           |
+|                   | `SS`                 | 00 01 ... 98 99                                   | Hundredths of a second                                                       |
+|                   | `SSS`                | 000 001 ... 998 999                               | Milliseconds                                                                 |
+|                   | `SSSS...SSSSSSSSS`   | 000[0..] ... 999[0..]                             | Fractional seconds (displays 3 significant digits, rest 0s)                  |
+| **Time Zone**     | `z`, `zz`            | EST CST ...                                       | Time zone name (deprecated for plain moments, use with moment-timezone)      |
+|                   | `Z`                  | -07:00 -06:00 ... +07:00                          | Offset from UTC                                                              |
+|                   | `ZZ`                 | -0700 -0600 ... +0700                             | Offset from UTC, compact                                                     |
+| **Unix Timestamp** | `X`                 | 1360013296                                        | Unix timestamp (seconds)                                                     |
+|                   | `x`                  | 1360013296123                                     | Unix millisecond timestamp                                                   |
+| **Localized**     | `LT`                 | 8:30 PM                                           | Time (local format)                                                          |
+|                   | `LTS`                | 8:30:25 PM                                        | Time with seconds (local format)                                             |
+|                   | `L`                  | 09/04/1986                                        | Date (local format)                                                          |
+|                   | `l`                  | 9/4/1986                                          | Date, short (local format)                                                   |
+|                   | `LL`                 | September 4, 1986                                 | Date, long (local format)                                                    |
+|                   | `ll`                 | Sep 4, 1986                                       | Date, short long (local format)                                              |
+|                   | `LLL`                | September 4, 1986 8:30 PM                         | Date & Time (local format)                                                   |
+|                   | `lll`                | Sep 4, 1986 8:30 PM                               | Date & Time, short (local format)                                            |
+|                   | `LLLL`               | Thursday, September 4, 1986 8:30 PM               | Date, Day & Time (local format)                                              |
+|                   | `llll`               | Thu, Sep 4, 1986 8:30 PM                          | Date, Day & Time, short (local format)                                       |
 
 **Example**
 

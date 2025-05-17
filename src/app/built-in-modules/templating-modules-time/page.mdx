@@ -28,16 +28,35 @@ Each time token has a single or double token, with the double token being used t
 
 _Tokens are case-sensitive._
 
-| Input                    | Example        | Description                                                                    |
-| ------------------------ | -------------- | ------------------------------------------------------------------------------ |
-| `H HH`                   | `0..23`        | Hours (24 hour time)                                                           |
-| `h hh`                   | `1..12`        | Hours (12 hour time used with `a A`.)                                          |
-| `k kk`                   | `1..24`        | Hours (24 hour time from 1 to 24)                                              |
-| `a A`                    | `am pm`        | Post or ante meridiem (Note the one character `a p` are also considered valid) |
-| `m mm`                   | `0..59`        | Minutes                                                                        |
-| `s ss`                   | `0..59`        | Seconds                                                                        |
-| `S SS SSS ... SSSSSSSSS` | `0..999999999` | Fractional seconds                                                             |
-| `Z ZZ`                   | `+12:00`       | Offset from UTC as `+-HH:mm`, `+-HHmm`, or `Z`                                 |
+| Category          | Token                | Example                                           | Description                                                                  |
+| ----------------- | -------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------- |
+| **AM/PM**         | `A`                  | AM PM                                             | Uppercase AM/PM                                                              |
+|                   | `a`                  | am pm                                             | Lowercase am/pm                                                              |
+| **Hour**          | `H`                  | 0 1 ... 22 23                                     | Hour (0-23)                                                                  |
+|                   | `HH`                 | 00 01 ... 22 23                                   | Hour, zero-padded (00-23)                                                    |
+|                   | `h`                  | 1 2 ... 11 12                                     | Hour (1-12)                                                                  |
+|                   | `hh`                 | 01 02 ... 11 12                                   | Hour, zero-padded (01-12)                                                    |
+|                   | `k`                  | 1 2 ... 23 24                                     | Hour (1-24)                                                                  |
+|                   | `kk`                 | 01 02 ... 23 24                                   | Hour, zero-padded (01-24)                                                    |
+| **Minute**        | `m`                  | 0 1 ... 58 59                                     | Minute                                                                       |
+|                   | `mm`                 | 00 01 ... 58 59                                   | Minute, zero-padded                                                          |
+| **Second**        | `s`                  | 0 1 ... 58 59                                     | Second                                                                       |
+|                   | `ss`                 | 00 01 ... 58 59                                   | Second, zero-padded                                                          |
+| **Fractional Second** | `S`              | 0 1 ... 8 9                                       | Tenths of a second                                                           |
+|                   | `SS`                 | 00 01 ... 98 99                                   | Hundredths of a second                                                       |
+|                   | `SSS`                | 000 001 ... 998 999                               | Milliseconds                                                                 |
+|                   | `SSSS...SSSSSSSSS`   | 000[0..] ... 999[0..]                             | Fractional seconds (displays 3 significant digits, rest 0s)                  |
+| **Time Zone**     | `z`, `zz`            | EST CST ...                                       | Time zone name (deprecated for plain moments, use with moment-timezone)      |
+|                   | `Z`                  | -07:00 -06:00 ... +07:00                          | Offset from UTC                                                              |
+|                   | `ZZ`                 | -0700 -0600 ... +0700                             | Offset from UTC, compact                                                     |
+| **Unix Timestamp** | `X`                 | 1360013296                                        | Unix timestamp (seconds)                                                     |
+|                   | `x`                  | 1360013296123                                     | Unix millisecond timestamp                                                   |
+| **Localized Time**| `LT`                 | 8:30 PM                                           | Time (local format)                                                          |
+|                   | `LTS`                | 8:30:25 PM                                        | Time with seconds (local format)                                             |
+|                   | `LLL`                | September 4, 1986 8:30 PM                         | Date & Time (local format)                                                   |
+|                   | `lll`                | Sep 4, 1986 8:30 PM                               | Date & Time, short (local format)                                            |
+|                   | `LLLL`               | Thursday, September 4, 1986 8:30 PM               | Date, Day & Time (local format)                                              |
+|                   | `llll`               | Thu, Sep 4, 1986 8:30 PM                          | Date, Day & Time, short (local format)                                       |
 
 ### Example
 
