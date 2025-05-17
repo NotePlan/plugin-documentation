@@ -521,6 +521,51 @@ The following returns number of days between `2022-05-01` and `2022-06-31` (retu
 
 ---
 
+### daysUntil
+
+> #### daysUntil(targetDateString : string, includeToday? : boolean = false) : number
+>
+> Calculates the number of days from today until the target date.
+> Uses local time for calculations.
+
+- `targetDateString` - The target date in 'YYYY-MM-DD' format.
+- `includeToday?` - Whether to include today in the count (default: false).
+
+- `-> result` - Returns the number of days until the target date. Returns 0 if the target date is in the past or if `targetDateString` is invalid.
+
+**Examples**
+
+The following example calculates the number of days from today until December 31st of the current year (assuming today is before December 31st):
+
+```javascript
+<%- date.daysUntil(date.now('YYYY') + '-12-31') %>
+```
+
+The following example calculates the number of days until December 31st, including today:
+
+```javascript
+<%- date.daysUntil(date.now('YYYY') + '-12-31', true) %>
+```
+
+If today is `2023-10-26`, the following returns `5` (days until `2023-10-31`):
+
+```javascript
+<%- date.daysUntil('2023-10-31') %>
+```
+
+If today is `2023-10-26`, the following returns `6` (days until `2023-10-31`, including today):
+
+```javascript
+<%- date.daysUntil('2023-10-31', true) %>
+```
+
+If the target date is in the past, it returns `0`:
+```javascript
+<%- date.daysUntil('2020-01-01') %> // returns 0
+```
+
+---
+
 ### add
 
 > #### add(pivotDate? : string = '', numDays : number = 1, timeframe : string = '', format? : string = 'YYYY-MM-DD') : string
