@@ -64,10 +64,10 @@ And, you can repeat the placeholders without having to increase the number of ar
 
 #### Named arguments
 
-Format strings may contain replacement fields rather than positional placeholders. Instead of referring to a certain argument, you can now refer to a certain key within an object. Replacement fields are surrounded by rounded parentheses - ( and ) - and begin with a keyword that refers to a key:
+Format strings may contain replacement fields rather than positional placeholders. Instead of referring to a certain argument, you can now refer to a certain key within an object. Replacement fields are surrounded by rounded parentheses - ( and ) - and begin with a keyword that refers to a key defined in an object in the second parameter:
 
 ```javascript
-<%- utility.format('Hello %(name)s', 'Mike') %>
+<%- utility.format('Hello %(name)s', { name: 'Mike' }) %>
 // Hello Mike
 ```
 
@@ -78,7 +78,7 @@ Keywords in replacement fields can be optionally followed by any number of keywo
 The following example will format string using parameter position (parameter access is 1 based)
 
 ```markdown
-<%- utility..format('%2$s %3$s a %1$s', 'cracker', 'Polly', 'wants')
+<%- utility.format('%2$s %3$s a %1$s', 'cracker', 'Polly', 'wants')
 // returns Polly wants a cracker
 ```
 

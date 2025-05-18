@@ -4,6 +4,7 @@
 
 Even though this is not technically part of the Note Module, it is relevant to Notes, so included here.
 This is a general-purpose method that can be used to get a note object for a given title or filename (calendar or regular note).
+If you do not provide a title or filename, it returns the NotePlan note object for the current note in the Editor.
 
 > #### getNote(titleOrFilename: string) : TNote
 >
@@ -11,13 +12,41 @@ This is a general-purpose method that can be used to get a note object for a giv
 
 **Examples:**
 
-The following will return the note object for the note with a title of "My Note"
+The following will return the note object for the note specified (or today's note if none is specified):
 
 ```javascript
+const note = await note.getNote()
 const note = await note.getNote('My Note')
 const note = await note.getNote('this is a test.md')
 const note = await note.getNote('20220529')
 const note = await note.getNote('2024-01-01')
+```
+
+### currentNote
+
+> #### currentNote() : TNote
+>
+> Returns the `TNote` object for the note currently open in the Editor.
+> This is equivalent to calling `note.getNote()` with no arguments.
+
+- `-> result` - Returns the `TNote` object for the note currently open in the Editor.
+
+**Example:**
+
+The following will return the note object for the currently open note:
+
+```javascript
+const currentOpenNote = await note.currentNote()
+```
+
+## Asynchronous Function Calls
+
+Templating does its best to predict which function calls are asynchronous and deals with the nuances of that behind the scenes. However, if you find you receive output that says `[object Promise]`, it means that you are calling a function that is asynchronous and was not caught by Templating. 
+
+If this happens, you can often resolve it by simply putting `await` in front of your command. For example, if `wotd()` was an asynchronous function returning a promise, you would write:
+
+```javascript
+const word = await wotd()
 ```
 
 ## Note Module Overview
@@ -65,7 +94,7 @@ Assuming the current note has a title of "# Todo List" located in the "Projects"
 > Returns the title of the current note, which may be either a calendar or project note.
 
 - If the current note is a calendar note, the value will be a date string in YYYY-MM-DD format
-- If the current note is a project note, the value will be the first line
+- If the current note is a project note, the value will be the first line or the "title" from frontmatter
 
 -> `title` - Returns note title
 
@@ -164,11 +193,11 @@ The following will return the created date using supplied format.
 
 ---
 
-### changedDate
+### changedDate 
 
 > #### changedDate(format: ?string = '') : date
 >
-> Returns the changed date value of the current note
+> Returns the changed (last modified) date value of the current note
 
 - `format` - Optional date format
 
@@ -261,6 +290,11 @@ The following will iterate through all paragraph objects for the current note.
 <%- item.key + ' : ' + item.value %>
 <%}) -%>
 ```
+
+<Callout type="info">
+Note that if you want the full NotePlan paragraphs instead, you can get them using:
+`note.currentNote().paragraphs`
+</Callout>
 
 ---
 
