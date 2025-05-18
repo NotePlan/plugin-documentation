@@ -124,79 +124,94 @@ This is necessary due to the way NotePlan handles dates. If you are passing a da
 
 ---
 
-### now
+### `now(format?: string, offset?: string | number)`
+Returns the current date and time, or a date/time offset from now, formatted as a string.
 
-> #### now(format? : string = '', offset? : string = '') : string
->
-> Returns a string representation current date.
+**Parameters:**
 
-_Note: Also available as [helper](/docs/templating-modules/date-module#helpers) method_
+*   `format` (optional): A string defining the desired output format.
+    *   Uses [Moment.js format tokens](https://momentjs.com/docs/#/displaying/format/) (e.g., `YYYY-MM-DD`, `dddd, MMMM Do YYYY, h:mm:ss a`).
+    *   Also supports Intl date styles: `'short'`, `'medium'`, `'long'`, `'full'`.
+    *   If empty or not provided, it defaults to the `dateFormat` specified in the plugin settings, or `YYYY-MM-DD` if no setting is found.
+*   `offset` (optional): A string or number to calculate a date/time offset from the current moment.
+    *   **Numerical Offset**: If a number is provided (e.g., `7`, `-90`), it's treated as a number of days to add to (positive) or subtract from (negative) the current date.
+    *   **Shorthand String Offset**: A string combining a number and a unit (e.g., `1w`, `-2M`, `+7d`, `-3y`).
+        *   Supported units:
+            *   `d`: days
+            *   `w`: weeks
+            *   `M`: months
+            *   `y`: years
+        *   Examples: `7d` (7 days from now), `-1M` (1 month ago), `+2w` (2 weeks from now).
+    *   If empty or not provided, no offset is applied.
 
-- `format?` - Desired date format. If not supplied, it will use the **Date Format** value in `Templating` [Plugin Settings](/docs/settings)
-- `offset?` - Offset can be used to add/subtract days, months, weeks, etc. (default: 'days')
+**Returns:**
+`(string)`: The formatted date string.
 
-**Shorthand Keys:**
-In addition to add/subtract days, you can `offset` may contain shorthand values
+**Behavior Notes:**
+*   When an Intl format (`short`, `medium`, `long`, `full`) is used, the locale for formatting is taken from the `templateLocale` in plugin settings, or `en-US` if not set.
+*   The global `now()` function available directly in templates (e.g., `<%- now(...) %>`) uses the same underlying logic as `date.now(...)`.
 
-| Shorthand | Description |
-| --------- | ----------- |
-| y         | years       |
-| Q         | quarters    |
-| M         | months      |
-| w         | weeks       |
-| d         | days        |
+**Examples:**
 
-- `-> result` - Returns formatted date string
-
-**Examples**
-
-The following example returns the current date, using default values
-
+The following example returns the current date, using default format (`YYYY-MM-DD` or plugin setting):
 ```javascript
 <%- date.now() %>
 ```
-
-The following example returns current date using custom format
-
+Equivalent global helper:
 ```javascript
-<%- date.now("dddd Do MMMM YYY") %>
+<%- now() %>
 ```
 
-The following example will subtract 90 days
+The following example returns the current date using a custom Moment.js format:
+```javascript
+<%- date.now("dddd, MMMM Do YYYY, h:mm a") %>
+```
+Global helper with custom format:
+```javascript
+<%- now("dddd, MMMM Do YYYY, h:mm a") %>
+```
 
+The following example returns the current date using the 'short' Intl date style (e.g., "5/18/25"):
+```javascript
+<%- date.now('short') %>
+```
+
+The following example will subtract 90 days from the current date and format it using the default format:
 ```javascript
 <%- date.now('', -90) %>
 ```
+Global helper subtracting 90 days:
+```javascript
+<%- now('', -90) %>
+```
 
-The following example will add 10 days
-
+The following example will add 10 days to the current date and format it using the default format:
 ```javascript
 <%- date.now('', 10) %>
 ```
 
-The following example will subtract 2 months
-
+The following example will add 2 weeks from the current date and format it using `MM/DD/YYYY`:
 ```javascript
-<%- date.now('', '-2M') %>
+<%- date.now('MM/DD/YYYY', '+2w') %>
+```
+Global helper adding 2 weeks with specific format:
+```javascript
+<%- now('MM/DD/YYYY', '2w') %>
 ```
 
-The following example will subtract 2 weeks
-
+The following example will subtract 3 months from the current date and format it using the 'long' Intl date style:
 ```javascript
-<%- date.now('', '-2w') %>
+<%- date.now('long', '-3M') %>
 ```
 
-The following example will subtract 2 years
-
+The following example will add 1 year to the current date and use the default format:
 ```javascript
-<%- date.now('', '-2y') %>
+<%- date.now('', '1y') %>
 ```
-
-The following example uses the `now` helper
-
+Equivalent using a positive number for the shorthand string offset:
 ```javascript
-<%- now() %>
-```
+<%- date.now('', '+1y') %>
+``` 
 
 ---
 
@@ -794,7 +809,7 @@ DateModule exposes commonly used methods as importable helpers
 
 ### now
 
-> #### now() -> current date
+> #### now(format,offsetDays) -> current date with optional format & offset in days
 
 ### format
 

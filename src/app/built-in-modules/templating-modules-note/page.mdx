@@ -1,4 +1,8 @@
+import Callout from '@/components/Callout'
+
 # Note Module
+
+The functions below are a part of the `note` module and are all accessed with `note.*`:
 
 ### getNote
 
@@ -15,11 +19,11 @@ If you do not provide a title or filename, it returns the NotePlan note object f
 The following will return the note object for the note specified (or today's note if none is specified):
 
 ```javascript
-const note = await note.getNote()
-const note = await note.getNote('My Note')
-const note = await note.getNote('this is a test.md')
-const note = await note.getNote('20220529')
-const note = await note.getNote('2024-01-01')
+const note = note.getNote()
+const note = note.getNote('My Note')
+const note = note.getNote('this is a test.md')
+const note = note.getNote('20220529')
+const note = note.getNote('2024-01-01')
 ```
 
 ### currentNote
