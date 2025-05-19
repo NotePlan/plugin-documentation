@@ -322,6 +322,10 @@ const navigation: Array<NavGroup> = [
         href: '/built-in-modules/templating-modules-time',
       },
       {
+        title: 'Tasks Module',
+        href: '/built-in-modules/templating-modules-tasks',
+      },
+      {
         title: 'Note Module',
         href: '/built-in-modules/templating-modules-note',
       },

@@ -26,7 +26,8 @@ function excludeObjectExpressions(tree) {
 }
 
 function escapeTemplateTags(content) {
-  return content.replace(/<%/g, '<%').replace(/%>/g, '%>')
+  // Escape HTML angle brackets to prevent them from being misinterpreted by the MDX parser.
+  return content.replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
 
 function extractSections() {
@@ -67,9 +68,8 @@ export default function (nextConfig = {}) {
 
             let files = glob.sync('**/*.mdx', { cwd: appDir })
             let data = files.map((file) => {
-              let url = '/' + file.replace(/(^|\/)page\.mdx$/, '')
+              let url = '/' + file.replace(new RegExp('(^|/)page\\\\.mdx$'), '')
               let mdx = fs.readFileSync(path.join(appDir, file), 'utf8')
-              mdx = escapeTemplateTags(mdx)
 
               let sections = []
 

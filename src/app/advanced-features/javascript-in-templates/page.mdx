@@ -26,7 +26,7 @@ Keep in mind that the line `<% const firstName = 'Mike' %>` will not output any 
 
 ## Asynchronous Function Calls
 
-Templating does its best to predict which function calls are asynchronous and deals with the nuances of that behind the scenes. However, if you find you receive output that says `[object Promise]`, it means that you are calling a function that is asynchronous and was not caught by Templating. 
+Templating does its best to predict which function calls are asynchronous (e.g. calls to websites which require waiting for an answer) and deals with the nuances of that behind the scenes. However, if you find you receive output that says `[object Promise]`, it means that you are calling a function that is asynchronous and was not caught by Templating. 
 
 If this happens, you can often resolve it by simply putting `await` in front of your command. For example, if `wotd()` was an asynchronous function returning a promise, you would write:
 

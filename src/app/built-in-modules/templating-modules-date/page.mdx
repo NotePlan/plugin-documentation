@@ -215,37 +215,53 @@ Equivalent using a positive number for the shorthand string offset:
 
 ---
 
-### timestamp
+### `timestamp(format?: string)`
+Returns a date/time timestamp string.
 
-> #### timestamp(format? : string = '') : string
->
-> Returns date/time timestamp with optional format
+**Parameters:**
 
-_Note: Also available as [helper](/docs/templating-modules/date-module#helpers) method_
+*   `format` (optional): A string defining the desired output format.
+    *   If not supplied or an empty string, it defaults to the full ISO 8601 local time format (e.g., `2023-10-27T17:30:00-07:00`). This is equivalent to `moment().format()`.
+    *   If a specific format string is provided (e.g., `YYYY-MM-DD HH:mm:ss`), it uses that format with the current local time.
+        *   Uses [Moment.js format tokens](https://momentjs.com/docs/#/displaying/format/).
+    *   A special format string `'UTC_ISO'` can be passed to get the current time in UTC, formatted as a standard ISO 8601 string (e.g., `2023-10-28T00:30:00Z`). This is equivalent to `moment.utc().format()`.
 
-- `format?` - Desired date format. If not supplied, will use `YYYY-MM-DD h:mm A` format
+**Returns:**
+`(string)`: The formatted timestamp string.
 
-- `-> result` - Returns formatted timestamp string
+**Behavior Notes:**
+*   The method respects the `templateLocale` setting from the plugin configuration when formatting, if the chosen Moment.js format is locale-sensitive (e.g., `LLLL`, `dddd`).
+*   The global `timestamp()` function available directly in templates (e.g., `<%- timestamp(...) %>`) uses the same underlying logic as `date.timestamp(...)`.
 
-**Examples**
+**Examples:**
 
-The following example returns the current date, using default values
-
+The following example returns the current date and time in full ISO 8601 local format:
 ```javascript
 <%- date.timestamp() %>
 ```
+Output might be similar to: `2023-10-27T10:45:30-07:00`
 
-The following example returns current date using custom format
-
+The following example returns the current date and time using a custom format:
 ```javascript
-<%- date.timestamp("dddd Do MMMM YYY") %>
+<%- date.timestamp("dddd, MMMM Do YYYY, h:mm:ss a") %>
 ```
+Output might be similar to: `Friday, October 27th 2023, 10:45:30 am`
 
-The following example uses the `timestamp` helper
+The following example returns the current date and time in UTC, formatted as ISO 8601:
+```javascript
+<%- date.timestamp('UTC_ISO') %>
+```
+Output might be similar to: `2023-10-27T17:45:30Z`
 
+The following example uses the global `timestamp()` helper to get the default local ISO timestamp:
 ```javascript
 <%- timestamp() %>
 ```
+
+The following example uses the global `timestamp()` helper to get a custom formatted local timestamp:
+```javascript
+<%- timestamp("YYYY/MM/DD HH:mm") %>
+``` 
 
 ---
 

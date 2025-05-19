@@ -3,7 +3,7 @@ import Callout from '@/components/Callout'
 # String Interpolation
 
 {/* ## Overview */}
-You can use standard JavaScript string interpolation within `Templating` tags.
+You can use standard JavaScript [string interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) (aka "Template Literals") within `Templating` tags to combine text and variables into a string of characters.
 
 {/* prettier-ignore */}
 {/*For example, using the following in your plugin code, you can provide the referenced `fname`, `mname`, and `lname` variables
@@ -23,7 +23,7 @@ export async function templatingInterpolation(): Promise<void> {
 ```
 
 {/* prettier-ignore */}
-In your template, you can reference these variables.*/}
+In your template, you can reference these variables.
 
 <Callout
   type="info"
@@ -32,8 +32,8 @@ In your template, you can reference these variables.*/}
 />
 
 ```markdown
-<% const fname = "Frank" %>
-<% const lname = "Winter" %>
+<% const fname = "Frank" -%>
+<% const lname = "Winter" -%>
 Full Name: <%- `${fname} ${lname}` %>
 ```
 
