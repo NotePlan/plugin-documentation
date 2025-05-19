@@ -1,51 +1,8 @@
 import Callout from '@/components/Callout'
-import Link from 'next/link'
 
-# Miscellaneous Template Commands
+# Global Commands (Miscellaneous)
 
-The Templating plugin provides various utility commands that can be used in your templates beyond the prompt commands. These commands can be used with the `<%-` template tag syntax to include dynamic content in your templates.
-
-## Content Generation
-
-### Inspirational Content
-
-```markdown
-<%- affirmation() %>
-```
-
-Returns a random affirmation.
-
-```markdown
-<%- advice() %>
-```
-
-Returns a random piece of advice.
-
-```markdown
-<%- quote() %>
-```
-
-Returns the daily quote.
-
-```markdown
-<%- wotd() %>
-```
-
-Returns the word of the day.
-
-## Weather Information
-
-```markdown
-<%- weather() %>
-```
-
-Returns weather information using the default format configured in settings.
-
-```markdown
-<%- weather('format') %>
-```
-
-Returns weather information using the specified format.
+The following commands are available without any module name prefix.
 
 ## Date and Time
 
@@ -179,39 +136,3 @@ Some commands require other NotePlan plugins to be installed:
 
   </Callout>
 
-## Examples
-
-Here are some example uses of these commands in templates:
-
-### Daily Note Template
-
-```markdown
-# Daily Note for <%- now() %>
-
-## Weather
-
-<%- weather() %>
-
-## Quote of the Day
-
-<%- quote() %>
-
-## Today's Events
-
-<%- listTodaysEvents() %>
-
-```
-
-### Weekly Review Template
-
-```markdown
-# Weekly Review: <%- weekDates({ format: "MMM D" }) %>
-
-## Progress this Week
-
-<%- progressUpdate({ period: "week" }) %>
-
-## Upcoming Week
-
-<%- events({ days: 7, format: "### $date\n$events" }) %>
-```

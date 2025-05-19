@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { useMobileNavigationStore } from '@/components/MobileNavigation'
 import { Logo } from '@/components/Logo'
-import { Search } from '@/components/Search'
+import dynamic from 'next/dynamic'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { TopLevelNavItem } from '@/components/TopLevelNavItem'
 import {
@@ -11,6 +11,15 @@ import {
   MobileNavigationDialog,
 } from '@/components/MobileNavigation'
 import { clsx } from 'clsx'
+
+// `ssr: false` ensures the component is only rendered in the browser.
+const Search = dynamic(
+  async () => {
+    const mod = await import('@/components/Search')
+    return mod.Search
+  },
+  { ssr: false },
+)
 
 export function Header() {
   let pathname = usePathname()

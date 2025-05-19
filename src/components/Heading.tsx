@@ -104,13 +104,47 @@ export function Heading<Level extends 1 | 2 | 3 | 4 | 5 | 6>({
         className={tag || label ? 'mt-2 scroll-mt-32' : 'scroll-mt-24'}
         {...props}
       >
-        {anchor ? (
-          <Anchor id={props.id} inView={inView}>
-            {children}
-          </Anchor>
-        ) : (
-          children
-        )}
+        {(() => {
+          if (!anchor) {
+            return children
+          }
+
+          const containsAnchor = (node: React.ReactNode): boolean => {
+            if (Array.isArray(node)) {
+              return node.some(containsAnchor)
+            }
+
+            if (
+              typeof node === 'object' &&
+              node !== null &&
+              'type' in node &&
+              'props' in node
+            ) {
+              const element = node as React.ReactElement
+
+              if (
+                element.type === 'a' ||
+                (element.type as any)?.displayName === 'Link'
+              ) {
+                return true
+              }
+
+              return containsAnchor(element.props.children)
+            }
+
+            return false
+          }
+
+          if (containsAnchor(children)) {
+            return children
+          }
+
+          return (
+            <Anchor id={props.id} inView={inView}>
+              {children}
+            </Anchor>
+          )
+        })()}
       </Component>
     </>
   )

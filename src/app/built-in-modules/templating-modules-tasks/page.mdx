@@ -20,11 +20,9 @@ The Tasks Module provides methods for interacting with tasks within NotePlan. Th
 
 The following are the methods available in the Tasks Module. They can be used in any `Templating` template; no additional configuration is required.
 
----
-
 ### getSyncedOpenTasksFrom
 
-> #### async getSyncedOpenTasksFrom(sourceIdentifier : string) : Promise&lt;string&gt;
+> #### getSyncedOpenTasksFrom(sourceIdentifier : string) : Promise&lt;string&gt;
 >
 > Retrieves open tasks (including their sub-tasks/children) from a specified note (daily, weekly, monthly, quarterly, yearly calendar note, or a project note). It ensures each open task paragraph and its children have a block ID and returns a string with each task on a new line.
 
@@ -52,33 +50,35 @@ The following are the methods available in the Tasks Module. They can be used in
 The following example retrieves open tasks from today's daily note:
 
 ```javascript
-<%- await tasks.getSyncedOpenTasksFrom('<today>') %>
+<%-  tasks.getSyncedOpenTasksFrom('<today>') %>
 ```
 
 The following example retrieves open tasks from today's daily note:
 
 ```javascript
-<%- await tasks.getSyncedOpenTasksFrom('<yesterday>') %>
+<%-  tasks.getSyncedOpenTasksFrom('<yesterday>') %>
 ```
 
 The following example retrieves open tasks from a specific day:
 
 ```javascript
-<%- await tasks.getSyncedOpenTasksFrom('2024-01-01') %>
+<%-  tasks.getSyncedOpenTasksFrom('2024-01-01') %>
+```
+
+The following example retrieves open tasks from one week ago today:
+
+```javascript
+<%-  tasks.getSyncedOpenTasksFrom(date.now('', -7)) %>
 ```
 
 The following example retrieves open tasks from a specific weekly note:
 
 ```javascript
-<%- await tasks.getSyncedOpenTasksFrom('2023-W42') %>
+<%-  tasks.getSyncedOpenTasksFrom('2023-W42') %>
 ```
 
 The following example retrieves open tasks from a project note titled "My Project Q4":
 
 ```javascript
-<%- await tasks.getSyncedOpenTasksFrom('My Project Q4') %>
+<%-  tasks.getSyncedOpenTasksFrom('My Project Q4') %>
 ``` 
-
-<Callout>
-
-</Callout>

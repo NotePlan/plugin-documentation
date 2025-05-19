@@ -294,7 +294,6 @@ const navigation: Array<NavGroup> = [
         href: '/getting-started/templating-installation',
       },
       { title: 'Basic Concepts', href: '/templating-terminology' },
-      { title: 'Common Use Cases', href: '/templating-miscellaneous' },
     ],
   },
   {
@@ -313,6 +312,10 @@ const navigation: Array<NavGroup> = [
   {
     title: 'Built-in Modules',
     links: [
+      {
+        title: 'Global Commands',
+        href: '/built-in-modules/templating-modules-global',
+      },
       {
         title: 'Date Module',
         href: '/built-in-modules/templating-modules-date',
@@ -333,14 +336,14 @@ const navigation: Array<NavGroup> = [
         title: 'System Module',
         href: '/built-in-modules/templating-modules-system',
       },
+      {
+        title: 'Web Services Module',
+        href: '/built-in-modules/templating-modules-web-services',
+      },
       { title: 'Web Module', href: '/built-in-modules/templating-modules-web' },
       {
         title: 'Utility Module',
         href: '/built-in-modules/templating-modules-utility',
-      },
-      {
-        title: 'Miscellaneous Module',
-        href: '/built-in-modules/templating-modules-miscellaneous',
       },
     ],
   },

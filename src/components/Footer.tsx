@@ -32,9 +32,8 @@ export function Footer() {
   return (
     <footer className="mx-auto w-full max-w-2xl space-y-10 pb-16 lg:max-w-5xl">
       <div className="flex flex-col items-center gap-5">
-        <Link href="/" aria-label="Home" className="h-8">
-          <Logo />
-        </Link>
+        {/* Logo already includes its own <Link>; avoid nesting links to prevent hydration errors */}
+        <Logo />
         <nav className="flex gap-8 text-sm font-medium text-zinc-800 dark:text-zinc-200">
           <Link href="/docs">Documentation</Link>
           <Link href="/support">Support</Link>
