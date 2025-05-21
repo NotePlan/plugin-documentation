@@ -2,21 +2,25 @@ import Callout from '@/components/Callout'
 
 # Prompts
 
-`Templating` provides the ability to ask the user questions through prompts when rendering templates.
+`Templating` provides the ability to ask the user questions through prompts when rendering templates. This page provides an overview of the different types of prompts available.
 
-## Basic Usage
+## Basic Prompts
 
-### Example 1: Simple text input prompt
+Basic prompts allow you to collect simple text input or present users with a list of choices.
+
+### Simple Text Input
+
+The most basic form of prompt is a simple text input:
 
 ```markdown
 <%- prompt('What is your first name?') %>
 ```
 
-Will prompt the user to enter their first name and then display it at the location of the prompt in the template.
+This will prompt the user to enter their first name and then display it at the location of the prompt in the template.
 
-### Example 2: Prompt with list of choices
+### Choice List Prompt
 
-The `prompt` command can accept optional prompt message and choices (for use with choice list prompt):
+You can also create prompts with a list of predefined choices:
 
 ```markdown
 Task Priority: <%- prompt('priority','What is task priority?',['high','medium','low']) %>
@@ -32,9 +36,9 @@ Task Priority: <%- prompt('priority','What is task priority?',['high','medium','
   Also, the variable name must be unique in the template, so if you use multiple prompts, make sure they use different variable names."
 />
 
-### Example: Define early; use later
+### Define Early, Use Later
 
-The following example demonstrates how you can place prompts at the top of templates, and then use somewhere else in the template:
+You can place prompts at the top of templates and use their values later in the template:
 
 ```markdown
 <% prompt('lastName','What is your last name?') -%>
@@ -52,163 +56,46 @@ And then finally use the `lastName` variable
 Erickson
 ```
 
-## Asking for dates or date intervals
+## Date Prompts
 
-There are two further commands available:
-
-- **`promptDate('variableName','message', defaultValue, canBeEmpty)`**, which accepts dates of form `YYYY-MM-DD`, the first two parameters are required, the third is optional and defaults to an empty string, the fourth is optional and defaults to true
-- **`promptDateInterval('variableName','message')`**, which accepts date intervals of form `nnn[bdwmqy]`, as used and documented further in the Repeat Extensions plugin.
-
+Date prompts provide specialized functions for collecting dates and date intervals.
 
 ```markdown
-Project start date: <%- promptDate('startDate1','Enter start date:') %>
-Project start date: <%- promptDate('startDate2','Enter start date:', '2024-01-01') %> // including default value
-Project start date: <%- promptDate('startDate3','Enter start date:', '', true) %> // no default value and allowing empty value
-Review frequency: <%- promptDateInterval('reviewInterval','Enter review interval:') %>
+# Date input
+<%- promptDate('startDate', 'Enter start date:') %>
+
+# Date interval
+<%- promptDateInterval('reviewInterval', 'Enter review interval:') %>
 ```
 
-## Working with Frontmatter Keys and Values
+[Learn more about date prompts →](/core-features/templating-prompts/date-prompts)
 
-### promptKey
+## Frontmatter Prompts
 
-`promptKey` allows you to prompt the user to select a value from existing frontmatter keys in your notes.
-
-#### Syntax
+Frontmatter prompts allow you to select values from frontmatter attributes in notes, with support for regex pattern matching and folder filtering.
 
 ```markdown
-<%- promptKey('key', 'message', 'noteType', caseSensitive, 'folder', fullPathMatch, ['options']) %>
+# Basic frontmatter selection
+<%- promptKey('projectStatus', 'Select project status:') %>
+
+# With regex pattern
+<%- promptKey('/status.*/', 'Select status:') %>
 ```
 
-#### Parameters
+[Learn more about frontmatter prompts →](/core-features/templating-prompts/frontmatter-prompts)
 
-- **key** (string): The frontmatter key to search for values (required)
-- **message** (string): Custom prompt message to display to the user (optional)
-- **noteType** (string): Type of notes to search - 'Notes', 'Calendar', or 'All' (default: 'All')
-- **caseSensitive** (boolean): Whether to perform case-sensitive search (default: false)
-- **folder** (string): Folder to limit search to (optional)
-- **fullPathMatch** (boolean): Whether to match the full path (default: false)
-- **options** (array): Array of predefined options to show instead of extracting from frontmatter (optional)
+## Tag and Mention Prompts
 
-#### Examples
 
-Basic usage:
 
-The following example prompts the user to select a project status from the frontmatter/property values `projectStatus` that exist in all notes:
+Tag and mention prompts allow you to select from existing hashtags and @ mentions in your notes.
 
 ```markdown
-Project status: <%- promptKey('projectStatus', 'Select project status:') %>
-```
-
-With folder restriction and case sensitivity (only project status values from notes in any folder containing 'Projects'):
-
-```markdown
-Project status: <%- promptKey('projectStatus', 'Select project status:', 'Notes', true, 'Projects') %>
-```
-
-With folder restriction and case sensitivity (only project status values from notes only in the specific folder 'Work/Projects/Clients' folder are shown):
-
-```
-Project status: <%- promptKey('projectStatus', 'Select project status:', 'Notes', true, 'Work/Projects/Clients', true) %>
-```
-
-With predefined options:
-
-```markdown
-Priority: <%- promptKey('priority', 'Set priority:', 'All', false, '', false, ['High', 'Medium', 'Low']) %>
-```
-
-## Working with Tags and Mentions (**coming soon in Templating 2.0**)
-
-### promptTag
-
-`promptTag` allows you to prompt the user to select from existing hashtags in your notes or create a new one.
-
-#### Syntax
-
-```markdown
-<%- promptTag('Select a hashtag:', 'includePattern', 'excludePattern', allowCreate) %>
-```
-
-#### Parameters
-
-- **promptMessage** (string): The message to display in the prompt (required)
-- **includePattern** (string): Regex pattern to include only matching hashtags (optional)
-- **excludePattern** (string): Regex pattern to exclude matching hashtags (optional)
-- **allowCreate** (boolean): Whether to allow creating a new hashtag if not found (default: true)
-
-#### Examples
-
-Basic usage:
-
-```markdown
+# Tag selection
 <%- promptTag('Select a hashtag:') %>
-```
 
-Filter tags to include only those containing "project":
-
-```markdown
-<%- promptTag('Select a project tag:', 'project') %>
-```
-
-Filter to include "priority" tags and exclude "low" tags:
-
-```markdown
-<%- promptTag('Select priority:', 'priority', 'low') %>
-```
-
-Don't allow creating new tags:
-
-```markdown
-<%- promptTag('Select from existing tags only:', '', '', false) %>
-```
-
-### promptMention
-
-`promptMention` allows you to prompt the user to select from existing @ mentions in your notes or create a new one.
-
-#### Syntax
-
-```markdown
-<%- promptMention('Select a mention:', 'includePattern', 'excludePattern', allowCreate) %>
-```
-
-#### Parameters
-
-- **promptMessage** (string): The message to display in the prompt (required)
-- **includePattern** (string): Regex pattern to include only matching mentions (optional)
-- **excludePattern** (string): Regex pattern to exclude matching mentions (optional)
-- **allowCreate** (boolean): Whether to allow creating a new mention if not found (default: true)
-
-#### Examples
-
-Basic usage:
-
-```markdown
+# Mention selection
 <%- promptMention('Select a person:') %>
 ```
 
-Filter mentions to include only those containing "team":
-
-```markdown
-<%- promptMention('Select a team member:', 'team') %>
-```
-
-Filter to include "client" mentions and exclude "former" clients:
-
-```markdown
-<%- promptMention('Select client:', 'client', 'former') %>
-```
-
-Don't allow creating new mentions:
-
-```markdown
-<%- promptMention('Select from existing mentions only:', '', '', false) %>
-```
-
-## Usage Tips
-
-<Callout
-  type="info"
-  title="TIP"
-  description="When using `includePattern` and `excludePattern`, these are converted to regular expressions, so you can use regex syntax for more advanced filtering. The `allowCreate` parameter is particularly useful when you want to limit selections to existing values only."
-/>
+[Learn more about tag and mention prompts →](/core-features/templating-prompts/tag-mention-prompts)
