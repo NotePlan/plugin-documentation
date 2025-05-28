@@ -117,7 +117,8 @@ name: Mike
   <img src="//d33v4339jhl8k0.cloudfront.net/docs/assets/6081f7f4c9133261f23f4b41/images/679d5efdac3b8d27c40957ee/file-c6X87YJ3ze.png"></img>
 </p>
 <p>For example:</p>
-```markdown --- title: Overdue Tasks type: meeting-note, empty-note --- ``` ```markdown
+```markdown 
+--- title: Overdue Tasks type: meeting-note, empty-note ---
 // Get all overdue tasks const overdues = await DataStore.listOverdueTasks()
 
 // Get the overdue task count
@@ -138,4 +139,3 @@ Overdue Tasks: &lt;%- overdueCount %&gt;
 <p>This will print the amount of overdue tasks and the latest overdue task below.&nbsp;</p>
 <p><a href="//help.noteplan.co/article/148-run-javascript-code-in-your-templates" target="_blank">Learn here</a> about how you can use JavaScript in general in your templates, and if you don't have that many lines of code (means you don't need a code block).</p>
 
-```
