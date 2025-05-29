@@ -7,88 +7,87 @@ import { CodeGroup, Code } from '@/components/Code'
 
 ## Tags
 
-- `<%` Script tag to be used when executing any JavaScript command without producing any output
+A Template tag contains a starting/opening tag and an ending/closing tag.
+
+### Opening Tags
+
 - `<%-` Outputs the value into the template
-- `<%_` 'Whitespace Slurping' Template tag, strips all whitespace before it ([example](#strip-whitespace))
+- `<%` Script tag to be used when executing any JavaScript command without producing any output
 - `<%#` Comment tag, no execution, no output
-- `<%%` Outputs a literal `<%`
-- `-%>` 'Whitespace Slurping' Template tag, strips all whitespace after it ([example](#strip-whitespace))
-- `%>` Plain ending tag
+
+## Closing Tags
+
+- `%>` Plain ending tag - used when you want to keep the return at the end of the line (true for most content insertion)
+- `-%>` 'Whitespace Slurping' Template tag, strips all whitespace after it ([example](#strip-whitespace)) -- generally every code tag should have this at the end of the line so that the return on the lineis not included in the output.
 
 ## Output Tags
 
-When you wish to output anything to the rendered template, you use the output `<%-`
+This is the most often used tag. When you wish to output anything to the rendered template, you use the output `<%-` tag.
 
 ## Examples
 
 The following are various examples of `Templating` tags in action
 
+### Simple Date Output
+
+This example shows how to output the current date and time in the format `YYYY-MM-DD HH:mm`. Outputs the line and keep the return at the end of the line.
+
+~~~markdown
+<%- date.now('YYYY-MM-DD HH:mm') %>
+~~~
+
+### Simple Output with Two Variables in the Same Line
+
+This example shows how to output the current date and time in the format `YYYY-MM-DD HH:mm` and the current day of the week in the format `dddd` separated by a space (because of the space between the two tags).
+
+~~~markdown
+<%- date.now('YYYY-MM-DD HH:mm') %> <%- date.dayName() %>
+~~~
+
 ### JavaScript / Flow Control Tag
 
-The basic flow control tag `<%` is used when you want to perform a standard JavaScript action such as setting a variable, doing a calculation, [looping](/docs/templating-examples/looping) or [conditionals](/docs/templating-examples/conditional). In this example, a `getData` method would be called, but the actual output would be displayed in another section of template. If you have many lines of JavaScript, you may want to consider the [templatejs code block](#templatejs-code-block).
+The basic flow control tag `<%` is used when you want to perform a standard JavaScript action such as setting a variable, doing a calculation, [looping](/docs/templating-examples/looping) or [conditionals](/docs/templating-examples/conditional). In this example, a `date.now()` method would be called, but the actual output would be displayed in another section of template. This example shows a single line of JavaScript, but if you have many lines of code, you may want to use the [templatejs code block](#templatejs-code-block) instead.
 
-<Code
-  language="markdown"
-  code={`<% const data = getData() // the variable is set in this tag %>
+~~~markdown
+<% const nowIs = date.now() // the variable is set in this tag -%>
 ...
-<%- data // the output is output later in this tag %>`}
-/>
+<%- nowIs %>
+~~~
+^^^ The output is output later using a simple output tag (`<%-`) with the variable name.
 
 <Callout type="warning">
-  WARNING: It is generally a bad idea to try to change the contents of the
-  Editor directly during a template run. Even though you have access to NotePlan
-  API's like `Editor`, using `Editor.insert*` or `Editor.append*` type commands
-  can confict with the running and output of the template. So generally the way
-  to insert content is to use Javascript to generate the content, and then use
-  the output tag to display it where you want it.
+Note that control/code tags, like any text, are on a line by themselves. This means there is a return at the end of the line. When the template is rendered, the tag will be processed and deleted, but the return at the end of the line will show up in your rendered template as a blank line. 
 </Callout>
 
-<Code
-  language="markdown"
-  code={`Note that flow control tags, like all other tags are on a line by themselves. This means there is a return at the end of the line. When the template is rendered, the tag will be processed and deleted, but the return at the end of the line will show up in your rendered template as a blank line. If you don't want the returns, use the minus (slurping tag) at the end of each flow control line, e.g.
-<% const myVar = note.title // there will be no blank line when this is processed because of the dash: -%>`}
-/>
+So, in the example above, the actual output would be:
+~~~markdown
+<blank line where the const data line was>
+...
+2025-02-02 <-- the output line with a return after
+~~~
+
+If you don't want the returns, use the minus (`-%>` slurping tag) at the end of each flow control line, e.g.
+~~~markdown
+<% const myVar = note.title // there will be no blank line when this is processed because of the dash: -%>
+~~~
+This will remove the return at the end of the line with the `const data`, so the output in this case would be just the date with no extra blank lines.
 
 ### Standard output tag (variable)
 
 Display `first` name variable contained in `Templating` [Plugin Settings](/docs/settings)
 
-<Code language="markdown" code={`<%- user.first %>`} />
+~~~markdown
+<%- user.first %>
+~~~
 
 ### Standard output tag (module method)
 
 Displays current date from [Date Module](/docs/templating-modules/date-module)
 
-<Code language="markdown" code={`<%- date.now() %>`} />
+<Code language="markdown">
+{`<%- date.now() %>`}
+</Code>
 
-### Unescaped Output Tag
-
-Displays result from `templates.services.developerQuote` defined in `Templating` [Plugin Settings](/docs/settings)
-
-<Callout
-  type="info"
-  language="markdown"
-  description={`
-<pre>Templating</pre> doesn't escape characters by default. When doing web requests, it may be useful to escape dangerous characters. You can escape a command's response characters using the <pre><%-</pre> tag.
-  
-  `}
-/>
-
-<Code language="markdown" code={`<%- web.service('developerQuote') %>`} />
-
-### Strip Whitespace
-
-When you have have process tags (this which do no produce output), it is recommended that you use the `Whitespace Slurping` tags.
-
-<Code
-  language="markdown"
-  code={`<%\_ const testName = 'Mike' -%>
-name: <%- testName %>`}
-/>
-
-will produce the following output
-
-<Code language="markdown" code={`name: Mike`} />
 
 ### templatejs Code Block
 
@@ -96,10 +95,15 @@ To make coding in templates easier, you can add a code block with the language "
 
 For example:
 
-<Code language="javascript" code={`---
+~~~markdown
+---
 title: Overdue Tasks
 type: meeting-note
 ---
+```templatejs
+
+// this is a big block of JavaScript code that is wrapped in a code block 
+// with the language "templatejs"
 
 // Get all overdue tasks
 const overdues = await DataStore.listOverdueTasks()
@@ -110,16 +114,63 @@ const overdueCount = overdues.length
 // Get the latest overdue task
 const latestTask = overdueCount > 0 ? overdues[0] : null
 
-// Create a variable that holds the content if there is a latest task
+// create a variable that holds the content if there is a latest task; 
+// we define this variable in the code block but use it later in the template
 let taskContent = ''
 if (latestTask) {
-taskContent = latestTask.rawContent
-}`} />
+  taskContent = latestTask.rawContent
+}
+```
 
 Results:
-Overdue Tasks: `<%- overdueCount %>`
-`<%- taskContent %>`
+Overdue Tasks: <%- overdueCount %>
+<%- taskContent %>
+~~~
 
 This will print the amount of overdue tasks and the latest overdue task below.
 
 [Learn here](https://help.noteplan.co/article/148-run-javascript-code-in-your-templates) about how you can use JavaScript in general in your templates, and if you don't have that many lines of code (means you don't need a code block).
+
+### Important Note on Whitespace
+
+When you have have control/process tags, it is recommended that you always use the `Whitespace Slurping` tags at the end of the line. Generally speaking, any control/process tag (`<% ...`) should have a whitespace slurping tag at the end of the line (`-%>`  ). It is very rare that you would want to have a control tag without removing the newline at the end of the line it's on. This is one of the most common mistakes people make when writing templates -- they end up with a lot of blank lines in their output and they don't know why.
+
+<Code language="markdown">
+{`<% const testName = 'Mike' -%>
+name: <%- testName %>`}
+</Code>
+
+will produce the following output
+
+<Code language="markdown">
+{`name: Mike`}
+</Code>
+
+Look at the following example:
+
+~~~markdown
+if (dayNum === 6) { %>
++ 10:00 - 10:30 🏊‍♀️ Steph's swimming lesson
+<% }  -%>`}
+~~~
+
+The output of this code block would be:
+
+~~~markdown
+<blank line where the if line was>
+16:30 - 17:00 🧠 Review my day and plan tomorrow
+~~~
+
+The "daynum === 6" line does not have the whitespace slurping tag, so it will have a blank line after it.
+
+The fix is to add the whitespace slurping tag to the "daynum === 6" line, so it looks like this:
+
+~~~markdown
+if (dayNum === 6) { -%>
++ 10:00 - 10:30 🏊‍♀️ Steph's swimming lesson
+<% }  -%>
+~~~
+
+<Callout type="warning">
+  WARNING: Even though you have access to NotePlan API's like `Editor`, it is generally a bad idea to try to change the contents of the Editor directly during a template run. Using `Editor.insert*` or `Editor.append*` type commands can confict with the running and output of the template. So generally the way to insert content is to use Javascript to generate the content, and then use the output tag to display it where you want it.
+</Callout>

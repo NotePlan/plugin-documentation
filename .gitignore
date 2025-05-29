@@ -39,3 +39,6 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Concatenated docs for uploading to AI 
+All_Docs_Concatenated.md

@@ -40,3 +40,34 @@ false: <%- false ? 'pass' : 'fail' %>
 
 <%- date.dayNumber(`${np.pivotDate}`) === 0 ? '> 📖 [Refuge CCHB](https://refugehb.online.church/)' : '' %>
 ```
+
+#### Example: Day-specific tasks
+
+In your template, you can do certain things on certain days.
+
+This example shows how to create different tasks to be inserted into the daily note based on the day of the week. We use the built-in date module functions to get the current day number (0=Sunday, 1=Monday, etc.) and check if it's a weekday or weekend.
+
+~~~markdown
+<% const dayNum = date.dayNumber(Editor.title); // get current day number (0=Sunday through 6=Saturday) -%>
+<% if (dayNum === 0) { // sunday -%>
+* 📖 Plan the week ahead
+<% } else if (dayNum === 1) { // monday -%>
+* 🗓️ Review weekly schedule
+<% } else if (dayNum === 2) { // tuesday -%>
+* 💼 Team meeting prep
+<% } else if (dayNum == 3) { // wednesday task -%>
+* 🏃‍♂️ Mid-week workout
+<% } else if (dayNum == 4) { // thursday task -%>
+* 🛒 Prepare Grocery shopping list
+<% } else if (dayNum == 5) { // friday task -%>
+* !! 🍝 Cook Friday Night Dinner
+<% } else if (dayNum == 6) { // saturday task -%>
+* !!! 👨‍👩‍👧‍👦 Family time
+<% } -%>
+<% if (date.isWeekend(Editor.title)) { // added for weekend only (sat/sun) -%>
+* Review House Fixit List
+<% } else { // weekdays only (mon-fri) -%>
+* 08:00-08:30 ⏰ Plan Workday
+<% } -%>
+~~~
+
