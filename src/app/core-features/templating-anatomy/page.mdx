@@ -1,4 +1,5 @@
 import noteplandefaulttemplate from '@/images/noteplan-default-template.png'
+import propertiespanel from '@/images/template-properties.png'
 
 # Template Anatomy
 
@@ -10,7 +11,9 @@ There are two parts to a NotePlan template: template attributes and template bod
 
 <img src={noteplandefaulttemplate.src} alt="Noteplan Default Template" />
 
-`attributes` - The attribute section is between open `---` and closing `---` tags. The attributes will have at least two properties `title` and `type`. NotePlan will display the frontmatter attributes in an alternate tint color
+`attributes` - The attribute section is between open `---` and closing `---` tags in the text of the template, often referred to as `frontmatter`. NotePlan makes it easy for you to editor frontmatter attributes (a.k.a. `properties`) in the [properties panel](https://help.noteplan.co/article/237-frontmatter). A template can have as many properties as you want, but the the minimum required properties are `title` and `type`.
+
+<img src={propertiespanel.src} alt="Template Properties" width="50%" />
 
 `body` - The remainder of template, after the second delimiter line`---`, is the template content and will be used when the template is rendered.
 
@@ -22,7 +25,7 @@ title: Template title
 type: empty-note
 ---
 
-Everything below the second `---` will be template content
+Everything below the second `---` (under the properties panel) will be template content
 
 --
 created: <%- date.now('dddd MMMM Do, YYYY HH:mm A') %>

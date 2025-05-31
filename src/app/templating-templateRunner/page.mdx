@@ -3,6 +3,12 @@ import { CodeGroup, Code } from '@/components/Code'
 
 # Template Runner
 
+## Motivation
+
+`New Note from Template` or `Append Template` or `Insert Template` are the most common ways to use templates. However, these methods are not flexible enough to meet all your needs. For instance, what if you want to have Shortcuts or Keyboard Maestro trigger a template to run and insert content into a note of your choosing? Or what if you want a keyboard shortcut/callback (x-callback-url) that will insert specific content under a specific heading in a note of your choosing? This is where Template Runner comes in.
+
+## Overview
+
 `Templating` includes the `templateRunner` command to allow templates to be invoked from callback URLs. This allows you to to use a template to insert content (including dynamic Templating tag-generated conntent) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor, or actively -- display the note you specify at run-time. Typically, Template Runner templates are activated when a link is clicked from within our outside of NotePlan (e.g. Shortcuts, Keyboard Maestro or wherever). This gives you a way to pass arbitrary information into your notes.
 
 <Callout type="info">

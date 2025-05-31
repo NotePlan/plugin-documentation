@@ -68,7 +68,12 @@ export default function (nextConfig = {}) {
 
             let files = glob.sync('**/*.mdx', { cwd: appDir })
             let data = files.map((file) => {
-              let url = '/' + file.replace(new RegExp('(^|/)page\\\\.mdx$'), '')
+              let url =
+                '/' +
+                file.replace(/\/page\.mdx$/, '').replace(/^page\.mdx$/, '')
+              // Handle root page case
+              if (url === '/') url = ''
+
               let mdx = fs.readFileSync(path.join(appDir, file), 'utf8')
 
               let sections = []
