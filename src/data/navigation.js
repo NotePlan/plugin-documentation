@@ -35,12 +35,8 @@ export const navigation = [
         href: '/built-in-modules/templating-modules-date',
       },
       {
-        title: 'Time Module',
-        href: '/built-in-modules/templating-modules-time',
-      },
-      {
-        title: 'Tasks Module',
-        href: '/built-in-modules/templating-modules-tasks',
+        title: 'Frontmatter Module',
+        href: '/built-in-modules/templating-modules-frontmatter',
       },
       {
         title: 'Note Module',
@@ -51,14 +47,22 @@ export const navigation = [
         href: '/built-in-modules/templating-modules-system',
       },
       {
-        title: 'Web Services Module',
-        href: '/built-in-modules/templating-modules-web-services',
+        title: 'Tasks Module',
+        href: '/built-in-modules/templating-modules-tasks',
       },
-      { title: 'Web Module', href: '/built-in-modules/templating-modules-web' },
+      {
+        title: 'Time Module',
+        href: '/built-in-modules/templating-modules-time',
+      },
       {
         title: 'Utility Module',
         href: '/built-in-modules/templating-modules-utility',
       },
+      {
+        title: 'Web Services Module',
+        href: '/built-in-modules/templating-modules-web-services',
+      },
+      { title: 'Web Module', href: '/built-in-modules/templating-modules-web' },
     ],
   },
   {

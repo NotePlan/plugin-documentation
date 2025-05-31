@@ -1,0 +1,191 @@
+import Callout from '@/components/Callout'
+
+# Frontmatter Module
+
+## Overview
+
+The Frontmatter Module provides methods for working with template frontmatter, parsing frontmatter content, and extracting frontmatter values from notes across your vault.
+
+## Methods
+
+> namespace: `frontmatter`
+
+The following are the methods available in the Frontmatter Module, and they can be used in any `Templating` template, no additional configuration required.
+
+---
+
+### getValuesForKey
+
+> #### getValuesForKey(tag: string): Promise\<string\>
+>
+> Gets all the values in frontmatter for all notes for a given key
+
+- `tag` - The frontmatter key to search for across all notes
+- `-> result` - Returns a JSON string representation of the values array (e.g., `'["value1","value2","value3"]'`)
+
+This method scans all notes in your vault and extracts all unique values for the specified frontmatter key, returning them as a JSON-stringified array.
+
+**Examples:**
+
+The following example will get all values for the `status` frontmatter key across all notes:
+
+```markdown
+<%- frontmatter.getValuesForKey('status') %>
+// Returns: '["active","completed","pending"]'
+```
+
+The following example will get all values for the `project` frontmatter key:
+
+```markdown
+<%- frontmatter.getValuesForKey('project') %>
+// Returns: '["Website Redesign","Mobile App","Documentation"]'
+```
+
+<Callout type="info">
+This method is also available as a global command: `<%- getValuesForKey('keyName') %>`
+</Callout>
+
+---
+
+### isFrontmatterTemplate
+
+> #### isFrontmatterTemplate(templateData: string): boolean
+>
+> Determines if the given template data contains frontmatter
+
+- `templateData` - The template content to check for frontmatter
+- `-> result` - Returns `true` if frontmatter is present, `false` otherwise
+
+**Example:**
+
+```markdown
+<%- frontmatter.isFrontmatterTemplate(note.content()) %>
+// Returns: true or false
+```
+
+---
+
+### getFrontmatterBlock
+
+> #### getFrontmatterBlock(templateData: string): string
+>
+> Extracts the complete frontmatter block from template data
+
+- `templateData` - The template content containing frontmatter
+- `-> result` - Returns the complete template data if it contains valid frontmatter, or empty string if no valid frontmatter found
+
+**Example:**
+
+```markdown
+<%- frontmatter.getFrontmatterBlock(note.content()) %>
+// Returns the complete template data if frontmatter is valid, or empty string
+```
+
+---
+
+### getFrontmatterText
+
+> #### getFrontmatterText(templateData: string): string
+>
+> Extracts only the frontmatter portion (without the body content)
+
+- `templateData` - The template content containing frontmatter
+- `-> result` - Returns only the frontmatter text portion
+
+**Example:**
+
+```markdown
+<%- frontmatter.getFrontmatterText(note.content()) %>
+// Returns only the frontmatter portion
+```
+
+---
+
+### parse
+
+> #### parse(template: string): any
+>
+> Parses frontmatter template and returns structured data
+
+- `template` - The template content to parse
+- `-> result` - Returns an object containing parsed frontmatter `{attributes: object, body: string}` if valid frontmatter exists, or empty object `{}` if not
+
+**Example:**
+
+```markdown
+<%- frontmatter.parse(note.content()) %>
+// Returns: { attributes: {...}, body: "..." } or {}
+```
+
+---
+
+### attributes
+
+> #### attributes(templateData: string): any
+>
+> Extracts only the frontmatter attributes from template data
+
+- `templateData` - The template content containing frontmatter
+- `-> result` - Returns an object containing only the frontmatter attributes, or empty object `{}` if no frontmatter or error
+
+**Example:**
+
+```markdown
+<%- frontmatter.attributes(note.content()) %>
+// Returns: { title: "My Note", status: "active", ... } or {}
+```
+
+---
+
+### body
+
+> #### body(templateData: string): string
+>
+> Extracts only the body content (excluding frontmatter) from template data
+
+- `templateData` - The template content containing frontmatter
+- `-> result` - Returns only the body content without frontmatter, or empty string if no body found
+
+**Example:**
+
+```markdown
+<%- frontmatter.body(note.content()) %>
+// Returns the note content without frontmatter
+```
+
+---
+
+### convertProjectNoteToFrontmatter
+
+> #### convertProjectNoteToFrontmatter(projectNote: string): any
+>
+> Converts a regular project note to frontmatter format
+
+- `projectNote` - The project note content to convert
+- `-> result` - Returns either:
+  - A string containing the converted frontmatter format note (if successful)
+  - Number error codes:
+    - `-1`: Empty note or no lines
+    - `-2`: First line doesn't start with `#`
+    - `-3`: Already a frontmatter template
+
+This method takes a standard project note (starting with `# Title`) and converts it to frontmatter format with `title` and `type` attributes.
+
+**Example:**
+
+```markdown
+<%- frontmatter.convertProjectNoteToFrontmatter(note.content()) %>
+// Returns converted frontmatter string or error code number
+```
+
+## Error Handling
+
+The Frontmatter Module methods include built-in error handling. If any method encounters an error, it will log the error and return appropriate fallback values:
+
+- `getValuesForKey()` returns an empty string `''` on error
+- `attributes()` and `parse()` return empty object `{}` on error
+- String methods return empty string `''` on error
+
+<Callout type="info">
+Many frontmatter operations are performed automatically by the templating system. These methods provide direct access to frontmatter functionality when you need more control over frontmatter processing.
+</Callout> 
