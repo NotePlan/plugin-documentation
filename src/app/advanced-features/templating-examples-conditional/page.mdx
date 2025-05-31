@@ -1,10 +1,12 @@
 # Conditionals
 
+You can use conditional logic to output certain text (e.g. tasks) in certain situations.
+
 #### if logic
 
 ```markdown
 <% if (recipes > 0) { %>
-// Do something with more than 1 recipe
+* Choose a recipe for tonight
 <% } %>
 ```
 
@@ -12,9 +14,9 @@
 
 ```markdown
 <% if (recipes > 0) { %>
-true
+* Choose a recipe
 <% } else { %>
-else
+* Cook the recipe
 <% } %>
 ```
 
@@ -23,13 +25,13 @@ else
 _note: the next line will only appear if the current day is Saturday_
 
 ```javascript
-<% if (date.dayNumber(`${np.pivotDate}`) === 6) { %>do stuff on Saturday<% } %>
+<% if (date.dayNumber(`${np.pivotDate}`) === 6) { %>* do Saturday tasks<% } %>
 ```
 
 #### if/else logic (single line)
 
 ```javascript
-<% if (recipes > 0) { %>true<% } else { %>else<% } %>
+<% if (recipes > 0) { %>* choose recipes<% } else { %>* cook the recipe<% } %>
 ```
 
 #### ternary logic

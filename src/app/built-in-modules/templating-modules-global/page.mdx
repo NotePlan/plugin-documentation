@@ -1,4 +1,5 @@
 import Callout from '@/components/Callout'
+import Link from 'next/link'
 
 # Global Commands (Miscellaneous)
 
@@ -10,13 +11,13 @@ The following commands are available without any module name prefix.
 <%- now() %>
 ```
 
-Returns the current date.
+Returns the current date. See the <Link href="/built-in-modules/templating-modules-date#now">Date Module documentation</Link> for detailed parameters and examples.
 
 ```markdown
 <%- timestamp() %>
 ```
 
-Returns the current timestamp.
+Returns the current timestamp. See the <Link href="/built-in-modules/templating-modules-date#timestamp">Date Module documentation</Link> for detailed parameters and examples.
 
 ```markdown
 <%- currentTime() %>
@@ -83,6 +84,50 @@ Lists events matching specified criteria.
 
 Alias for `matchingEvents()`.
 
+## Web Services
+
+```markdown
+<%- affirmation() %>
+```
+
+Returns a random affirmation. See the <Link href="/built-in-modules/templating-modules-web-services">Web Services Module documentation</Link> for more details.
+
+```markdown
+<%- advice() %>
+```
+
+Returns a random piece of advice. See the <Link href="/built-in-modules/templating-modules-web-services">Web Services Module documentation</Link> for more details.
+
+```markdown
+<%- quote() %>
+```
+
+Returns the daily quote. See the <Link href="/built-in-modules/templating-modules-web-services">Web Services Module documentation</Link> for more details.
+
+```markdown
+<%- wotd() %>
+```
+
+Returns the word of the day. See the <Link href="/built-in-modules/templating-modules-web-services">Web Services Module documentation</Link> for more details.
+
+```markdown
+<%- journalingQuestion() %>
+```
+
+Returns a random journaling question. See the <Link href="/built-in-modules/templating-modules-web#journalingquestion--string">Web Module documentation</Link> for more details.
+
+```markdown
+<%- weather() %>
+```
+
+Returns weather information using the default format configured in settings. See the <Link href="/built-in-modules/templating-modules-web-services">Web Services Module documentation</Link> for more details.
+
+```markdown
+<%- weather('format') %>
+```
+
+Returns weather information using the specified format.
+
 ## Project Management
 
 ```markdown
@@ -96,6 +141,43 @@ Shows progress update information using the Summaries plugin.
 ```
 
 Shows today's progress from a template using the Summaries plugin.
+
+## Utilities
+
+```markdown
+<%- format(formatString, param1, param2, ...) %>
+```
+
+Formats parameters using a format string. See the <Link href="/built-in-modules/templating-modules-utility#format">Utility Module documentation</Link> for detailed formatting specifications and examples.
+
+```markdown
+<%- moment %>
+```
+
+Access to the moment.js library for advanced date/time manipulation. This provides the full moment.js API for complex date operations.
+
+```markdown
+<%- clo(obj, preamble, space) %>
+```
+
+Console log function for debugging. Logs an object to the console with optional preamble text and formatting.
+- `obj`: The object to log
+- `preamble`: Optional description text 
+- `space`: Optional spacing for JSON formatting (default: 2)
+
+## Note Operations
+
+```markdown
+<%- getNote() %>
+```
+
+Returns the current note object when called without parameters. See the <Link href="/built-in-modules/templating-modules-note#getnote">Note Module documentation</Link> for detailed usage with parameters.
+
+```markdown
+<%- getNote(titleOrFilename) %>
+```
+
+Returns a note object for the given title or filename (calendar or regular note).
 
 ## Frontmatter Utilities
 
@@ -130,9 +212,9 @@ This would list events for the next day from the "Work" and "Personal" calendars
 <Callout type="warning" title="Plugin Dependencies">
 Some commands require other NotePlan plugins to be installed:
 
-`events()`, `listTodaysEvents()`, `matchingEvents()`, and `listMatchingEvents()` require the EventHelpers plugin.
-`progressUpdate()` and `todayProgressFromTemplate()` require the Summaries plugin.
-`date8601()` and `weekDates()` require the DateAutomations plugin.
+- `events()`, `listTodaysEvents()`, `matchingEvents()`, and `listMatchingEvents()` require the EventHelpers plugin.
+- `progressUpdate()` and `todayProgressFromTemplate()` require the Summaries plugin.
+- `date8601()` and `weekDates()` require the DateAutomations plugin.
 
-  </Callout>
+</Callout>
 
