@@ -614,7 +614,7 @@ The following returns number of days between `2022-05-01` and `2022-06-31` (retu
 - `targetDateString` - The target date in 'YYYY-MM-DD' format.
 - `includeToday?` - Whether to include today in the count (default: false).
 
-- `-> result` - Returns the number of days until the target date. Returns 0 if the target date is in the past or if `targetDateString` is invalid.
+- `-> result` - Returns the number of days until the target date. Returns negative number if target date is in the past.
 
 **Examples**
 
