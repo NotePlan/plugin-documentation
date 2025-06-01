@@ -187,6 +187,36 @@ Returns a note object for the given title or filename (calendar or regular note)
 
 Returns all values found in frontmatter across all notes for the specified key. Returns them as a JSON string array, e.g. ["apple","banana"]. See the <Link href="/built-in-modules/templating-modules-frontmatter#getvaluesforkey">Frontmatter Module documentation</Link> for detailed usage.
 
+```markdown
+<%- getFrontmatterAttributes(note) %>
+```
+
+Get all frontmatter attributes from a note or an empty object if the note has no front matter. See the <Link href="/built-in-modules/templating-modules-frontmatter#getfrontmatterattributes">Frontmatter Module documentation</Link> for detailed usage.
+
+<Callout type="warning">
+This returns an object, not a string. Use within control tags `<% %>` or `templatejs` code blocks.
+</Callout>
+
+```markdown
+<%- updateFrontmatterVars(note, newAttributes, deleteMissingAttributes) %>
+```
+
+Update existing front matter attributes based on the provided newAttributes. Creates new fields if they don't exist. See the <Link href="/built-in-modules/templating-modules-frontmatter#updatefrontmattervars">Frontmatter Module documentation</Link> for detailed usage.
+
+<Callout type="warning">
+This returns a boolean, not a string. Use within control tags `<% %>` or `templatejs` code blocks.
+</Callout>
+
+```markdown
+<%- updateFrontmatterAttributes(note, newAttributes, deleteMissingAttributes) %>
+```
+
+Alias for `updateFrontmatterVars()`. Update existing front matter attributes with identical functionality.
+
+<Callout type="warning">
+This returns a boolean, not a string. Use within control tags `<% %>` or `templatejs` code blocks.
+</Callout>
+
 ## Editor Utilities
 
 ```markdown

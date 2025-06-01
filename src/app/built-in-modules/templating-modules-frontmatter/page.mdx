@@ -47,135 +47,85 @@ This method is also available as a global command: `<%- getValuesForKey('keyName
 
 ---
 
-### isFrontmatterTemplate
+### getFrontmatterAttributes
 
-> #### isFrontmatterTemplate(templateData: string): boolean
+> #### getFrontmatterAttributes(note: CoreNoteFields): \{ \[string\]: string \}
 >
-> Determines if the given template data contains frontmatter
+> Get all frontmatter attributes from a note or an empty object if the note has no front matter
 
-- `templateData` - The template content to check for frontmatter
-- `-> result` - Returns `true` if frontmatter is present, `false` otherwise
+- `note` - The note object to get attributes from
+- `-> result` - Returns an object of attributes or empty object if the note has no front matter
+
+<Callout type="info">
+This method is also available as a global command: `<%- getFrontmatterAttributes(note) %>`
+</Callout>
+
+<Callout type="warning">
+This method returns an object, not a string. Use it within control tags `<% %>` or `templatejs` code blocks, then output the results separately.
+</Callout>
 
 **Example:**
 
 ```markdown
-<%- frontmatter.isFrontmatterTemplate(note.content()) %>
-// Returns: true or false
+<%
+const attrs = frontmatter.getFrontmatterAttributes(Editor); // get the current frontmatter attributes of the note open in the Editor
+const status = attrs.status || 'none'; // check/process that information in some way and then use a template tag to output the result:
+%>
+Current status: <%- status %>
 ```
 
 ---
 
-### getFrontmatterBlock
+### updateFrontmatterVars
 
-> #### getFrontmatterBlock(templateData: string): string
+> #### updateFrontmatterVars(note: TEditor | TNote, newAttributes: \{ \[string\]: string \}, deleteMissingAttributes: boolean = false): boolean
 >
-> Extracts the complete frontmatter block from template data
+> Update existing front matter attributes based on the provided newAttributes
 
-- `templateData` - The template content containing frontmatter
-- `-> result` - Returns the complete template data if it contains valid frontmatter, or empty string if no valid frontmatter found
+- `note` - The note to update (either Editor or TNote object)
+- `newAttributes` - The complete set of desired front matter attributes as an object
+- `deleteMissingAttributes` - Whether to delete attributes that are not present in newAttributes (default: false)
+- `-> result` - Returns `true` if the front matter was updated successfully, `false` otherwise
 
-**Example:**
+This method will set frontmatter fields whether they existed before or not. If a field doesn't exist, it will be created. If it exists, it will be updated with the new value.
+
+<Callout type="info">
+**Alias**: This method is also available as `updateFrontmatterAttributes()` with identical functionality.
+</Callout>
+
+<Callout type="info">
+This method is also available as global commands: `<%- updateFrontmatterVars(...) %>` and `<%- updateFrontmatterAttributes(...) %>`
+</Callout>
+
+<Callout type="warning">
+This method returns a boolean, not a string. Use it within control tags `<% %>` or `templatejs` code blocks for its side effects (updating the note).
+</Callout>
+
+**Examples:**
+
+Setting a single field (creates or updates the field):
 
 ```markdown
-<%- frontmatter.getFrontmatterBlock(note.content()) %>
-// Returns the complete template data if frontmatter is valid, or empty string
+<% frontmatter.updateFrontmatterVars(note, { status: "in progress" }) -%>
 ```
 
----
-
-### getFrontmatterText
-
-> #### getFrontmatterText(templateData: string): string
->
-> Extracts only the frontmatter portion (without the body content)
-
-- `templateData` - The template content containing frontmatter
-- `-> result` - Returns only the frontmatter text portion
-
-**Example:**
+Setting multiple fields at once:
 
 ```markdown
-<%- frontmatter.getFrontmatterText(note.content()) %>
-// Returns only the frontmatter portion
+<% frontmatter.updateFrontmatterAttributes(Editor, { status: "in progress", priority: "high", assignee: "Alice" }) -%>
 ```
 
----
-
-### parse
-
-> #### parse(template: string): any
->
-> Parses frontmatter template and returns structured data
-
-- `template` - The template content to parse
-- `-> result` - Returns an object containing parsed frontmatter `{attributes: object, body: string}` if valid frontmatter exists, or empty object `{}` if not
-
-**Example:**
+Complete example with error handling:
 
 ```markdown
-<%- frontmatter.parse(note.content()) %>
-// Returns: { attributes: {...}, body: "..." } or {}
-```
-
----
-
-### attributes
-
-> #### attributes(templateData: string): any
->
-> Extracts only the frontmatter attributes from template data
-
-- `templateData` - The template content containing frontmatter
-- `-> result` - Returns an object containing only the frontmatter attributes, or empty object `{}` if no frontmatter or error
-
-**Example:**
-
-```markdown
-<%- frontmatter.attributes(note.content()) %>
-// Returns: { title: "My Note", status: "active", ... } or {}
-```
-
----
-
-### body
-
-> #### body(templateData: string): string
->
-> Extracts only the body content (excluding frontmatter) from template data
-
-- `templateData` - The template content containing frontmatter
-- `-> result` - Returns only the body content without frontmatter, or empty string if no body found
-
-**Example:**
-
-```markdown
-<%- frontmatter.body(note.content()) %>
-// Returns the note content without frontmatter
-```
-
----
-
-### convertProjectNoteToFrontmatter
-
-> #### convertProjectNoteToFrontmatter(projectNote: string): any
->
-> Converts a regular project note to frontmatter format
-
-- `projectNote` - The project note content to convert
-- `-> result` - Returns either:
-  - A string containing the converted frontmatter format note (if successful)
-  - Number error codes:
-    - `-1`: Empty note or no lines
-    - `-2`: First line doesn't start with `#`
-    - `-3`: Already a frontmatter template
-
-This method takes a standard project note (starting with `# Title`) and converts it to frontmatter format with `title` and `type` attributes.
-
-**Example:**
-
-```markdown
-<%- frontmatter.convertProjectNoteToFrontmatter(note.content()) %>
-// Returns converted frontmatter string or error code number
+<%
+const success = frontmatter.updateFrontmatterVars(Editor, { status: 'completed', lastModified: new Date().toISOString() }, false);
+%>
+<% if (success) { %>
+✅ Front matter updated successfully
+<% } else { %>
+❌ Failed to update front matter
+<% } %>
 ```
 
 ## Error Handling
@@ -183,9 +133,9 @@ This method takes a standard project note (starting with `# Title`) and converts
 The Frontmatter Module methods include built-in error handling. If any method encounters an error, it will log the error and return appropriate fallback values:
 
 - `getValuesForKey()` returns an empty string `''` on error
-- `attributes()` and `parse()` return empty object `{}` on error
-- String methods return empty string `''` on error
+- `getFrontmatterAttributes()` returns empty object `{}` on error
+- `updateFrontmatterVars()` returns `false` on error
 
 <Callout type="info">
-Many frontmatter operations are performed automatically by the templating system. These methods provide direct access to frontmatter functionality when you need more control over frontmatter processing.
+All these methods are available both as `frontmatter.*` namespaced methods and as global commands for convenience.
 </Callout> 

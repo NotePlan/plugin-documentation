@@ -19,19 +19,21 @@ If you do not provide a title or filename, it returns the NotePlan note object f
 The following will return the note object for the note specified (or today's note if none is specified):
 
 ```javascript
-const note = note.getNote()
-const note = note.getNote('My Note')
-const note = note.getNote('this is a test.md')
-const note = note.getNote('20220529')
-const note = note.getNote('2024-01-01')
+const note = getNote()
+const note = getNote('My Note')
+const note = getNote('this is a test.md')
+const note = getNote('20220529')
+const note = getNote('2024-01-01')
 ```
+
+## Note module commands (note.*)
 
 ### currentNote
 
 > #### currentNote() : TNote
 >
 > Returns the `TNote` object for the note currently open in the Editor.
-> This is equivalent to calling `note.getNote()` with no arguments.
+> This is equivalent to calling `getNote()` with no arguments.
 
 - `-> result` - Returns the `TNote` object for the note currently open in the Editor.
 
