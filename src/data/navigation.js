@@ -118,6 +118,10 @@ export const navigation = [
         title: 'Date/Time Examples',
         href: '/examples-templates/templating-examples-datetime',
       },
+      {
+        title: 'Display the Week in Quarter',
+        href: '/examples-templates/templating-examples-week-quarter',
+      },
     ],
   },
   {
