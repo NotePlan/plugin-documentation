@@ -21,6 +21,10 @@ export const navigation = [
         href: '/core-features/templating-commands',
       },
       { title: 'Prompts', href: '/core-features/templating-prompts' },
+      {
+        title: 'Quick Notes',
+        href: '/core-features/templating-quicknotes',
+      },
     ],
   },
   {
@@ -33,6 +37,10 @@ export const navigation = [
       {
         title: 'Date Module',
         href: '/built-in-modules/templating-modules-date',
+      },
+      {
+        title: 'Time Module',
+        href: '/built-in-modules/templating-modules-time',
       },
       {
         title: 'Frontmatter Module',
@@ -49,10 +57,6 @@ export const navigation = [
       {
         title: 'Tasks Module',
         href: '/built-in-modules/templating-modules-tasks',
-      },
-      {
-        title: 'Time Module',
-        href: '/built-in-modules/templating-modules-time',
       },
       {
         title: 'Utility Module',
@@ -114,16 +118,25 @@ export const navigation = [
         title: 'Date/Time Examples',
         href: '/examples-templates/templating-examples-datetime',
       },
-      {
-        title: 'Quick Notes',
-        href: '/examples-templates/templating-quicknotes',
-      },
     ],
   },
   {
     title: 'Configuration',
     links: [
       { title: 'Plugin Settings', href: '/configuration/templating-settings' },
+    ],
+  },
+  {
+    title: 'Debugging & Troubleshooting',
+    links: [
+      {
+        title: 'AI Error Explanation',
+        href: '/debugging/ai-error-explanation',
+      },
+      {
+        title: 'Console Logging',
+        href: '/debugging/console-logging',
+      },
     ],
   },
   {

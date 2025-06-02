@@ -1,0 +1,73 @@
+import Callout from '@/components/Callout'
+
+# AI Error Explanation
+
+Templating 2.0 has incorporated AI-powered error explanation to help you quickly understand and resolve template processing issues.
+
+## How It Works
+
+When Templating encounters an error while processing your template, and you have an active internet connection, the system will automatically use AI to:
+
+- Analyze the error
+- Provide a human-readable explanation of what went wrong
+- Suggest specific steps to fix the issue
+
+<Callout
+  type="info"
+  title="Internet Connection Required"
+  description="AI error explanation requires an active internet connection to function. If you're offline, you'll need to use manual debugging methods."
+/>
+
+## What Triggers AI Explanation
+
+AI error explanation is automatically triggered when:
+
+- Templating encounters a processing error
+- You have an active internet connection
+- The error is significant enough to halt template execution
+
+## When AI Explanation Might Not Be Enough
+
+For most issues, AI error explanation will provide sufficient information to resolve the problem. However, you may need additional debugging if:
+
+- The error is not severe enough to trigger AI explanation
+- You need more detailed information about the template execution process
+- The AI explanation doesn't fully resolve your specific use case
+
+In these cases, you should proceed to [Console Logging](/debugging/console-logging) for more detailed troubleshooting, including verbose logging options.
+
+## Example AI Explanations
+
+Here are some common types of AI explanations you might see:
+
+### Syntax Errors
+```
+Error: Unexpected token '}' at line 15
+AI Explanation: You have an extra closing brace '}' on line 15. This suggests you either have a missing opening brace earlier in your template, or you have one too many closing braces. Check your template structure to ensure all braces are properly paired.
+```
+
+### Variable Reference Errors
+```
+Error: Cannot read property 'title' of undefined
+AI Explanation: You're trying to access the 'title' property of a variable that doesn't exist or is undefined. Make sure the variable is properly defined before using it, or add a conditional check to handle cases where it might be undefined.
+```
+
+### Module Errors
+```
+Error: Method 'invalidMethod' not found in date module
+AI Explanation: The method 'invalidMethod' doesn't exist in the date module. Check the documentation for available date module methods, or verify you've spelled the method name correctly.
+```
+
+<Callout
+  type="tip"
+  title="Best Practices"
+  description="When you receive an AI error explanation, read it carefully and follow the suggested steps. Most issues can be resolved by making the recommended changes to your template."
+/>
+
+## Still Need Help?
+
+If you've tried all the debugging techniques listed here and still need assistance, you can post a question in the Templating channel of the NotePlan Discord server:
+
+**[NotePlan Discord - Templating Channel](https://discord.com/channels/763107030223290449/963950027946999828)**
+
+The community and developers are active there and can provide additional support for complex templating issues. 

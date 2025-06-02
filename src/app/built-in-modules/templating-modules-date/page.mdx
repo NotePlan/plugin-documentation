@@ -44,7 +44,7 @@ _Tokens are case-sensitive._
 |                   | `dddd`               | Sunday Monday ... Friday Saturday                 | Day of week, full                                                            |
 | **Day of Week (Locale)** | `e`           | 0 1 ... 5 6                                       | Day of week (locale specific, e.g. 0 may be Monday)                        |
 | **Day of Week (ISO)** | `E`              | 1 2 ... 6 7                                       | Day of week (ISO 8601, Monday as 1, Sunday as 7)                             |
-| **Week of Year**  | `w`                  | 1 2 ... 52 53                                     | Week of year (locale specific)                                               |
+| **Week of Year** (see note below) | `w`                  | 1 2 ... 52 53                                     | Week of year (locale specific)                                               |
 |                   | `wo`                 | 1st 2nd ... 52nd 53rd                             | Week of year with ordinal (locale specific)                                  |
 |                   | `ww`                 | 01 02 ... 52 53                                   | Week of year, zero-padded (locale specific)                                  |
 | **Week of Year (ISO)** | `W`             | 1 2 ... 52 53                                     | Week of year (ISO 8601)                                                      |
@@ -94,9 +94,13 @@ _Tokens are case-sensitive._
 |                   | `LLLL`               | Thursday, September 4, 1986 8:30 PM               | Date, Day & Time (local format)                                              |
 |                   | `llll`               | Thu, Sep 4, 1986 8:30 PM                          | Date, Day & Time, short (local format)                                       |
 
+<Callout type="warning" title="Week Numbers in Templates & NotePlan">
+If you are interested in week numbers, keep in mind that moment.js uses the ISO 8601 week number, which can be different from the week number used in NotePlan, depending on what you have set in your NotePlan preferences for your start-of-week. Instead of using the `w` token, if you want to match the NotePlan week number, use the Date Module `date.weekNumber()` method instead. See the [Date Module page](/built-in-modules/templating-modules-date#weeknumber) for more details. 
+</Callout>
+
 **Example**
 
-If you wish to display date value with 4 digit year and 2 digit month, separated by a dash `-` character, you would use `<%- date.now('YYYY-MM') %>`
+If you wish to display today's date value with 4 digit year and 2 digit month, separated by a dash `-` character, you would use `<%- date.now('YYYY-MM') %>`
 
 ## Methods
 
@@ -104,9 +108,9 @@ If you wish to display date value with 4 digit year and 2 digit month, separated
 
 The following are the methods available in the Date Module, and they can be used in any `Templating` template, no additional configuration required.
 
-:::note
-`pivotDate` - Many of the Date Module methods accept a `pivotDate` argument, which means the date which will be used to perform the appropriate calculation. When no `pivotDate` is supplied, the current date will be used.
-:::
+<Callout type="info" title="Pivot Date">
+Many of the Date Module methods accept a `pivotDate` argument, which means the date which will be used to perform the appropriate calculation. When no `pivotDate` is supplied, the current date will be used.
+</Callout>
 
 ---
 

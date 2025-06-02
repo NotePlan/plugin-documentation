@@ -8,7 +8,7 @@ While the [Web Module](/built-in-modules/templating-modules-web) `weather()` com
 
 If you would like to have greater control, you can also use a service such as `openweathermap.org` API to retrieve weather, utilizing predefined lat/long value and you own personal API key.
 
-```markdown
+~~~markdown
 ---
 title: Get the Weather
 step1: go to OpenWeatherMap and sign up for a free account https://home.openweathermap.org/users/sign_up
@@ -21,7 +21,7 @@ LONG: -73.955223
 UNITS: imperial
 type: ignore
 ---
-\`\`\`templatejs
+```templatejs
 // Note there should be no slashes above in the backticks - this is a documentation artifact
 const weatherURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${encodeURIComponent(LAT)}&lon=${encodeURIComponent(LONG)}&exclude=current,hourly,minutely&units=${encodeURIComponent(UNITS)}&appid=${encodeURIComponent(API_KEY)}`; 
 // console.log(`Weather Calling: "${weatherURL}"`);
@@ -40,5 +40,6 @@ const units = UNITS === 'imperial' ? '°F' : '°C';
 const timezone = weatherObj;
 const weatherLine = `Weather: ${weatherDesc} ${minTemp}${units}-${maxTemp}${units}; Feels like: ${fMin}${units}-${fMax}${units}`;
 // Note there should be no slashes below in the backticks - this is a documentation artifact
-\`\`\`
-<%- weatherLine %>```
+```
+<%- weatherLine %>
+~~~
