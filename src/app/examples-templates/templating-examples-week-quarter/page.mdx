@@ -28,9 +28,9 @@ To use this example, either:
 ~~~markdown
 ```templatejs
 if (!/\d{4}-\d{2}-\d{2}/.test(Editor.title)) throw "You can only run this on a daily calendar note."
-const today = new Date(Editor.title);
-const currentWeekNumber = Calendar.weekNumber(today); // respects user's start of week
-const currentYear = today.getFullYear();
+const todayMom = moment(Editor.title);
+const currentWeekNumber = Calendar.weekNumber(todayMom.toDate()); // respects user's start of week
+const currentYear = parseInt(todayMom.format("YYYY"));
 
 function getCurrentQuarter(weekOfYear) {
   if (weekOfYear <= 13) return 1;
@@ -50,7 +50,6 @@ const currentDayMarker = "●";
 const emptyCircles = "○".repeat(Math.max(13 - currentProgress, 0));
 ```
 W<%- currentWeekNumber %> [in Q<%- currentQuarter %>: <%- filledCircles + currentDayMarker + emptyCircles %>]
-```
 ~~~
 
 ## How It Works

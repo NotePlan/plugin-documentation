@@ -3,20 +3,18 @@ import Link from 'next/link'
 
 # Global Commands (Miscellaneous)
 
-The following commands are available without any module name prefix.
+Generally, Templating commands have the name of the module they are in in front of them, like date.now() or time.now(). However, for ease of use, the following commands are available without any module name prefix (aka "global commands").
 
 ## Date and Time
 
 ```markdown
 <%- now() %>
 ```
-
 Returns the current date. See the <Link href="/built-in-modules/templating-modules-date#now">Date Module documentation</Link> for detailed parameters and examples.
 
 ```markdown
 <%- timestamp() %>
 ```
-
 Returns the current timestamp. See the <Link href="/built-in-modules/templating-modules-date#timestamp">Date Module documentation</Link> for detailed parameters and examples.
 
 ```markdown
