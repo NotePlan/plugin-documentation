@@ -20,6 +20,12 @@ The Date Module exposes commonly used [helper](/docs/templating-modules/date-mod
 
 The Date Module uses JavaScript `moment` library internally, thus you can use any of the [moment formatting](https://momentjs.com/docs/#/parsing/string-format/) options.
 
+<Callout type="info" title="Note about Weeks">
+If you are interested in week numbers, keep in mind that moment.js uses the ISO 8601 week number, which can be different from the week number used in NotePlan, depending on what you have set in your NotePlan preferences for your start-of-week. Instead of using the `w` token, if you want to match the NotePlan week number, use the Date Module `date.weekNumber()` method instead. See the [Date Module page](/built-in-modules/templating-modules-date#weeknumber) for more details. 
+</Callout>
+
+
+
 _Tokens are case-sensitive._
 
 | Category          | Token                | Example                                           | Description                                                                  |
@@ -44,9 +50,9 @@ _Tokens are case-sensitive._
 |                   | `dddd`               | Sunday Monday ... Friday Saturday                 | Day of week, full                                                            |
 | **Day of Week (Locale)** | `e`           | 0 1 ... 5 6                                       | Day of week (locale specific, e.g. 0 may be Monday)                        |
 | **Day of Week (ISO)** | `E`              | 1 2 ... 6 7                                       | Day of week (ISO 8601, Monday as 1, Sunday as 7)                             |
-| **Week of Year** (see note below) | `w`                  | 1 2 ... 52 53                                     | Week of year (locale specific)                                               |
-|                   | `wo`                 | 1st 2nd ... 52nd 53rd                             | Week of year with ordinal (locale specific)                                  |
-|                   | `ww`                 | 01 02 ... 52 53                                   | Week of year, zero-padded (locale specific)                                  |
+| **Week of Year** (see note below) | `w`                  | 1 2 ... 52 53                                     | Week of year (locale specific, **not** using NotePlan's start of week)                                               |
+|                   | `ww`                 | 01 02 ... 52 53                                   | Week of year, zero-padded (locale specific, **not** using NotePlan's start of week)                                  |
+|                   | `wo`                 | 1st 2nd ... 52nd 53rd                             | Week of year with ordinal (locale specific, **not** using NotePlan's start of week)                                  |
 | **Week of Year (ISO)** | `W`             | 1 2 ... 52 53                                     | Week of year (ISO 8601)                                                      |
 |                   | `Wo`                 | 1st 2nd ... 52nd 53rd                             | Week of year with ordinal (ISO 8601)                                         |
 |                   | `WW`                 | 01 02 ... 52 53                                   | Week of year, zero-padded (ISO 8601)                                         |
