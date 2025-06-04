@@ -24,7 +24,42 @@ The Date Module uses JavaScript `moment` library internally, thus you can use an
 If you are interested in week numbers, keep in mind that moment.js uses the ISO 8601 week number, which can be different from the week number used in NotePlan, depending on what you have set in your NotePlan preferences for your start-of-week. Instead of using the `w` token, if you want to match the NotePlan week number, use the Date Module `date.weekNumber()` method instead. See the [Date Module page](/built-in-modules/templating-modules-date#weeknumber) for more details. 
 </Callout>
 
+## Week Numbering Behavior
 
+The DateModule now uses NotePlan's native week calculation system to ensure consistency with your configured week start preferences. This differs from the standard ISO week numbering used by moment.js.
+
+### Week Token Types
+
+| Token | Description | Calculation Method | Example |
+|-------|-------------|-------------------|---------|
+| `w`, `ww` | NotePlan week number | Uses NotePlan's `Calendar.weekNumber()` | `25`, `05` |
+| `W`, `WW` | ISO week number (Monday start) | Uses moment.js standard | `24`, `04` |
+| `wo` | Ordinal ISO week number | Uses moment.js ISO weeks | `24th` |
+
+### Key Differences
+
+**NotePlan Weeks (`w`/`ww`):**
+- Respects your NotePlan week start day configuration
+- Consistent with NotePlan's built-in week numbering
+
+**ISO Weeks (`W`/`WW`):**
+- Always start on Monday (ISO 8601 standard)
+- May differ from NotePlan's week numbering
+
+**Examples:**
+
+```javascript
+// Assuming NotePlan is configured with Sunday as week start
+<%- date.format('YYYY-[W]ww', '2023-01-01') %>  // "2023-W01" (NotePlan week)
+<%- date.format('YYYY-[W]WW', '2023-01-01') %>  // "2023-W52" (ISO week)
+
+// Compare both systems
+<%- date.format('w/W', '2023-06-15') %>         // "25/24" (NotePlan vs ISO)
+```
+
+<Callout type="tip" title="Pure Moment.js Formatting">
+Use `date.moment.format()` to bypass NotePlan week intervention entirely and get exact moment.js behavior including localized formatting.
+</Callout>
 
 _Tokens are case-sensitive._
 
@@ -50,10 +85,10 @@ _Tokens are case-sensitive._
 |                   | `dddd`               | Sunday Monday ... Friday Saturday                 | Day of week, full                                                            |
 | **Day of Week (Locale)** | `e`           | 0 1 ... 5 6                                       | Day of week (locale specific, e.g. 0 may be Monday)                        |
 | **Day of Week (ISO)** | `E`              | 1 2 ... 6 7                                       | Day of week (ISO 8601, Monday as 1, Sunday as 7)                             |
-| **Week of Year** (see note below) | `w`                  | 1 2 ... 52 53                                     | Week of year (locale specific, **not** using NotePlan's start of week)                                               |
-|                   | `ww`                 | 01 02 ... 52 53                                   | Week of year, zero-padded (locale specific, **not** using NotePlan's start of week)                                  |
-|                   | `wo`                 | 1st 2nd ... 52nd 53rd                             | Week of year with ordinal (locale specific, **not** using NotePlan's start of week)                                  |
-| **Week of Year (ISO)** | `W`             | 1 2 ... 52 53                                     | Week of year (ISO 8601)                                                      |
+| **Week of Year** (see note below) | `w`                  | 1 2 ... 52 53                                     | Week of year (NotePlan weeks, **uses** NotePlan's start of week setting)                                               |
+|                   | `ww`                 | 01 02 ... 52 53                                   | Week of year, zero-padded (NotePlan weeks, **uses** NotePlan's start of week setting)                                  |
+|                   | `wo`                 | 1st 2nd ... 52nd 53rd                             | Week of year with ordinal (ISO weeks, **not** using NotePlan's start of week)                                  |
+| **Week of Year (ISO)** | `W`             | 1 2 ... 52 53                                     | Week of year (ISO 8601, Monday start)                                                      |
 |                   | `Wo`                 | 1st 2nd ... 52nd 53rd                             | Week of year with ordinal (ISO 8601)                                         |
 |                   | `WW`                 | 01 02 ... 52 53                                   | Week of year, zero-padded (ISO 8601)                                         |
 | **Year**          | `YY`                 | 70 71 ... 29 30                                   | Year, 2-digits                                                               |
@@ -101,7 +136,7 @@ _Tokens are case-sensitive._
 |                   | `llll`               | Thu, Sep 4, 1986 8:30 PM                          | Date, Day & Time, short (local format)                                       |
 
 <Callout type="warning" title="Week Numbers in Templates & NotePlan">
-If you are interested in week numbers, keep in mind that moment.js uses the ISO 8601 week number, which can be different from the week number used in NotePlan, depending on what you have set in your NotePlan preferences for your start-of-week. Instead of using the `w` token, if you want to match the NotePlan week number, use the Date Module `date.weekNumber()` method instead. See the [Date Module page](/built-in-modules/templating-modules-date#weeknumber) for more details. 
+The DateModule now uses NotePlan's native week calculation for lowercase week tokens (`w`, `ww`) to ensure consistency with your configured week start day. Use uppercase tokens (`W`, `WW`) for ISO 8601 week numbers, or `date.moment.format()` for pure moment.js behavior. The `date.weekNumber()` method returns NotePlan weeks.
 </Callout>
 
 **Example**
@@ -361,6 +396,10 @@ _Note: Also available as [helper](/docs/templating-modules/date-module#helpers) 
 
 - `-> result` - Returns formatted date string
 
+<Callout type="info" title="Week Numbering">
+When using week-related format tokens, this method now supports NotePlan's native week calculation. Use lowercase `w`/`ww` for NotePlan weeks, uppercase `W`/`WW` for ISO weeks.
+</Callout>
+
 :::tip
 Refer to [moment.js format](https://momentjs.com/docs/#/parsing/string-format/) for available formatting options
 :::
@@ -399,19 +438,23 @@ The following returns the closest weekday 2 days in advance using fixed date
 
 > #### weekNumber(pivotDate? : string = '') : number
 >
-> Returns the week number based on `pivotDate`
+> Returns the week number based on `pivotDate` using NotePlan's native week calculation
 
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 
-- `-> result` - Returns week number
+- `-> result` - Returns week number according to NotePlan's calculation (respects your configured week start day)
 
 **Example**
 
-The following returns the closest weekday 2 days in advance using current date
+The following returns the NotePlan week number for the specified date
 
 ```javascript
-<%- date.weekNumber('2021-12-15') %> // the following will return 50
+<%- date.weekNumber('2021-12-15') %> // the following will return 50 (NotePlan week)
 ```
+
+<Callout type="info" title="Week Numbering">
+This method now returns NotePlan's native week number instead of ISO week number, ensuring consistency with your configured week start day. For ISO week numbers, use `date.format('W', pivotDate)`.
+</Callout>
 
 ---
 
