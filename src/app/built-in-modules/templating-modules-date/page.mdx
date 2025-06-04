@@ -113,9 +113,7 @@ _Tokens are case-sensitive._
 |                   | `kk`                 | 01 02 ... 23 24                                   | Hour, zero-padded (01-24)                                                    |
 | **Minute**        | `m`                  | 0 1 ... 58 59                                     | Minute                                                                       |
 |                   | `mm`                 | 00 01 ... 58 59                                   | Minute, zero-padded                                                          |
-| **Second**        | `s`                  | 0 1 ... 58 59                                     | Second                                                                       |
 |                   | `ss`                 | 00 01 ... 58 59                                   | Second, zero-padded                                                          |
-| **Fractional Second** | `S`              | 0 1 ... 8 9                                       | Tenths of a second                                                           |
 |                   | `SS`                 | 00 01 ... 98 99                                   | Hundredths of a second                                                       |
 |                   | `SSS`                | 000 001 ... 998 999                               | Milliseconds                                                                 |
 |                   | `SSSS...SSSSSSSSS`   | 000[0..] ... 999[0..]                             | Fractional seconds (displays 3 significant digits, rest 0s)                  |
@@ -535,25 +533,34 @@ Returns information about the week number, and start/end dates in ISO 8601 forma
 or
 > #### weekOf(pivotDate? : string = '') : string 
 >
-> Returns formatted weekOf based on `pivotDate`
+> Returns formatted weekOf based on `pivotDate` using NotePlan's week calculation system
 
-- startDay - Day number for start of week if not 0 (Sunday)
-- endDay - Day number for end of week if not 6 (Saturday)
+- startDay - Day number for start of week (adds offset to NotePlan's configured start day)
+- endDay - Day number for end of week (not actively used - end is calculated from start day)
 - `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
 
 - `-> result` Returns formatted weekOf using following syntax `Wnn (YYYY-MM-DD..YYYY-MM-DD)`
 
+<Callout type="info" title="Week Numbering System">
+This method uses NotePlan's `Calendar.weekNumber()` system, which respects your configured week start day. Week numbers may differ from ISO week numbers, especially around year boundaries and for Sunday dates.
+</Callout>
+
+<Callout type="warning" title="Parameter Behavior">
+When `startDay` is provided, it acts as an offset to NotePlan's calculated week start rather than completely overriding the week preference. The `endDay` parameter is kept for backward compatibility but is not actively used.
+</Callout>
+
 **Example**
 
-The following returns weekOf value based on `pivotDate`
+The following returns weekOf value using NotePlan's week numbering and start setting:
 
 ```javascript
-<%- date.weekOf('2021-12-01') %> // the following will W48 (2021-11-28..2021-12-03)
+<%- date.weekOf('2021-12-01') %> // Uses NotePlan's configured week start
 ```
-or if you like to use Monday as the start of the week:
+
+The following example adds an offset to the week start calculation:
 
 ```javascript
-<%- date.weekOf(1,7,"2024-04-14") %> // will return W16 (2025-04-14..2025-04-20)
+<%- date.weekOf(1, 7, "2024-04-14") %> // W16 (2024-04-14..2024-04-20)
 ```
 
 ---
@@ -562,20 +569,30 @@ or if you like to use Monday as the start of the week:
 
 > #### startOfWeek(format? string = '', pivotDate? : string = '', firstOfWeek? : number = 0) : string
 >
-> Returns start of week date
+> Returns start of week date using NotePlan's configured week start day
 
 - `format` - Optional date format, uses `Templating` Date Format if not supplied
 - `pivotDate?` - Desired date to obtain start of week. If not supplied, it will use current date
-- `firstOfWeek` - Day number for first of week if not 0 (Sunday)
+- `firstOfWeek` - Day number offset added to NotePlan's calculated week start (not a complete override)
 
 - `-> result` Returns start of week
 
+<Callout type="info" title="Week Calculation">
+This method uses NotePlan's `Calendar.startOfWeek()` which respects your configured week start day. The `firstOfWeek` parameter adds an offset to this calculation rather than overriding your week preference entirely.
+</Callout>
+
 **Example**
 
-The following returns start of week based on `pivotDate` and `firstOfWeek` of 1 (Monday), and returns it in the format (YYYY-MM-DD)
+The following returns start of week using NotePlan's configured week start day:
 
 ```javascript
-<%- date.startOfWeek('YYYY-MM-DD', '2021-12-01', 1) %> // the following return 2021-11-29
+<%- date.startOfWeek('YYYY-MM-DD', '2021-12-01') %> // Uses NotePlan's week start setting
+```
+
+The following adds an offset to the calculated week start:
+
+```javascript
+<%- date.startOfWeek('YYYY-MM-DD', '2021-12-01', 1) %> // Adds 1-day offset to week start
 ```
 
 ---
@@ -584,13 +601,31 @@ The following returns start of week based on `pivotDate` and `firstOfWeek` of 1 
 
 > #### endOfWeek(format? string = '', pivotDate? : string = '', firstOfWeek? : number = 0) : string
 >
-> Returns end of week date
+> Returns end of week date using NotePlan's configured week start day
 
 - `format` - Optional date format, uses `Templating` Date Format if not supplied
 - `pivotDate?` - Desired date to obtain end of week. If not supplied, it will use current date
-- `firstOfWeek` - Day number for first of week if not 0 (Sunday)
+- `firstOfWeek` - Day number offset added to NotePlan's calculated week start (not a complete override)
 
-- `-> result` Returns end of week (see example above)
+- `-> result` Returns end of week
+
+<Callout type="info" title="Week Calculation">
+This method uses NotePlan's `Calendar.endOfWeek()` which automatically determines the end based on your configured week start day. The `firstOfWeek` parameter adds an offset to the calculation rather than overriding your week preference entirely.
+</Callout>
+
+**Example**
+
+The following returns end of week using NotePlan's configured week start day:
+
+```javascript
+<%- date.endOfWeek('YYYY-MM-DD', '2021-12-01') %> // Uses NotePlan's week start setting
+```
+
+The following adds an offset to the calculated week:
+
+```javascript
+<%- date.endOfWeek('YYYY-MM-DD', '2021-12-01', 1) %> // Adds 1-day offset to week calculation
+```
 
 ---
 
