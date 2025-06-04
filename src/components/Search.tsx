@@ -20,8 +20,6 @@ import {
 import { Dialog, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 
-import { navigation } from '@/components/Navigation'
-
 type Result = {
   url: string
   title: string
