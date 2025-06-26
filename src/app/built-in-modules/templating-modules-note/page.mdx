@@ -509,3 +509,28 @@ The following will return the line number where the active content ends
 ```javascript
 <%- note.contentEndIndex() %> // returns line number (e.g., 25)
 ```
+
+---
+
+### getRandomLine
+
+> #### getRandomLine(noteTitle: string) : 
+>
+> Gets a random line from a note specified by title. Ignores frontmatter/properties, titles (lines starting with #), and blank lines.
+
+- `noteTitle` - The title of the note to get a random line from
+- -> `randomLine` - Returns a random line from the note, or error message if note not found
+
+**Example:**
+
+The following will return a random line from the specified note
+
+```javascript
+<%- note.getRandomLine('My Note Title') %> // returns a random line from the note
+```
+
+**Error Handling:**
+
+- If the note is not found, returns: `**Note not found: "noteTitle"**`
+- If no eligible lines are found, returns: `**No eligible lines found in note: "noteTitle"**`
+- If an error occurs, returns: `**Error getting random line from note "noteTitle": error message**`
