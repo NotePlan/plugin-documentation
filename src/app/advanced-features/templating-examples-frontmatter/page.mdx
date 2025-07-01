@@ -35,29 +35,6 @@ priority: <%- prompt('priority','What is the new note's priority?',['high','medi
 
 When the template is rendered, it will display a choice list prompt for the `priority` key, and the value entered will be used as the value of the `priority` key in the new note's frontmatter.
 
-## Expanding tags in the note's frontmatter header
-
-When frontmatter templates are rendered, the content between frontmatter tags `--` use alternate start `{%` and end `%}` tags, which can then accessed outside the frontmatter tags. You can then access the frontmatter tags within rest of template
-
-_In the following examples we omit the template frontmatter between `---` for brevity._
-
-```markdown
---
-modified: {%= date.now('YYYY-MM-DD h:mm A') %}
---
-```
-
-You can then access these frontmatter variable within the template content
-
-```
-modified: *<%- frontmatter.modified %>*
-```
-
-When template is rendered, it will display as
-
-```markdown
-modified: _2021-12-31 10:36 AM_
-```
 
 ### Example: Complete Frontmatter Template
 
@@ -67,7 +44,7 @@ The following example demonstates a complete frontmatter format template
 --
 name: Mike Erickson
 phone: 714.555.1212
-modified: {%= date.now('YYYY-MM-DD h:mm A') %}
+modified: <%- date.now('YYYY-MM-DD h:mm A') %>
 description: The following content will be ignored when rendering a frontmatter template and cannot contain any carriage returns (this note is auto wrapped)
 --
 

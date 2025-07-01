@@ -63,13 +63,13 @@ JavaScript control structures (if statements, loops, etc.) work seamlessly in te
 While Templating is flexible, some patterns can lead to confusion:
 
 **Missing spaces in template tags** (will cause errors):
-Tags should be separated by a space, e.g. `<% if (condition) { %>`
+Starting and ending tags should be separated by a space, e.g. `<% if (condition) { %>`
 ```javascript
-// ❌ May not run properly
-<%if(condition){%>content<%}%>
+// ❌ May not run properly -- no space between tag and "if"
+<%if(condition) {  %>
 
-// ✅ More readable
-<% if (condition) { %>content<% } %>
+// ✅ Safer and more readable
+<% if (condition) { %>
 ```
 
 ## Asynchronous Function Calls
