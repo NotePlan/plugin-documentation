@@ -1,7 +1,7 @@
 import Callout from '@/components/Callout'
 import { Code } from '@/components/Code'
 
-# Include (content) vs. Import (template code)
+# Include (content) and Import (template code)
 
 Templating offers two very powerful commands, `include()` and `import()`, for bringing content from other notes or templates into your current template in a reusable way. While they sound similar, they serve distinct purposes. Understanding the difference helps you reuse content and build more powerful templates.
 
@@ -93,6 +93,40 @@ title: My Day Summary Note
 
 <Callout type="info">
 A calendar note can be included by either YYYY-MM-DD or in the format YYYYMMDD.
+</Callout>
+
+### JavaScript template string Support
+
+Both `include()` and `import()` functions support simple JavaScript template strings -- strings that include dynamic values (e.g. `include('${currentMonth} Monthly Note')` or `import('${currentMonth} Monthly Note')`) in the template name, allowing you to dynamically reference templates based on variables in your defined variables (e.g. in frontmatter):
+
+```javascript
+<%- include(`Monthly Notes/${currentMonth} Monthly Note`) %>
+<% import(`Snippets/${snippetType} Snippet`) %>
+```
+
+This will evaluate `${currentMonth}` to its value (e.g., "July") and include/import the template "Monthly Notes/July Monthly Note" or "Snippets/Header Snippet".
+
+**Supported Features:**
+- Basic variable substitution: `${variableName}`
+- Nested object properties: `${user.name}`, `${user.settings.theme}`
+
+**Limitations of the JavaScript template string support:**
+- Complex JavaScript expressions (like conditional logic, method calls, or default values) inside the JavaScript template string are not evaluated and will be preserved as literal text
+- Only simple variable substitution is supported
+
+<Callout type="info">
+JavaScript template strings in include() and import() names are evaluated using the current defined variables (e.g. in frontmatter), so make sure your variables are defined before using them in template names.
+</Callout>
+
+### Outcome
+
+The `include()` tag is replaced by either:
+
+*   The **rendered result** of the target template.
+*   The **full text content** of the target note.
+
+<Callout>
+This is especially useful if the template you are including has frontmatter attributes that you want to use in your current template.
 </Callout>
 
 ## `import(template_title)`
