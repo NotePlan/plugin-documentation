@@ -11,20 +11,20 @@ Templating offers two very powerful commands, `include()` and `import()`, for br
 
 Use `include()` when you want to insert the **final, rendered content** of another template or the **entire content** of a regular note into your current template.
 
-*   **For Templates:** `include()` processes the target template first – it runs any template tags and uses the included template's frontmatter in the processing – and then inserts the resulting text.
+*   **For Templates:** `include()` processes the target template first – it runs any template tags and uses the included template's frontmatter in the processing – and then inserts the resulting text. 
 *   **For Regular Notes or Calendar Notes:** `include()` simply grabs the full text of the note you specify and inserts it.
 
-Think of `include()` as asking NotePlan to fully prepare the content from the other file *before* placing it in your current template. 
+Think of `include()` as asking NotePlan to fully prepare the content from the other file *before* placing it in your current template. By the time it is included in your current template, it is just text and no longer has any variables or template tags.
 
 ### Outcome
 
 The `include()` tag is replaced by either:
 
 *   The **rendered result** of the target template.
-*   The **full text content** of the target note.
+*   The **full text content** of the target note
 
 <Callout>
-This is especially useful if the template you are including has frontmatter attributes that you want to use in your current template.
+Note that if you are using the `include()` tag to get the contents of a regular note, all the note's content, including any frontmatter/properties, will be included.
 </Callout>
 
 ### Example: Including the contents of another template
@@ -123,11 +123,8 @@ JavaScript template strings in include() and import() names are evaluated using 
 The `include()` tag is replaced by either:
 
 *   The **rendered result** of the target template.
+or
 *   The **full text content** of the target note.
-
-<Callout>
-This is especially useful if the template you are including has frontmatter attributes that you want to use in your current template.
-</Callout>
 
 ## `import(template_title)`
 
@@ -137,7 +134,7 @@ Use `import()` when you want to insert the **raw, unprocessed text** and potenti
 
 This is ideal for reusing static snippets of text, markdown, or code that you don't want NotePlan to interpret or change during the import step. Any template tags inside the imported text will be processed later, as if they were simply part of the main template.
 
-Think of `import()` as copy-pasting a block of text from another template's body into your current one.
+Think of `import()` as copy-pasting a block of text from another template's body into your current one. In this way, the imported text can process template tags using the target template's frontmatter/properties.
 
 ### Outcome
 
