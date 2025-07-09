@@ -1,0 +1,536 @@
+import Callout from '@/components/Callout'
+
+# Note Module
+
+The functions below are a part of the `note` module and are all accessed with `note.*`:
+
+### getNote
+
+Even though this is not technically part of the Note Module, it is relevant to Notes, so included here.
+This is a general-purpose method that can be used to get a note object for a given title or filename (calendar or regular note).
+If you do not provide a title or filename, it returns the NotePlan note object for the current note in the Editor.
+
+> #### getNote(titleOrFilename: string) : TNote
+>
+> Returns a note object for the given title or filename (calendar or regular note).
+
+**Examples:**
+
+The following will return the note object for the note specified (or today's note if none is specified):
+
+```javascript
+const note = getNote()
+const note = getNote('My Note')
+const note = getNote('this is a test.md')
+const note = getNote('20220529')
+const note = getNote('2024-01-01')
+```
+
+## Note module commands (note.*)
+
+### currentNote
+
+> #### currentNote() : TNote
+>
+> Returns the `TNote` object for the note currently open in the Editor.
+> This is equivalent to calling `getNote()` with no arguments.
+
+- `-> result` - Returns the `TNote` object for the note currently open in the Editor.
+
+**Example:**
+
+The following will return the note object for the currently open note:
+
+```javascript
+const currentOpenNote = await note.currentNote()
+```
+
+## Asynchronous Function Calls
+
+Templating does its best to predict which function calls are asynchronous and deals with the nuances of that behind the scenes. However, if you find you receive output that says `[object Promise]`, it means that you are calling a function that is asynchronous and was not caught by Templating. 
+
+If this happens, you can often resolve it by simply putting `await` in front of your command. For example, if `wotd()` was an asynchronous function returning a promise, you would write:
+
+```javascript
+const word = await wotd()
+```
+
+## Note Module Overview
+
+The Note Module provides a suite of methods which provide access to the current note (calendar or project note). If there is no current note, each method will return an empty value
+
+## Methods
+
+> namespace: `note`
+
+The following are the methods available in the Note Module, and they can be used in any `Templating` template, no additional configuration.
+
+---
+
+### filename
+
+> #### filename() : string
+>
+> Returns the current note filename as it appears on disk. This may be different than the note title. You an use the `note.title` method if you wish to access the actual note title.
+
+**Examples:**
+
+The following example will return the filename for the current calendar note.
+
+Assuming the current note is May 29, 2022, the value returned will be `20220529.md`
+
+```javascript
+<%- note.filename() %> // returns 20220529.md
+```
+
+The following example will return the filename for the current project note
+
+Assuming the current note has a title of "# Todo List" located in the "Projects", the value returned will be `Projects/Todo List.md`
+
+```javascript
+<%- note.filename() %> // returns Projects/Todo List.md
+```
+
+---
+
+### title
+
+> #### title() : string
+>
+> Returns the title of the current note, which may be either a calendar or project note.
+
+- If the current note is a calendar note, the value will be a date string in YYYY-MM-DD format
+- If the current note is a project note, the value will be the first line or the "title" from frontmatter
+
+-> `title` - Returns note title
+
+**Examples:**
+
+The following will return the note title.
+
+Assuming the current note is May 29, 2022, the value returned will be `2022-05-29`
+
+```javascript
+<%- note.title() %> // returns 2022-05-29
+```
+
+The following example will return the filename for the current project note
+
+Assuming the current note has a title of "# Todo List" the value returned will be `Todo List`
+
+```javascript
+<%- note.title() %> // returns Todo List
+```
+
+---
+
+### content
+
+> #### content(stripFrontmatter: boolean = false) : string
+>
+> Returns content of current note in markdown format
+
+- `stripFrontmatter` (default: `false`) - If `true`, content frontmatter will be stripped.
+- -> `content` - Returns content of current note
+
+  **Example:**
+
+The following will return the content of current note
+
+```javascript
+<%- note.content() %> // Markdown formatted content of current note
+```
+
+---
+
+### date
+
+> #### date(format: ?string = '') : date
+>
+> Returns the date value of a calendar note. If the current note is a project note, an empty string will be returned
+
+- `format` - Optional date format
+
+-> `date` - Returns date string of calendar note
+
+**Examples:**
+
+The following will return the note date (calendar note only).
+
+Assuming the current note is May 29, 2022, the value returned will be `Sun May 29 2022 00:00:00 GMT-0700 (PDT)`
+
+```javascript
+<%- note.date() %> // Sun May 29 2022 00:00:00 GMT-0700 (PDT)*
+```
+
+The following will return the note date (calendar note only).
+
+Assuming the current note is May 29, 2022, the value returned will be `2022-05-29`
+
+```javascript
+<%- note.date('YYYY-MM-DD') %> // returns 2022-05-29
+```
+
+---
+
+### createdDate
+
+> #### createdDate(format: ?string = '') : date
+>
+> Returns the created date value of the current note
+
+- `format` - Optional date format
+
+-> `date` - Returns created date string of current note
+
+**Examples:**
+
+The following will return the note created date.
+
+```javascript
+<%- note.createdDate() %> // Sun May 29 2022 00:00:00 GMT-0700 (PDT)*
+```
+
+The following will return the created date using supplied format.
+
+```javascript
+<%- note.createdDate('YYYY-MM-DD') %> // returns 2022-05-29
+```
+
+---
+
+### changedDate 
+
+> #### changedDate(format: ?string = '') : date
+>
+> Returns the changed (last modified) date value of the current note
+
+- `format` - Optional date format
+
+-> `date` - Returns changed date string of current note
+
+**Examples:**
+
+The following will return the note changed date.
+
+```javascript
+<%- note.changedDate() %> // Sun May 29 2022 00:00:00 GMT-0700 (PDT)*
+```
+
+The following will return the changed date using supplied format.
+
+```javascript
+<%- note.changedDate('YYYY-MM-DD') %> // returns 2022-05-29
+```
+
+---
+
+### hashtags
+
+> #### hashtags() : string
+>
+> Returns comma separated list of hashtags located in current note
+
+-> `hashtags` - Returns list of all hashtags in current note
+
+**Example:**
+
+The following will comma separated list of hashtags
+
+```javascript
+<%- note.hashtags() %> // #tag1, #tag2, ...
+```
+
+---
+
+### mentions
+
+> #### mentions() : string
+>
+> Returns comma separated list of mentions located in current note
+
+-> `mentions` - Returns list of all mentions in current note
+
+**Example:**
+
+The following will return comma separated list of mentions
+
+```javascript
+<%- note.mentions() %> // #tag1, #tag2, ...
+```
+
+---
+
+### paragraphs
+
+> #### paragraphs() : string
+>
+> Returns an array of paragraph objects for the current note
+
+-> `paragraphs` - Returns an array of paragraph objects for the current note
+
+Each object in paragraph array will contain the following keys
+
+`type` - type of paragraph
+`content` - content
+`rawContent` - content including any markdown
+`prefix` - The first character of the `rawContent`
+`heading` - Paragraph heading
+`isRecurring` - If this paragraph is a todo item, is it recurring
+`filename` - Same as `filename` command above
+`noteType` - Type of note which paragraphs are associated.
+
+> Calendar if note is a calendar note
+> Notes if the note is a regular project note
+> `linkedNoteTitles` - An array of titles for any linked notes
+> `subItems` - An array of subitems
+> `referenceBlocks` - An array of all reference items (those references listed at the top of note)
+
+**Example:**
+
+The following will iterate through all paragraph objects for the current note.
+
+```javascript
+<% const paragraphs = await note.paragraphs() -%>
+<% paragraphs.map(item => { -%>
+<%- item.key + ' : ' + item.value %>
+<%}) -%>
+```
+
+<Callout type="info">
+Note that if you want the full NotePlan paragraphs instead, you can get them using:
+`note.currentNote().paragraphs`
+</Callout>
+
+---
+
+### datedTodos
+
+> #### datedTodos() : array
+>
+> Returns array paragraphs contained in this note which contain a link to a daily note.
+
+-> `datedTodos` - Returns an array of datedTodos objects for the current note
+
+---
+
+### backlinks
+
+> #### backlinks() : array
+>
+> Returns array of all backlinks pointing to the current note as Paragraph objects.
+
+In this array, the top level items are all notes linking to the current note and the 'subItems' attributes (of the paragraph objects) contain the paragraphs with a link to the current note.
+
+The headings of the linked paragraphs are also listed here, although they don't have to contain a link.
+
+-> `datedTodos` - Returns an array of datedTodos objects for the current note
+
+---
+
+### openTasks
+
+> #### openTasks() : `Array<TParagraph>`
+>
+> Returns an array of open task paragraphs in the current note. This includes tasks in the current note and tasks from other notes that are scheduled for today (in case of a calendar note).
+
+-> `openTasks` - Returns array of open task paragraph objects in the current note
+
+**Example:**
+
+The following will return the array of open tasks in the current note
+
+```javascript
+<%- note.openTasks() %> // returns array of open task paragraph objects
+```
+
+---
+
+### openTaskCount
+
+> #### openTaskCount() : number
+>
+> Returns the number of open tasks in the current note.
+
+-> `openTaskCount` - Returns count of open tasks in the current note
+
+**Example:**
+
+The following will return the number of open tasks in the current note
+
+```javascript
+<%- note.openTaskCount() %> // returns number of open tasks (e.g., 5)
+```
+
+---
+
+### completedTasks
+
+> #### completedTasks() : `Array<TParagraph>`
+>
+> Returns an array of completed task paragraphs in the current note. This includes tasks in the current note and completed tasks from other notes that were scheduled for today (in case of a calendar note).
+
+-> `completedTasks` - Returns array of completed task paragraph objects in the current note
+
+**Example:**
+
+The following will return the array of completed tasks in the current note
+
+```javascript
+<%- note.completedTasks() %> // returns array of completed task paragraph objects
+```
+
+---
+
+### completedTaskCount
+
+> #### completedTaskCount() : number
+>
+> Returns the number of completed tasks in the current note.
+
+-> `completedTaskCount` - Returns count of completed tasks in the current note
+
+**Example:**
+
+The following will return the number of completed tasks in the current note
+
+```javascript
+<%- note.completedTaskCount() %> // returns number of completed tasks (e.g., 3)
+```
+
+---
+
+### openChecklists
+
+> #### openChecklists() : `Array<TParagraph>`
+>
+> Returns an array of open checklist paragraph objects in the current note.
+
+-> `openChecklists` - Returns array of open checklist paragraph objects in the current note
+
+**Example:**
+
+The following will return the array of open checklists in the current note
+
+```javascript
+<%- note.openChecklists() %> // returns array of open checklist paragraph objects
+```
+
+---
+
+### openChecklistCount
+
+> #### openChecklistCount() : number
+>
+> Returns the number of open checklists in the current note.
+
+-> `openChecklistCount` - Returns count of open checklists in the current note
+
+**Example:**
+
+The following will return the number of open checklists in the current note
+
+```javascript
+<%- note.openChecklistCount() %> // returns number of open checklists (e.g., 2)
+```
+
+---
+
+### completedChecklists
+
+> #### completedChecklists() : `Array<TParagraph>`
+>
+> Returns an array of completed checklist paragraph objects in the current note.
+
+-> `completedChecklists` - Returns array of completed checklist paragraph objects in the current note
+
+**Example:**
+
+The following will return the array of completed checklists in the current note
+
+```javascript
+<%- note.completedChecklists() %> // returns array of completed checklist paragraph objects
+```
+
+---
+
+### completedChecklistCount
+
+> #### completedChecklistCount() : number
+>
+> Returns the number of completed checklists in the current note.
+
+-> `completedChecklistCount` - Returns count of completed checklists in the current note
+
+**Example:**
+
+The following will return the number of completed checklists in the current note
+
+```javascript
+<%- note.completedChecklistCount() %> // returns number of completed checklists (e.g., 1)
+```
+
+---
+
+### contentStartIndex
+
+> #### contentStartIndex() : number
+>
+> Works out where the first 'active' line of the note is, following the first paragraph of type 'title', or frontmatter (if present).
+> Returns the line number of the first non-frontmatter paragraph (0 if no frontmatter, -1 if no note can be found).
+
+-> `contentStartIndex` - Returns line number where the active content starts
+
+**Example:**
+
+The following will return the line number where the active content starts
+
+```javascript
+<%- note.contentStartIndex() %> // returns line number (e.g., 3)
+```
+
+---
+
+### contentEndIndex
+
+> #### contentEndIndex() : number
+>
+> Works out the index to insert paragraphs before any ## Done or ## Cancelled section starts, if present, and returns the paragraph before that.
+> Works with folded Done or Cancelled sections. If the result is a separator, uses the line before that instead.
+> If neither Done nor Cancelled sections are present, returns the last non-empty line index.
+> Returns -1 if no note can be found.
+
+-> `contentEndIndex` - Returns line number where the active content ends
+
+**Example:**
+
+The following will return the line number where the active content ends
+
+```javascript
+<%- note.contentEndIndex() %> // returns line number (e.g., 25)
+```
+
+---
+
+### getRandomLine
+
+> #### getRandomLine(noteTitle: string) : 
+>
+> Gets a random line from a note specified by title. Ignores frontmatter/properties, titles (lines starting with #), and blank lines.
+
+- `noteTitle` - The title of the note to get a random line from
+- -> `randomLine` - Returns a random line from the note, or error message if note not found
+
+**Example:**
+
+The following will return a random line from the specified note
+
+```javascript
+<%- note.getRandomLine('My Note Title') %> // returns a random line from the note
+```
+
+**Error Handling:**
+
+- If the note is not found, returns: `**Note not found: "noteTitle"**`
+- If no eligible lines are found, returns: `**No eligible lines found in note: "noteTitle"**`
+- If an error occurs, returns: `**Error getting random line from note "noteTitle": error message**`

@@ -1,0 +1,87 @@
+import Callout from '@/components/Callout'
+
+# Date Prompts
+
+`Templating` provides specialized functions for prompting users to enter dates and date intervals. This page covers the available date-related prompt functions.
+
+## Prompting for Dates
+
+The `promptDate` function allows you to prompt users for dates in the format `YYYY-MM-DD`.
+
+### Syntax
+
+```markdown
+<%- promptDate('variableName', 'message', defaultValue, canBeEmpty) %>
+```
+
+### Parameters
+
+- **variableName** (string): The name of the variable to store the result (required)
+- **message** (string): The prompt message to display to the user (required)
+- **defaultValue** (string): Optional default date value in YYYY-MM-DD format (default: '')
+- **canBeEmpty** (boolean): Whether to allow empty values (default: true)
+
+### Examples
+
+Basic usage with no default value:
+
+```markdown
+Project start date: <%- promptDate('startDate1', 'Enter start date:') %>
+```
+
+With a default value:
+
+```markdown
+Project start date: <%- promptDate('startDate2', 'Enter start date:', '2024-01-01') %>
+```
+
+With empty value disabled:
+
+```markdown
+Project start date: <%- promptDate('startDate3', 'Enter start date:', '', false) %>
+```
+
+## Prompting for Date Intervals
+
+The `promptDateInterval` function allows you to prompt users for date intervals in the format `nnn[bdwmqy]`, as used in the Repeat Extensions plugin.
+
+### Syntax
+
+```markdown
+<%- promptDateInterval('variableName', 'message') %>
+```
+
+### Parameters
+
+- **variableName** (string): The name of the variable to store the result (required)
+- **message** (string): The prompt message to display to the user (required)
+
+### Examples
+
+Basic usage:
+
+```markdown
+Review frequency: <%- promptDateInterval('reviewInterval', 'Enter review interval:') %>
+```
+
+### Interval Format
+
+The date interval format uses the following units:
+- `b`: Business days
+- `d`: Days
+- `w`: Weeks
+- `m`: Months
+- `q`: Quarters
+- `y`: Years
+
+For example:
+- `5d` = 5 days
+- `2w` = 2 weeks
+- `3m` = 3 months
+- `1y` = 1 year
+
+## Related Topics
+
+- [Basic Prompts](/core-features/templating-prompts) - Learn about basic prompt functionality
+- [Frontmatter Prompts](/core-features/templating-prompts/frontmatter-prompts) - Learn about prompting for frontmatter values
+- [Tag and Mention Prompts](/core-features/templating-prompts/tag-mention-prompts) - Learn about prompting for tags and mentions 

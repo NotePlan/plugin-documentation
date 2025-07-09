@@ -1,0 +1,80 @@
+import Callout from '@/components/Callout'
+
+# Console Logging
+
+When AI error explanation isn't sufficient or you need more detailed information about template execution, you can use NotePlan's Console Log to view detailed debugging information.
+
+## Opening the Console Log
+
+To access the Console Log in NotePlan, follow the first part of the instructions to open the Console Log and debug plugins. You will open the configuration for Templating.
+
+**[Console Log Setup Guide](https://noteplan.co/n/4515666C-19C8-4637-83DF-6248C12AFC92)**.
+
+<Callout
+  type="info"
+  title="External Reference"
+  description="The Console Log setup process is documented on NotePlan's website. Make sure to follow those instructions to properly enable console logging."
+/>
+
+## When to Use Console Logging
+
+Console logging is particularly useful for:
+
+- **Silent Failures**: When templates don't work but don't show obvious errors
+- **Performance Issues**: When templates run slowly or hang
+- **Complex Logic**: When debugging intricate conditional statements or loops
+- **Module Interactions**: When troubleshooting how different modules work together
+- **Variable Values**: When you need to see what values variables contain during execution
+
+## Best Practices
+
+1. **Keep it Open**: When you are debugging, leave the Console Log open while developing and testing templates
+2. **Clear Regularly**: Clear the console between tests to avoid confusion
+3. **Look for Patterns**: Pay attention to recurring messages that might indicate systematic issues
+4. **Note Timing**: Observe when messages appear to understand execution flow
+
+## Enabling Verbose Logging
+
+For even more detailed debugging information, you can enable verbose logging by adding a special property to your template's frontmatter:
+
+```yaml
+---
+verboseLog: true
+---
+```
+
+<Callout
+  type="important"
+  title="Prerequisites"
+  description="Verbose logging requires that you have the Console Log open to view the additional output. Make sure to follow the console setup instructions above first."
+/>
+
+### Disabling Verbose Logging
+
+To disable verbose logging, either:
+
+- **Remove the property**: Delete the `verboseLog: true` line from your frontmatter
+
+## Troubleshooting Strategy
+
+When debugging templates, follow this progressive approach:
+
+1. **Start with AI Error Explanation**: Most issues will be resolved automatically
+2. **Use Console Logging**: For general debugging and understanding execution flow
+3. **Enable Verbose Logging**: For complex issues requiring detailed analysis
+
+When analyzing logs:
+
+1. **Start from the Error**: Find the error message and work backwards
+2. **Check Variable Values**: Look for unexpected variable contents
+3. **Trace Execution Flow**: Follow the step-by-step execution to find where things go wrong
+4. **Compare Expected vs. Actual**: Look for discrepancies between what you expected and what actually happened
+5. **Time Analysis**: Check if any operations are taking unexpectedly long
+
+## Still Need Help?
+
+If you've tried all the debugging techniques listed here and still need assistance, you can post a question in the Templating channel of the NotePlan Discord server:
+
+**[NotePlan Discord - Templating Channel](https://discord.com/channels/763107030223290449/963950027946999828)**
+
+The community and developers are active there and can provide additional support for complex templating issues. 

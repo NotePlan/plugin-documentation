@@ -1,0 +1,131 @@
+import Callout from '@/components/Callout'
+
+# Date and Time
+
+The `Templating` DateModule and TimeModule provide a number of methods which can be used within your templates. The following example demonstrates how to use a variety of these methods.
+
+<Callout
+  type="tip"
+  title="FORMATTING DATES"
+  description={
+    'The DateModule uses the JavaScript <code>moment</code> library internally, thus you can use any of the <a href="https://momentjs.com/docs/#/parsing/string-format/" alt="MomentJS String Formats"> Moment.js string formatting options </a> to get the exact date or time format you want.'
+  }
+/>
+## Template To use this example, create a new template inside NotePlan by right-clicking
+"Templates" in the left sidebar and then "New Template". Then copy the template below
+the last blue line.
+
+```markdown
+Test (DateModule)
+_Demonstrates DateModule, providing date/time utilities_
+
+#### Templates with date and time
+
+Date now: _<%- np.date.now() %>_
+Date now with format: _<%- np.date.now("Do MMMM YYYY") %>_
+
+Today: _<%- date.today() %>_
+Last week: _<%- np.date.now("dddd Do MMMM YYYY", -7) %>_
+Last week of current date: _<%- np.date.now("", -7) %>_
+Today: _<%- np.date.now("dddd Do MMMM YYYY, ddd") %>_
+Next week: _<%- np.date.now("dddd Do MMMM YYYY", 7) %>_
+Today w/ format: _<%- date.now("dddd MMMM Do, YYYY HH:mm A") %>_
+
+Day Number: _<%- date.dayNumber() %>_
+Day Number w/ Specific Date: _<%- date.dayNumber('2021-12-25') %>_
+
+#### Day Number Constants
+
+Sunday: _<%- date.DAY_NUMBER_SUNDAY %>_
+Monday: _<%- date.DAY_NUMBER_MONDAY %>_
+Tuesday: _<%- date.DAY_NUMBER_TUESDAY %>_
+Wednesday: _<%- date.DAY_NUMBER_WEDNESDAY %>_
+Thursday: _<%- date.DAY_NUMBER_THURSDAY %>_
+Friday: _<%- date.DAY_NUMBER_FRIDAY %>_
+Saturday: _<%- date.DAY_NUMBER_SATURDAY %>_
+
+Week Number: _<%- date.weekNumber() %>_
+Week Number w/ Specific Date: _<%- date.weekNumber('2021-12-25') %>_
+
+Last month: _<%- np.date.now("YYYY-MM-DD", "P-1M") %>_
+Next year: _<%- np.date.now("YYYY-MM-DD", "P1Y") %>_
+
+Date tomorrow: _<%- np.date.tomorrow() %>_
+Date tomorrow with format: _<%- np.date.tomorrow("Do MMMM YYYY") %>_
+
+Date yesterday: _<%- np.date.yesterday() %>_
+Date yesterday with format: _<%- np.date.yesterday("Do MMMM YYYY") %>_
+
+Add 3 Business Days: _<%- np.date.businessAdd(3) %>_
+Add 3 Business Days w/ PivotDate 2021-11-24: _<%- np.date.businessAdd(3,'2021-11-24') %>_
+
+Subtract 3 Business Days: _<%- np.date.businessSubtract(3) %>_
+Subtract 3 Business Days w/ PivotDate 2021-11-22: _<%- np.date.businessSubtract(3,'2021-11-22') %>_
+
+This week's Monday: _<%- np.date.weekday("YYYY-MM-DD", 1) %>_
+Next Monday: _<%- np.date.weekday("YYYY-MM-DD", 8) %>_
+
+Week Of: _<%- np.date.weekOf() %>_
+Week Of (only pivotDate): _<%- np.date.weekOf('2021-11-03') %>_
+Week Of: _<%- np.date.weekOf(null, null, '2021-11-03') %>_
+
+Current Time: _<%- np.time.now('h:mm A') %>_
+Current Date: _<%- date.now() %>_
+```
+
+## Output
+
+```markdown
+#### Templates with date and time
+
+Date now: _2021-12-24_
+Date now with format: _24th December 2021_
+
+Today: _2021-12-24_
+Last week: _Friday 17th December 2021_
+Last week of current date: _2021-12-17_
+Today: _Friday 24th December 2021, Fri_
+Next week: _Friday 31st December 2021_
+Today w/ format: _Friday December 24th, 2021 05:10 AM_
+
+Day Number: _5_
+Day Number w/ Specific Date: _6_
+
+#### Day Number Constants
+
+Sunday: _0_
+Monday: _1_
+Tuesday: _2_
+Wednesday: _3_
+Thursday: _4_
+Friday: _5_
+Saturday: _6_
+
+Week Number: _51_
+Week Number w/ Specific Date: _51_
+
+Last month: _2021-11-24_
+Next year: _2022-12-24_
+
+Date tomorrow: _2021-12-25_
+Date tomorrow with format: _25th December 2021_
+
+Date yesterday: _2021-12-23_
+Date yesterday with format: _23rd December 2021_
+
+Add 3 Business Days: _2021-12-29_
+Add 3 Business Days w/ PivotDate 2021-11-24: _2021-11-29_
+
+Subtract 3 Business Days: _2021-12-21_
+Subtract 3 Business Days w/ PivotDate 2021-11-22: _2021-11-17_
+
+This week's Monday: _2021-12-20_
+Next Monday: _2021-12-27_
+
+Week Of: _W51 (2021-12-19..2021-12-25)_
+Week Of (only pivotDate): _W44 (2021-10-31..2021-11-06)_
+Week Of: _W44 (2021-10-31..2021-11-06)_
+
+Current Time: _7:10 AM_
+Current Date: _2021-12-24_
+```

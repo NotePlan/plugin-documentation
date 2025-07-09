@@ -1,0 +1,80 @@
+import Callout from '@/components/Callout'
+import weekInQuarterImage from '@/images/week-in-quarter.png'
+
+# Display the Week in Quarter
+
+This example demonstrates how to create a visual progress indicator showing the current week's position within a quarter. It uses JavaScript to calculate the quarter, week progress, and displays it with filled and empty circles. Thanks to [Chris Lacey](https://www.linkedin.com/in/chrislacey89/) for [posting](https://discord.com/channels/763107030223290449/1325129182375710862/1325129182375710862) this to the community, and @jgclark for improving upon it.
+
+## Output
+
+When used in a note titled "2024-W15" (for example), this template will generate:
+
+<img src={weekInQuarterImage.src} alt="Week in Quarter Progress Display" className="week-quarter-example" />
+
+<Callout
+  type="info"
+  title="JAVASCRIPT IN TEMPLATES"
+  description={
+    'This example uses JavaScript code blocks within templates. The code calculates quarter information based on the currently selected daily Calendar note.'
+  }
+/>
+
+## Template
+
+To use this example, either:
+- include this code in your daily template 
+- create a new template inside NotePlan by right-clicking "Templates" in the left sidebar and then "New Template". Then copy the template below.
+
+~~~markdown
+```templatejs
+if (!/\d{4}-\d{2}-\d{2}/.test(Editor.title)) throw "You can only run this on a daily calendar note."
+const todayMom = moment(Editor.title);
+const currentWeekNumber = Calendar.weekNumber(todayMom.toDate()); // respects user's start of week
+const currentYear = parseInt(todayMom.format("YYYY"));
+
+function getCurrentQuarter(weekOfYear) {
+  if (weekOfYear <= 13) return 1;
+  if (weekOfYear <= 26) return 2;
+  if (weekOfYear <= 39) return 3;
+  return 4;
+}
+
+function getWeekProgressOfQuarter(quarter, weekOfYear) {
+  return weekOfYear - ((quarter - 1) * 13);
+}
+
+const currentQuarter = getCurrentQuarter(currentWeekNumber);
+const currentProgress = getWeekProgressOfQuarter(currentQuarter, currentWeekNumber);
+const filledCircles = "●".repeat(Math.max(currentProgress - 1, 0));
+const currentDayMarker = "●";
+const emptyCircles = "○".repeat(Math.max(13 - currentProgress, 0));
+```
+W<%- currentWeekNumber %> [in Q<%- currentQuarter %>: <%- filledCircles + currentDayMarker + emptyCircles %>]
+~~~
+
+## How It Works
+
+The template performs several key operations:
+
+1. **Extracts Week Number**: Gets the week number from the note title (assumes it's a daily Calendar note)
+2. **Calculates Quarter**: Determines which quarter the week falls into (Q1: weeks 1-13, Q2: weeks 14-26, etc.)
+3. **Determines Progress**: Calculates how many weeks into the current quarter we are
+4. **Creates Visual Indicator**: 
+   - `●` (filled circles) represent completed weeks in the quarter
+   - `●` (current marker) represents the current week
+   - `○` (empty circles) represent remaining weeks in the quarter
+
+## Use Cases
+
+This template is particularly useful for:
+
+- **Weekly Planning**: Visual progress tracking within quarters
+- **Project Management**: Understanding quarter-based timelines
+- **Productivity Tracking**: Seeing how much of the quarter remains
+- **Calendar Notes**: Quick visual reference in weekly note headers
+
+<Callout
+  type="tip"
+  title="NOTE TITLE FORMAT"
+  description="This template expects your note title to be in YYYY-WXX format (e.g., '2024-W15'). Adjust the slice() parameters if your format is different."
+/> 

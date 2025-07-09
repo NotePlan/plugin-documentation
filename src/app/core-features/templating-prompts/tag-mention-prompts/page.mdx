@@ -1,0 +1,89 @@
+import Callout from '@/components/Callout'
+
+# Tag and Mention Prompts
+
+## Tag Prompts
+
+The `promptTag` function allows you to prompt users to select from existing hashtags in your notes or create a new one.
+
+### Syntax
+
+```markdown
+<%- promptTag('Select a hashtag:', 'includePattern', 'excludePattern', allowCreate) %>
+```
+
+### Parameters
+
+- **promptMessage** (string): The message to display in the prompt (required)
+- **includePattern** (string): Regex pattern to include only matching hashtags (optional)
+- **excludePattern** (string): Regex pattern to exclude matching hashtags (optional)
+- **allowCreate** (boolean): Whether to allow creating a new hashtag if not found (default: true)
+
+### Examples
+
+Basic usage:
+
+```markdown
+<%- promptTag('Select a hashtag:') %>
+```
+
+Filter tags to include only those containing "project":
+
+```markdown
+<%- promptTag('Select a project tag:', 'project') %>
+```
+
+Filter to include "priority" tags and exclude "low" tags:
+
+```markdown
+<%- promptTag('Select priority:', 'priority', 'low') %>
+```
+
+Don't allow creating new tags:
+
+```markdown
+<%- promptTag('Select from existing tags only:', '', '', false) %>
+```
+
+## Mention Prompts
+
+The `promptMention` function allows you to prompt users to select from existing @ mentions in your notes or create a new one.
+
+### Syntax
+
+```markdown
+<%- promptMention('Select a mention:', 'includePattern', 'excludePattern', allowCreate) %>
+```
+
+### Parameters
+
+- **promptMessage** (string): The message to display in the prompt (required)
+- **includePattern** (string): Regex pattern to include only matching mentions (optional)
+- **excludePattern** (string): Regex pattern to exclude matching mentions (optional)
+- **allowCreate** (boolean): Whether to allow creating a new mention if not found (default: true)
+
+### Examples
+
+Basic usage:
+
+```markdown
+<%- promptMention('Select a person:') %>
+```
+
+Filter mentions to include only those containing "team":
+
+```markdown
+<%- promptMention('Select a team member:', 'team') %>
+```
+
+Filter to include "client" mentions and exclude "former" clients:
+
+```markdown
+<%- promptMention('Select client:', 'client', 'former') %>
+```
+
+## Related Topics
+
+- [Basic Prompts](/core-features/templating-prompts) - Learn about basic prompt functionality
+- [Date Prompts](/core-features/templating-prompts/date-prompts) - Learn about prompting for dates and date intervals
+- [Frontmatter Prompts](/core-features/templating-prompts/frontmatter-prompts) - Learn about prompting for frontmatter values 

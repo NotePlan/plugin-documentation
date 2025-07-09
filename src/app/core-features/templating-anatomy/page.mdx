@@ -1,0 +1,53 @@
+import noteplandefaulttemplate from '@/images/noteplan-default-template.png'
+import propertiespanel from '@/images/template-properties.png'
+
+# Template Anatomy
+
+The `Templating` template uses a format called [Frontmatter](https://jekyllrb.com/docs/front-matter/) commonly found in blogging platforms that utilize templates to render dynamic content. It is a great fit for the way NotePlan integrates normal note taking features, but infuses a robust calendaring system.
+
+### Template Configuration
+
+There are two parts to a NotePlan template: template attributes and template body.
+
+<img src={noteplandefaulttemplate.src} alt="Noteplan Default Template" />
+
+`attributes` - The attribute section is between open `---` and closing `---` tags in the text of the template, often referred to as `frontmatter`. NotePlan makes it easy for you to editor frontmatter attributes (a.k.a. `properties`) in the [properties panel](https://help.noteplan.co/article/237-frontmatter). A template can have as many properties as you want, but the the minimum required properties are `title` and `type`.
+
+<img src={propertiespanel.src} alt="Template Properties" width="50%" />
+
+`body` - The remainder of template, after the second delimiter line`---`, is the template content and will be used when the template is rendered.
+
+**Example**
+
+```markdown
+---
+title: Template title
+type: empty-note
+---
+
+Everything below the second `---` (under the properties panel) will be template content
+
+--
+created: <%- date.now('dddd MMMM Do, YYYY HH:mm A') %>
+--
+
+&-- [[<%- date.yesterday('YYYY-MM-DD') %>]] | [[<%- date.tomorrow('YYYY-MM-DD') %>]] -- >
+
+And the remainder of the template will be display here ...
+```
+
+### Using Dynamic Keys in Frontmatter
+
+The key+value pairs in frontmatter can be used in other parts of your template. In fact, frontmatter fields can be calculated using Templating tags and then used dynamically in other parts of your template.
+
+For example:
+
+```markdown
+---
+title: Dynamic Template
+modified: <%- date.now('YYYY-MM-DD h:mm A') %>
+---
+
+This is read from frontmatter:
+contents of the calculated "modified" field: <%- modified %>
+```

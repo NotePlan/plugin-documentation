@@ -1,16 +1,24 @@
-# Terminology
+import Callout from '@/components/Callout'
+
+# Basic Concepts
+
 To further understand how `Templating` works, let's define a few important items:
 
-- A template is a note which contains text and commands
-- A text snippet that starts with an opening tag `<%-`, ends with a closing tag `%>` and contains a **variable** or **method** (which is referred to as command or placeholder). You can refer to [Templating - Commands](/docs/templating-commands/overview) to find more advanced usage of commands
-- A **variable** or **method** is an object that we can invoke using a [template command](/docs/templating-commands/overview) and that returns a value (the replacement string)
+- A template is a note which contains text and commands used to generate dynamic content -- either a full note or a snippet of text. Some examples might be: 
+  - a template to create a meeting note pre-populated with the meeting title, date, and participants; 
+  - a template to create a daily note with the current date and time; 
+  - a template to add a heading with the current date and time to the currently open note.
+
+- **Tags:** A text snippet that starts with an opening tag `<%-`, ends with a closing tag `%>` and contains a **variable** or **method** (which is referred to as command or placeholder). You can refer to [Templating - Commands](/docs/templating-commands/overview) to find more advanced usage of commands
+- **Variables**/**Methods:** A **variable** or **method** is an object that we can invoke using a [template command](/docs/templating-commands/overview) and that returns a value (the replacement string)
 
 There are two types of **variables**/**methods** you can use in your templates:
 
 - [Template Methods](/templating/templating-modules). They are predefined **variables/methods** that are built within the plugin. For example, `date.now` is an internal variable that will return the current date.
-- User defined functions. Other NotePlan plugins can extend `Templating` built-in **variables/methods** with their own custom variable or methods. For example `sweepTasks` or `listTodaysEvents` are custom plugin functions which operate on NotePlan tasks or events.
+- **Plugin commands:** You can run commands from other NotePlan plugins. For example `listTodaysEvents` is a custom plugin functions which operate on NotePlan tasks or events.
 
 For example, the following template contains 1 variable (`firstName`) and 2 commands from `DateModule` (`yesterday`, and `tomorrow`)
+
 - `Templating` variables do not have left and right parenthesis
 - `Templating` methods contain an opening and closing parenthesis, followed by _optional_ parameter(s)
 
@@ -20,3 +28,6 @@ Yesterday: <% date.yesterday() %>
 Tomorrow: <% date.tomorrow("YYYY-MM-DD") %>
 ```
 
+<Callout type="info">
+Templating is designed to be simple to use. However, it is a powerful tool that can also be used to create complex and dynamic notes using JavasScript code.
+</Callout>

@@ -1,0 +1,60 @@
+import Callout from '@/components/Callout'
+import Link from 'next/link'
+
+# Web Services
+
+Templating provides some built-in web services to get content from the web. These commands can be used with the `<%-` template tag syntax to include dynamic content in your templates.
+
+## Content Generation
+
+### Inspirational Content
+
+```markdown
+<%- affirmation() %>
+```
+
+Returns a random affirmation.
+
+```markdown
+<%- advice() %>
+```
+
+Returns a random piece of advice.
+
+```markdown
+<%- quote() %>
+```
+
+Returns the daily quote.
+
+```markdown
+<%- wotd() %>
+```
+
+Returns the word of the day.
+
+```markdown
+<%- verse() %>
+```
+
+Returns a random bible verse.
+
+```markdown
+<%- stoicQuote() %>
+```
+
+Returns a daily quote from Stoic philosophers (Epictetus, Marcus Aurelius, etc.).
+
+## Weather Information
+
+```markdown
+<%- weather() %>
+```
+
+Returns weather information using the default format configured in settings.
+
+```markdown
+<%- weather('format') %>
+```
+
+Returns weather information using the specified format.

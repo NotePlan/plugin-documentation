@@ -1,0 +1,83 @@
+import Callout from '@/components/Callout'
+
+# Using JavaScript in Templates
+
+`Templating` can be configured to execute a wide variety of JavaScript commands, directly in the template.
+
+Using the leading tag `<%` at the beginning of line will instruct `Templating` to interpret whatever comes next as a standard JavaScript command, but will not output anything when the template is rendered, and when combined with the `<%-` tag, you can then output any variable you created previously when the template is rendered.
+
+**Example**
+
+The following will instruct `Templating` to initialize a variable `firstName` with the value of `Mike`
+
+```javascript
+<% const firstName = 'Mike' %>
+```
+
+Then, you can output the value when rendered using one of the `Templating` output tags
+
+```javascript
+<%- firstName %> // output Mike
+```
+
+<Callout type="info">
+Keep in mind that the line `<% const firstName = 'Mike' %>` will not output any text, but it is on a line by itself with a return/newline at the end which will be output as part of the rendered template. You can suppress this by adding a `-` to the template tag, e.g. `<% const firstName = 'Mike' -%>` This will set the variable but not output anything at all.
+</Callout> 
+
+## Control Structures and Template Organization
+
+JavaScript control structures (if statements, loops, etc.) work seamlessly in templates and can be organized in several ways:
+
+### Multi-line Control Structures (Recommended for Readability)
+
+```javascript
+<%
+  const dayNum = date.dayNumber(date.format("YYYY-MM-DD", Editor.title));
+  const weekdays = [1, 2, 3, 4, 5]; // Monday to Friday
+  if (weekdays.includes(dayNum)) {
+%>
++ 16:30 - 17:00 :brain: Review my day and plan tomorrow
+<% } %>
+```
+
+### Single-line Control Structures (Also Valid)
+
+```javascript
+<% if ([1, 2, 3, 4, 5].includes(date.dayNumber(date.format("YYYY-MM-DD", Editor.title)))) { %>
++ 16:30 - 17:00 :brain: Review my day and plan tomorrow
+<% } %>
+```
+
+### Inline Conditional Output
+
+```javascript
+<%- weekdays.includes(dayNum) ? '+ 16:30 - 17:00 :brain: Review my day and plan tomorrow' : '' %>
+```
+
+<Callout type="info">
+**Best Practice**: While Templating allows multiple template tags on the same line and various formatting styles, separating complex logic across multiple lines generally improves readability and makes debugging easier. Choose the style that works best for your specific use case.
+</Callout>
+
+### Common Patterns to Avoid
+
+While Templating is flexible, some patterns can lead to confusion:
+
+**Missing spaces in template tags** (will cause errors):
+Starting and ending tags should be separated by a space, e.g. `<% if (condition) { %>`
+```javascript
+// ❌ May not run properly -- no space between tag and "if"
+<%if(condition) {  %>
+
+// ✅ Safer and more readable
+<% if (condition) { %>
+```
+
+## Asynchronous Function Calls
+
+Templating does its best to predict which function calls are asynchronous (e.g. calls to websites which require waiting for an answer) and deals with the nuances of that behind the scenes. However, if you find you receive output that says `[object Promise]`, it means that you are calling a function that is asynchronous and was not caught by Templating. 
+
+If this happens, you can often resolve it by simply putting `await` in front of your command. For example, if `wotd()` was an asynchronous function returning a promise, you would write:
+
+```javascript
+const word = await wotd()
+``` 

@@ -1,0 +1,169 @@
+import Link from 'next/link'
+import Callout from '@/components/Callout'
+
+# Time Module
+
+## Overview
+
+The Time Module provides methods and variables which work with dates.
+
+<Callout
+  type="info"
+  description={`
+Refer to <a href="/built-in-modules/templating-modules-date" alt="Date Module">Date Modules</a> for similar methods which work with with date values.
+  
+  `}
+/>
+
+<Callout
+  type="info"
+  title="FORMATTING TIME VALUES"
+  description={`
+The Time Module uses JavaScript <code>moment</code> library internally, thus you can use any of the <a href="https://momentjs.com/docs/#/parsing/string-format/" alt="moment formatting">Momentjs Formatting</a> options.
+Each time token has a single or double token, with the double token being used to display leading zeros.
+  `}
+/>
+
+#### Formatting Time Values
+
+_Tokens are case-sensitive._
+
+| Category          | Token                | Example                                           | Description                                                                  |
+| ----------------- | -------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------- |
+| **AM/PM**         | `A`                  | AM PM                                             | Uppercase AM/PM                                                              |
+|                   | `a`                  | am pm                                             | Lowercase am/pm                                                              |
+| **Hour**          | `H`                  | 0 1 ... 22 23                                     | Hour (0-23)                                                                  |
+|                   | `HH`                 | 00 01 ... 22 23                                   | Hour, zero-padded (00-23)                                                    |
+|                   | `h`                  | 1 2 ... 11 12                                     | Hour (1-12)                                                                  |
+|                   | `hh`                 | 01 02 ... 11 12                                   | Hour, zero-padded (01-12)                                                    |
+|                   | `k`                  | 1 2 ... 23 24                                     | Hour (1-24)                                                                  |
+|                   | `kk`                 | 01 02 ... 23 24                                   | Hour, zero-padded (01-24)                                                    |
+| **Minute**        | `m`                  | 0 1 ... 58 59                                     | Minute                                                                       |
+|                   | `mm`                 | 00 01 ... 58 59                                   | Minute, zero-padded                                                          |
+| **Second**        | `s`                  | 0 1 ... 58 59                                     | Second                                                                       |
+|                   | `ss`                 | 00 01 ... 58 59                                   | Second, zero-padded                                                          |
+| **Fractional Second** | `S`              | 0 1 ... 8 9                                       | Tenths of a second                                                           |
+|                   | `SS`                 | 00 01 ... 98 99                                   | Hundredths of a second                                                       |
+|                   | `SSS`                | 000 001 ... 998 999                               | Milliseconds                                                                 |
+|                   | `SSSS...SSSSSSSSS`   | 000[0..] ... 999[0..]                             | Fractional seconds (displays 3 significant digits, rest 0s)                  |
+| **Time Zone**     | `z`, `zz`            | EST CST ...                                       | Time zone name (deprecated for plain moments, use with moment-timezone)      |
+|                   | `Z`                  | -07:00 -06:00 ... +07:00                          | Offset from UTC                                                              |
+|                   | `ZZ`                 | -0700 -0600 ... +0700                             | Offset from UTC, compact                                                     |
+| **Unix Timestamp** | `X`                 | 1360013296                                        | Unix timestamp (seconds)                                                     |
+|                   | `x`                  | 1360013296123                                     | Unix millisecond timestamp                                                   |
+| **Localized Time**| `LT`                 | 8:30 PM                                           | Time (local format)                                                          |
+|                   | `LTS`                | 8:30:25 PM                                        | Time with seconds (local format)                                             |
+|                   | `LLL`                | September 4, 1986 8:30 PM                         | Date & Time (local format)                                                   |
+|                   | `lll`                | Sep 4, 1986 8:30 PM                               | Date & Time, short (local format)                                            |
+|                   | `LLLL`               | Thursday, September 4, 1986 8:30 PM               | Date, Day & Time (local format)                                              |
+|                   | `llll`               | Thu, Sep 4, 1986 8:30 PM                          | Date, Day & Time, short (local format)                                       |
+
+### Example
+
+If you wish to display time value with hour and minute in 24 hour format, separated by a colon`:` character, you would use `<%- date.now('H:mm') %>`
+
+## Methods
+
+> namespace: `time`
+
+The following are the methods available in the Time Module, and they can be used in any `Templating` template, no additional configuration required.
+
+---
+
+### now
+
+> #### now(format? : string = '') : string
+>
+> Returns a string representation current time.
+
+- `format?` - Desired time format. If not supplied, it will use the **Time Format** value in `Templating` <Link href="/configuration/templating-settings" alt="Plugin Settings"> Plugin Settings </Link >
+
+- `-> result` - Returns formatted time string
+
+**Examples**
+
+The following example returns the current time, using default values
+
+```markdown
+<%- time.now() %>
+```
+
+The following example returns current time using custom format, using 12hr format.
+
+```javascript
+<%- time.now("h:mm") %>  // returns 7:22 (no leading zero)
+```
+
+The following example returns current time using custom format, using 24hr format, each displayed with leading zeros
+
+```javascript
+<%- time.now("HH:mm") %>  // returns 07:22
+```
+
+The following example returns curren time in 12hr format, with lowercase am/pm
+
+```javascript
+<%- time.now("hh:mm a") %>  // returns 07:22 am
+```
+
+The following example returns curren time in 12hr format, with uppercase AM/PM
+
+```javascript
+<%- time.now("hh:mm A") %>  // returns 07:22 AM
+```
+
+---
+
+### currentTime
+
+> #### currentTime(format? : string = '') : string
+>
+> Returns a string representation current time.
+
+- `format?` - Desired time format. If not supplied, it will use the **Time Format** in `Templating` <Link href="/configuration/templating-settings" alt="Plugin Settings"> Plugin Settings </Link >
+
+- `-> result` - Returns formatted time string
+
+**Examples**
+
+The following example returns the current time, using default values
+
+```markdown
+<%- time.currentTime() %>
+```
+
+The following example returns current time using custom format
+
+```markdown
+<%- time.currentTime("h:mm") %>
+```
+
+The following example uses the `currentTime` helper
+
+```markdown
+<%- currentTime() %>
+```
+
+---
+
+### format
+
+> #### format(format : string = '', pivotDate? : string = '') : string
+>
+> Formats `pivotDate` using supplied `format`.
+
+_Note: Also available as a <Link href="/built-in-modules/templating-modules-helpers"> helper method </Link >_
+
+- `format?` - A valid time format string
+- `pivotDate?` - Desired date to format. If not supplied, it will use current date.
+
+- `-> result` - Returns formatted time string
+
+<Callout
+  type="info"
+  title="TIP"
+  description={`
+Refer to <a href="https://momentjs.com/docs/#/parsing/string-format/" alt="moment formatting">Momentjs Formatting</a> for available formatting options.
+  
+  `}
+/>

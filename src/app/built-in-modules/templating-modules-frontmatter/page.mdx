@@ -1,0 +1,141 @@
+import Callout from '@/components/Callout'
+
+# Frontmatter Module
+
+## Overview
+
+The Frontmatter Module provides methods for working with template frontmatter, parsing frontmatter content, and extracting frontmatter values from notes across your vault.
+
+## Methods
+
+> namespace: `frontmatter`
+
+The following are the methods available in the Frontmatter Module, and they can be used in any `Templating` template, no additional configuration required.
+
+---
+
+### getValuesForKey
+
+> #### getValuesForKey(tag: string): Promise\<string\>
+>
+> Gets all the values in frontmatter for all notes for a given key
+
+- `tag` - The frontmatter key to search for across all notes
+- `-> result` - Returns a JSON string representation of the values array (e.g., `'["value1","value2","value3"]'`)
+
+This method scans all notes in your vault and extracts all unique values for the specified frontmatter key, returning them as a JSON-stringified array.
+
+**Examples:**
+
+The following example will get all values for the `status` frontmatter key across all notes:
+
+```markdown
+<%- frontmatter.getValuesForKey('status') %>
+// Returns: '["active","completed","pending"]'
+```
+
+The following example will get all values for the `project` frontmatter key:
+
+```markdown
+<%- frontmatter.getValuesForKey('project') %>
+// Returns: '["Website Redesign","Mobile App","Documentation"]'
+```
+
+<Callout type="info">
+This method is also available as a global command: `<%- getValuesForKey('keyName') %>`
+</Callout>
+
+---
+
+### getFrontmatterAttributes
+
+> #### getFrontmatterAttributes(note: CoreNoteFields): \{ \[string\]: string \}
+>
+> Get all frontmatter attributes from a note or an empty object if the note has no front matter
+
+- `note` - The note object to get attributes from
+- `-> result` - Returns an object of attributes or empty object if the note has no front matter
+
+<Callout type="info">
+This method is also available as a global command: `<%- getFrontmatterAttributes(note) %>`
+</Callout>
+
+<Callout type="warning">
+This method returns an object, not a string. Use it within control tags `<% %>` or `templatejs` code blocks, then output the results separately.
+</Callout>
+
+**Example:**
+
+```markdown
+<%
+const attrs = frontmatter.getFrontmatterAttributes(Editor); // get the current frontmatter attributes of the note open in the Editor
+const status = attrs.status || 'none'; // check/process that information in some way and then use a template tag to output the result:
+%>
+Current status: <%- status %>
+```
+
+---
+
+### updateFrontmatterVars
+
+> #### updateFrontmatterVars(note: TEditor | TNote, newAttributes: \{ \[string\]: string \}, deleteMissingAttributes: boolean = false): boolean
+>
+> Update existing front matter attributes based on the provided newAttributes
+
+- `note` - The note to update (either Editor or TNote object)
+- `newAttributes` - The complete set of desired front matter attributes as an object
+- `deleteMissingAttributes` - Whether to delete attributes that are not present in newAttributes (default: false)
+- `-> result` - Returns `true` if the front matter was updated successfully, `false` otherwise
+
+This method will set frontmatter fields whether they existed before or not. If a field doesn't exist, it will be created. If it exists, it will be updated with the new value.
+
+<Callout type="info">
+**Alias**: This method is also available as `updateFrontmatterAttributes()` with identical functionality.
+</Callout>
+
+<Callout type="info">
+This method is also available as global commands: `<%- updateFrontmatterVars(...) %>` and `<%- updateFrontmatterAttributes(...) %>`
+</Callout>
+
+<Callout type="warning">
+This method returns a boolean, not a string. Use it within control tags `<% %>` or `templatejs` code blocks for its side effects (updating the note).
+</Callout>
+
+**Examples:**
+
+Setting a single field (creates or updates the field):
+
+```markdown
+<% frontmatter.updateFrontmatterVars(note, { status: "in progress" }) -%>
+```
+
+Setting multiple fields at once:
+
+```markdown
+<% frontmatter.updateFrontmatterAttributes(Editor, { status: "in progress", priority: "high", assignee: "Alice" }) -%>
+```
+
+Complete example with error handling:
+
+```markdown
+<%
+const success = frontmatter.updateFrontmatterVars(Editor, { status: 'completed', lastModified: new Date().toISOString() }, false);
+%>
+<% if (success) { %>
+✅ Front matter updated successfully
+<% } else { %>
+❌ Failed to update front matter
+<% } %>
+```
+
+## Error Handling
+
+The Frontmatter Module methods include built-in error handling. If any method encounters an error, it will log the error and return appropriate fallback values:
+
+- `getValuesForKey()` returns an empty string `''` on error
+- `getFrontmatterAttributes()` returns empty object `{}` on error
+- `updateFrontmatterVars()` returns `false` on error
+
+<Callout type="info">
+All these methods are available both as `frontmatter.*` namespaced methods and as global commands for convenience.
+</Callout> 

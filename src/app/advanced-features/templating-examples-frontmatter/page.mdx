@@ -1,0 +1,86 @@
+# Creating Notes with Properties/Frontmatter
+
+`Templating` provides support for templates which create notes with properties/frontmatter. The note properties/frontmatter content is placed at the top of the template, between `--` separators and follows the frontmatter of the template.
+
+In the following example, the template frontmatter is at the top between `---` (three dashes) while the note frontmatter (that gets copied into the note) is defined between the two dashes ("--") just below:
+
+```markdown
+---
+title: this is my template title
+type: meeting-note, empty-note
+note: These properties are only relevant to the template, not the note
+---
+--
+note: These items will become the new note's properties/frontmatter
+name: Mike Erickson
+phone: 714.555.1212
+icon: hammer
+icon-color: red-500
+--
+Any other template content you want to be in the generated note can be placed here...
+```
+
+## Prompting for values to be used in the note's frontmatter
+
+You can use prompts in frontmatter/properties to set the value of a frontmatter key of the template as it is rendered.
+
+```markdown
+---
+title: My Template with Prompt for New Note's Frontmatter
+---
+--
+priority: <%- prompt('priority','What is the new note's priority?',['high','medium','low']) %>
+--
+```
+
+When the template is rendered, it will display a choice list prompt for the `priority` key, and the value entered will be used as the value of the `priority` key in the new note's frontmatter.
+
+
+### Example: Complete Frontmatter Template
+
+The following example demonstates a complete frontmatter format template
+
+```markdown
+--
+name: Mike Erickson
+phone: 714.555.1212
+modified: <%- date.now('YYYY-MM-DD h:mm A') %>
+description: The following content will be ignored when rendering a frontmatter template and cannot contain any carriage returns (this note is auto wrapped)
+--
+
+#### Frontmatter Objects
+
+The following is normal template content
+
+name: _<%- frontmatter.name %>_
+phone: _<%- frontmatter.phone %>_
+
+#### Other Templating Variables
+
+<%- user.first %> <%- user.last %>
+<%- date.now() %>
+
+---
+
+modified: _<%- frontmatter.modified %>_
+```
+
+When template is rendered, it will appear as
+
+```markdown
+#### Frontmatter Objects
+
+The following is normal template content
+
+name: _Mike Erickson_
+phone: _714.555.1212_
+
+#### Other Templating Variables
+
+Mike Erickson
+2021-12-24
+
+---
+
+modified: _2021-12-24 10:36 AM_
+```

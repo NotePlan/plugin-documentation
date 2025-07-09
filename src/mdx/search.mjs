@@ -25,6 +25,11 @@ function excludeObjectExpressions(tree) {
   return filter(tree, (node) => !isObjectExpression(node))
 }
 
+function escapeTemplateTags(content) {
+  // Escape HTML angle brackets to prevent them from being misinterpreted by the MDX parser.
+  return content.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
 function extractSections() {
   return (tree, { sections }) => {
     slugify.reset()
@@ -32,6 +37,7 @@ function extractSections() {
     visit(tree, (node) => {
       if (node.type === 'heading' || node.type === 'paragraph') {
         let content = toString(excludeObjectExpressions(node))
+        content = escapeTemplateTags(content)
         if (node.type === 'heading') {
           let hash = node.depth === 1 ? null : slugify(content)
           if (node.depth <= 2) {
@@ -62,7 +68,12 @@ export default function (nextConfig = {}) {
 
             let files = glob.sync('**/*.mdx', { cwd: appDir })
             let data = files.map((file) => {
-              let url = '/' + file.replace(/(^|\/)page\.mdx$/, '')
+              let url =
+                '/' +
+                file.replace(/\/page\.mdx$/, '').replace(/^page\.mdx$/, '')
+              // Handle root page case
+              if (url === '/') url = ''
+
               let mdx = fs.readFileSync(path.join(appDir, file), 'utf8')
 
               let sections = []
@@ -87,13 +98,23 @@ export default function (nextConfig = {}) {
                 tokenize: 'full',
                 document: {
                   id: 'url',
-                  index: 'content',
-                  store: ['title', 'pageTitle'],
-                },
-                context: {
-                  resolution: 9,
-                  depth: 2,
-                  bidirectional: true
+                  index: [
+                    {
+                      field: 'title',
+                      tokenize: 'full',
+                      optimize: true,
+                      resolution: 9
+                    },
+                    {
+                      field: 'content',
+                      tokenize: 'full',
+                      optimize: true,
+                      resolution: 9,
+                      minlength: 2,
+                      context: true
+                    }
+                  ],
+                  store: ['title', 'pageTitle', 'content']
                 }
               })
 
@@ -110,19 +131,86 @@ export default function (nextConfig = {}) {
                 }
               }
 
+              function findMatchContext(text, query, contextLength = 100) {
+                const lowerText = text.toLowerCase()
+                const lowerQuery = query.toLowerCase()
+                const index = lowerText.indexOf(lowerQuery)
+                if (index === -1) return null
+                
+                let start = Math.max(0, index - contextLength)
+                let end = Math.min(text.length, index + query.length + contextLength)
+                
+                // Adjust to word boundaries
+                while (start > 0 && text[start - 1].match(/\w/)) start--
+                while (end < text.length && text[end].match(/\w/)) end++
+                
+                let preview = text.slice(start, end)
+                if (start > 0) preview = '...' + preview
+                if (end < text.length) preview = preview + '...'
+                
+                // Calculate the adjusted match position in the preview
+                const matchStartInPreview = index - start
+                const matchEndInPreview = matchStartInPreview + query.length
+                
+                return {
+                  text: preview,
+                  matchStart: matchStartInPreview,
+                  matchEnd: matchEndInPreview
+                }
+              }
+
               export function search(query, options = {}) {
-                let result = sectionIndex.search(query, {
+                // Search in both title and content fields
+                const results = sectionIndex.search(query, {
                   ...options,
                   enrich: true,
+                  field: ['title', 'content']
                 })
-                if (result.length === 0) {
+
+                if (results.length === 0) {
                   return []
                 }
-                return result[0].result.map((item) => ({
-                  url: item.id,
-                  title: item.doc.title,
-                  pageTitle: item.doc.pageTitle,
-                }))
+
+                // Convert all results to our format
+                const allResults = results.flatMap((resultSet, index) => {
+                  const isFromTitleField = index === 0 // title field results come first
+                  return resultSet.result.map(item => {
+                    const preview = findMatchContext(item.doc.content, query)
+                    return {
+                      url: item.id,
+                      title: item.doc.title,
+                      pageTitle: item.doc.pageTitle,
+                      preview,
+                      isTitleMatch: isFromTitleField
+                    }
+                  })
+                })
+
+                // Deduplicate based on content (title + preview)
+                const seen = new Set()
+                const uniqueResults = allResults.filter(item => {
+                  // Create a unique key based on the content that matters
+                  const key = JSON.stringify({
+                    title: item.title,
+                    pageTitle: item.pageTitle,
+                    previewText: item.preview?.text,
+                    matchStart: item.preview?.matchStart,
+                    matchEnd: item.preview?.matchEnd
+                  })
+                  
+                  if (seen.has(key)) {
+                    return false
+                  }
+                  seen.add(key)
+                  return true
+                })
+
+                // Sort with title matches first
+                return uniqueResults.sort((a, b) => {
+                  if (a.isTitleMatch && !b.isTitleMatch) return -1
+                  if (!a.isTitleMatch && b.isTitleMatch) return 1
+                  return 0
+                })
               }
             `
           }),

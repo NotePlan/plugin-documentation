@@ -1,0 +1,949 @@
+import Callout from '@/components/Callout'
+import Link from 'next/link'
+
+# Date Module
+
+## Overview
+
+The Date Module provides methods and variables which work with dates.
+
+<Callout
+  type="info"
+  description={`Refer to the <a href="/built-in-modules/templating-modules-time" alt="Time Module"> Time Module </a> page for similar methods which work with with time values. `}
+/>
+
+### Date Module Helpers
+
+The Date Module exposes commonly used [helper](/docs/templating-modules/date-module#helpers) methods
+
+### Formatting Date Values
+
+The Date Module uses JavaScript `moment` library internally, thus you can use any of the [moment formatting](https://momentjs.com/docs/#/parsing/string-format/) options.
+
+<Callout type="info" title="Note about Weeks">
+If you are interested in week numbers, keep in mind that moment.js uses the ISO 8601 week number, which can be different from the week number used in NotePlan, depending on what you have set in your NotePlan preferences for your start-of-week. Instead of using the `w` token, if you want to match the NotePlan week number, use the Date Module `date.weekNumber()` method instead. See the [Date Module page](/built-in-modules/templating-modules-date#weeknumber) for more details. 
+</Callout>
+
+## Week Numbering Behavior
+
+The DateModule now uses NotePlan's native week calculation system to ensure consistency with your configured week start preferences. This differs from the standard ISO week numbering used by moment.js.
+
+### Week Token Types
+
+| Token | Description | Calculation Method | Example |
+|-------|-------------|-------------------|---------|
+| `w`, `ww` | NotePlan week number | Uses NotePlan's `Calendar.weekNumber()` | `25`, `05` |
+| `W`, `WW` | ISO week number (Monday start) | Uses moment.js standard | `24`, `04` |
+| `wo` | Ordinal ISO week number | Uses moment.js ISO weeks | `24th` |
+
+### Key Differences
+
+**NotePlan Weeks (`w`/`ww`):**
+- Respects your NotePlan week start day configuration
+- Consistent with NotePlan's built-in week numbering
+
+**ISO Weeks (`W`/`WW`):**
+- Always start on Monday (ISO 8601 standard)
+- May differ from NotePlan's week numbering
+
+**Examples:**
+
+```javascript
+// Assuming NotePlan is configured with Sunday as week start
+<%- date.format('YYYY-[W]ww', '2023-01-01') %>  // "2023-W01" (NotePlan week)
+<%- date.format('YYYY-[W]WW', '2023-01-01') %>  // "2023-W52" (ISO week)
+
+// Compare both systems
+<%- date.format('w/W', '2023-06-15') %>         // "25/24" (NotePlan vs ISO)
+```
+
+<Callout type="tip" title="Pure Moment.js Formatting">
+Use `date.moment.format()` to bypass NotePlan week intervention entirely and get exact moment.js behavior including localized formatting.
+</Callout>
+
+_Tokens are case-sensitive._
+
+| Category          | Token                | Example                                           | Description                                                                  |
+| ----------------- | -------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------- |
+| **Month**         | `M`                  | 1 2 ... 11 12                                     | Month number                                                                 |
+|                   | `Mo`                 | 1st 2nd ... 11th 12th                             | Month number with ordinal                                                    |
+|                   | `MM`                 | 01 02 ... 11 12                                   | Month number, zero-padded                                                    |
+|                   | `MMM`                | Jan Feb ... Nov Dec                               | Month name, short                                                            |
+|                   | `MMMM`               | January February ... November December            | Month name, full                                                             |
+| **Quarter**       | `Q`                  | 1 2 3 4                                           | Quarter of year                                                              |
+|                   | `Qo`                 | 1st 2nd 3rd 4th                                   | Quarter of year with ordinal                                                 |
+| **Day of Month**  | `D`                  | 1 2 ... 30 31                                     | Day of month                                                                 |
+|                   | `Do`                 | 1st 2nd ... 30th 31st                             | Day of month with ordinal                                                    |
+|                   | `DD`                 | 01 02 ... 30 31                                   | Day of month, zero-padded                                                    |
+| **Day of Year**   | `DDD`                | 1 2 ... 364 365                                   | Day of year                                                                  |
+|                   | `DDDo`               | 1st 2nd ... 364th 365th                           | Day of year with ordinal                                                     |
+|                   | `DDDD`               | 001 002 ... 364 365                               | Day of year, zero-padded (3 digits)                                          |
+| **Day of Week**   | `d`                  | 0 1 ... 5 6                                       | Day of week (Sunday as 0, Saturday as 6)                                     |
+|                   | `do`                 | 0th 1st ... 5th 6th                               | Day of week with ordinal                                                     |
+|                   | `dd`                 | Su Mo ... Fr Sa                                   | Day of week, min                                                             |
+|                   | `ddd`                | Sun Mon ... Fri Sat                               | Day of week, short                                                           |
+|                   | `dddd`               | Sunday Monday ... Friday Saturday                 | Day of week, full                                                            |
+| **Day of Week (Locale)** | `e`           | 0 1 ... 5 6                                       | Day of week (locale specific, e.g. 0 may be Monday)                        |
+| **Day of Week (ISO)** | `E`              | 1 2 ... 6 7                                       | Day of week (ISO 8601, Monday as 1, Sunday as 7)                             |
+| **Week of Year** (see note below) | `w`                  | 1 2 ... 52 53                                     | Week of year (NotePlan weeks, **uses** NotePlan's start of week setting)                                               |
+|                   | `ww`                 | 01 02 ... 52 53                                   | Week of year, zero-padded (NotePlan weeks, **uses** NotePlan's start of week setting)                                  |
+|                   | `wo`                 | 1st 2nd ... 52nd 53rd                             | Week of year with ordinal (ISO weeks, **not** using NotePlan's start of week)                                  |
+| **Week of Year (ISO)** | `W`             | 1 2 ... 52 53                                     | Week of year (ISO 8601, Monday start)                                                      |
+|                   | `Wo`                 | 1st 2nd ... 52nd 53rd                             | Week of year with ordinal (ISO 8601)                                         |
+|                   | `WW`                 | 01 02 ... 52 53                                   | Week of year, zero-padded (ISO 8601)                                         |
+| **Year**          | `YY`                 | 70 71 ... 29 30                                   | Year, 2-digits                                                               |
+|                   | `YYYY`               | 1970 1971 ... 2029 2030                           | Year, 4-digits                                                               |
+|                   | `Y`                  | 1970 ... 9999 +10000                              | Year (ISO 8601, handles years > 9999)                                        |
+|                   | `YYYYYY`             | -001970 ... +001970                               | Year, expanded (±6 digits)                                                   |
+| **Era Year**      | `y`                  | 1 2 ... 2020 ...                                  | Year of era                                                                  |
+| **Era**           | `N`, `NN`, `NNN`     | BC AD                                             | Era name, abbreviated                                                        |
+|                   | `NNNN`               | Before Christ, Anno Domini                        | Era name, full                                                               |
+|                   | `NNNNN`              | BC AD                                             | Era name, narrow                                                             |
+| **Week Year (Locale)** | `gg`           | 70 71 ... 29 30                                   | Week year, 2-digits (locale specific)                                        |
+|                   | `gggg`               | 1970 1971 ... 2029 2030                           | Week year, 4-digits (locale specific)                                        |
+| **Week Year (ISO)** | `GG`              | 70 71 ... 29 30                                   | Week year, 2-digits (ISO 8601)                                               |
+|                   | `GGGG`               | 1970 1971 ... 2029 2030                           | Week year, 4-digits (ISO 8601)                                               |
+| **AM/PM**         | `A`                  | AM PM                                             | Uppercase AM/PM                                                              |
+|                   | `a`                  | am pm                                             | Lowercase am/pm                                                              |
+|                   | `H`                  | 0 1 ... 22 23                                     | Hour (0-23)                                                                  |
+|                   | `HH`                 | 00 01 ... 22 23                                   | Hour, zero-padded (00-23)                                                    |
+|                   | `h`                  | 1 2 ... 11 12                                     | Hour (1-12)                                                                  |
+|                   | `hh`                 | 01 02 ... 11 12                                   | Hour, zero-padded (01-12)                                                    |
+|                   | `k`                  | 1 2 ... 23 24                                     | Hour (1-24)                                                                  |
+|                   | `kk`                 | 01 02 ... 23 24                                   | Hour, zero-padded (01-24)                                                    |
+| **Minute**        | `m`                  | 0 1 ... 58 59                                     | Minute                                                                       |
+|                   | `mm`                 | 00 01 ... 58 59                                   | Minute, zero-padded                                                          |
+|                   | `ss`                 | 00 01 ... 58 59                                   | Second, zero-padded                                                          |
+|                   | `SS`                 | 00 01 ... 98 99                                   | Hundredths of a second                                                       |
+|                   | `SSS`                | 000 001 ... 998 999                               | Milliseconds                                                                 |
+|                   | `SSSS...SSSSSSSSS`   | 000[0..] ... 999[0..]                             | Fractional seconds (displays 3 significant digits, rest 0s)                  |
+| **Time Zone**     | `z`, `zz`            | EST CST ...                                       | Time zone name (deprecated for plain moments, use with moment-timezone)      |
+|                   | `Z`                  | -07:00 -06:00 ... +07:00                          | Offset from UTC                                                              |
+|                   | `ZZ`                 | -0700 -0600 ... +0700                             | Offset from UTC, compact                                                     |
+| **Unix Timestamp** | `X`                 | 1360013296                                        | Unix timestamp (seconds)                                                     |
+|                   | `x`                  | 1360013296123                                     | Unix millisecond timestamp                                                   |
+| **Localized**     | `LT`                 | 8:30 PM                                           | Time (local format)                                                          |
+|                   | `LTS`                | 8:30:25 PM                                        | Time with seconds (local format)                                             |
+|                   | `L`                  | 09/04/1986                                        | Date (local format)                                                          |
+|                   | `l`                  | 9/4/1986                                          | Date, short (local format)                                                   |
+|                   | `LL`                 | September 4, 1986                                 | Date, long (local format)                                                    |
+|                   | `ll`                 | Sep 4, 1986                                       | Date, short long (local format)                                              |
+|                   | `LLL`                | September 4, 1986 8:30 PM                         | Date & Time (local format)                                                   |
+|                   | `lll`                | Sep 4, 1986 8:30 PM                               | Date & Time, short (local format)                                            |
+|                   | `LLLL`               | Thursday, September 4, 1986 8:30 PM               | Date, Day & Time (local format)                                              |
+|                   | `llll`               | Thu, Sep 4, 1986 8:30 PM                          | Date, Day & Time, short (local format)                                       |
+
+<Callout type="warning" title="Week Numbers in Templates & NotePlan">
+The DateModule now uses NotePlan's native week calculation for lowercase week tokens (`w`, `ww`) to ensure consistency with your configured week start day. Use uppercase tokens (`W`, `WW`) for ISO 8601 week numbers, or `date.moment.format()` for pure moment.js behavior. The `date.weekNumber()` method returns NotePlan weeks.
+</Callout>
+
+**Example**
+
+If you wish to display today's date value with 4 digit year and 2 digit month, separated by a dash `-` character, you would use `<%- date.now('YYYY-MM') %>`
+
+## Methods
+
+> namespace: `date`
+
+The following are the methods available in the Date Module, and they can be used in any `Templating` template, no additional configuration required.
+
+<Callout type="info" title="Pivot Date">
+Many of the Date Module methods accept a `pivotDate` argument, which means the date which will be used to perform the appropriate calculation. When no `pivotDate` is supplied, the current date will be used.
+</Callout>
+
+---
+
+### createDateTime
+
+> #### createDateTime(pivotDate? : string = '') : date
+>
+> Creates JavaScript `Date` object based on user supplied `pivotDate`.
+
+This is necessary due to the way NotePlan handles dates. If you are passing a date string to any NotePlan method, you will need to first create a native JavaScript `date` value.
+
+- `pivotDate?` - Date string supplied either from NotePlan directly, or from other Date Module methods. If not supplied, current date will be used
+
+- `-> result` - Returns JavaScript `date` object
+
+---
+
+### `now(format?: string, offset?: string | number)`
+Returns the current date and time, or a date/time offset from now, formatted as a string.
+
+**Parameters:**
+
+*   `format` (optional): A string defining the desired output format.
+    *   Uses [Moment.js format tokens](https://momentjs.com/docs/#/displaying/format/) (e.g., `YYYY-MM-DD`, `dddd, MMMM Do YYYY, h:mm:ss a`).
+    *   Also supports Intl date styles: `'short'`, `'medium'`, `'long'`, `'full'`.
+    *   If empty or not provided, it defaults to the `dateFormat` specified in the plugin settings, or `YYYY-MM-DD` if no setting is found.
+*   `offset` (optional): A string or number to calculate a date/time offset from the current moment.
+    *   **Numerical Offset**: If a number is provided (e.g., `7`, `-90`), it's treated as a number of days to add to (positive) or subtract from (negative) the current date.
+    *   **Shorthand String Offset**: A string combining a number and a unit (e.g., `1w`, `-2M`, `+7d`, `-3y`).
+        *   Supported units:
+            *   `d`: days
+            *   `w`: weeks
+            *   `M`: months
+            *   `y`: years
+        *   Examples: `7d` (7 days from now), `-1M` (1 month ago), `+2w` (2 weeks from now).
+    *   If empty or not provided, no offset is applied.
+
+**Returns:**
+`(string)`: The formatted date string.
+
+**Behavior Notes:**
+*   When an Intl format (`short`, `medium`, `long`, `full`) is used, the locale for formatting is taken from the `templateLocale` in plugin settings, or `en-US` if not set.
+*   The global `now()` function available directly in templates (e.g., `<%- now(...) %>`) uses the same underlying logic as `date.now(...)`.
+
+**Examples:**
+
+The following example returns the current date, using default format (`YYYY-MM-DD` or plugin setting):
+```javascript
+<%- date.now() %>
+```
+Equivalent global helper:
+```javascript
+<%- now() %>
+```
+
+The following example returns the current date using a custom Moment.js format:
+```javascript
+<%- date.now("dddd, MMMM Do YYYY, h:mm a") %>
+```
+Global helper with custom format:
+```javascript
+<%- now("dddd, MMMM Do YYYY, h:mm a") %>
+```
+
+The following example returns the current date using the 'short' Intl date style (e.g., "5/18/25"):
+```javascript
+<%- date.now('short') %>
+```
+
+The following example will subtract 90 days from the current date and format it using the default format:
+```javascript
+<%- date.now('', -90) %>
+```
+Global helper subtracting 90 days:
+```javascript
+<%- now('', -90) %>
+```
+
+The following example will add 10 days to the current date and format it using the default format:
+```javascript
+<%- date.now('', 10) %>
+```
+
+The following example will add 2 weeks from the current date and format it using `MM/DD/YYYY`:
+```javascript
+<%- date.now('MM/DD/YYYY', '+2w') %>
+```
+Global helper adding 2 weeks with specific format:
+```javascript
+<%- now('MM/DD/YYYY', '2w') %>
+```
+
+The following example will subtract 3 months from the current date and format it using the 'long' Intl date style:
+```javascript
+<%- date.now('long', '-3M') %>
+```
+
+The following example will add 1 year to the current date and use the default format:
+```javascript
+<%- date.now('', '1y') %>
+```
+Equivalent using a positive number for the shorthand string offset:
+```javascript
+<%- date.now('', '+1y') %>
+``` 
+
+---
+
+### `timestamp(format?: string)`
+Returns a date/time timestamp string.
+
+**Parameters:**
+
+*   `format` (optional): A string defining the desired output format.
+    *   If not supplied or an empty string, it defaults to the full ISO 8601 local time format (e.g., `2023-10-27T17:30:00-07:00`). This is equivalent to `moment().format()`.
+    *   If a specific format string is provided (e.g., `YYYY-MM-DD HH:mm:ss`), it uses that format with the current local time.
+        *   Uses [Moment.js format tokens](https://momentjs.com/docs/#/displaying/format/).
+    *   A special format string `'UTC_ISO'` can be passed to get the current time in UTC, formatted as a standard ISO 8601 string (e.g., `2023-10-28T00:30:00Z`). This is equivalent to `moment.utc().format()`.
+
+**Returns:**
+`(string)`: The formatted timestamp string.
+
+**Behavior Notes:**
+*   The method respects the `templateLocale` setting from the plugin configuration when formatting, if the chosen Moment.js format is locale-sensitive (e.g., `LLLL`, `dddd`).
+*   The global `timestamp()` function available directly in templates (e.g., `<%- timestamp(...) %>`) uses the same underlying logic as `date.timestamp(...)`.
+
+**Examples:**
+
+The following example returns the current date and time in full ISO 8601 local format:
+```javascript
+<%- date.timestamp() %>
+```
+Output might be similar to: `2023-10-27T10:45:30-07:00`
+
+The following example returns the current date and time using a custom format:
+```javascript
+<%- date.timestamp("dddd, MMMM Do YYYY, h:mm:ss a") %>
+```
+Output might be similar to: `Friday, October 27th 2023, 10:45:30 am`
+
+The following example returns the current date and time in UTC, formatted as ISO 8601:
+```javascript
+<%- date.timestamp('UTC_ISO') %>
+```
+Output might be similar to: `2023-10-27T17:45:30Z`
+
+The following example uses the global `timestamp()` helper to get the default local ISO timestamp:
+```javascript
+<%- timestamp() %>
+```
+
+The following example uses the global `timestamp()` helper to get a custom formatted local timestamp:
+```javascript
+<%- timestamp("YYYY/MM/DD HH:mm") %>
+``` 
+
+---
+
+### date8601
+
+> #### date8601() : string
+>
+> Returns current date 8601 format (YYYY-MM-DD)
+
+_Note: Also available as [helper](/docs/templating-modules/date-module#helpers) method_
+
+- `-> result` - Returns current date in 8601 format
+
+---
+
+### today
+
+> #### today(format? : string = '') : string
+>
+> Returns a string representation current date.
+
+- `format?` - Desired date format. If not supplied, it will use **Date Format** value in `Templating` [Plugin Settings](/docs/settings)
+
+- `-> result` - Returns formatted date string
+
+**Example**
+
+The following example returns the current date, using default values
+
+```javascript
+<%- date.today() %>
+```
+
+---
+
+### tomorrow
+
+> #### tomorrow(format? : string = '') : string
+>
+> Returns a string representation of tomorrow
+
+- `format?` - Desired date format. If not supplied, it will use the **Date Format** value in `Templating` [Plugin Settings](/docs/settings)
+
+- `-> result` - Returns formatted date
+
+**Example**
+
+The following example returns tomorrow based on current date
+
+```javascript
+<%- date.tomorrow() %>
+```
+
+---
+
+### yesterday
+
+> #### yesterday(format? : string = '') : string
+>
+> Returns a string representation of yesterday
+
+- `format?` - Desired date format. If not supplied, it will use the **Date Format** in `Templating` [Plugin Settings](/docs/settings)
+
+- `-> result` - Returns formatted date
+
+**Example**
+
+The following example returns yesterday based on current date
+
+```javascript
+<%- date.yesterday() %>
+```
+
+---
+
+### format
+
+> #### format(format : string = '', pivotDate? : string = new Date()) : string
+>
+> Formats `pivotDate` using supplied `format` (default: 'YYYY-MM-DD')
+> If no pivotDate is provided, it formats the date/time as of this moment (basically the same as `now()`
+
+_Note: Also available as [helper](/docs/templating-modules/date-module#helpers) method_
+
+- `format?` - A valid date format string
+- `pivotDate?` - Desired date to format. If not supplied, it will use current date
+
+- `-> result` - Returns formatted date string
+
+<Callout type="info" title="Week Numbering">
+When using week-related format tokens, this method now supports NotePlan's native week calculation. Use lowercase `w`/`ww` for NotePlan weeks, uppercase `W`/`WW` for ISO weeks.
+</Callout>
+
+:::tip
+Refer to [moment.js format](https://momentjs.com/docs/#/parsing/string-format/) for available formatting options
+:::
+
+---
+
+### weekday
+
+> #### weekday(format? : string = '', offset? : number = 1, pivotDate? : string = '') : string
+>
+> Returns the closest weekday, using the `offset` to add or subtract days
+
+- `format?` - Desired date format. If not supplied, it will use the Date Format value in `Templating` [Plugin Settings](/docs/settings)
+- `offset?` - Date offset, using `d`, `w`, `m`, or `y`
+- `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
+
+- `-> result` - Returns formatted date string
+
+**Example**
+
+The following returns the closest weekday 2 days in advance using current date
+
+```javascript
+<%- date.weekday('', 2) %>
+```
+
+The following returns the closest weekday 2 days in advance using fixed date
+
+```javascript
+<%- date.weekday('', 2, '2021-12-15') %> // returns 2021-12-17
+```
+
+---
+
+### weekNumber
+
+> #### weekNumber(pivotDate? : string = '') : number
+>
+> Returns the week number based on `pivotDate` using NotePlan's native week calculation
+
+- `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
+
+- `-> result` - Returns week number according to NotePlan's calculation (respects your configured week start day)
+
+**Example**
+
+The following returns the NotePlan week number for the specified date
+
+```javascript
+<%- date.weekNumber('2021-12-15') %> // the following will return 50 (NotePlan week)
+```
+
+<Callout type="info" title="Week Numbering">
+This method now returns NotePlan's native week number instead of ISO week number, ensuring consistency with your configured week start day. For ISO week numbers, use `date.format('W', pivotDate)`.
+</Callout>
+
+---
+
+### dayNumber
+
+> #### dayNumber(pivotDate? : string = '') : number
+>
+> Returns the day number based on `pivotDate`
+
+Day number will be one of following
+
+- 0 - Sunday
+- 1 - Monday
+- 2 - Tuesday
+- 3 - Wednesday
+- 4 - Thursday
+- 5 - Friday
+- 6 - Saturday
+
+- `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
+
+- `-> result` - Returns day number
+
+**Example**
+
+The following returns the closest weekday 2 days in advance using current date
+
+```javascript
+<%- date.dayNumber('2021-12-15') %> // the following will return 3
+```
+
+---
+
+### isWeekday
+
+> #### isWeekday(pivotDate? : string = '') : boolean
+>
+> Returns true if `pivotDate` is on weekday
+
+- `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
+
+- `-> result` - Returns true or false
+
+**Example**
+
+The following returns true or false if `pivotDate` is weekday
+
+```javascript
+<%- date.isWeekday('2021-12-15') %> // the following will return true
+```
+
+---
+
+### isWeekend
+
+> #### isWeekend(pivotDate? : string = '') : boolean
+>
+> Returns true if `pivotDate` is on weekend
+
+- `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
+- `-> result` - Returns true or false
+
+**Example**
+
+The following returns true or false if `pivotDate` is weekend
+
+```javascript
+<%- date.isWeekend('2021-12-15') %> // the following will return false
+```
+
+---
+
+### weekOf
+
+Returns information about the week number, and start/end dates in ISO 8601 format.
+
+> #### weekOf(startDay, endDay, pivotDate) : string 
+or
+> #### weekOf(pivotDate? : string = '') : string 
+>
+> Returns formatted weekOf based on `pivotDate` using NotePlan's week calculation system
+
+- startDay - Day number for start of week (adds offset to NotePlan's configured start day)
+- endDay - Day number for end of week (not actively used - end is calculated from start day)
+- `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
+
+- `-> result` Returns formatted weekOf using following syntax `Wnn (YYYY-MM-DD..YYYY-MM-DD)`
+
+<Callout type="info" title="Week Numbering System">
+This method uses NotePlan's `Calendar.weekNumber()` system, which respects your configured week start day. Week numbers may differ from ISO week numbers, especially around year boundaries and for Sunday dates.
+</Callout>
+
+<Callout type="warning" title="Parameter Behavior">
+When `startDay` is provided, it acts as an offset to NotePlan's calculated week start rather than completely overriding the week preference. The `endDay` parameter is kept for backward compatibility but is not actively used.
+</Callout>
+
+**Example**
+
+The following returns weekOf value using NotePlan's week numbering and start setting:
+
+```javascript
+<%- date.weekOf('2021-12-01') %> // Uses NotePlan's configured week start
+```
+
+The following example adds an offset to the week start calculation:
+
+```javascript
+<%- date.weekOf(1, 7, "2024-04-14") %> // W16 (2024-04-14..2024-04-20)
+```
+
+---
+
+### startOfWeek
+
+> #### startOfWeek(format? string = '', pivotDate? : string = '', firstOfWeek? : number = 0) : string
+>
+> Returns start of week date using NotePlan's configured week start day
+
+- `format` - Optional date format, uses `Templating` Date Format if not supplied
+- `pivotDate?` - Desired date to obtain start of week. If not supplied, it will use current date
+- `firstOfWeek` - Day number offset added to NotePlan's calculated week start (not a complete override)
+
+- `-> result` Returns start of week
+
+<Callout type="info" title="Week Calculation">
+This method uses NotePlan's `Calendar.startOfWeek()` which respects your configured week start day. The `firstOfWeek` parameter adds an offset to this calculation rather than overriding your week preference entirely.
+</Callout>
+
+**Example**
+
+The following returns start of week using NotePlan's configured week start day:
+
+```javascript
+<%- date.startOfWeek('YYYY-MM-DD', '2021-12-01') %> // Uses NotePlan's week start setting
+```
+
+The following adds an offset to the calculated week start:
+
+```javascript
+<%- date.startOfWeek('YYYY-MM-DD', '2021-12-01', 1) %> // Adds 1-day offset to week start
+```
+
+---
+
+### endOfWeek
+
+> #### endOfWeek(format? string = '', pivotDate? : string = '', firstOfWeek? : number = 0) : string
+>
+> Returns end of week date using NotePlan's configured week start day
+
+- `format` - Optional date format, uses `Templating` Date Format if not supplied
+- `pivotDate?` - Desired date to obtain end of week. If not supplied, it will use current date
+- `firstOfWeek` - Day number offset added to NotePlan's calculated week start (not a complete override)
+
+- `-> result` Returns end of week
+
+<Callout type="info" title="Week Calculation">
+This method uses NotePlan's `Calendar.endOfWeek()` which automatically determines the end based on your configured week start day. The `firstOfWeek` parameter adds an offset to the calculation rather than overriding your week preference entirely.
+</Callout>
+
+**Example**
+
+The following returns end of week using NotePlan's configured week start day:
+
+```javascript
+<%- date.endOfWeek('YYYY-MM-DD', '2021-12-01') %> // Uses NotePlan's week start setting
+```
+
+The following adds an offset to the calculated week:
+
+```javascript
+<%- date.endOfWeek('YYYY-MM-DD', '2021-12-01', 1) %> // Adds 1-day offset to week calculation
+```
+
+---
+
+### startOfMonth
+
+> #### startOfMonth(format? string = '', pivotDate? : string = '') : string
+>
+> Returns start of month date
+
+- `format` - Optional date format, uses `Templating` Date Format if not supplied
+- `pivotDate?` - Desired date to obtain start of month. If not supplied, it will use current date
+
+- `-> result` Returns start of month
+
+---
+
+### daysInMonth
+
+> #### daysInMonth(pivotDate? : string = '') : number
+>
+> Returns number of days in month
+
+- `pivotDate?` - Desired date to obtain days in month. If not supplied, it will use current date
+
+- `-> result` Returns days in month
+
+---
+
+### endOfMonth
+
+> #### endOfMonth(format? string = '', pivotDate? : string = '') : string
+>
+> Returns start of month date
+
+- `format` - Optional date format, uses `Templating` Date Format if not supplied
+- `pivotDate?` - Desired date to obtain start of month. If not supplied, it will use current date
+
+- `-> result` Returns end of month
+
+---
+
+### daysBetween
+
+> #### daysBetween(startDate : string = '', endDate: string = '') : number | string
+>
+> Returns days between two dates.
+
+- `startDate` - Desired start date
+- `endDate` - Desired end date
+
+- `-> result` Returns number of days between `startDate` and `endDate`
+
+:::note
+If `startDate` or `endDate` are not supplied, an error string ("Invalid Start Date" or "Invalid End Date") will be returned
+:::
+
+**Example**
+
+The following returns number of days between `2022-05-01` and `2022-06-31` (returns `31`)
+
+```javascript
+<%- date.daysBewteen('2022-05-01', '2022-06-01') %> // returns 31
+```
+
+---
+
+### daysUntil
+
+> #### daysUntil(targetDateString : string, includeToday? : boolean = false) : number
+>
+> Calculates the number of days from today until the target date.
+> Uses local time for calculations.
+
+- `targetDateString` - The target date in 'YYYY-MM-DD' format.
+- `includeToday?` - Whether to include today in the count (default: false).
+
+- `-> result` - Returns the number of days until the target date. Returns negative number if target date is in the past.
+
+**Examples**
+
+The following example calculates the number of days from today until December 31st of the current year (assuming today is before December 31st):
+
+```javascript
+<%- date.daysUntil(date.now('YYYY') + '-12-31') %>
+```
+
+The following example calculates the number of days until December 31st, including today:
+
+```javascript
+<%- date.daysUntil(date.now('YYYY') + '-12-31', true) %>
+```
+
+If today is `2023-10-26`, the following returns `5` (days until `2023-10-31`):
+
+```javascript
+<%- date.daysUntil('2023-10-31') %>
+```
+
+If today is `2023-10-26`, the following returns `6` (days until `2023-10-31`, including today):
+
+```javascript
+<%- date.daysUntil('2023-10-31', true) %>
+```
+
+If the target date is in the past, it returns `0`:
+```javascript
+<%- date.daysUntil('2020-01-01') %> // returns 0
+```
+
+---
+
+### add
+
+> #### add(pivotDate? : string = '', numDays : number = 1, timeframe : string = '', format? : string = 'YYYY-MM-DD') : string
+>
+> Adds `numDays` days. You can also supply `pivotDate` and date `format`
+
+- `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
+- `numDays` - Number of days to add (default: 1)
+- `timeframe` - 'days', 'weeks', 'months', 'years'
+- `format?` - Optional format string
+
+- `-> result` Returns formatted date string
+
+**Example**
+
+The following adds 7 days, using current date
+
+```javascript
+<%- date.add('2022-01-07', 7, 'days', 'YYYY-MM-DD') %> // returns 2022-01-14
+```
+
+---
+
+### businessAdd
+
+> #### businessAdd(numDays : number = 1, pivotDate? : string = '', format? : string = '') : string
+>
+> Adds `numDays` business days. You can also supply `pivotDate` and date `format`
+
+- `numDays` - Number of days to add (default: 1)
+- `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
+- `format?` - Optional format string
+
+- `-> result` Returns formatted date string
+
+**Example**
+
+The following adds 3 business days, using current date
+
+```javascript
+<%- date.businessAdd(3, '2022-01-07', 'YYYY-MM-DD') %> // returns 2022-01-12
+```
+
+---
+
+### subtract
+
+> #### subtract(pivotDate? : string = '', numDays : number = 1, timeframme : string = '', format? : string = '') : string
+>
+> Subtracts `numDays` days. You can also supply `pivotDate` and date `format`
+
+- `numDays` - Number of days to add (default: 1)
+- `timeframe` - 'days', 'weeks', 'months', 'years'
+- `pivotDate?` - Desired date to subtract from. If not supplied, it will use current date
+- `format?` - Optional format string
+
+- `-> result` Returns formatted date string
+
+**Example**
+
+The following subtracts 7 days, using current date
+
+```javascript
+<%- date.subtract('2022-01-12', 7, 'days', 'YYYY-MM-DD') %> // returns 2022-01-05
+```
+
+---
+
+### businessSubtract
+
+> #### businessSubtract(numDays : number = 1, pivotDate? : string = '', format? : string = '') : string
+>
+> Subtracts `numDays` business days. You can also supply `pivotDate` and date `format`
+
+- `numDays` - Number of business days to subtract (default: 1)
+- `pivotDate?` - Desired date to obtain subtract from. If not supplied, it will use current date
+- `format?` - Optional format string
+
+- `-> result` Returns formatted date string
+
+**Example**
+
+The following subtracts 3 business days, using current date
+
+```javascript
+<%- date.businessSubtract(3, '2022-01-12', 'YYYY-MM-DD') %> // returns 2022-01-07
+```
+
+---
+
+### nextBusinessDay
+
+> #### nextBusinessDay(pivotDate? : string = '', format? : string = '') : string
+>
+> Returns next business day, based on `pivotDate`. You can also supply date `format`
+
+- `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
+- `format?` - Optional format string
+
+- `-> result` Returns formatted date string
+
+**Example**
+
+The following returns next business day based on `pivotDate`
+
+```javascript
+<%- date.nextBusinessDay('2022-01-12') %> // returns 2022-01-13
+```
+
+---
+
+### previousBusinessDay
+
+> #### previousBusinessDay(pivotDate? : string = '', format? : string = '') : string
+>
+> Returns previous business day, based on `pivotDate`. You can also supply date `format`
+
+- `pivotDate?` - Desired date to obtain week number. If not supplied, it will use current date
+- `format?` - Optional format string
+
+- `-> result` Returns formatted date string
+
+**Example**
+
+The following returns previous business day based on `pivotDate`
+
+```javascript
+<%- date.previousBusinessDay('2022-01-10') %> // returns 2022-01-07
+```
+
+## Using DateModule in NotePlan Plugins
+
+In addition to using the Date Module methods in templates, you can also use within your custom NotePlan plugins.
+
+### Date Module Methods
+
+The following examples demonstrates how you can use some of the Date Module methods
+
+#### previousBusinessDay
+
+```javascript
+// import DateModule from @templatingModules
+import DateModule from '@templatingModules/DateModule'
+
+export async testPreviousBusinessDay() : Promise<string> {
+	// The following example executes the `previousBusinessDay` method
+	return new DateModule().previousBusinessDay()
+}
+```
+
+#### isWeekend
+
+```javascript
+export async testNextBusinessDay() : Promise<string> {
+	// in addition to use the static class method, you could also create a `dateInstance` variable
+	const dateInstance = new DateModule()
+
+	// get the current date using supplied format
+	const currentDate = moment(new Date()).format('YYYY-MM-DD h:mm A')
+
+  // check if `currentDate` is weekend
+	const isWeekend = dateInstance.isWeekend(currentDate)
+  if (isWeekend) {
+		return 'Perform special handling if current day is on weekend'
+	}
+
+	return ''
+}
+```
+
+## Helpers
+
+DateModule exposes commonly used methods as importable helpers
+
+### now
+
+> #### now(format,offsetDays) -> current date with optional format & offset in days
+
+### format
+
+> #### format(format : string = '') -> formatted date
+
+### date8601
+
+> #### date8601() -> returns current date in 8601 format YYYY-MM-DD)
+
+### timestamp
+
+> #### timestamp() -> returns current date time
+
+**Examples:**
+
+```javascript
+// import Templating Library
+import NPTemplating from 'NPTemplating'
+import DateModule from '@templatingModules/DateModule'
+import { now, format, timestamp, date8601 } from '@templatingModules/DateModule'
+
+const templateData = {
+	data: {
+		testDate: new DateModule().now(), // returns current date using .now module method
+		myDate: now(), // returns current date, using default format YYYY-MM-DD
+		myDate2: date8601(), // returns current date in 8601 format YYYY-MM-DD (alias of now)
+		myDateFormatted: format('YYYY MM DD','2022-03-18'), // returns 2022 03 18
+		myTimeStamp: timestamp()
+	}
+
+	const renderedData = NPTemplating.renderTemplate('My Template', data)
+}
+```

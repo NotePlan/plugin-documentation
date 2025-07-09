@@ -1,0 +1,101 @@
+import Callout from '@/components/Callout'
+
+# Prompts
+
+`Templating` provides the ability to ask the user questions through prompts when rendering templates. This page provides an overview of the different types of prompts available.
+
+## Basic Prompts
+
+Basic prompts allow you to collect simple text input or present users with a list of choices.
+
+### Simple Text Input
+
+The most basic form of prompt is a simple text input:
+
+```markdown
+<%- prompt('What is your first name?') %>
+```
+
+This will prompt the user to enter their first name and then display it at the location of the prompt in the template.
+
+### Choice List Prompt
+
+You can also create prompts with a list of predefined choices:
+
+```markdown
+Task Priority: <%- prompt('priority','What is task priority?',['high','medium','low']) %>
+```
+
+<Callout
+  type="warning"
+  title="PROMPT PLACEHOLDER/VARIABLE NAME"
+  description="When using `prompt` command with anything other than a simple text input, you must supply a valid placeholder (variable) name (e.g. `name`) for the first parameter. You can use this variable name in your template to access the results of the prompt. The placeholder/variable name must contain valid characters:
+  - must start with an alpha character (a..z, A..Z)
+  - may only contain alphanumeric characters (a..z, A..Z, 0..9)
+  - may **not** contain spaces
+  Also, the variable name must be unique in the template, so if you use multiple prompts, make sure they use different variable names."
+/>
+
+### Define Early, Use Later
+
+You can place prompts at the top of templates and use their values later in the template:
+
+```markdown
+<% prompt('lastName','What is your last name?') -%>
+
+The rest of this could be your template code
+And then finally use the `lastName` variable
+<%- lastName %>
+```
+
+The template would render as follows, with the `lastName` value result from prompt on first line (assuming entered `lastName` Erickson):
+
+```markdown
+The rest of this could be your template code
+And then finally use the `lastName` variable
+Erickson
+```
+
+## Date Prompts
+
+Date prompts provide specialized functions for collecting dates and date intervals.
+
+```markdown
+# Date input
+<%- promptDate('startDate', 'Enter start date:') %>
+
+# Date interval
+<%- promptDateInterval('reviewInterval', 'Enter review interval:') %>
+```
+
+[Learn more about date prompts →](/core-features/templating-prompts/date-prompts)
+
+## Frontmatter Prompts
+
+Frontmatter prompts allow you to select values from frontmatter attributes in notes, with support for regex pattern matching and folder filtering.
+
+```markdown
+# Basic frontmatter selection
+<%- promptKey('projectStatus', 'Select project status:') %>
+
+# With regex pattern
+<%- promptKey('/status.*/', 'Select status:') %>
+```
+
+[Learn more about frontmatter prompts →](/core-features/templating-prompts/frontmatter-prompts)
+
+## Tag and Mention Prompts
+
+
+
+Tag and mention prompts allow you to select from existing hashtags and @ mentions in your notes.
+
+```markdown
+# Tag selection
+<%- promptTag('Select a hashtag:') %>
+
+# Mention selection
+<%- promptMention('Select a person:') %>
+```
+
+[Learn more about tag and mention prompts →](/core-features/templating-prompts/tag-mention-prompts)

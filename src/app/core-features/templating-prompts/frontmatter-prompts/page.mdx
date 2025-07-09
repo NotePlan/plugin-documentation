@@ -1,0 +1,108 @@
+import Callout from '@/components/Callout'
+
+# Frontmatter Prompts
+
+The `promptKey` function allows you to prompt users to select values from frontmatter attributes in notes, with support for regex pattern matching, case sensitivity, and folder filtering.
+
+## Syntax
+
+```markdown
+<%- promptKey('key', 'message', 'noteType', caseSensitive, 'folder', fullPathMatch, ['options']) %>
+```
+
+## Parameters
+
+- **key** (string): The frontmatter key to search for values. Can be a regex pattern starting with `/` and ending with `/` (e.g., `/status.*/`). (required)
+- **message** (string): Custom prompt message to display to the user (optional)
+- **noteType** (string): Type of notes to search - 'Notes', 'Calendar', or 'All' (default: 'All')
+- **caseSensitive** (boolean): Whether to perform case-sensitive search (default: false)
+- **folder** (string): Folder to limit search to (optional)
+- **fullPathMatch** (boolean): Whether to match the full path (default: false)
+- **options** (array): Array of predefined options to show instead of extracting from frontmatter (optional)
+
+### Basic Usage
+
+Prompt user to select a project status from all notes (using the key `projectStatus`):
+
+```markdown
+Project status: <%- promptKey('projectStatus', 'Select project status:') %>
+```
+
+This will scan all your notes and extract all unique values for the `projectStatus` frontmatter key, offering those as options to the user.
+
+## Regex Pattern Support
+
+The `key` parameter supports regex patterns for matching multiple frontmatter keys. When using regex:
+
+- Pattern must start with `/` and end with `/`
+- Can include regex flags after the closing `/` (e.g., `/status.*/i` for case-insensitive)
+- Default case-insensitive flag (`i`) is added unless explicitly specified or caseSensitive is true
+
+### Regex Examples
+
+```markdown
+# Match all keys you have used in your notes that contain the word 'color' (could be color or bg-color, etc.
+<%- promptKey('/color/', 'Select color:') %>
+
+# Match keys ending with _status (case-sensitive)
+<%- promptKey('/.*_status/', 'Select status:', 'All', true) %>
+
+# Match keys starting with task_ (case-insensitive)
+<%- promptKey('/^task_.*/i', 'Select task type:') %>
+```
+
+## Examples
+
+### With Folder Restriction
+
+Only show values from notes in folders including the word 'Projects':
+
+```markdown
+Project status: <%- promptKey('projectStatus', 'Select project status:', 'Notes', false, 'Projects') %>
+```
+
+### With Full Path Match
+
+Only show values from notes in the specific 'Work/Projects/Clients' folder:
+
+```markdown
+Project status: <%- promptKey('projectStatus', 'Select project status:', 'Notes', false, 'Work/Projects/Clients', true) %>
+```
+
+### With Predefined Options
+
+Use a fixed set of options instead of extracting from frontmatter:
+
+```markdown
+Priority: <%- promptKey('priority', 'Set priority:', 'All', false, '', false, ['High', 'Medium', 'Low']) %>
+```
+
+### With Regex Pattern
+
+Match all status-related keys across all notes:
+
+```markdown
+Status: <%- promptKey('/status.*/', 'Select status:') %>
+```
+
+### With Case-Sensitive Regex
+
+Match status keys with exact case:
+
+```markdown
+Status: <%- promptKey('/Status.*/', 'Select status:', 'All', true) %>
+```
+
+## Notes
+
+- When using regex patterns, the function will collect values from all matching keys
+- Case sensitivity applies to both the key matching and value comparison
+- Folder filtering works with both exact and regex key matching
+- If no values are found, an empty array is returned
+- The function will prompt the user to select from available values if no options are provided
+
+## Related Topics
+
+- [Basic Prompts](/core-features/templating-prompts) - Learn about basic prompt functionality
+- [Date Prompts](/core-features/templating-prompts/date-prompts) - Learn about prompting for dates and date intervals
+- [Tag and Mention Prompts](/core-features/templating-prompts/tag-mention-prompts) - Learn about prompting for tags and mentions 

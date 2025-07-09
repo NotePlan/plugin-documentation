@@ -1,25 +1,30 @@
-import React, { useEffect } from 'react'
-import logoLight from '@/images/logos/plugins-logo.png'
-import logoDark from '@/images/logos/plugins-logo-dark.png'
+'use client'
+
+import Link from 'next/link'
+import Image from 'next/image'
 import { useTheme } from 'next-themes'
+import logoLight from '@/images/logos/templating-logo.png'
+import logoDark from '@/images/logos/plugins-logo-dark.png'
 
-export const Logo = () => {
-  let { resolvedTheme, setTheme } = useTheme()
-  const [source, setSource] = React.useState(logoLight.src)
-
-  useEffect(() => {
-    if (resolvedTheme === 'dark') {
-      setSource(logoDark.src)
-    } else {
-      setSource(logoLight.src)
-    }
-  }, [resolvedTheme])
+function LogoImage() {
+  const { theme } = useTheme()
 
   return (
-    <div className="h-6">
-      <img className="-mt-2 h-10" alt="logo" src={source} key={resolvedTheme} />
-    </div>
+    <Image
+      src={theme === 'dark' ? logoDark : logoLight}
+      alt="NotePlan Plugins"
+      width={99}
+      height={24}
+      className="h-6 w-auto"
+      priority
+    />
   )
 }
 
-export default Logo
+export function Logo() {
+  return (
+    <Link href="/" aria-label="Home" className="flex items-center">
+      <LogoImage />
+    </Link>
+  )
+}

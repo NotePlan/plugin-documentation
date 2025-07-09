@@ -1,0 +1,85 @@
+# Example 3: Using Methods
+
+In this example, we will demonstrate how to use custom methods in a template.
+
+## Step 1: Create Template
+
+First, create a new template in your `@Templates` folder named `Text Processing Template` with the following content:
+
+```yaml
+---
+title: Text Processing Template
+type: quick-note
+---
+Original text: <%- text %>
+
+Uppercase: <%- uppercase(text) %>
+Lowercase: <%- lowercase(text) %>
+
+Current Date: <%- date.now() %>
+```
+
+## Step 2: Create Command
+
+Next, create a new command file (e.g., `src/commands/templatingTextProcessing.js`) with the following content:
+
+```javascript
+import NPTemplating from 'NPTemplating'
+import { logError } from '@helpers/dev'
+
+export async function templatingTextProcessing(): Promise<void> {
+  try {
+    const templateData = {
+      data: {
+        text: 'Hello World!'
+      },
+      methods: {
+        uppercase: (str: string = '') => {
+          return str.toUpperCase()
+        },
+        lowercase: (str: string = '') => {
+          return str.toLowerCase()
+        }
+      }
+    }
+    const result = await NPTemplating.renderTemplate('Text Processing Template', templateData)
+    Editor.insertTextAtCursor(result)
+  } catch (error) {
+    logError('templatingTextProcessing', error)
+  }
+}
+```
+
+## Step 3: Register Command
+
+Finally, register the command in your plugin's `plugin.json`:
+
+```json
+{
+  "commands": [
+    {
+      "name": "Templating: Text Processing",
+      "identifier": "templating.text.processing",
+      "script": "./src/commands/templatingTextProcessing.js"
+    }
+  ]
+}
+```
+
+## Explanation
+
+- We define a `templateData` object with both `data` and `methods` properties
+- The `methods` property contains our custom functions that can be called from the template
+- The template uses these methods with the `<%- methodName(argument) %>` syntax
+- The methods are executed and their results are inserted into the template
+
+Would produce the following output when the custom command is invoked
+
+```
+Original text: Hello World!
+
+Uppercase: HELLO WORLD!
+Lowercase: hello world!
+
+Current Date: *2021-12-24*
+```
