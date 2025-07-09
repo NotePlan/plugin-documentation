@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTheme } from 'next-themes'
-import logoLight from '@/images/logos/templating-logo.png'
+import logoLight from '@/images/logos/plugins-logo.png'
 import logoDark from '@/images/logos/plugins-logo-dark.png'
 
 function LogoImage() {
