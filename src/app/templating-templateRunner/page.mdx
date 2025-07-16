@@ -9,10 +9,16 @@ import { CodeGroup, Code } from '@/components/Code'
 
 ## Overview
 
-`Templating` includes the `templateRunner` command to allow templates to be invoked from callback URLs. This allows you to to use a template to insert content (including dynamic Templating tag-generated conntent) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor, or actively -- display the note you specify at run-time. Typically, Template Runner templates are activated when a link is clicked from within our outside of NotePlan (e.g. Shortcuts, Keyboard Maestro or wherever). This gives you a way to pass arbitrary information into your notes.
+`Templating` includes the `templateRunner` command to allow templates to be invoked from callback URLs or triggers. This allows you to use a template to insert content (including dynamic Templating tag-generated content) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor, or actively -- display the note you specify at run-time. 
+
+Template Runner templates can be activated in two ways:
+1. **Callback URLs**: When a link is clicked from within or outside of NotePlan (e.g. Shortcuts, Keyboard Maestro or wherever)
+2. **Triggers**: Automatically when certain events occur in NotePlan (e.g. when a note is saved)
+
+This gives you a way to pass arbitrary information into your notes and automate template execution based on NotePlan events.
 
 <Callout type="info">
-Template Runner is a hidden command to be run from a callback URL. It is not a command that you can call from the Command Bar.
+Template Runner is a hidden command to be run from a callback URL or trigger. It is not a command that you can call from the Command Bar.
 </Callout>
 
 ## Required Attributes
@@ -137,6 +143,34 @@ Notice how in this example, `var1` is not set in the frontmatter. This is a vari
 > _Tip_
 > Because it's hard to predict what words are reserved in the Templating system, we suggest you use names that are very unlikely to exist elsewhere. For example, _var1_, _var2_, _var3_ or something like _myThoughtsVar_
 
+## Trigger-Based Template Runner
+
+In addition to being called via callback URLs, Template Runner can also be triggered automatically by NotePlan events. This allows you to run templateRunner templates when certain actions occur in NotePlan, such as when a note is saved.
+
+### templateTitle (required for triggers)
+
+When using triggers, you need to specify the name of the templateRunner template to execute in the `templateTitle` frontmatter attribute of the note that will trigger the template.
+
+Example:
+
+```markdown
+---
+title: My Note
+templateTitle: write modified time to frontmatter
+triggers: onEditorWillSave => np.Templating.templateRunner
+---
+```
+
+In this example, when the note is saved, the templateRunner will execute the template named "write modified time to frontmatter".
+
+### Setting up the Trigger
+
+To set up a trigger, you need to add a `triggers` attribute to your note's frontmatter. The trigger should call the `templateRunner` command from the `np.Templating` plugin.
+
+Common trigger patterns:
+- `onEditorWillSave => np.Templating.templateRunner` - runs when the note is about to be saved
+- `onEditorDidSave => np.Templating.templateRunner` - runs after the note has been saved
+
 ## Running a Template Runner Template
 
 X-Callback-Links, especially ones with lots of variables attached, can be a bit daunting. The easiest way to get a URL to invoke your template is by using the `Link Creator` plugin and the command `/Get X-Callback-URL`, and selecting `RUN a template`. This command will help you create a link and pass variables through to Template Runner. In fact, the `RUN a template` will ask you if you want it to create the actual template for you by interactively asking you questions, and then will deliver you a URL that you can use to invoke the new template.
@@ -227,6 +261,45 @@ In this example, I passed two variables (var1 and var2) corresponding to two pro
 After these variables are URL-encoded, they look like this in the final URL:
 `...arg2=var1%3DVALUE1%3Bvar2%3DVALUE2`
 ...now you probably see why the `URL Creator` will save you so much trial and error.
+
+### Trigger-Based Example - Auto-Update Modified Time
+
+This example demonstrates how to use Template Runner with triggers to automatically update a note's frontmatter when it's saved. This is useful for tracking when notes were last modified.
+
+#### Trigger Note
+
+The note that will trigger the templateRunner:
+
+```markdown
+---
+title: Test of templateRunner trigger with no args
+templateTitle: write modified time to frontmatter
+triggers: onEditorWillSave => np.Templating.templateRunner
+modified: 7/16/2025, 1:54:11 AM
+---
+```
+
+#### TemplateRunner Template
+
+The template that will be executed when the note is saved:
+
+```markdown
+---
+title: write modified time to frontmatter
+type: meeting-note, empty-note
+---
+```templatejs
+    const theTime = new Date().toISOString() || new Date().toLocaleString()
+    updateFrontmatterVars(Editor, {
+      modified: user?.first||'' ? `${theTime} (${authorID})` : theTime,
+    })
+```
+
+In this example:
+1. When the trigger note is saved, the `templateRunner` will execute the "write modified time to frontmatter" template
+2. The template uses JavaScript to get the current timestamp
+3. It updates the `modified` field in the note's frontmatter with the current time
+4. If a user is logged in, it includes the user's name in parentheses
 
 ### Super Advanced Example - Inline Meeting Notes
 
