@@ -24,7 +24,21 @@ type: ignore
 
 This template will not be displayed in any of the Templating template chooser dialog
 ```
+### np:new (/New note from template)
 
+`np:new` will show a list of all templates in the `Templates` folder, then create a new project note using supplied note name. You can specify a folder to create the new note in using the `folder` attribute and a new note title using the `newNoteTitle` attribute.
+
+_aliases: npn, new, nn_
+
+### Calling /New Note from Template from Apple/Siri Shortcuts
+
+You can also call this command from Shortcuts using the following parameters:
+  1. Template Name
+  2. Folder
+  3. New Note Title
+  4. An optional list of variables to pass to the template in JSON format. For example: ` {"foo":"bar"} ` then you could use ` <%- foo %> ` in the template to insert the value "bar" into the new note.
+
+<img src={newnoteShortcut.src} alt="New Note Shortcut" />
 ---
 
 ### np:append
@@ -39,19 +53,12 @@ _aliases: npa, append, at_
 
 _aliases: npi, insert, it_
 
-### np:new (/New note from template)
-
-`np:new` will show a list of all templates in the `Templates` folder, then create a new project note using supplied note name.
-
-_aliases: npn, new, nn_
-
-Note that you can also call this command from Shortcuts using the following parameters:
-  1. Template Name
-  2. Folder
-  3. New Note Title
-  4. An optional list of variables to pass to the template in JSON format. For example: ` {"foo":"bar"} ` then you could use ` <%- foo %> ` in the template to insert the value "bar" into the new note.
-
-<img src={newnoteShortcut.src} alt="New Note Shortcut" />
+<Callout
+  type="warning"
+  description={`
+Note that if you first create a new note and then try to insert a template using \`insert\` or \`append\`, any folder information will be ignored because the note has already been created in the default folder or wherever you created it. If you want the folder attribute to be used, you must first create the note using the \`/New Note from Template\` command.
+  `}
+/>
 
 ### np:invoke
 
@@ -217,20 +224,7 @@ When rendered, `folder` value will appear something like
 
 `np:migrate-templates` will migrate existing legacy templates in "📋 Templates" to NotePlan "Templates" folder. In addition, if you have any `quickNotes` in your `_configuration` notes, they will also be migrated to "Templates" folder within "🗒 Quick Notes" folder
 
-<Callout
-  type="info"
-  description={`
-If you are installing <code>Templating</code> for the first time, this migration will happen automatically when <code>Templating</code> plugin is installed.
-  `}
-/>
-
 ### np:migrate-quick-notes
 
 `np:migrate-quick-notes` will migrate any templates defined in `quickNotes` in your `_configuration` notes.
 
-<Callout
-  type="info"
-  description={`
-If you are installing <code>Templating</code> for the first time, this migration will happen automatically when <code>Templating</code> plugin is installed.
-  `}
-/>

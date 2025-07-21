@@ -86,8 +86,6 @@ Frontmatter prompts allow you to select values from frontmatter attributes in no
 
 ## Tag and Mention Prompts
 
-
-
 Tag and mention prompts allow you to select from existing hashtags and @ mentions in your notes.
 
 ```markdown
@@ -99,3 +97,89 @@ Tag and mention prompts allow you to select from existing hashtags and @ mention
 ```
 
 [Learn more about tag and mention prompts →](/core-features/templating-prompts/tag-mention-prompts)
+
+## Function Calls in Prompts
+
+**Note**: Direct function calls within prompt parameters are not currently supported. Function calls like `getValuesForKey("bg-color")` will be treated as literal strings rather than being evaluated.
+
+### Template Evaluation Order
+
+The templating system evaluates templates in this order:
+1. **Frontmatter is evaluated first**
+2. **Prompts are evaluated second**
+3. **JavaScript blocks and the rest of the template are evaluated last**
+
+This means JavaScript blocks before prompts won't work because prompts are evaluated before those blocks.
+
+### Using Frontmatter for Dynamic Options
+
+If you want to use a variable in a prompt, you need to pre-evaluate it using a templating tag in frontmatter:
+
+```markdown
+---
+title: Dynamic Color Selection Template
+type: empty-note
+bgColorOptions: <%- getValuesForKey("bg-color") %>
+dateOptions: <%- JSON.stringify([date.today(), date.tomorrow(), date.add('', 7)]) %>
+---
+# Color Selection
+
+<%- prompt('bgcolor', 'Select background color:', bgColorOptions) %>
+<%- prompt('meetingDate', 'Select meeting date:', dateOptions) %>
+
+Your selected color: <%- bgcolor %>
+Your selected date: <%- meetingDate %>
+```
+
+### Using Frontmatter for Default Values
+
+Set intelligent default values in frontmatter:
+
+```markdown
+---
+title: Project Template
+type: quick-note
+projectOptions: <%- getValuesForKey("project") %>
+today: <%- date.today() %>
+isWeekend: <%- date.dayNumber(date.today()) >= 6 %>
+priorityOptions: <%- date.dayNumber(date.today()) >= 6 ? ['low', 'medium'] : ['high', 'medium', 'low'] %>
+---
+
+# Project Setup
+
+<%- prompt('project', 'Select project:', projectOptions) %>
+<%- prompt('startDate', 'Enter start date:', today) %>
+<%- prompt('priority', 'Set priority:', priorityOptions) %>
+```
+
+### Complex Frontmatter Combinations
+
+Combine multiple functions and logic in frontmatter:
+
+```markdown
+---
+title: Advanced Template
+type: quick-note
+existingColors: <%- getValuesForKey("bg-color") %>
+defaultColors: <%- ['red', 'blue', 'green'] %>
+allColors: <%- [...new Set([...existingColors, ...defaultColors])] %>
+weatherData: <%- await web.getWeather() %>
+---
+
+# Advanced Setup
+
+<%- prompt('bgcolor', 'Select background color:', allColors) %>
+<%- prompt('weather', 'Current weather:', weatherData) %>
+```
+
+<Callout type="warning">
+**Evaluation Order**: Frontmatter is processed first, then prompts, then the JavaScript code and other Templating Tags. For this reason, you cannot use variables from JavaScript blocks in prompts. However, you can put variables and code in frontmatter and use it later in the processing of the template.
+</Callout>
+
+<Callout type="info">
+**Specialized Functions**: To choose from all frontmatter values for a given key/property name, consider using the `promptKey(propertyName)` function which is specifically designed for this purpose and handles function evaluation internally.
+</Callout>
+
+<Callout type="info">
+**Available Functions**: You can use any of the built-in templating modules (date, time, system, utility, web, etc.) and their methods in frontmatter. See the [Built-in Modules](/built-in-modules/templating-modules-overview) section for a complete list of available functions.
+</Callout>

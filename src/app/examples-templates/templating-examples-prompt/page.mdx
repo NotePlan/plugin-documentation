@@ -1,0 +1,246 @@
+import Callout from '@/components/Callout'
+
+# Advanced Prompt Examples
+
+This page demonstrates advanced prompt usage patterns, including function calls within prompts, dynamic option generation, and complex prompt scenarios.
+
+## Important Limitation
+
+**Function calls within prompt parameters are not currently supported.** For example, this will NOT work:
+
+```markdown
+# ❌ This will NOT work - function call is treated as literal string
+<%- prompt('bgcolor', 'Select background color:', getValuesForKey("bg-color")) %>
+```
+
+**JavaScript blocks before prompts also won't work** because prompts are evaluated before JavaScript blocks. For example, this will NOT work:
+
+```markdown
+# ❌ This will NOT work - prompts are evaluated before JS blocks
+<%
+  const bgColorOptions = getValuesForKey("bg-color");
+%>
+<%- prompt('bgcolor', 'Select background color:', bgColorOptions) %>
+```
+
+Instead, you must set variables in frontmatter that can be used in prompts.
+
+## Function Calls in Prompts
+
+### Using getValuesForKey for Dynamic Options
+
+The most common use case is using `getValuesForKey` to populate prompt choices from existing frontmatter values. **Note**: You must set the values in frontmatter since prompts are evaluated before JavaScript blocks:
+
+```markdown
+---
+title: Dynamic Color Selection Template
+type: quick-note
+bgColorOptions: <%- getValuesForKey("bg-color") %>
+---
+
+# Color Selection
+
+<%- prompt('bgcolor', 'Select background color:', bgColorOptions) %>
+
+Your selected color: <%- bgcolor %>
+```
+
+This template will:
+1. Evaluate `getValuesForKey("bg-color")` in the frontmatter to get the array of existing values
+2. Present those values as choices in the prompt
+3. Store the user's selection in the `bgcolor` variable
+
+### Combining Multiple Sources
+
+You can combine existing values with default options by setting them in frontmatter:
+
+```markdown
+---
+title: Project Selection Template
+type: quick-note
+existingProjects: <%- getValuesForKey("project") %>
+defaultProjects: <%- ['Personal', 'Work', 'Learning'] %>
+allProjects: <%- [...new Set([...existingProjects, ...defaultProjects])] %>
+---
+
+# Project Setup
+
+<%- prompt('project', 'Select project:', allProjects) %>
+<%- prompt('priority', 'Set priority:', ['High', 'Medium', 'Low']) %>
+
+## Project: <%- project %>
+## Priority: <%- priority %>
+```
+
+### Date-Based Dynamic Prompts
+
+Use date functions to create context-aware prompts by setting them in frontmatter:
+
+```markdown
+---
+title: Meeting Template with Dynamic Times
+type: meeting-note
+today: <%- date.today() %>
+tomorrow: <%- date.tomorrow() %>
+nextWeek: <%- date.addDays(7) %>
+timeSlots: <%- ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'] %>
+---
+
+# Meeting Setup
+
+<%- prompt('meetingDate', 'Select meeting date:', [today, tomorrow, nextWeek]) %>
+<%- prompt('meetingTime', 'Select meeting time:', timeSlots) %>
+
+## Meeting Details
+- **Date:** <%- meetingDate %>
+- **Time:** <%- meetingTime %>
+```
+
+### Conditional Prompt Options
+
+Use JavaScript logic to show different options based on conditions by setting them in frontmatter:
+
+```markdown
+---
+title: Task Template with Conditional Options
+type: quick-note
+isWeekend: <%- date.dayNumber(date.today()) >= 6 %>
+priorityOptions: <%- date.dayNumber(date.today()) >= 6 ? ['Low', 'Medium'] : ['High', 'Medium', 'Low'] %>
+categoryOptions: <%- date.dayNumber(date.today()) >= 6 ? ['Personal', 'Hobby'] : ['Work', 'Personal', 'Urgent'] %>
+---
+
+# Task Creation
+
+<%- prompt('priority', 'Set priority:', priorityOptions) %>
+<%- prompt('category', 'Select category:', categoryOptions) %>
+
+## Task Details
+- **Priority:** <%- priority %>
+- **Category:** <%- category %>
+- **Created:** <%- date.now('YYYY-MM-DD HH:mm') %>
+```
+
+## Advanced Prompt Patterns
+
+### Multi-Step Prompts with Dependencies
+
+**Note**: Multi-step prompts with dependencies are complex because prompts are evaluated before JavaScript blocks. You would need to handle this logic in frontmatter or use a different approach.
+
+For simple cases, you can pre-define all options in frontmatter:
+
+```markdown
+---
+title: Multi-Step Configuration Template
+type: quick-note
+devEnvironments: <%- ['Local', 'Staging', 'Dev-Server'] %>
+prodEnvironments: <%- ['Live', 'Backup', 'Archive'] %>
+testEnvironments: <%- ['Test-1', 'Test-2', 'Integration'] %>
+---
+
+# Configuration Setup
+
+<%- prompt('configType', 'Select configuration type:', ['Development', 'Production', 'Testing']) %>
+
+# Note: You would need to handle the conditional logic differently
+# since prompts are evaluated before JavaScript blocks
+
+## Configuration
+- **Type:** <%- configType %>
+```
+
+### Using System Functions in Prompts
+
+Incorporate system functions for dynamic content by setting them in frontmatter:
+
+```markdown
+---
+title: Clipboard Integration Template
+type: quick-note
+clipboardContent: <%- system.clipboard() %>
+clipboardPreview: <%- `[Preview: ${system.clipboard().substring(0, 50)}...]` %>
+---
+
+# Content from Clipboard
+
+<%- prompt('useClipboard', 'Use clipboard content?', ['Yes', 'No', 'Preview first']) %>
+
+<% if (useClipboard === 'Yes') { %>
+## Content
+<%- clipboardContent %>
+<% } else if (useClipboard === 'Preview first') { %>
+## Content
+<%- clipboardPreview %>
+<% } %>
+```
+
+### Async Function Integration
+
+Handle asynchronous functions in prompts by setting them in frontmatter:
+
+```markdown
+---
+title: Weather-Aware Template
+type: quick-note
+weatherData: <%- await web.getWeather() %>
+weatherOptions: <%- weatherData ? ['Sunny', 'Rainy', 'Cloudy', 'Current: ' + weatherData] : ['Sunny', 'Rainy', 'Cloudy'] %>
+---
+
+# Weather-Based Planning
+
+<%- prompt('weather', 'Weather condition:', weatherOptions) %>
+
+## Planning Notes
+- **Weather:** <%- weather %>
+- **Date:** <%- date.now('YYYY-MM-DD') %>
+```
+
+## Best Practices
+
+### Error Handling
+
+Always handle cases where functions might return empty or invalid data by setting fallbacks in frontmatter:
+
+```markdown
+---
+title: Error Handling Template
+type: quick-note
+existingValues: <%- getValuesForKey("some-key") %>
+options: <%- existingValues && existingValues.length > 0 ? existingValues : ['Default Option 1', 'Default Option 2'] %>
+---
+
+<%- prompt('selection', 'Make selection:', options) %>
+```
+
+### Performance Considerations
+
+For large datasets, consider limiting the number of options in frontmatter:
+
+```markdown
+---
+title: Performance Template
+type: quick-note
+allValues: <%- getValuesForKey("large-key") %>
+limitedValues: <%- allValues.slice(0, 10) %>
+---
+
+<%- prompt('selection', 'Select from top 10:', limitedValues) %>
+```
+
+### User Experience
+
+Provide clear, descriptive prompt messages:
+
+```markdown
+# Good
+<%- prompt('bgcolor', 'Select background color for this note:', getValuesForKey("bg-color")) %>
+
+# Better
+<%- prompt('bgcolor', 'Choose a background color (existing colors from your notes will be shown):', getValuesForKey("bg-color")) %>
+```
+
+## Related Topics
+
+- [Basic Prompts](/core-features/templating-prompts) - Learn about basic prompt functionality
+- [Function Calls in Prompts](/core-features/templating-prompts#function-calls-in-prompts) - Learn about using functions within prompt contexts
+- [Frontmatter Prompts](/core-features/templating-prompts/frontmatter-prompts) - Learn about specialized frontmatter prompting
+- [Built-in Modules](/built-in-modules/templating-modules-overview) - Explore available functions for use in prompts 

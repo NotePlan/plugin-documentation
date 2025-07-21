@@ -101,8 +101,71 @@ Status: <%- promptKey('/Status.*/', 'Select status:', 'All', true) %>
 - If no values are found, an empty array is returned
 - The function will prompt the user to select from available values if no options are provided
 
+## Using getValuesForKey in Prompts
+
+**Note**: Direct function calls within prompt parameters are not supported. Since prompts are evaluated before JavaScript blocks, you must use frontmatter to pre-evaluate `getValuesForKey`.
+
+### Using getValuesForKey in Frontmatter
+
+To use `getValuesForKey` with prompts, set the values in frontmatter:
+
+```markdown
+---
+title: Color Selection Template
+type: quick-note
+bgColorOptions: <%- getValuesForKey("bg-color") %>
+existingPriorities: <%- getValuesForKey("priority") %>
+defaultPriorities: <%- ['High', 'Medium', 'Low'] %>
+allPriorities: <%- [...new Set([...defaultPriorities, ...existingPriorities])] %>
+---
+
+# Color Selection
+
+<%- prompt('bgcolor', 'Select background color:', bgColorOptions) %>
+<%- prompt('priority', 'Set priority:', allPriorities) %>
+```
+
+### Complex Frontmatter Combinations
+
+Combine multiple functions and logic in frontmatter:
+
+```markdown
+---
+title: Advanced Template
+type: quick-note
+existingColors: <%- getValuesForKey("bg-color") %>
+defaultColors: <%- ['red', 'blue', 'green'] %>
+allColors: <%- [...new Set([...existingColors, ...defaultColors])] %>
+---
+
+# Advanced Setup
+
+<%- prompt('bgcolor', 'Select background color:', allColors) %>
+```
+
+### Comparison: promptKey vs getValuesForKey
+
+| Feature | promptKey | getValuesForKey (in frontmatter) |
+|---------|-----------|-----------------------------------|
+| **Purpose** | Specialized frontmatter key selection | General prompt with dynamic options |
+| **Regex Support** | ✅ Built-in regex pattern matching | ❌ No regex support |
+| **Folder Filtering** | ✅ Built-in folder filtering | ❌ No folder filtering |
+| **Flexibility** | Limited to frontmatter keys | Can combine with any JavaScript logic |
+| **Performance** | Optimized for frontmatter scanning | Standard function call |
+| **Function Evaluation** | ✅ Handled internally | ✅ Evaluated in frontmatter |
+| **Use Case** | When you need regex/folder filtering | When you need custom logic or simple key lookup |
+
+<Callout type="warning">
+**Evaluation Order**: Prompts are evaluated before JavaScript blocks, so you cannot use variables from JavaScript blocks in prompts. Use frontmatter instead.
+</Callout>
+
+<Callout type="info">
+**Choose the Right Tool**: Use `promptKey` when you need regex patterns or folder filtering. Use `getValuesForKey` in frontmatter when you need more control over the options or want to combine with other JavaScript logic.
+</Callout>
+
 ## Related Topics
 
 - [Basic Prompts](/core-features/templating-prompts) - Learn about basic prompt functionality
 - [Date Prompts](/core-features/templating-prompts/date-prompts) - Learn about prompting for dates and date intervals
-- [Tag and Mention Prompts](/core-features/templating-prompts/tag-mention-prompts) - Learn about prompting for tags and mentions 
+- [Tag and Mention Prompts](/core-features/templating-prompts/tag-mention-prompts) - Learn about prompting for tags and mentions
+- [Function Calls in Prompts](/core-features/templating-prompts#function-calls-in-prompts) - Learn about using functions within prompt contexts 

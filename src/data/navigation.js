@@ -31,7 +31,7 @@ export const navigation = [
     title: 'Built-in Modules',
     links: [
       {
-        title: 'Global Commands',
+        title: 'Global Functions',
         href: '/built-in-modules/templating-modules-global',
       },
       {
@@ -106,6 +106,10 @@ export const navigation = [
   {
     title: 'Examples & Templates',
     links: [
+      {
+        title: 'Advanced Prompt Examples',
+        href: '/examples-templates/templating-examples-prompt',
+      },
       {
         title: 'Javascript in Templates',
         href: '/examples-templates/templating-examples-js-weather',
