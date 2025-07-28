@@ -1,5 +1,6 @@
 import Callout from '@/components/Callout'
 import { CodeGroup, Code } from '@/components/Code'
+import templateRunnerShortcuts from '@/images/templateRunner-shortcuts.png'
 
 # Template Runner
 
@@ -343,3 +344,34 @@ location: append
 ### <%- eventTitle %> - <%- eventDate %>
 **Event:**  <%- calendarItemLink %>
 ```
+## Shortcuts TemplateRunner Example
+
+Here's  a TemplateRunner template that dynamically opens a note and prepends text to the top of the note.
+The shortcut sends 3 pieces of information:
+- the name of the Template which will process the response
+- the noteTitle of the note that should be opened
+- the text to be prepended
+
+The template receives this info, opens the named note, and prepends the text to the top of the note
+
+<img src={templateRunnerShortcuts.src} alt="TemplateRunner Shortcuts" />
+
+Here's the [shortcut](https://www.icloud.com/shortcuts/a3c83fbd9ce9466d84f56b5fa5f23a42)
+
+Here's the very basicTemplateRunner template:
+~~~markdown
+---
+title: Scott C Shortcuts Text Insert TR Template
+type: templateRunner
+getNoteTitled: <%- noteName %>
+location: prepend
+NOTE: Takes in a note name from Shortcuts and prepends text
+---
+<%- textToInsert %>
+~~~
+You will notice that the Shortcut passes URL-encoded variables to the template. In this case, the variables are:
+- `noteName` - the name of the note to open
+- `textToInsert` - the text to prepend to the note
+
+...but you could pass any number of variables to the template and use them in the template.
+
