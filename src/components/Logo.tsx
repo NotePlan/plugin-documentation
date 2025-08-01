@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import Link from 'next/link'
 import logoLight from '@/images/logos/templating-logo.png'
 import logoDark from '@/images/logos/plugins-logo-dark.png'
 import { useTheme } from 'next-themes'
@@ -16,9 +17,9 @@ export const Logo = () => {
   }, [resolvedTheme])
 
   return (
-    <div className="h-6">
+    <Link href="/" className="h-6">
       <img className="h-7" alt="logo" src={source} key={resolvedTheme} />
-    </div>
+    </Link>
   )
 }
 

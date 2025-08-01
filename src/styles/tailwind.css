@@ -23,3 +23,7 @@
 .callout-content p {
   @apply mb-0 mt-0;
 }
+
+.faq-answer p:first-child {
+  margin-top: 3px !important;
+}

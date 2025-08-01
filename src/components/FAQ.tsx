@@ -100,10 +100,10 @@ export function FAQ({ items, className = '' }: FAQProps) {
             {isOpen && (
               <div className="border-t border-gray-200 bg-white px-6 py-5">
                 <div className="flex items-start space-x-3">
-                  <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-100 text-sm font-bold text-green-600">
+                  <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-100 text-sm font-bold text-green-600">
                     A
                   </div>
-                  <div className="prose-sm prose max-w-none leading-relaxed text-gray-700">
+                  <div className="prose-sm faq-answer prose max-w-none leading-relaxed text-gray-700">
                     {item.answer}
                   </div>
                 </div>
