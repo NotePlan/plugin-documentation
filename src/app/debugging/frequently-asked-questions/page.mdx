@@ -1,0 +1,30 @@
+import { FAQ } from '@/components/FAQ'
+import { faqData } from '@/data/faq-data'
+
+{/* 
+  NOTE: FAQ data is stored in src/data/faq-data.js
+  To add/edit FAQ items, modify that file instead of this one.
+  The data is imported here and used for both search indexing and the interactive component.
+*/}
+
+# Frequently Asked Questions (FAQ)
+
+This page contains answers to commonly asked questions about the NotePlan Templating plugin.
+
+{/* Search-indexable content generated from FAQ data */}
+<div className="sr-only">
+  <h2>Template Creation and Usage</h2>
+  {faqData.map((item) => (
+    <div key={item.id}>
+      <h3>{item.question}</h3>
+      <p>{item.searchText}</p>
+    </div>
+  ))}
+</div>
+
+{/* Interactive FAQ component */}
+<FAQ items={faqData} />
+
+---
+
+*More FAQ entries will be added here as common questions arise.* 

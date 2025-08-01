@@ -145,6 +145,10 @@ export const navigation = [
         title: 'Console Logging',
         href: '/debugging/console-logging',
       },
+      {
+        title: 'FAQ: Frequently Asked Questions',
+        href: '/debugging/frequently-asked-questions',
+      },
     ],
   },
   {
