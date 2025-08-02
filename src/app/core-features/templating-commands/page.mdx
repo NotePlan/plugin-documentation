@@ -53,13 +53,6 @@ _aliases: npa, append, at_
 
 _aliases: npi, insert, it_
 
-<Callout
-  type="warning"
-  description={`
-Note that if you first create a new note and then try to insert a template using \`insert\` or \`append\`, any folder information will be ignored because the note has already been created in the default folder or wherever you created it. If you want the folder attribute to be used, you must first create the note using the \`/New Note from Template\` command.
-  `}
-/>
-
 ### np:invoke
 
 `np:invoke` will show a list of all templates in the `Templates` folder, and will render template in current note based on the `location` attribute value in template.
@@ -219,12 +212,4 @@ When rendered, `folder` value will appear something like
 `np:about` will display current version information
 
 <img src={templatingabout.src} alt="About Templating" />
-
-### np:migrate-templates
-
-`np:migrate-templates` will migrate existing legacy templates in "📋 Templates" to NotePlan "Templates" folder. In addition, if you have any `quickNotes` in your `_configuration` notes, they will also be migrated to "Templates" folder within "🗒 Quick Notes" folder
-
-### np:migrate-quick-notes
-
-`np:migrate-quick-notes` will migrate any templates defined in `quickNotes` in your `_configuration` notes.
 

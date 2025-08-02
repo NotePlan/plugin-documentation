@@ -16,7 +16,7 @@ By default, Quick Notes templates are located in "🗒 Quick Notes" however you 
 
 ### Using Quick Notes
 
-When you create a Quick Note template, it becomes available via the `np:qtn` command. When invoking the `np:qtn`, you will see the **Quick Note Template Picker**, where you can select the desired Quick Note template for which you want to create a new note.
+When you create a Quick Note template and include the `type: quick-note` attribute, it becomes available via the `np:qtn` command. When invoking the `np:qtn`, you will see the **Quick Note Template Picker**, where you can select the desired Quick Note template for which you want to create a new note.
 
 <img src={quicknoteschooser.src} alt="Quick Notes Chooser" />
 
@@ -72,3 +72,9 @@ _Who is on call?_
 - action 1
 - action 2
 ```
+<Callout type="info" title="Quick Note Keyboard Shortcut">
+You can speed things up even more by creating an x-callback link for your quick note, passing the title as a parameter, and you could use that as a link in your Daily Note or assign it to a keyboard shortcut to run the template with a single keystroke.
+For example, you could run the Quick Note Template `My Template Title` with a single keystroke by creating a link in your Daily Note with the following x-callback URL:
+
+`noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=New%20note%20using%20Quick%20Note%20Template&arg0=My%20Template%20Title`
+</Callout>
