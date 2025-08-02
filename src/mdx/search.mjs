@@ -9,6 +9,9 @@ import { createLoader } from 'simple-functional-loader'
 import { filter } from 'unist-util-filter'
 import { SKIP, visit } from 'unist-util-visit'
 import * as url from 'url'
+import { faqData } from '../data/faq-data.js'
+
+console.log('FAQ data:', faqData)
 
 const __filename = url.fileURLToPath(import.meta.url)
 const processor = remark().use(remarkMdx).use(extractSections)
@@ -90,52 +93,44 @@ export default function (nextConfig = {}) {
               if (file === 'debugging/frequently-asked-questions/page.mdx') {
                 console.log('=== PROCESSING FAQ PAGE ===')
                 try {
-                  const faqDataPath = path.resolve('./src/data/faq-data.js')
-                  const faqDataContent = fs.readFileSync(faqDataPath, 'utf8')
-                  console.log('FAQ data content length:', faqDataContent.length)
+                  if (faqData && Array.isArray(faqData)) {
+                    faqData.forEach((item, index) => {
+                      if (item.id && item.question && item.answer) {
+                        console.log('FAQ found:', {
+                          id: item.id,
+                          question:
+                            (item.question?.substring(0, 50) || '') + '...',
+                          answer: (item.answer?.substring(0, 50) || '') + '...',
+                        })
 
-                  // Extract FAQ content from the data file using a more robust approach
-                  // Use a more robust regex approach that handles multi-line strings with quotes
-                  // The searchText is a multi-line string that ends with a single quote
-                  const searchTextMatch = faqDataContent.match(
-                    /searchText:\s*'([\s\S]*?)',/,
-                  )
-                  const questionMatch = faqDataContent.match(
-                    /question:\s*'([\s\S]*?)',/,
-                  )
-                  const idMatch = faqDataContent.match(/id:\s*'([^']+)',/)
+                        // Clean the content to ensure it serializes properly
+                        const cleanQuestion = item.question.replace(
+                          /['"`]/g,
+                          "'",
+                        )
+                        const cleanAnswer = item.answer.replace(/['"`]/g, "'")
 
-                  if (searchTextMatch && questionMatch && idMatch) {
-                    const searchText = searchTextMatch[1]
-                    const question = questionMatch[1]
-                    const id = idMatch[1]
+                        // Add the FAQ section with the ID as the hash for deep linking
+                        sections.push([cleanQuestion, item.id, [cleanAnswer]])
 
-                    console.log('FAQ found:', {
-                      id: id,
-                      question: (question?.substring(0, 50) || '') + '...',
-                      searchText: (searchText?.substring(0, 50) || '') + '...',
+                        console.log('Added FAQ to sections')
+                        console.log('FAQ section added:', {
+                          title: cleanQuestion.substring(0, 50),
+                          id: item.id,
+                          content: cleanAnswer.substring(0, 100),
+                          contentLength: cleanAnswer.length,
+                        })
+                      }
                     })
 
-                    if (question && searchText && id) {
-                      // Clean the content to ensure it serializes properly
-                      const cleanQuestion = question.replace(/['"`]/g, "'")
-                      const cleanSearchText = searchText.replace(/['"`]/g, "'")
-
-                      // Add the FAQ section with the ID as the hash for deep linking
-                      // Also add the FAQ page title for context
-                      sections.push([cleanQuestion, id, [cleanSearchText]])
-                      
-                      // Add a section for the FAQ page title to provide context
-                      sections.push(['Frequently Asked Questions (FAQ)', null, ['FAQ page containing common questions and answers']])
-                      console.log('Added FAQ to sections')
-                      console.log('FAQ section added:', {
-                        title: cleanQuestion.substring(0, 50),
-                        id: id,
-                        content: cleanSearchText.substring(0, 100),
-                        contentLength: cleanSearchText.length,
-                      })
-                    }
+                    // Add a section for the FAQ page title to provide context
+                    sections.push([
+                      'Frequently Asked Questions (FAQ)',
+                      null,
+                      ['FAQ page containing common questions and answers'],
+                    ])
                   }
+
                   console.log(
                     'Total sections after FAQ processing:',
                     sections.length,

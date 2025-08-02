@@ -6,8 +6,7 @@ import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 interface FAQItem {
   id: string
   question: string
-  answer: React.ReactNode
-  searchText?: string // Optional plain text version for search indexing
+  answer: string // Plain text answer
 }
 
 interface FAQProps {
@@ -104,7 +103,11 @@ export function FAQ({ items, className = '' }: FAQProps) {
                     A
                   </div>
                   <div className="prose-sm faq-answer prose max-w-none leading-relaxed text-gray-700">
-                    {item.answer}
+                    {item.answer.split('\n\n').map((paragraph, index) => (
+                      <p key={index} className="mb-4 last:mb-0">
+                        {paragraph}
+                      </p>
+                    ))}
                   </div>
                 </div>
               </div>
