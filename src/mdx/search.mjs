@@ -103,25 +103,34 @@ export default function (nextConfig = {}) {
                   const questionMatch = faqDataContent.match(
                     /question:\s*'([\s\S]*?)',/,
                   )
+                  const idMatch = faqDataContent.match(/id:\s*'([^']+)',/)
 
-                  if (searchTextMatch && questionMatch) {
+                  if (searchTextMatch && questionMatch && idMatch) {
                     const searchText = searchTextMatch[1]
                     const question = questionMatch[1]
+                    const id = idMatch[1]
 
                     console.log('FAQ found:', {
+                      id: id,
                       question: (question?.substring(0, 50) || '') + '...',
                       searchText: (searchText?.substring(0, 50) || '') + '...',
                     })
 
-                    if (question && searchText) {
+                    if (question && searchText && id) {
                       // Clean the content to ensure it serializes properly
                       const cleanQuestion = question.replace(/['"`]/g, "'")
                       const cleanSearchText = searchText.replace(/['"`]/g, "'")
 
-                      sections.push([cleanQuestion, null, [cleanSearchText]])
+                      // Add the FAQ section with the ID as the hash for deep linking
+                      // Also add the FAQ page title for context
+                      sections.push([cleanQuestion, id, [cleanSearchText]])
+                      
+                      // Add a section for the FAQ page title to provide context
+                      sections.push(['Frequently Asked Questions (FAQ)', null, ['FAQ page containing common questions and answers']])
                       console.log('Added FAQ to sections')
                       console.log('FAQ section added:', {
                         title: cleanQuestion.substring(0, 50),
+                        id: id,
                         content: cleanSearchText.substring(0, 100),
                         contentLength: cleanSearchText.length,
                       })
