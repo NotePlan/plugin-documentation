@@ -46,8 +46,8 @@ function getAllSections() {
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - NotePlan Plugins Documentation',
-    default: 'NotePlan Plugins Documentation',
+    template: '%s - NotePlan Templating Documentation',
+    default: 'NotePlan Templating Documentation',
   },
 }
 
