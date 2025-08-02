@@ -1,6 +1,7 @@
 import { type Section } from '@/components/SectionProvider'
 import { Layout } from '@/components/Layout'
 import { Providers } from '@/app/providers'
+import { PageTitle } from '@/components/PageTitle'
 import { type Metadata } from 'next'
 
 import '@/styles/tailwind.css'
@@ -58,7 +59,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <body className="flex min-h-full bg-white dark:bg-zinc-900">
         <Providers>
-          <Layout allSections={allSections}>{children}</Layout>
+          <Layout allSections={allSections}>
+            <PageTitle />
+            {children}
+          </Layout>
         </Providers>
       </body>
     </html>

@@ -157,10 +157,10 @@ function CodePanel({
   }
 
   return (
-    <div className="group dark:bg-white/2.5">
+    <div className="group dark:bg-white/2.5 w-full max-w-full">
       <CodePanelHeader tag={tag} label={label} />
-      <div className="relative">
-        <pre className="overflow-x-auto p-4 text-xs text-white">{children}</pre>
+      <div className="relative w-full max-w-full">
+        <pre className="overflow-x-auto p-4 text-xs text-white w-full max-w-full">{children}</pre>
         <CopyButton code={code} />
       </div>
     </div>
@@ -319,7 +319,7 @@ export function CodeGroup({
   let hasTabs = Children.count(children) > 1
 
   let containerClassName =
-    'my-6 overflow-hidden rounded-2xl bg-zinc-900 shadow-md dark:ring-1 dark:ring-white/10'
+    'my-6 overflow-hidden rounded-2xl bg-zinc-900 shadow-md dark:ring-1 dark:ring-white/10 w-full max-w-full'
   let header = (
     <CodeGroupHeader title={title} selectedIndex={tabGroupProps.selectedIndex}>
       {children}
@@ -331,14 +331,14 @@ export function CodeGroup({
     <CodeGroupContext.Provider value={true}>
       {hasTabs ? (
         <Tab.Group {...tabGroupProps} className={containerClassName}>
-          <div className="not-prose">
+          <div className="not-prose w-full max-w-full">
             {header}
             {panels}
           </div>
         </Tab.Group>
       ) : (
         <div className={containerClassName}>
-          <div className="not-prose">
+          <div className="not-prose w-full max-w-full">
             {header}
             {panels}
           </div>

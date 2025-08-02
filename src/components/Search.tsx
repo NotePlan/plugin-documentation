@@ -73,26 +73,25 @@ function useAutocomplete({ close }: { close: () => void }) {
         return state.query !== ''
       },
       getSources({ query }) {
-        return import('@/mdx/search.mjs').then(({ search }) => {
-          return [
-            {
-              sourceId: 'documentation',
-              getItems() {
-                return search(query)
-              },
-              getItemUrl({ item }) {
-                return item.url
-              },
-              getItemInputValue({ item }) {
-                return item.title
-              },
-              onSelect({ item }) {
-                router.push(item.url)
-                close()
-              },
+        // Temporarily disabled search to isolate metadata issue
+        return Promise.resolve([
+          {
+            sourceId: 'documentation',
+            getItems() {
+              return []
             },
-          ]
-        })
+            getItemUrl({ item }) {
+              return item.url
+            },
+            getItemInputValue({ item }) {
+              return item.title
+            },
+            onSelect({ item }) {
+              router.push(item.url)
+              close()
+            },
+          },
+        ])
       },
       navigator: {
         navigate({ itemUrl }) {
