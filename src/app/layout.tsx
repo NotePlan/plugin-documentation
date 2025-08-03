@@ -2,7 +2,7 @@ import { type Section } from '@/components/SectionProvider'
 import { Layout } from '@/components/Layout'
 import { Providers } from '@/app/providers'
 import { PageTitle } from '@/components/PageTitle'
-import { type Metadata } from 'next'
+import { type Metadata, type Viewport } from 'next'
 
 import '@/styles/tailwind.css'
 
@@ -52,12 +52,19 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+}
+
 export default function RootLayout({ children }: RootLayoutProps) {
   let allSections = getAllSections()
 
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
-      <body className="flex min-h-full bg-white dark:bg-zinc-900">
+      <body className="flex min-h-full w-full max-w-full overflow-x-hidden bg-white dark:bg-zinc-900">
         <Providers>
           <Layout allSections={allSections}>
             <PageTitle />

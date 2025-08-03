@@ -21,7 +21,7 @@ export function Layout({
 
   return (
     <SectionProvider sections={sections}>
-      <div className="relative flex h-full">
+      <div className="relative flex h-full w-full max-w-full overflow-x-hidden">
         <motion.header
           layoutScroll
           className="contents lg:pointer-events-none lg:fixed lg:inset-0 lg:z-40 lg:flex"
@@ -34,9 +34,11 @@ export function Layout({
             <Navigation className="hidden lg:mt-10 lg:block" />
           </div>
         </motion.header>
-        <div className="flex-1 lg:ml-72 xl:ml-80">
-          <div className="relative flex h-full flex-col px-4 pt-14 sm:px-6 lg:px-8">
-            <main className="flex-auto w-full max-w-full overflow-x-hidden">{children}</main>
+        <div className="w-full max-w-full flex-1 overflow-x-hidden lg:ml-72 xl:ml-80">
+          <div className="relative flex h-full w-full max-w-full flex-col overflow-x-hidden px-4 pt-14 sm:px-6 lg:px-8">
+            <main className="w-full max-w-full flex-auto overflow-x-hidden">
+              {children}
+            </main>
             <Footer />
           </div>
         </div>

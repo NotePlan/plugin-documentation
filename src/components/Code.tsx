@@ -157,10 +157,12 @@ function CodePanel({
   }
 
   return (
-    <div className="group dark:bg-white/2.5 w-full max-w-full">
+    <div className="group w-full max-w-full dark:bg-white/2.5">
       <CodePanelHeader tag={tag} label={label} />
       <div className="relative w-full max-w-full">
-        <pre className="overflow-x-auto p-4 text-xs text-white w-full max-w-full">{children}</pre>
+        <pre className="w-full max-w-full overflow-x-auto p-4 text-xs text-white">
+          {children}
+        </pre>
         <CopyButton code={code} />
       </div>
     </div>
