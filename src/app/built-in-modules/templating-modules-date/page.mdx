@@ -167,8 +167,12 @@ This is necessary due to the way NotePlan handles dates. If you are passing a da
 
 ---
 
-### `now(format?: string, offset?: string | number)`
-Returns the current date and time, or a date/time offset from now, formatted as a string.
+<Callout type="info" title="Enhanced Date Support">
+This method now supports formatting specific dates in addition to offset calculations. This resolves issues where templates needed to format dates from variables like `Editor.title`.
+</Callout>
+
+### `now(format?: string, dateOrOffset?: string | number)`
+Returns the current date and time, a date/time offset from now, or formats a specific date, formatted as a string.
 
 **Parameters:**
 
@@ -176,7 +180,10 @@ Returns the current date and time, or a date/time offset from now, formatted as 
     *   Uses [Moment.js format tokens](https://momentjs.com/docs/#/displaying/format/) (e.g., `YYYY-MM-DD`, `dddd, MMMM Do YYYY, h:mm:ss a`).
     *   Also supports Intl date styles: `'short'`, `'medium'`, `'long'`, `'full'`.
     *   If empty or not provided, it defaults to the `dateFormat` specified in the plugin settings, or `YYYY-MM-DD` if no setting is found.
-*   `offset` (optional): A string or number to calculate a date/time offset from the current moment.
+*   `dateOrOffset` (optional): A date string, offset string, or number.
+    *   **Date String**: If a date string is provided (e.g., `'2025-08-06'`, `'August 6, 2025'`, `'08/06/2025'`), it formats that specific date.
+        *   Supported formats: `YYYY-MM-DD`, `MM/DD/YYYY`, `DD/MM/YYYY`, month names (e.g., `'August 6, 2025'`), ISO datetime strings.
+        *   Examples: `'2025-08-06'` (August 6, 2025), `'December 25, 2024'` (Christmas 2024).
     *   **Numerical Offset**: If a number is provided (e.g., `7`, `-90`), it's treated as a number of days to add to (positive) or subtract from (negative) the current date.
     *   **Shorthand String Offset**: A string combining a number and a unit (e.g., `1w`, `-2M`, `+7d`, `-3y`).
         *   Supported units:
@@ -185,7 +192,7 @@ Returns the current date and time, or a date/time offset from now, formatted as 
             *   `M`: months
             *   `y`: years
         *   Examples: `7d` (7 days from now), `-1M` (1 month ago), `+2w` (2 weeks from now).
-    *   If empty or not provided, no offset is applied.
+    *   If empty or not provided, the current date is used.
 
 **Returns:**
 `(string)`: The formatted date string.
@@ -193,6 +200,10 @@ Returns the current date and time, or a date/time offset from now, formatted as 
 **Behavior Notes:**
 *   When an Intl format (`short`, `medium`, `long`, `full`) is used, the locale for formatting is taken from the `templateLocale` in plugin settings, or `en-US` if not set.
 *   The global `now()` function available directly in templates (e.g., `<%- now(...) %>`) uses the same underlying logic as `date.now(...)`.
+*   **Date vs Offset Detection**: The method automatically detects whether the second parameter is a date string or an offset:
+    *   Date strings are identified by patterns like `YYYY-MM-DD`, `MM/DD/YYYY`, month names, or ISO datetime strings.
+    *   Single numbers or shorthand strings (e.g., `7`, `1d`, `10w`) are treated as offsets.
+    *   If a string doesn't match date patterns, it's treated as an offset.
 
 **Examples:**
 
@@ -254,7 +265,39 @@ The following example will add 1 year to the current date and use the default fo
 Equivalent using a positive number for the shorthand string offset:
 ```javascript
 <%- date.now('', '+1y') %>
-``` 
+```
+
+**Examples with specific dates:**
+
+The following example formats a specific date using the default format:
+```javascript
+<%- date.now('', '2025-08-06') %>
+```
+Output: `2025-08-06`
+
+The following example formats a specific date with a custom format:
+```javascript
+<%- date.now('YYYY - dddd', '2025-08-06') %>
+```
+Output: `2025 - Wednesday`
+
+The following example formats a date using month name format:
+```javascript
+<%- date.now('MMMM Do, YYYY', 'August 6, 2025') %>
+```
+Output: `August 6th, 2025`
+
+The following example formats a date using MM/DD/YYYY format:
+```javascript
+<%- date.now('YYYY-MM-DD', '08/06/2025') %>
+```
+Output: `2025-08-06`
+
+The following example uses the global `now()` helper to format a specific date:
+```javascript
+<%- now('dddd, MMMM Do', '2025-08-06') %>
+```
+Output: `Wednesday, August 6th` 
 
 ---
 
