@@ -84,3 +84,27 @@ Mike Erickson
 
 modified: _2021-12-24 10:36 AM_
 ```
+
+## Setting the Note Title with Frontmatter
+
+<Callout type="info">
+You can include a `title` field in your embedded frontmatter (between the `--` separators) to set the title of the new note. This is particularly useful when you want to dynamically generate note titles based on template variables or user input.
+</Callout>
+
+### Example: Template with Dynamic Title
+
+The following example creates a note with a title that includes the current date:
+
+```markdown
+---
+title: Template with Output Frontmatter and title
+type: blank-note
+folder: <select>
+---
+--
+title: Client Meeting <%- moment().format('YYYY-MM-DD') %>
+date: <% moment().format('YYYY-MM-DD HH:mm') %>
+--
+```
+
+When this template is rendered, it will create a note titled "Client Meeting 2024-01-15" (with the current date) and include the date in the note's frontmatter as well.
