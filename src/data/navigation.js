@@ -8,6 +8,10 @@ export const navigation = [
         href: '/getting-started/templating-installation',
       },
       { title: 'Basic Concepts', href: '/templating-terminology' },
+      {
+        title: 'Help Creating Templates',
+        href: '/getting-started/help-creating-templates',
+      },
     ],
   },
   {

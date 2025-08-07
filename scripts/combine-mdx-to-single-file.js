@@ -3,7 +3,7 @@ const path = require('path')
 const matter = require('gray-matter')
 
 // Import the shared navigation structure
-const { navigation } = require('../src/data/navigation.js')
+let { navigation } = require('../src/data/navigation.js')
 
 // Function to convert href to file path
 function hrefToFilePath(href) {
@@ -39,6 +39,10 @@ function concatenateFiles() {
 
     // Process each link in the section
     for (const link of section.links) {
+      if (link.href.startsWith('http')) {
+        continue
+      }
+
       const filePath = hrefToFilePath(link.href)
 
       try {
