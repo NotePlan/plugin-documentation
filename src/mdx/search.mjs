@@ -278,10 +278,7 @@ export default function (nextConfig = {}) {
                   })
                 }
               `
-              
-              console.log('Generated code length:', generatedCode.length)
-              console.log('Generated code preview:', generatedCode.substring(0, 200))
-              
+
               return generatedCode
             } catch (error) {
               console.error('Error generating search code:', error)

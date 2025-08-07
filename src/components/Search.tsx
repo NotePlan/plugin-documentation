@@ -73,12 +73,21 @@ function useAutocomplete({ close }: { close: () => void }) {
         return state.query !== ''
       },
       getSources({ query }) {
-        // Temporarily disabled search to isolate metadata issue
         return Promise.resolve([
           {
             sourceId: 'documentation',
-            getItems() {
-              return []
+            async getItems() {
+              if (!query) {
+                return []
+              }
+              
+              try {
+                const { search } = await import('@/mdx/search.mjs')
+                return search(query)
+              } catch (error) {
+                console.error('Search error:', error)
+                return []
+              }
             },
             getItemUrl({ item }) {
               return item.url
