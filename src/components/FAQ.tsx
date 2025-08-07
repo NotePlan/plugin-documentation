@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 
 interface FAQItem {
   id: string
@@ -103,11 +104,73 @@ export function FAQ({ items, className = '' }: FAQProps) {
                     A
                   </div>
                   <div className="prose-sm faq-answer prose max-w-none leading-relaxed text-gray-700">
-                    {item.answer.split('\n\n').map((paragraph, index) => (
-                      <p key={index} className="mb-4 last:mb-0">
-                        {paragraph}
-                      </p>
-                    ))}
+                    {item.answer.includes('<') ? (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: item.answer
+                            .split('\n\n')
+                            .map((paragraph) => {
+                              // Handle Markdown headers
+                              if (paragraph.trim().startsWith('### ')) {
+                                return `<h3 class="text-lg font-semibold text-gray-900 mb-3 mt-6 first:mt-0">${paragraph
+                                  .trim()
+                                  .substring(4)}</h3>`
+                              }
+                              if (paragraph.trim().startsWith('## ')) {
+                                return `<h2 class="text-xl font-semibold text-gray-900 mb-4 mt-8 first:mt-0">${paragraph
+                                  .trim()
+                                  .substring(3)}</h2>`
+                              }
+                              if (paragraph.trim().startsWith('# ')) {
+                                return `<h1 class="text-2xl font-bold text-gray-900 mb-6 mt-10 first:mt-0">${paragraph
+                                  .trim()
+                                  .substring(2)}</h1>`
+                              }
+                              return `<p class="mb-4 last:mb-0">${paragraph}</p>`
+                            })
+                            .join(''),
+                        }}
+                      />
+                    ) : (
+                      item.answer.split('\n\n').map((paragraph, index) => {
+                        // Handle Markdown headers for plain text too
+                        if (paragraph.trim().startsWith('### ')) {
+                          return (
+                            <h3
+                              key={index}
+                              className="mb-3 mt-6 text-lg font-semibold text-gray-900 first:mt-0"
+                            >
+                              {paragraph.trim().substring(4)}
+                            </h3>
+                          )
+                        }
+                        if (paragraph.trim().startsWith('## ')) {
+                          return (
+                            <h2
+                              key={index}
+                              className="mb-4 mt-8 text-xl font-semibold text-gray-900 first:mt-0"
+                            >
+                              {paragraph.trim().substring(3)}
+                            </h2>
+                          )
+                        }
+                        if (paragraph.trim().startsWith('# ')) {
+                          return (
+                            <h1
+                              key={index}
+                              className="mb-6 mt-10 text-2xl font-bold text-gray-900 first:mt-0"
+                            >
+                              {paragraph.trim().substring(2)}
+                            </h1>
+                          )
+                        }
+                        return (
+                          <p key={index} className="mb-4 last:mb-0">
+                            {paragraph}
+                          </p>
+                        )
+                      })
+                    )}
                   </div>
                 </div>
               </div>
