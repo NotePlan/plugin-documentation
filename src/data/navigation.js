@@ -71,6 +71,10 @@ export const navigation = [
         href: '/built-in-modules/templating-modules-web-services',
       },
       { title: 'Web Module', href: '/built-in-modules/templating-modules-web' },
+      {
+        title: 'Helpers Module',
+        href: '/built-in-modules/templating-modules-helpers',
+      },
     ],
   },
   {

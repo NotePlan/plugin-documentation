@@ -1,0 +1,215 @@
+import Callout from '@/components/Callout'
+import { CodeGroup, Code } from '@/components/Code'
+
+# Helpers Module
+
+<Callout type="warning">
+**Advanced Usage**: The functions documented below are for advanced use in JavaScript code within templates. For detailed function signatures, parameters, and return types, please refer to the [NotePlan plugins repository helpers folder](https://github.com/NotePlan/plugins/tree/main/helpers).
+</Callout>
+
+The `helpers` module provides access to commonly used helper functions in templates through a clean, organized interface. It's designed to give you access to useful functions without adding unnecessary dependencies to the plugin bundle.
+
+## Overview
+
+The helpers module is available in templates as `helpers.*` and provides access to functions that are already imported throughout the np.Templating plugin. This means you get access to useful functionality without any additional bundle weight.
+
+<Callout type="info">
+The helpers module is available in **v2.1.0** and later versions of np.Templating.
+</Callout>
+
+## Usage
+
+Access helper functions directly in your templates using the `helpers` namespace:
+
+```javascript
+<%- helpers.log('Processing template...') %>
+<%- helpers.showMessage('Enter your name:', 'OK', 'Input') %>
+<%- helpers.getNote('Note Title') %>
+```
+
+## Available Functions
+
+### Development & Debugging
+
+**Logging Functions**
+- `helpers.log()` - Standard logging
+- `helpers.logError()` - Error logging
+- `helpers.logDebug()` - Debug logging
+- `helpers.logWarn()` - Warning logging
+- `helpers.logInfo()` - Info logging
+
+**Utility Functions**
+- `helpers.clo()` - Console log object with formatting
+- `helpers.JSP()` - JSON stringify with pretty printing
+- `helpers.timer()` - Performance timing utility
+- `helpers.clof()` - Console log object with custom formatting
+- `helpers.getAllPropertyNames()` - Get all property names from an object
+- `helpers.overrideSettingsWithStringArgs()` - Override settings with string arguments
+
+### User Input
+
+**Message Dialogs**
+- `helpers.showMessage()` - Simple message dialog
+- `helpers.showMessageYesNo()` - Yes/No confirmation dialog
+- `helpers.chooseOption()` - Choose from a list of options
+- `helpers.chooseFolder()` - Select a folder
+- `helpers.chooseNote()` - Select a note
+- `helpers.chooseHeading()` - Select a heading
+
+**Input Methods**
+- `helpers.datePicker()` - Date selection dialog
+- `helpers.askDateInterval()` - Date range selection
+- `helpers.chooseOptionWithModifiers()` - Choose option with modifier keys
+- `helpers.getInput()` - Get text input from user
+
+### Date & Time
+
+**Standard Date Functions**
+- `helpers.getFormattedTime()` - Format time with custom format string
+- `helpers.getISOWeekAndYear()` - Get ISO week number and year
+- `helpers.getISOWeekString()` - Get ISO week as formatted string
+- `helpers.hyphenatedDate()` - Get date in hyphenated format
+
+**NotePlan Date Functions**
+- `helpers.getNPWeekData()` - Get NotePlan week data
+
+### Notes
+
+**Basic Note Operations**
+- `helpers.getNote()` - Get note content by title
+- `helpers.removeSection()` - Remove a section from a note
+
+**Note Selection & Navigation**
+- `helpers.selectFirstNonTitleLineInEditor()` - Select first non-title line
+- `helpers.getNoteFromIdentifier()` - Get note from identifier
+- `helpers.getFlatListOfBacklinks()` - Get list of backlinks
+
+### Frontmatter
+
+**Frontmatter Detection & Analysis**
+- `helpers.hasFrontMatter()` - Check if note has frontmatter
+- `helpers.analyzeTemplateStructure()` - Analyze template structure
+- `helpers.isValidYamlContent()` - Validate YAML content
+- `helpers.getSanitizedFmParts()` - Get sanitized frontmatter parts
+
+**Frontmatter Operations**
+- `helpers.updateFrontMatterVars()` - Update frontmatter variables
+- `helpers.getNoteTitleFromTemplate()` - Extract title from template
+- `helpers.getNoteTitleFromRenderedContent()` - Get title from rendered content
+- `helpers.getValuesForFrontmatterTag()` - Get values for frontmatter tag
+- `helpers.getFrontmatterAttributes()` - Get frontmatter attributes
+
+### Configuration
+
+**Settings Management**
+- `helpers.getSetting()` - Get plugin setting value
+- `helpers.updateSettingData()` - Update setting data
+- `helpers.pluginUpdated()` - Mark plugin as updated
+- `helpers.initConfiguration()` - Initialize configuration
+
+### Paragraphs
+
+**Paragraph Navigation**
+- `helpers.findStartOfActivePartOfNote()` - Find start of active note section
+- `helpers.findEndOfActivePartOfNote()` - Find end of active note section
+
+**Paragraph Manipulation**
+- `helpers.smartPrependPara()` - Smartly prepend content to paragraph
+- `helpers.smartAppendPara()` - Smartly append content to paragraph
+
+**NPParagraph Functions**
+- `helpers.replaceContentUnderHeading()` - Replace content under heading
+- `helpers.insertContentUnderHeading()` - Insert content under heading
+- `helpers.getParagraphBlock()` - Get paragraph block
+- `helpers.getBlockUnderHeading()` - Get block under heading
+
+### Code & Content
+
+**Code Block Operations**
+- `helpers.getCodeBlocksOfType()` - Get code blocks of specific type
+
+**String Transformations**
+- `helpers.parseObjectString()` - Parse object string
+- `helpers.validateObjectString()` - Validate object string
+
+**Content Processing**
+- `helpers.escapeRegExp()` - Escape regular expression characters
+
+### Editor & Files
+
+**Editor Operations**
+- `helpers.checkAndProcessFolderAndNewNoteTitle()` - Process folder and note title
+
+**Task Management**
+- `helpers.getOpenTasksAndChildren()` - Get open tasks with children
+
+**Week Formatting**
+- `helpers.formatWithNotePlanWeeks()` - Format with NotePlan week system
+
+### General Utilities
+
+**Data Processing**
+- `helpers.parseJSON5()` - Parse JSON5 content
+- `helpers.semverVersionToNumber()` - Convert semver to number
+- `helpers.getRandomUUID()` - Generate random UUID
+
+## Benefits
+
+**Efficient Access** - All helper functions are available through a single namespace without adding bundle weight.
+
+**Organized Interface** - Functions are logically grouped and easy to discover.
+
+**No Dependencies** - Only includes functions already imported in np.Templating.
+
+**Template Friendly** - Clean syntax that works well in template contexts.
+
+**Performance Optimized** - Rollup only bundles the functions you actually use.
+
+## Integration
+
+The helpers module is automatically available in all templates through the TemplatingEngine. You don't need to import or configure anything - just start using `helpers.functionName()` in your templates.
+
+## Examples
+
+**Logging and Debugging**
+```javascript
+<%- helpers.log('Template processing started') %>
+<%- helpers.logDebug('Processing step 1') %>
+<%- helpers.clo(userData, 'User data received') %>
+```
+
+**User Interaction**
+```javascript
+<%- helpers.showMessage('Template completed successfully!', 'OK', 'Success') %>
+<%- helpers.chooseOption(['Option A', 'Option B'], 'Choose an option') %>
+<%- helpers.datePicker('Select completion date') %>
+```
+
+**Note Operations**
+```javascript
+<%- helpers.getNote('Template Note') %>
+<%- helpers.chooseNote('Select target note') %>
+<%- helpers.selectFirstNonTitleLineInEditor() %>
+```
+
+**Configuration**
+```javascript
+<%- helpers.getSetting('defaultFormat', 'YYYY-MM-DD') %>
+<%- helpers.updateSettingData('lastRun', helpers.getFormattedTime()) %>
+```
+
+**Frontmatter Operations**
+```javascript
+<% if (helpers.hasFrontMatter()) { %>
+<%- helpers.getFrontmatterAttributes() %>
+<% } %>
+```
+
+**Date and Time**
+```javascript
+<%- helpers.getFormattedTime('YYYY-MM-DD') %>
+<%- helpers.getISOWeekString() %>
+<%- helpers.hyphenatedDate() %>
+```
+
+The helpers module gives you access to a comprehensive set of utility functions that make template development more efficient and powerful, all while maintaining optimal bundle size and performance.
