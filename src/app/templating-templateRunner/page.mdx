@@ -101,7 +101,7 @@ writeUnderHeading: My Daily Journal
 
 ### location
 
-The `location` attribute tells Template Runner where/how to place the template contents in the note. _location_ applies contextually depending on whether _writeUnderHeading_ is set or not. It may be one of the following values:
+The `location` attribute tells Template Runner where/how to place the template contents in the note (or in the block under a heading if you are using `writeUnderHeading`). _location_ applies contextually depending on whether _writeUnderHeading_ is set or not. It may be one of the following values:
 
 - `prepend` - (the default) - prepends content directly under the heading if _writeUnderHeading_ is set, otherwise prepends content at the top of the note itself if _writeUnderHeading_ is omitted.
 - `append` - appends content directly under the heading if _writeUnderHeading_ is set, otherwise appends content at the top of the note itself if _writeUnderHeading_ is omitted.
@@ -119,12 +119,41 @@ Example:
 ---
 getNoteTitled: <thisweek>
 writeUnderHeading: Thoughts for the week
-location: append
+location: prepend
 ---
 - <% - date.timestamp() %> This text will appear in my daily note under the heading *Thoughts for the week*, but underneath any text that has been written before
 ```
 
-### Other variables (of your choosing)
+<Callout>
+When you specify `writeUnderHeading`, by default, content is appended to the end of the content under the heading. You can change that with `location` -- as demonstrated above. Additionally, if the heading does not yet exist in the target note, it will be created -- by default as a level 2 heading, appended to the end of the note. You can change that behavior though: 
+</Callout>
+
+### addHeadingLocation
+
+The `addHeadingLocation` attribute tells Template Runner where in the note to add a new heading if it creates one.  `addHeadingLocation` can be 
+- `append` (the default)
+- `prepend`
+
+### headingLevel
+
+When a heading is added, `headingLevel` dictates what heading level it will be (default 2)
+
+Example:
+
+```markdown
+---
+getNoteTitled: <today>
+writeUnderHeading: My Daily Journal
+location: append
+addHeadingLocation: prepend
+headingLevel: 3
+---
+```
+This example will open Today's note, find the "My Daily Journal" section, and (because of `location: append`), will add the content you passed in the URL to the bottom of that section/block. 
+
+However, if the "My Daily Journal" section does not yet exist, it will be added to the top of today's note (due to `addHeadingLocation: prepend`) with a heading level of 3 (`###`).
+
+### Other variables (you can add as many arbitrary variables as you want)
 
 The real power of Template Runner Templates comes from including dynamic variables in the Callback URL and using those in the template. Any variable name that is not a reserved word can be passed in the URL and used in your template when it is run by Template Runner.
 
