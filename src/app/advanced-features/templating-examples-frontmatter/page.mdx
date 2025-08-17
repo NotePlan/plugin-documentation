@@ -93,7 +93,7 @@ modified: _2021-12-24 10:36 AM_
 You can include a `title` field in your embedded frontmatter (between the `--` separators) to set the title of the new note. This is particularly useful when you want to dynamically generate note titles based on template variables or user input.
 </Callout>
 
-### Example: Template with Dynamic Title
+### Method 1: Using the `title` Field in Note Frontmatter
 
 The following example creates a note with a title that includes the current date:
 
@@ -110,3 +110,47 @@ date: <% moment().format('YYYY-MM-DD HH:mm') %>
 ```
 
 When this template is rendered, it will create a note titled "Client Meeting 2024-01-15" (with the current date) and include the date in the note's frontmatter as well.
+
+### Method 2: Using the `newNoteTitle` Field in Template Frontmatter
+
+For more control over the note title, you can use the `newNoteTitle` field in your template's frontmatter (between the `---` separators). This field allows you to:
+
+- Set the title programmatically using template variables
+- Use prompts to get user input for the title
+- Reference the title later in your template to create frontmatter
+
+#### Example: Dynamic Title with Template Variables
+
+```markdown
+---
+title: Meeting Template
+type: meeting-note
+folder: My Meeting Folder
+newNoteTitle: <%- eventTitle %> - <%- eventDate('YYYY-MM-DD') %>
+---
+--
+title: <%- newNoteTitle %>
+category: Meetings
+--
+Agenda...
+```
+
+#### Example: User Prompt for Title
+
+```markdown
+---
+title: Meeting Template
+type: blank-note
+folder: My Meeting Folder
+newNoteTitle: <%- prompt("What's the Subject of the meeting?") %>
+---
+--
+title: <%- newNoteTitle %>
+category: Meetings
+--
+Agenda...
+```
+
+<Callout type="tip">
+**Key Difference**: The `newNoteTitle` field in template frontmatter sets the note's title, while the `title` field in note frontmatter (between `--`) can be used to reference that title or set additional frontmatter properties. Both approaches work together to give you full control over note creation.
+</Callout>
