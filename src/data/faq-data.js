@@ -76,7 +76,7 @@ If you want <code>newNoteTitle</code> to be used, you must first create the note
   {
     id: 'newNoteTitle-in-frontmatter',
     question:
-      'How can a template set the title of the new note in the frontmatter of the resulting template rather than in a H1 at the top of the document?',
+      'How can a template set the title of the new note in the frontmatter of the resulting note rather than in a H1 at the top of the document?',
     answer: `You specify the title of the new note in the template using the field <code>newNoteTitle</code>. You can then access that field later in your template to create <a href="/core-features/templating-anatomy">frontmatter</a> for the new note and that frontmatter can contain the variable <code>newNoteTitle</code>.
 
 ## Example with Dynamic Content
