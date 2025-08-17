@@ -126,6 +126,19 @@ export function FAQ({ items, className = '' }: FAQProps) {
                                   .trim()
                                   .substring(2)}</h1>`
                               }
+                              // Handle markdown code blocks (both ``` and ~~~)
+                              if (
+                                (paragraph.trim().startsWith('```') &&
+                                  paragraph.trim().endsWith('```')) ||
+                                (paragraph.trim().startsWith('~~~') &&
+                                  paragraph.trim().endsWith('~~~'))
+                              ) {
+                                const codeContent = paragraph
+                                  .trim()
+                                  .slice(3, -3)
+                                  .replace(/^[a-zA-Z0-9]+\n?/, '') // Remove language identifier
+                                return `<div class="group w-full max-w-full bg-zinc-800 mb-4"><div class="relative w-full max-w-full"><pre class="w-full max-w-full overflow-x-auto p-4 text-xs text-white">${codeContent}</pre></div></div>`
+                              }
                               return `<p class="mb-4 last:mb-0">${paragraph}</p>`
                             })
                             .join(''),
@@ -162,6 +175,30 @@ export function FAQ({ items, className = '' }: FAQProps) {
                             >
                               {paragraph.trim().substring(2)}
                             </h1>
+                          )
+                        }
+                        // Handle markdown code blocks for plain text too (both ``` and ~~~)
+                        if (
+                          (paragraph.trim().startsWith('```') &&
+                            paragraph.trim().endsWith('```')) ||
+                          (paragraph.trim().startsWith('~~~') &&
+                            paragraph.trim().endsWith('~~~'))
+                        ) {
+                          const codeContent = paragraph
+                            .trim()
+                            .slice(3, -3)
+                            .replace(/^[a-zA-Z0-9]+\n?/, '') // Remove language identifier
+                          return (
+                            <div
+                              key={index}
+                              className="group mb-4 w-full max-w-full bg-zinc-800"
+                            >
+                              <div className="relative w-full max-w-full">
+                                <pre className="w-full max-w-full overflow-x-auto p-4 text-xs text-white">
+                                  {codeContent}
+                                </pre>
+                              </div>
+                            </div>
                           )
                         }
                         return (
