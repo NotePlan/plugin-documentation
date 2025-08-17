@@ -97,7 +97,7 @@ export const navigation = [
         href: '/advanced-features/templating-examples-looping',
       },
       {
-        title: 'Frontmatter',
+        title: 'New Notes w/ Properties/Frontmatter',
         href: '/advanced-features/templating-examples-frontmatter',
       },
       {
