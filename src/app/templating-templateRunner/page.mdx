@@ -10,7 +10,7 @@ import templateRunnerShortcuts from '@/images/templateRunner-shortcuts.png'
 
 ## Overview
 
-`Templating` includes the `templateRunner` command to allow templates to be invoked from callback URLs or triggers. This allows you to use a template to insert content (including dynamic Templating tag-generated content) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor, or actively -- display the note you specify at run-time. 
+`Templating` includes the `templateRunner` command to allow templates to be invoked from callback URLs or triggers. This allows you to use a template to insert content (including dynamic Templating tag-generated content) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor or display the note you specify at run-time). 
 
 Template Runner templates can be activated in two ways:
 1. **Callback URLs**: When a link is clicked from within or outside of NotePlan (e.g. Shortcuts, Keyboard Maestro or wherever)
@@ -28,7 +28,7 @@ At its core, a Template Runner template is a basic template note with frontmatte
 
 ### getNoteTitled (required)
 
-This frontmatter attribute tells Template Runner what document to pull up (either silently or in focus in NotePlan).
+When the Template Runner template is running, the `getNoteTitled` frontmatter attribute tells Template Runner what document you want to write to (either silently or in focus in NotePlan).
 
 The value of this attribute can be one of the following:
 
@@ -72,15 +72,15 @@ replaceNoteContents: true
 
 ### writeUnderHeading
 
-The `writeUnderHeading` attribute tells Template Runner _under which heading_ to place the template content if you are not replacing all the note's contents. By default, content will be prepended (immediately following the heading). If a heading that you specify here does not exist in the _getNotetitled_ note, the heading and content will be created and added to the end of the note.
+The `writeUnderHeading` attribute tells Template Runner _under which heading_ to place the template content if you are not replacing all the note's contents. By default, content will be prepended (immediately following the heading). If a heading that you specify here does not exist in the _getNotetitled_ note, the heading and content will be created and added to the end of the note (but you can change that behavior with the `addHeadingLocation` attribute -- see below).
 
 <Callout>
   IMPORTANT NOTE: writeUnderHeading uses NotePlan's definition of a block,
   replacing all text from the header specified until another header of the same
-  or greater value. So if your heading is a ## level and you have ### level
-  headings directly under it, those items will be replaced. Make sure to have a
+  or greater value or two consecutive empty lines. So if your heading is a ## level and you have ### level
+  headings directly under it, those items will be deleted. Same with horizontal rules (---). NotePlan looks only for a higher level heading to stop at. Make sure to have a
   heading of level ## or # underneath. If you want, you can use the @Stacey
-  trick and place a line with just a blank ` # `, which will be treated as an H1
+  trick and place a line with just a blank ` # ` at the bottom of your section, which will not show visibly but will be treated as an H1,
   when the replacer hits it and nothing beneath that line will be overwritten.
 </Callout>
 
@@ -101,12 +101,19 @@ writeUnderHeading: My Daily Journal
 
 ### location
 
-The `location` attribute tells Template Runner where/how to place the template contents in the note (or in the block under a heading if you are using `writeUnderHeading`). _location_ applies contextually depending on whether _writeUnderHeading_ is set or not. It may be one of the following values:
+The `location` attribute tells Template Runner where/how to place the template contents. The behavior depends on whether you're using `writeUnderHeading` or operating on the whole note.
 
-- `prepend` - (the default) - prepends content directly under the heading if _writeUnderHeading_ is set, otherwise prepends content at the top of the note itself if _writeUnderHeading_ is omitted.
-- `append` - appends content directly under the heading if _writeUnderHeading_ is set, otherwise appends content at the top of the note itself if _writeUnderHeading_ is omitted.
-- `replace` - will replace any text under the heading with the new text from the template, leaving the rest of the note intact. **Note:** Beware: As mentioned above, this uses NotePlan's definition of where a heading's content starts/ends. This will replace all text until either (a) a heading of the same or greater heading level is located, or (b) two empty lines are reached. So if you have "---" horizontal rules, etc. they will be replaced.
-- `cursor` - if the `getNoteTitled` is set to `<current>` then you can insert at the `cursor` position
+#### When using `writeUnderHeading`
+
+- `prepend` - (the default) - adds content at the beginning of the text under the specified heading
+- `append` - adds content at the end of the text under the specified heading  
+- `replace` - replaces all text under the heading with the new template content. **Note:** This uses NotePlan's definition of where a heading's content starts/ends. It will replace all text until either (a) a heading of the same or greater heading level is located, or (b) two empty lines are reached. So if you have "---" horizontal rules, etc. they will be replaced.
+
+#### When not using `writeUnderHeading` (operating on the whole note)
+
+- `prepend` - (the default) - adds content at the top of the note
+- `append` - adds content at the bottom of the note
+- `cursor` - if `getNoteTitled` is set to `<current>`, inserts content at the current cursor position
 
 > _Tip_:
 > Make sure your target note has another heading of the same or higher level underneath it. If necessary, you can even put in a blank heading, e.g.:
@@ -153,7 +160,7 @@ This example will open Today's note, find the "My Daily Journal" section, and (b
 
 However, if the "My Daily Journal" section does not yet exist, it will be added to the top of today's note (due to `addHeadingLocation: prepend`) with a heading level of 3 (`###`).
 
-### Other variables (you can add as many arbitrary variables as you want)
+## Passing variable content (you can add as many arbitrary variables as you want)
 
 The real power of Template Runner Templates comes from including dynamic variables in the Callback URL and using those in the template. Any variable name that is not a reserved word can be passed in the URL and used in your template when it is run by Template Runner.
 
@@ -203,7 +210,7 @@ Common trigger patterns:
 
 ## Running a Template Runner Template
 
-X-Callback-Links, especially ones with lots of variables attached, can be a bit daunting. The easiest way to get a URL to invoke your template is by using the `Link Creator` plugin and the command `/Get X-Callback-URL`, and selecting `RUN a template`. This command will help you create a link and pass variables through to Template Runner. In fact, the `RUN a template` will ask you if you want it to create the actual template for you by interactively asking you questions, and then will deliver you a URL that you can use to invoke the new template.
+X-Callback-Links, especially ones with lots of variables attached, can be a bit daunting. The easiest way to get a URL to invoke your template is by using the `Link Creator` plugin and the command `/Get X-Callback-URL`, and selecting `RUN a TemplateRunner type template`. This command will help you create a link and pass variables through to Template Runner. The easiest way to get there is to go to have your TemplateRunner template open and open the Command Bar and invoke `/Get Callback URL`. Click `RUN a TemplateRunner type template`. If you don't have the Link Creator plugin, you can install it from the Plugins by going to the NotePlan Preferences and clicking the Plugins tab.
 
 ## Examples
 
