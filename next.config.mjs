@@ -14,12 +14,15 @@ const withMDX = nextMDX({
 })
 
 /** @type {import('next').NextConfig} */
+const isExport = process.env.NEXT_EXPORT === 'true'
 const nextConfig = {
+  output: isExport ? 'export' : undefined,
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
+}
 
-  // Handle Vercel deployment at subpath
-  basePath: process.env.NODE_ENV === 'production' ? '/templates/docs' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/templates/docs' : '',
+if (isExport) {
+  nextConfig.basePath = '/templates/docs'
+  nextConfig.assetPrefix = '/templates/docs'
 }
 
 export default withSearch(withMDX(nextConfig))
