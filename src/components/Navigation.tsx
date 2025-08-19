@@ -126,7 +126,7 @@ function NavLink({
           : 'text-zinc-600 dark:text-zinc-400'
       }`}
     >
-      <span className="truncate">{children}</span>
+      <span className="truncate text-xs">{children}</span>
       {tag && (
         <Tag variant="small" color="zinc">
           {tag}
