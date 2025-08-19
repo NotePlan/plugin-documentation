@@ -4,7 +4,7 @@
  *
  * FAQ Answer Formatting:
  *
- * The FAQ component supports both plain text and HTML formatting in answers.
+ * The FAQ component supports both plain text and HTML formatting in answers. But generally you should use markdown for the answers keeping them as simple as possible and let the JSX component handle the HTML. Only use HTML for more complex formatting.
  *
  * Plain Text:
  * - Use \n\n (double line breaks) to create paragraph breaks
@@ -126,5 +126,73 @@ This example uses the <a href="/core-features/templating-prompts">prompt functio
 - This allows you to create <a href="/advanced-features/templating-examples-frontmatter">frontmatter in the new note</a> that contains the dynamic title
 - The title will appear in both the note's frontmatter and as the note's title in NotePlan
 - For more details on using the two dashes ("--") syntax for note frontmatter, see the <a href="/advanced-features/templating-examples-frontmatter">Frontmatter Examples</a> documentation`,
+  },
+  {
+    id: 'template-blank-lines',
+    question:
+      'Why is the template inserting so many blank lines in the result and how do I remove them?',
+    answer: `When template tags are processed, they are replaced with the text they represent. If each tag is on its own line, the line breaks at the end of each line will remain in the final output, resulting in numerous extra blank lines.
+
+## The Solution: Newline Slurping Tags
+
+To prevent these unwanted blank lines, use the newline slurping tag syntax: <code>-%&gt;</code> instead of simply <code>%&gt;</code>.
+
+## How It Works
+
+- <code>&lt;% tag %&gt;</code> - Keeps the newline after the tag
+- <code>&lt;%- tag -%&gt;</code> - Removes the newline after the tag
+
+## Example
+
+<strong>With regular tags (\`%>\`) -- this creates extra lines:</strong>
+
+~~~
+<% const name = prompt("What's your name?") %>
+<% const age = prompt("What's your age?") %>
+<% const color = prompt("What's your favorite color?") %>
+<%- name %>
+<%- age %>
+<%- color %>
+~~~
+
+This would result in the following output with the extra blank lines where the prompt tags were:
+
+~~~
+ 
+ 
+ 
+John Doe
+25
+Blue
+~~~
+
+<strong>With newline slurping tags (\`-%>\`) at the end of each tag that should not produce any output:</strong>
+
+~~~
+<% const name = prompt("What's your name?") -%>
+<% const age = prompt("What's your age?") -%>
+<% const color = prompt("What's your favorite color?") -%>
+<%- name %>
+<%- age %>
+<%- color %>
+~~~
+
+This would result in the following output with no extra blank lines:
+
+~~~
+John Doe
+25
+Blue
+~~~
+
+## When to Use Each
+
+- Use <code>&lt;% tag -%&gt;</code> when you want the return/newline after the tag to be removed
+
+- Use <code>&lt;% tag %&gt;</code> when you want to preserve the return/newline after the tag (generally for outputting text)
+
+This is especially important when you have many JavaScript tags or when you want precise control over the spacing in your template output.
+
+For more information, read about <a href="/core-features/templating-tags">Template Tags</a>.`,
   },
 ]
