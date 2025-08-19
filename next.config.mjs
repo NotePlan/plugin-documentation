@@ -16,6 +16,10 @@ const withMDX = nextMDX({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
+
+  // Handle Vercel deployment at subpath
+  basePath: process.env.NODE_ENV === 'production' ? '/templates/docs' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/templates/docs' : '',
 }
 
 export default withSearch(withMDX(nextConfig))
