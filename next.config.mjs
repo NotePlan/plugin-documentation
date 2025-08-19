@@ -14,15 +14,8 @@ const withMDX = nextMDX({
 })
 
 /** @type {import('next').NextConfig} */
-const isExport = process.env.NEXT_EXPORT === 'true'
 const nextConfig = {
-  output: isExport ? 'export' : undefined,
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
-}
-
-if (isExport) {
-  nextConfig.basePath = '/templates/docs'
-  nextConfig.assetPrefix = '/templates/docs'
 }
 
 export default withSearch(withMDX(nextConfig))

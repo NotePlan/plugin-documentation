@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3010",
-    "build": "NEXT_EXPORT=true next build",
-    "start": "NEXT_EXPORT=false next start",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint"
   },
   "browserslist": "defaults, not ie <= 11",
