@@ -186,21 +186,31 @@ export default function (nextConfig = {}) {
                   let end = Math.min(text.length, index + query.length + contextLength)
                   
                   // Adjust to word boundaries
-                  while (start > 0 && text[start - 1].match(/\\w/)) start--
-                  while (end < text.length && text[end].match(/\\w/)) end++
+                  while (start > 0 && text[start - 1].match(/\w/)) start--
+                  while (end < text.length && text[end].match(/\w/)) end++
                   
                   let preview = text.slice(start, end)
                   if (start > 0) preview = '...' + preview
                   if (end < text.length) preview = preview + '...'
                   
-                  // Calculate the adjusted match position in the preview
-                  const matchStartInPreview = index - start
-                  const matchEndInPreview = matchStartInPreview + query.length
+                  // Instead of calculating positions, search for the query within the preview text
+                  const previewLower = preview.toLowerCase()
+                  const queryLower = query.toLowerCase()
+                  const matchIndexInPreview = previewLower.indexOf(queryLower)
+                  
+                  if (matchIndexInPreview === -1) {
+                    // Fallback: if we can't find it in preview, return the preview without highlighting
+                    return {
+                      text: preview,
+                      matchStart: -1,
+                      matchEnd: -1
+                    }
+                  }
                   
                   return {
                     text: preview,
-                    matchStart: matchStartInPreview,
-                    matchEnd: matchEndInPreview
+                    matchStart: matchIndexInPreview,
+                    matchEnd: matchIndexInPreview + query.length
                   }
                 }
 
@@ -240,6 +250,10 @@ export default function (nextConfig = {}) {
                   const allResults = results.flatMap((resultSet, index) => {
                     const isFromTitleField = index === 0 // title field results come first
                     return resultSet.result.map(item => {
+                      // Search in the content that was indexed (the combined title + content)
+                      
+                      // Always search in the content that was indexed (the combined title + content)
+                      // This ensures the highlighting positions are correct
                       const preview = findMatchContext(item.doc.content, query)
                       return {
                         url: item.id,
