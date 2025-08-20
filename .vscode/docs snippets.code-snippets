@@ -1,0 +1,7 @@
+{
+  "DynamicImage": {
+    "prefix": "dimg",
+    "body": ["<DynamicImage src=\"$1\" alt=\"$2\" />"],
+    "description": "Insert DynamicImage component"
+  }
+}

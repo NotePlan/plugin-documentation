@@ -1,17 +1,23 @@
 import Link from 'next/link'
 import clsx from 'clsx'
 
-import { Feedback } from '@/components/Feedback'
-import { Heading } from '@/components/Heading'
+import { Button } from '@/components/Button'
+import { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
+import Callout from '@/components/Callout'
+import { DynamicImage } from '@/components/DynamicImage'
 import { Prose } from '@/components/Prose'
+import { Heading } from '@/components/Heading'
 
 export const a = Link
-export { Button } from '@/components/Button'
-export { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
+export { Button }
+export { CodeGroup, code, pre }
+
+// Export only the essential components for standard document pages
+export { Callout, DynamicImage }
 
 export function wrapper({ children }: { children: React.ReactNode }) {
   return (
-    <article className="flex h-full flex-col pb-10 pt-0 w-full max-w-full overflow-x-hidden">
+    <article className="flex h-full w-full max-w-full flex-col overflow-x-hidden pb-10 pt-0">
       <Prose className="flex-auto">{children}</Prose>
       <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
         {/* <Feedback /> */}

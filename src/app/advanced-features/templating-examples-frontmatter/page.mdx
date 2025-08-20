@@ -1,6 +1,3 @@
-import Callout from '@/components/Callout'
-import noteFrontmatter from '@/images/note-frontmatter.png'
-import resultingNote from '@/images/resulting-template.png'
 
 # Creating Notes with Properties/Frontmatter
 
@@ -8,7 +5,7 @@ import resultingNote from '@/images/resulting-template.png'
 
 In the following example, the template frontmatter is at the top between `---` (three dashes) while the note frontmatter (that gets copied into the note) is defined between the two dashes `--` just below:
 
-<img src={noteFrontmatter.src} alt="Note Frontmatter Example" width="70%" />
+<DynamicImage src="note-frontmatter.png" alt="Note Frontmatter Example" width="70%" />
 
 In this example, there are two frontmatter areas:
 
@@ -19,7 +16,7 @@ In this example, there are two frontmatter areas:
 
 The resulting note ends up with its own frontmatter fields: note, name, phone, icon, icon-color, etc.
 
-<img src={resultingNote.src} alt="Resulting Note Example" width="70%" />
+<DynamicImage src="resulting-template.png" alt="Resulting Note Example" width="70%" />
 
 ## Prompting for values to be used in the note's frontmatter
 
@@ -131,5 +128,5 @@ Agenda...
 ```
 
 <Callout type="tip">
-**Key Difference**: Generally, you will want to use the `newNoteTitle` field in templates to set the note's title when creating a new note, e.g. with the `/New Note from Template` command.
+Generally, you will want to use the `newNoteTitle` field in templates to set the note's title when creating a new note, e.g. with the `/New Note from Template` command.
 </Callout>
