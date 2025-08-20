@@ -195,4 +195,56 @@ This is especially important when you have many JavaScript tags or when you want
 
 For more information, read about <a href="/core-features/templating-tags">Template Tags</a>.`,
   },
+  {
+    id: 'template-properties-vs-note-frontmatter',
+    question:
+      "What's the difference between the properties in the top part of the template and the properties in the body of the template? What should I put where?",
+    answer: `There are two distinct areas for properties in templates, each serving a different purpose:
+
+## Template Properties (Top Section)
+
+The properties at the top of the template (in the Properties editor, or in the raw text between \`---\` separators) are **template metadata** that control how the template itself works:
+
+- <strong>title</strong>: The name of the template
+- <strong>type</strong>: Template type (e.g., meeting-note, blank-note)
+- <strong>folder</strong>: Where new notes created from this template should be placed
+- <strong>newNoteTitle</strong>: The title for the new note being created
+- <strong>Any other template-specific settings</strong>
+
+## Example
+
+<DynamicImage src="note-frontmatter-example.png" alt="Template Properties Example" width="70%" />
+
+In this example:
+- The top section defines this as a template that can be used in the context of creating a "meeting-note" or an "empty-note" type template with the title: "Generate note with frontmatter" and will prompt the user to select a folder for the new note. The <code>newNoteTitle</code> field is used to set the title of the new note -- in this case, some text with the date automatically added.
+- The middle section (between \`--\`) creates a new note with frontmatter containing any arbitrary properties/frontmatter that the user wants to add to the new note (could have template tags or just text)
+- The bottom section is the actual note content
+
+## Note Frontmatter (Body Section - Between \`--\`)
+
+The properties between the \`--\` (two dashes) separators in the template body become the **actual frontmatter of the new note** that gets created. In this example:
+
+- <strong>title</strong>: The actual title of the new note, which it is getting from the <code>newNoteTitle</code> field in the template's top section
+- <strong>category</strong>, <strong>priority</strong>, etc.: User-defined properties that will be added to the new note's properties/frontmatter
+
+## What Goes Where?
+
+- <strong>Template properties (top):</strong> How the template works, where notes go, template behavior, variables to be used in the template body or note frontmatter
+- <strong>Note frontmatter (middle):</strong> What metadata the resulting note should have
+- <strong>Note content (bottom):</strong> The actual content of the new note
+
+For more detailed examples and advanced usage, see the <a href="/advanced-features/templating-examples-frontmatter">Creating Notes with Properties/Frontmatter</a> documentation.`,
+  },
+  {
+    id: 'newNoteTitle-not-overriding-first-line',
+    question:
+      'My template has new note frontmatter and a newNoteTitle which is being used to create the note, but when the note is created, the title is actually being pulled from the top title line of my note. Why is the title not what I specified in `newNoteTitle`?',
+    answer: `NotePlan historically has used the first line of a note to hold the <code># Title</code> of the note. For this reason, NotePlan reads that line and considers that line the title of your note from this point forward, no matter what title you gave it at note creation time.
+
+If you want your note to keep the title that you specified in <code>newNoteTitle</code> rather than reading the first line of your note body, you simply have to add a <code>title</code> line to your template's new note frontmatter and pull the <code>&lt;%- newNoteTitle %&gt;</code> for the value.
+
+<DynamicImage src="new-note-title-comparison.png" alt="New Note Title Not Overriding First Line" />
+
+The note will have the title from <code>newNoteTitle</code> in its frontmatter, and NotePlan will use that title instead of reading the first <code># Title</code> line from the note body.`,
+  },
 ]
