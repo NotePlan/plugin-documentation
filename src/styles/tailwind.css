@@ -59,3 +59,14 @@
 .faq-answer p:first-child {
   margin-top: 3px !important;
 }
+
+/* Prevent small inline code elements from wrapping */
+.prose p code,
+.prose li code,
+.prose h1 code,
+.prose h2 code,
+.prose h3 code,
+.prose blockquote code {
+  white-space: nowrap;
+  word-break: keep-all;
+}

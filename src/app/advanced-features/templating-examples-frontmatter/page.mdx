@@ -1,26 +1,25 @@
 import Callout from '@/components/Callout'
+import noteFrontmatter from '@/images/note-frontmatter.png'
+import resultingNote from '@/images/resulting-template.png'
 
 # Creating Notes with Properties/Frontmatter
 
-`Templating` provides support for templates which create notes with properties/frontmatter. The note properties/frontmatter content is placed at the top of the template, between `--` separators and follows the frontmatter of the template.
+`Templating` provides support for templates which create notes with properties/frontmatter of their own. The note properties/frontmatter used by the template processor is placed at the top (in the Properties editor, or between `--` separators in the raw file). You can add properties for the new note's frontmatter by enclosing it at the very top of the template between the `--` (two dashes) separators.
 
-In the following example, the template frontmatter is at the top between `---` (three dashes) while the note frontmatter (that gets copied into the note) is defined between the two dashes ("--") just below:
+In the following example, the template frontmatter is at the top between `---` (three dashes) while the note frontmatter (that gets copied into the note) is defined between the two dashes `--` just below:
 
-```markdown
----
-title: this is my template title
-type: meeting-note, empty-note
-note: These properties are only relevant to the template, not the note
----
---
-note: These items will become the new note's properties/frontmatter
-name: Mike Erickson
-phone: 714.555.1212
-icon: hammer
-icon-color: red-500
---
-Any other template content you want to be in the generated note can be placed here...
-```
+<img src={noteFrontmatter.src} alt="Note Frontmatter Example" width="70%" />
+
+In this example, there are two frontmatter areas:
+
+1. The template's frontmatter in the Properties editor
+2. The resulting note's frontmatter, which is between the `--` separators in the template
+
+## The Resulting Note
+
+The resulting note ends up with its own frontmatter fields: note, name, phone, icon, icon-color, etc.
+
+<img src={resultingNote.src} alt="Resulting Note Example" width="70%" />
 
 ## Prompting for values to be used in the note's frontmatter
 
@@ -40,78 +39,58 @@ When the template is rendered, it will display a choice list prompt for the `pri
 
 ### Example: Complete Frontmatter Template
 
-The following example demonstates a complete frontmatter format template
+The following example demonstates a complete frontmatter format template with prompts that populate the new note's frontmatter.
 
 ```markdown
+---
+title: My Template with Prompt for New Note's Frontmatter
+newNoteTitle: <%- prompt('newNoteTitle',"What is the new note's title?") %>
+---
 --
+title: <%- newNoteTitle %>
+context: <%- prompt('context',"What is the new note's context?") %>
 name: Mike Erickson
 phone: 714.555.1212
 modified: <%- date.now('YYYY-MM-DD h:mm A') %>
 description: The following content will be ignored when rendering a frontmatter template and cannot contain any carriage returns (this note is auto wrapped)
 --
-
-#### Frontmatter Objects
-
-The following is normal template content
-
-name: _<%- frontmatter.name %>_
-phone: _<%- frontmatter.phone %>_
-
-#### Other Templating Variables
-
-<%- user.first %> <%- user.last %>
-<%- date.now() %>
-
----
-
-modified: _<%- frontmatter.modified %>_
+## <%- prompt('topic1',"What is the first topic in the note?") %>
 ```
 
-When template is rendered, it will appear as
+<Callout type="info">
+**Prompts**: Prompts are evaluated before the template is rendered, so you can use them to set values of either a frontmatter key to be used in the processing of the template or in the resulting note's frontmatter or body content.
+The above example will display 3 prompts in order of appearance in the template:
+
+- a prompt for the `newNoteTitle` key, and the value entered will be used to create the new note's title and the value will be set as the `title` key in the new note's frontmatter. 
+- a prompt for the `context` key, and the value entered will be used as the value of the `context` key in the new note's frontmatter. 
+- a prompt for the first topic in the new note.
+
+Even though the prompts are in different places in the template, they will all be displayed (in the order they appear in the template) when the template rendering begins. 
+
+</Callout>
+
+## Where to Put the Prompts
+
+There is no right or wrong place to put the prompts, but it is often easier to put them in the main template's frontmatter and access them later **by variablename** where they are needed.
+
+For example, the following template has 3 prompts in the frontmatter and the resulting values are used in various places:
 
 ```markdown
-#### Frontmatter Objects
-
-The following is normal template content
-
-name: _Mike Erickson_
-phone: _714.555.1212_
-
-#### Other Templating Variables
-
-Mike Erickson
-2021-12-24
-
 ---
-
-modified: _2021-12-24 10:36 AM_
+newNoteTitle: <%- prompt('newNoteTitle',"What is the new note's title?") %>
+newNoteContext: <%- prompt('newNoteContext',"What is the new note's context?") %>
+firstTopic: <%- prompt('firstTopic',"What is the first topic in the note?") %>
+---
+--
+title: <%- newNoteTitle %>
+context: <%- newNoteContext %>
+--
+## <%- firstTopic %>
 ```
 
 ## Setting the Note Title with Frontmatter
 
-<Callout type="info">
-You can include a `title` field in your embedded frontmatter (between the `--` separators) to set the title of the new note. This is particularly useful when you want to dynamically generate note titles based on template variables or user input.
-</Callout>
-
-### Method 1: Using the `title` Field in Note Frontmatter
-
-The following example creates a note with a title that includes the current date:
-
-```markdown
----
-title: Template with Output Frontmatter and title
-type: blank-note
-folder: <select>
----
---
-title: Client Meeting <%- moment().format('YYYY-MM-DD') %>
-date: <% moment().format('YYYY-MM-DD HH:mm') %>
---
-```
-
-When this template is rendered, it will create a note titled "Client Meeting 2024-01-15" (with the current date) and include the date in the note's frontmatter as well.
-
-### Method 2: Using the `newNoteTitle` Field in Template Frontmatter
+As you see in the example above, you can include a `title` field in your embedded frontmatter (between the `--` separators) to set the title of the new note. This is particularly useful when you want to dynamically generate note titles based on template variables or user prompt input.
 
 For more control over the note title, you can use the `newNoteTitle` field in your template's frontmatter (between the `---` separators). This field allows you to:
 
