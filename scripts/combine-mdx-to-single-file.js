@@ -81,7 +81,7 @@ function concatenateFiles() {
   console.log(
     `Processed ${processedCount} files successfully, with ${errorCount} errors.`,
   )
-  console.log('All documentation concatenated to documentation.md')
+  console.log('All documentation concatenated to All_Docs_Concatenated.md')
 }
 
 // Run the main function
