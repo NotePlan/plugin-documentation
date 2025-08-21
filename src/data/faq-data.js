@@ -51,6 +51,7 @@
 export const faqData = [
   {
     id: 'newNoteTitle-not-working',
+    order: 4,
     question:
       'I created a blank note, added some content, then tried to insert a template using the "Insert Template" button (or the `/insert` or `/append` command) but the newNoteTitle field in the template is not changing the title of the note.',
     answer: `Once a note has a title (and/or some content), then <code>newNoteTitle</code> is ignored. 
@@ -59,6 +60,7 @@ If you want <code>newNoteTitle</code> to be used, you must first create the note
   },
   {
     id: 'copying-a-template',
+    order: 2,
     question: 'How do I copy/paste a template into NotePlan?',
     answer: `There are three ways to copy a template into NotePlan:
 
@@ -75,6 +77,7 @@ If you want <code>newNoteTitle</code> to be used, you must first create the note
   },
   {
     id: 'newNoteTitle-in-frontmatter',
+    order: 5,
     question:
       'How can a template set the title of the new note in the frontmatter of the resulting note rather than in a H1 at the top of the document?',
     answer: `You specify the title of the new note in the template using the field <code>newNoteTitle</code>. You can then access that field later in your template to create <a href="/core-features/templating-anatomy">frontmatter</a> for the new note and that frontmatter can contain the variable <code>newNoteTitle</code>.
@@ -129,6 +132,7 @@ This example uses the <a href="/core-features/templating-prompts">prompt functio
   },
   {
     id: 'template-blank-lines',
+    order: 6,
     question:
       'Why is the template inserting so many blank lines in the result and how do I remove them?',
     answer: `When template tags are processed, they are replaced with the text they represent. If each tag is on its own line, the line breaks at the end of each line will remain in the final output, resulting in numerous extra blank lines.
@@ -197,6 +201,7 @@ For more information, read about <a href="/core-features/templating-tags">Templa
   },
   {
     id: 'template-properties-vs-note-frontmatter',
+    order: 1,
     question:
       "What's the difference between the properties in the top part of the template and the properties in the body of the template? What should I put where?",
     answer: `There are two distinct areas for properties in templates, each serving a different purpose:
@@ -237,6 +242,7 @@ For more detailed examples and advanced usage, see the <a href="/advanced-featur
   },
   {
     id: 'newNoteTitle-not-overriding-first-line',
+    order: 3,
     question:
       'My template has new note frontmatter and a newNoteTitle which is being used to create the note, but when the note is created, the title is actually being pulled from the top title line of my note. Why is the title not what I specified in `newNoteTitle`?',
     answer: `NotePlan historically has used the first line of a note to hold the <code># Title</code> of the note. For this reason, NotePlan reads that line and considers that line the title of your note from this point forward, no matter what title you gave it at note creation time.
@@ -247,4 +253,4 @@ If you want your note to keep the title that you specified in <code>newNoteTitle
 
 The note will have the title from <code>newNoteTitle</code> in its frontmatter, and NotePlan will use that title instead of reading the first <code># Title</code> line from the note body.`,
   },
-]
+].sort((a, b) => a.order - b.order)
