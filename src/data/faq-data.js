@@ -60,7 +60,7 @@ If you want <code>newNoteTitle</code> to be used, you must first create the note
   },
   {
     id: 'copying-a-template',
-    order: 2,
+    order: 1,
     question: 'How do I copy/paste a template into NotePlan?',
     answer: `There are three ways to copy a template into NotePlan:
 
@@ -132,7 +132,7 @@ This example uses the <a href="/core-features/templating-prompts">prompt functio
   },
   {
     id: 'template-blank-lines',
-    order: 6,
+    order: 2,
     question:
       'Why is the template inserting so many blank lines in the result and how do I remove them?',
     answer: `When template tags are processed, they are replaced with the text they represent. If each tag is on its own line, the line breaks at the end of each line will remain in the final output, resulting in numerous extra blank lines.
@@ -201,7 +201,7 @@ For more information, read about <a href="/core-features/templating-tags">Templa
   },
   {
     id: 'template-properties-vs-note-frontmatter',
-    order: 1,
+    order: 2.2,
     question:
       "What's the difference between the properties in the top part of the template and the properties in the body of the template? What should I put where?",
     answer: `There are two distinct areas for properties in templates, each serving a different purpose:
