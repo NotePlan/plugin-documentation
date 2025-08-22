@@ -24,13 +24,18 @@ Template Runner is a hidden command to be run from a callback URL or trigger. It
 
 ## Required Attributes
 
-At its core, a Template Runner template is a basic template note with frontmatter. There is only one _required_ field in the frontmatter:
+At its core, a Template Runner template is a basic template note with frontmatter. You need **one** of the following attributes to specify what document to work with:
 
-### getNoteTitled (required)
+### newNoteTitle (for creating new notes)
 
-When the Template Runner template is running, the `getNoteTitled` frontmatter attribute tells Template Runner what document you want to write to (either silently or in focus in NotePlan).
+When you want to create a new note, use `newNoteTitle` in the template's frontmatter. This will:
+- Create a new note with the specified title
+- Bypass any other note selection logic (e.g. `getNoteTitled`)
+- Use the template content as the new note's content
 
-The value of this attribute can be one of the following:
+### getNoteTitled (for working with existing notes)
+
+When you want to work with an existing note, use `getNoteTitled`. The value can be one of the following:
 
 - a note title - should be a unique title (you will get the first note if there are more than one)
 - `<current>` - the currently opened note in the NotePlan Editor
@@ -39,13 +44,46 @@ The value of this attribute can be one of the following:
 - `<nextweek>`
 - `<choose>` - user will be asked to select a note at run-time
 
-Example:
+<Callout type="info">
+**Note**: `getNoteTitled` is only used when you don't specify `newNoteTitle`.
+</Callout>
+
+### Note Creation vs. Note Selection
+
+If both `newNoteTitle` and `getNoteTitled` are specified, TemplateRunner has a priority system for determining how to handle notes:
+
+1. **`newNoteTitle` (Highest Priority)** - Creates a new note with the specified title
+4. **`getNoteTitled` (Second Priority)** - If you are not creating a new note, you need to specify the note you want to work with
+
+Example for existing notes:
 
 ```markdown
 ---
+title: My template runner template with getNoteTitled
 getNoteTitled: My Tasks Document Title
+type: template-runner
 ---
+This line will be the added to the `My Tasks Document Title` note after the link is clicked
 ```
+### Simple Example with newNoteTitle and Variables
+
+Here's a basic example that demonstrates using `newNoteTitle` with arguments `taskDescription` and `taskDate` passed via the callback URL to create a new note:
+
+```markdown
+---
+title: Quick Task Template
+newNoteTitle: <%- taskDescription %> - <%- taskDate %>
+type: template-runner
+---
+## Note content here
+```
+
+**Callback URL example:**
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=Quick%20Task%20Template&arg1=false&arg2=taskDescription%3DBuy%20groceries;taskDate%3D2024-01-15
+```
+
+This will create a new note titled "Buy groceries - 2024-01-15" with the task details formatted as a proper note.
 
 ## Other Attributes
 
@@ -67,7 +105,7 @@ Example:
 getNoteTitled: My Tasks Document Title
 replaceNoteContents: true
 ---
-<% - date.timestamp() %> This line will be the text in the document after the link is clicked
+### <% - date.timestamp() %> This line will be the text in the document after the link is clicked
 ```
 
 ### writeUnderHeading
@@ -96,7 +134,8 @@ Example:
 getNoteTitled: <today>
 writeUnderHeading: My Daily Journal
 ---
-- <% - date.timestamp() %> This text will appear in my daily note under the heading *My Daily Journal*
+### <% - date.timestamp() %> 
+This text will appear in my daily note under the heading *My Daily Journal*
 ```
 
 ### location
@@ -128,7 +167,8 @@ getNoteTitled: <thisweek>
 writeUnderHeading: Thoughts for the week
 location: prepend
 ---
-- <% - date.timestamp() %> This text will appear in my daily note under the heading *Thoughts for the week*, but underneath any text that has been written before
+### <% - date.timestamp() %>
+This text will appear in my daily note under the heading *Thoughts for the week*, but underneath any text that has been written before
 ```
 
 <Callout>
@@ -172,7 +212,7 @@ getNoteTitled: <thisweek>
 writeUnderHeading: Thoughts for the week
 location: append
 ---
-- <% - date.timestamp() %> <%- var1 %>
+### <% - date.timestamp() %> <%- var1 %>
 ```
 
 Notice how in this example, `var1` is not set in the frontmatter. This is a variable value that is passed through in your callback link, in this example, perhaps you passed through some thoughts that you dictated (and encoded using Shortcuts) as `...var1=My%20Thoughts%etc`. Template Runner passses through all the variables it receives to the Templating Engine to include in values just as if you had included those values in frontmatter.
@@ -290,7 +330,7 @@ writeUnderHeading: "Today's Notes & Actions"
 location: append
 exampleURL: noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=logWorkout&arg1=true&arg2=var1%3DVALUE1%3Bvar2%3DVALUE2
 ---
-<% - date.timestamp() %> #workout <%- var1 %> | <%- var2 %>
+### <% - date.timestamp() %> #workout <%- var1 %> | <%- var2 %>
 ```
 
 In this example, I passed two variables (var1 and var2) corresponding to two prompts I use in Shortcuts. All variables are passed in as arg2 in the form of:
