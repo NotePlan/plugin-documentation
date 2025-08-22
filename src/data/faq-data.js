@@ -253,4 +253,31 @@ If you want your note to keep the title that you specified in <code>newNoteTitle
 
 The note will have the title from <code>newNoteTitle</code> in its frontmatter, and NotePlan will use that title instead of reading the first <code># Title</code> line from the note body.`,
   },
+  {
+    id: 'create-xcallback-url-for-new-note',
+    question:
+      'How do I get an xcallback URL to run a template to create a new note?',
+    answer: `The easiest way is to download the "Link Creator" plugin and run the following sequence of commands:
+
+<DynamicImage src="x-callback-new-note.png" alt="Callback link to create a new note using a template" />
+
+This will give you a URL that looks like this:
+
+<code>noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=Create%20new%20note%20using%20template&arg0=My%20Template%20Title</code>
+
+You can then attach that URL to a keyboard shortcut or can paste it as a link in your daily note or you can use the Favorites plugin to create this link as a <code>/ command</code> in the NotePlan Command Bar!
+
+## Alternative: Manual URL Creation
+
+If you prefer to create the URL manually, the basic format is:
+
+<code>noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=Create%20new%20note%20using%20template&arg0=My%20Template%20Title</code>
+
+Where:
+- <code>My%20Template%20Title</code> is the name of your template (URL-encoded)
+
+## Adding Variables
+
+If you want to pass variables to a template using x-callbacks, you should use the <a href="/templating-templateRunner">Template Runner</a> template.`,
+  },
 ].sort((a, b) => a.order - b.order)
