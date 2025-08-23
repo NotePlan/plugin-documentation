@@ -110,7 +110,7 @@ replaceNoteContents: true
 
 ### writeUnderHeading
 
-The `writeUnderHeading` attribute tells Template Runner _under which heading_ to place the template content if you are not replacing all the note's contents. By default, content will be prepended (immediately following the heading). If a heading that you specify here does not exist in the _getNotetitled_ note, the heading and content will be created and added to the end of the note (but you can change that behavior with the `addHeadingLocation` attribute -- see below).
+The `writeUnderHeading` attribute tells Template Runner _under which heading_ to place the template content if you are not replacing all the note's contents. By default, content will be prepended (immediately following the heading). If a heading that you specify here does not exist in the _getNotetitled_ note, the heading and content will be created and added to the end of the note (but you can change that behavior with the `addHeadingLocation` attribute -- see below). The `writeUnderHeading` attribute should not contain any #'s (just the heading name), and the search for the heading will look for any heading which **contains** the specified heading name. This gives you flexibility to add text to the end of the heading using the `replaceHeadingWithContents` attribute -- see below, but still find the heading you want to add to.
 
 <Callout>
   IMPORTANT NOTE: writeUnderHeading uses NotePlan's definition of a block,
@@ -175,6 +175,37 @@ This text will appear in my daily note under the heading *Thoughts for the week*
 When you specify `writeUnderHeading`, by default, content is appended to the end of the content under the heading. You can change that with `location` -- as demonstrated above. Additionally, if the heading does not yet exist in the target note, it will be created -- by default as a level 2 heading, appended to the end of the note. You can change that behavior though: 
 </Callout>
 
+### replaceHeadingWithContents
+
+When you have `writeUnderHeading` and `location: replace` set, this parameter controls whether to replace just the content under the heading or the heading itself as well.
+
+- **`replaceHeadingWithContents: true`** - Replaces both the heading and its content
+- **`replaceHeadingWithContents: false`** (default) - Only replaces the content under the heading, keeping the original heading
+
+**Example replaceHeadingWithContents template:**
+
+```markdown
+---
+title: Update Weekly Status Template
+getNoteTitled: <thisweek>
+writeUnderHeading: Weekly Status
+location: replace
+replaceHeadingWithContents: true
+---
+## Weekly Status revised: <%- revised %>
+
+**Week of:** <%- date.now('YYYY-MM-DD') %>  
+**Status:** <%- status %>  
+**Notes:** <%- notes %>
+```
+
+This example will:
+1. Find a heading that contains the text "Weekly Status" in the weekly note
+2. Remove both the heading and all content underneath it
+3. Place the template content (with the new heading and the revised text that was passed in the URL) where the heading was
+
+**Note:** The `location: replace` and `replaceHeadingWithContents: true` combination is required for this functionality to work.
+
 ### addHeadingLocation
 
 The `addHeadingLocation` attribute tells Template Runner where in the note to add a new heading if it creates one.  `addHeadingLocation` can be 
@@ -190,13 +221,6 @@ When a heading is added, `headingLevel` dictates what heading level it will be (
 By default, if you have a `writeUnderHeading` and that heading doesn't exist, the heading will be created at the end of the note (appended) and your contents will be placed underneath. You can change that to the beginning of the note by setting `addHeadingLocation` to 'prepend' in your frontmatter.
 
 On the other hand, if you want the heading and block to not be created at all if the heading did not exist in the note, set `createMissingHeading: false`. However, be warned that the content that was passed to the script will be lost because it will not be written anywhere.
-
-### replaceHeadingWithContents
-
-When you have `writeUnderHeading` and `location: replace` set, this parameter controls whether to replace just the content under the heading or the heading itself as well.
-
-- **`replaceHeadingWithContents: true`** - Replaces both the heading and its content
-- **`replaceHeadingWithContents: false`** (default) - Only replaces the content under the heading, keeping the original heading
 
 This is useful when you want to completely replace a section including its title, rather than just updating the content within an existing section.
 
