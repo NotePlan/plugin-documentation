@@ -112,12 +112,12 @@ replaceNoteContents: true
 Remember that if you replace the note contents, the title will be overwritten as well, so make sure your replacement content includes the title you want.
 </Callout>
 
-### replaceHeadingAndContents
+### replaceHeading
 
 When `replaceNoteContents` is set to `true`, this parameter provides additional control over what gets replaced:
 
-- **`replaceHeadingAndContents: true`** - Replaces the entire note including title, frontmatter, and all content
-- **`replaceHeadingAndContents: false`** (default) - Only replaces the note content, preserving the title and frontmatter
+- **`replaceHeading: true`** - Replaces the entire note including title, frontmatter, and all content
+- **`replaceHeading: false`** (default) - Only replaces the note content, preserving the title and frontmatter
 
 **Example with full replacement:**
 
@@ -125,7 +125,7 @@ When `replaceNoteContents` is set to `true`, this parameter provides additional 
 ---
 getNoteTitled: My Tasks Document Title
 replaceNoteContents: true
-replaceHeadingAndContents: true
+replaceHeading: true
 ---
 # This will be my title after the replacement
 New replaced content
@@ -147,11 +147,11 @@ replaceNoteContents: true
 
 This will replace only the note content while keeping the original title and frontmatter intact.
 
-**Note:** The `replaceHeadingAndContents` flag only applies when `replaceNoteContents` is set to `true`.
+**Note:** The `replaceHeading` flag only applies when `replaceNoteContents` is set to `true`.
 
 ### writeUnderHeading
 
-The `writeUnderHeading` attribute tells Template Runner _under which heading_ to place the template content if you are not replacing all the note's contents. By default, content will be prepended (immediately following the heading). If a heading that you specify here does not exist in the _getNotetitled_ note, the heading and content will be created and added to the end of the note (but you can change that behavior with the `addHeadingLocation` attribute -- see below). The `writeUnderHeading` attribute should not contain any #'s (just the heading name), and the search for the heading will look for any heading which **contains** the specified heading name. This gives you flexibility to add text to the end of the heading using the `replaceHeadingWithContents` attribute -- see below, but still find the heading you want to add to.
+The `writeUnderHeading` attribute tells Template Runner _under which heading_ to place the template content if you are not replacing all the note's contents. By default, content will be prepended (immediately following the heading). If a heading that you specify here does not exist in the _getNotetitled_ note, the heading and content will be created and added to the end of the note (but you can change that behavior with the `addHeadingLocation` attribute -- see below). The `writeUnderHeading` attribute should not contain any #'s (just the heading name), and the search for the heading will look for any heading which **contains** the specified heading name. This gives you flexibility to add text to the end of the heading using the `replaceHeading` attribute -- see below, but still find the heading you want to add to.
 
 <Callout>
   IMPORTANT NOTE: writeUnderHeading uses NotePlan's definition of a block,
@@ -216,14 +216,14 @@ This text will appear in my daily note under the heading *Thoughts for the week*
 When you specify `writeUnderHeading`, by default, content is appended to the end of the content under the heading. You can change that with `location` -- as demonstrated above. Additionally, if the heading does not yet exist in the target note, it will be created -- by default as a level 2 heading, appended to the end of the note. You can change that behavior though: 
 </Callout>
 
-### replaceHeadingWithContents
+### replaceHeading
 
 When you have `writeUnderHeading` and `location: replace` set, this parameter controls whether to replace just the content under the heading or the heading itself as well.
 
-- **`replaceHeadingWithContents: true`** - Replaces both the heading and its content
-- **`replaceHeadingWithContents: false`** (default) - Only replaces the content under the heading, keeping the original heading
+- **`replaceHeading: true`** - Replaces both the heading and its content
+- **`replaceHeading: false`** (default) - Only replaces the content under the heading, keeping the original heading
 
-**Example replaceHeadingWithContents template:**
+**Example replaceHeading template:**
 
 ```markdown
 ---
@@ -231,7 +231,7 @@ title: Update Weekly Status Template
 getNoteTitled: <thisweek>
 writeUnderHeading: Weekly Status
 location: replace
-replaceHeadingWithContents: true
+replaceHeading: true
 ---
 ## Weekly Status revised: <%- revised %>
 
@@ -245,7 +245,7 @@ This example will:
 2. Remove both the heading and all content underneath it
 3. Place the template content (with the new heading and the revised text that was passed in the URL) where the heading was
 
-**Note:** The `location: replace` and `replaceHeadingWithContents: true` combination is required for this functionality to work.
+**Note:** The `location: replace` and `replaceHeading: true` combination is required for this functionality to work.
 
 ### addHeadingLocation
 
@@ -548,8 +548,8 @@ addHeadingLocation: prepend
 headingLevel: 3
 createMissingHeading: true
 replaceNoteContents: false
-replaceHeadingWithContents: true
-replaceHeadingAndContents: false
+replaceHeading: true
+replaceHeading: false
 ---
 *Generated by TemplateRunner at <%- date.now('YYYY-MM-DD HH:mm:ss') %>*
 <% - content %>
@@ -565,8 +565,8 @@ replaceHeadingAndContents: false
 - **`headingLevel`**: Heading level for new headings (default: 2)
 - **`createMissingHeading`**: Set to `false` to prevent creation of missing headings
 - **`replaceNoteContents`**: Set to `true` to replace entire note content
-- **`replaceHeadingAndContents`**: Set to `true` to replace entire note including title and frontmatter when using `replaceNoteContents: true`
-- **`replaceHeadingWithContents`**: Set to `true` to replace both heading and content when using `location: replace`
+- **`replaceHeading`**: Set to `true` to replace entire note including title and frontmatter when using `replaceNoteContents: true`
+- **`replaceHeading`**: Set to `true` to replace both heading and content when using `location: replace`
 
 **Usage:** This template can be called with variables like:
 - `myTitle`: The title for the new note (the template above will add the current date to the end of the title)
