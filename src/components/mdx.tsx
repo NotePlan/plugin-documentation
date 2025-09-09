@@ -7,9 +7,10 @@ import Callout from '@/components/Callout'
 import { DynamicImage } from '@/components/DynamicImage'
 import { Prose } from '@/components/Prose'
 import { Heading } from '@/components/Heading'
+import BasePathLink from '@/components/BasePathLink'
 
-export const a = NextLink
-export const Link = NextLink
+export const a = BasePathLink
+export const Link = BasePathLink
 export { Button }
 export { CodeGroup, code, pre }
 

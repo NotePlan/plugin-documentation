@@ -13,6 +13,9 @@ function SmallPrint() {
           &copy; Copyright {new Date().getFullYear()}. All rights reserved.
         </p>
         <BuildInfo />
+        <div className="text-xs text-zinc-500 dark:text-zinc-500">
+          Debug: basePath = {process.env.NEXT_PUBLIC_BASE_PATH || 'not set'}
+        </div>
       </div>
       <div className="flex gap-4">
         <Link

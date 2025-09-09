@@ -23,6 +23,10 @@ const nextConfig = {
 if (isExport) {
   nextConfig.basePath = '/templates/docs'
   nextConfig.assetPrefix = '/templates/docs'
+  nextConfig.env = {
+    ...nextConfig.env,
+    NEXT_PUBLIC_BASE_PATH: '/templates/docs',
+  }
 }
 
 export default withSearch(withMDX(nextConfig))
