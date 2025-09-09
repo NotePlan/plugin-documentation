@@ -22,9 +22,9 @@ export default function CustomLink({
   // Check if this is an internal link (starts with /)
   const isInternalLink = href.startsWith('/')
 
-  // In production with base path, we need to prepend /templates/docs to internal links
-  const basePath =
-    process.env.NODE_ENV === 'production' ? '/templates/docs' : ''
+  // Check if we're in export mode (which sets the basePath)
+  const isExport = process.env.NEXT_EXPORT === 'true'
+  const basePath = isExport ? '/templates/docs' : ''
   const finalHref = isInternalLink ? `${basePath}${href}` : href
 
   return (
