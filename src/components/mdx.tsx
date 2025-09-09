@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import NextLink from 'next/link'
 import clsx from 'clsx'
 
 import { Button } from '@/components/Button'
@@ -7,8 +7,10 @@ import Callout from '@/components/Callout'
 import { DynamicImage } from '@/components/DynamicImage'
 import { Prose } from '@/components/Prose'
 import { Heading } from '@/components/Heading'
+import CustomLink from '@/components/Link'
 
-export const a = Link
+export const a = CustomLink
+export const Link = CustomLink
 export { Button }
 export { CodeGroup, code, pre }
 
