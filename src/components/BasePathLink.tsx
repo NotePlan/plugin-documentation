@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 interface BasePathLinkProps {
   href: string
@@ -25,15 +24,6 @@ export default function BasePathLink({
   // Get base path from environment variable or fallback to hardcoded value
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '/templates/docs'
   const finalHref = isInternalLink ? `${basePath}${href}` : href
-
-  // Debug logging
-  console.log('BasePathLink debug:', {
-    href,
-    isInternalLink,
-    basePath,
-    finalHref,
-    envBasePath: process.env.NEXT_PUBLIC_BASE_PATH,
-  })
 
   return (
     <Link href={finalHref} className={className} {...props}>
