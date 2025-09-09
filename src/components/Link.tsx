@@ -22,10 +22,9 @@ export default function CustomLink({
   // Check if this is an internal link (starts with /)
   const isInternalLink = href.startsWith('/')
 
-  // Check if we're in export mode (which sets the basePath)
-  const isExport = process.env.NEXT_EXPORT === 'true'
-  const basePath = isExport ? '/templates/docs' : ''
-  const finalHref = isInternalLink ? `${basePath}${href}` : href
+  // For internal links, let Next.js handle the basePath automatically
+  // by not modifying the href at all - Next.js will apply basePath from config
+  const finalHref = href
 
   return (
     <Link href={finalHref} className={className} {...props}>

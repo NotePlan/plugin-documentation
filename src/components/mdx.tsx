@@ -7,10 +7,9 @@ import Callout from '@/components/Callout'
 import { DynamicImage } from '@/components/DynamicImage'
 import { Prose } from '@/components/Prose'
 import { Heading } from '@/components/Heading'
-import CustomLink from '@/components/Link'
 
-export const a = CustomLink
-export const Link = CustomLink
+export const a = NextLink
+export const Link = NextLink
 export { Button }
 export { CodeGroup, code, pre }
 
