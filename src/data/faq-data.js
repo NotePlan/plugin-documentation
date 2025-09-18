@@ -251,7 +251,23 @@ If you want your note to keep the title that you specified in <code>newNoteTitle
 
 <DynamicImage src="new-note-title-comparison.png" alt="New Note Title Not Overriding First Line" />
 
-The note will have the title from <code>newNoteTitle</code> in its frontmatter, and NotePlan will use that title instead of reading the first <code># Title</code> line from the note body.`,
+The note will have the title from <code>newNoteTitle</code> in its frontmatter, and NotePlan will use that title instead of reading the first <code># Title</code> line from the note body.
+`,
+  },
+  {
+    id: 'note-frontmatter-and-h1-title',
+    order: 6,
+    question:
+      'How can I create a new note with both note frontmatter and the note title as a H1 in the first line of the note?',
+    answer: `If you want the title to appear as the first line of the note body as a # heading (the traditional NotePlan title format), you can prompt the user for the new note's title using the <code>newNoteTitle</code> tag in the template's frontmatter, and then reference the <code>&lt;%- newNoteTitle %&gt;</code> for the value in your template's body.
+
+<DynamicImage src="note-frontmatter-and-h1.png" alt="New Note Title with H1" />
+
+The resulting new note's first line will have the title from <code>newNoteTitle</code> (whatever you entered in the prompt)as a H1 (# Title) heading, such as:
+
+<DynamicImage src="frontmatter-and-newnotetitle-result.png" alt="New Note Title with H1" />
+
+For more details on how to use the <code>title</code> line in the template's new note frontmatter, see the <a href="/advanced-features/templating-examples-frontmatter">Creating Notes with Properties/Frontmatter</a> documentation.`,
   },
   {
     id: 'create-xcallback-url-for-new-note',
