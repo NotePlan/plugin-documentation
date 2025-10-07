@@ -328,6 +328,70 @@ Common trigger patterns:
 - `onEditorWillSave => np.Templating.templateRunner` - runs when the note is about to be saved
 - `onEditorDidSave => np.Templating.templateRunner` - runs after the note has been saved
 
+## Arguments for X-Callbacks and Shortcuts
+
+The `templateRunner` command accepts three arguments that can be passed via X-Callbacks or Shortcuts:
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| arg0 | Template title to run (empty to be prompted at runtime) | No |
+| arg1 | Open file in editor after running (true/false) (default is false) | No |
+| arg2 | Template arguments (optional) -- variable name = value, separated by semicolons | No |
+
+### Argument Details
+
+#### arg0 - Template Title
+- The name of the templateRunner template to execute
+- Can be left empty to prompt the user to choose a template at runtime
+- Must match the exact title of an existing templateRunner template
+
+#### arg1 - Open File in Editor
+- `true` - Opens the target note in the NotePlan editor after running the template
+- `false` - Runs the template silently without opening the note (default)
+- Useful for background automation where you don't want to interrupt the user's current workflow
+
+#### arg2 - Template Arguments
+- Passes variables to the template that can be used in template content and frontmatter
+- Format: `variableName=value;anotherVariable=anotherValue`
+- Variables are URL-encoded in X-Callbacks
+- Variables become available in the template using `<%- variableName %>` syntax
+
+### X-Callback Examples
+
+**Basic template execution:**
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=My%20Template
+```
+
+**With editor opening:**
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=My%20Template&arg1=true
+```
+
+**With template arguments:**
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=My%20Template&arg1=false&arg2=taskName%3DBuy%20groceries;priority%3Dhigh
+```
+
+**Complex example with multiple variables:**
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=Report%20Generator&arg1=true&arg2=repeat%3Dmonthly;year%3D2024;category%3Dwork
+```
+
+### Shortcuts Integration
+
+In macOS Shortcuts, use the "NotePlan: Run the plugin command" action:
+
+1. Set the plugin ID to `np.Templating`
+2. Choose the command `templateRunner`
+3. Set Argument 0 to your template title
+4. Set Argument 1 to `true` or `false` for opening the editor
+5. Set Argument 2 to your template variables in the format: `variableName=value;anotherVariable=anotherValue`
+
+<Callout type="info" title="Template Arguments">
+Template arguments passed in arg2 become available as variables in your template. Use them in both the frontmatter and content with `<%- variableName %>` syntax. In the complex example above, the template would have access to variables named `repeat` (value: "monthly"), `year` (value: "2024"), and `category` (value: "work").
+</Callout>
+
 ## Running a Template Runner Template
 
 X-Callback-Links, especially ones with lots of variables attached, can be a bit daunting. The easiest way to get a URL to invoke your template is by using the `Link Creator` plugin and the command `/Get X-Callback-URL`, and selecting `RUN a TemplateRunner type template`. This command will help you create a link and pass variables through to Template Runner. The easiest way to get there is to go to have your TemplateRunner template open and open the Command Bar and invoke `/Get Callback URL`. Click `RUN a TemplateRunner type template`. If you don't have the Link Creator plugin, you can install it from the Plugins by going to the NotePlan Preferences and clicking the Plugins tab.

@@ -85,6 +85,10 @@ export const navigation = [
         href: 'https://help.noteplan.co/article/134-meeting-notes',
       },
       {
+        title: 'Shortcuts and X-Callbacks',
+        href: '/advanced-features/shortcuts-x-callbacks',
+      },
+      {
         title: 'Javascript in Templates',
         href: '/advanced-features/javascript-in-templates',
       },

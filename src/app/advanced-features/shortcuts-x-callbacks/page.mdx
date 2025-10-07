@@ -1,0 +1,182 @@
+# Templating Commands in Shortcuts and X-Callbacks
+
+The Templating plugin provides several commands that can be used in macOS Shortcuts and X-Callbacks to automate template operations. This allows you to integrate templating functionality into your workflows and trigger template creation from external apps.
+
+## Using Commands in Shortcuts
+
+To use Templating commands in macOS Shortcuts:
+
+1. Add a "NotePlan: Run the plugin command" action
+2. Choose the `Templating` command you want to run ([See Below](#available-commands)) from the dropdown
+3. Provide any arguments using Argument 0, Argument 1, etc.
+
+## Using Commands via X-Callbacks
+
+X-Callbacks allow external apps to trigger NotePlan plugin commands using [URL schemes](https://help.noteplan.co/article/49-x-callback-url-scheme#runplugin). The format for Templating commands is:
+
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=COMMAND_NAME&arg0=ARGUMENT_0&arg1=ARGUMENT_1
+```
+
+Where:
+- `COMMAND_NAME` is the URL-encoded command name
+- `arg0`, `arg1`, etc. are the URL-encoded arguments
+
+<Callout type="info" title="IMPORTANT: URL Encoding">
+When using X-Callbacks, remember to URL-encode special characters. Spaces become `%20`, and other special characters have their own encoding values. This can be challenging to do manually, so we recommend using the `Link Creator` plugin to create your X-Callbacks. Link Creator offers a command `Run a Plugin Command` that will help you create your X-Callbacks with the correct URL encoding.
+</Callout>
+
+## Available TemplatingCommands
+
+The following Templating commands are available for use in Shortcuts and X-Callbacks:
+
+- [Create new note using template](#create-new-note-using-template)
+- [Append template to end of current note](#append-template-to-end-of-current-note)
+- [Insert template at cursor position](#insert-template-at-cursor-position)
+- [Create Meeting Note using Meeting Note Template](#create-meeting-note-using-meeting-note-template)
+- [templateRunner](#template-runner)
+- [New note using Quick Note Template](#new-note-using-quick-note-template)
+
+---
+
+### Create new note using template
+
+Creates a new note with a specified template, optionally in a specific folder.
+
+| Argument | Description |
+|----------|-------------|
+| arg0 | Template title to run (empty to be prompted at runtime) |
+| arg1 | Folder to create note in (leave empty to be prompted) |
+
+**X-Callback Examples:**
+
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=Create%20new%20note%20using%20template&arg0=Daily%20Journal
+```
+
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=Create%20new%20note%20using%20template&arg0=Meeting%20Notes&arg1=Projects/Work
+```
+
+---
+
+### Append template to end of current note
+
+Appends template content to the end of the currently open note.
+
+| Argument | Description |
+|----------|-------------|
+| arg0 | Template title to run (empty to be prompted at runtime) |
+
+**X-Callback Examples:**
+
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=Append%20template%20to%20end%20of%20current%20note&arg0=Action%20Items
+```
+
+---
+
+### Insert template at cursor position
+
+Inserts template content at the current cursor position in the open note.
+
+| Argument | Description |
+|----------|-------------|
+| arg0 | Template title to run (empty to be prompted at runtime) |
+
+**X-Callback Examples:**
+
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=Insert%20template%20at%20cursor%20position&arg0=Code%20Block
+```
+
+---
+
+### Create Meeting Note using Meeting Note Template
+
+Creates a new note using the Meeting Note Template.
+
+| Argument | Description |
+|----------|-------------|
+| arg0 | Template title to use (empty to be prompted at runtime) |
+
+**X-Callback Examples:**
+
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=Create%20Meeting%20Note%20using%20Meeting%20Note%20Template&arg0=Team%20Standup
+```
+
+---
+
+### templateRunner
+
+Runs a template (generally invoked by a link from Shortcuts or X-Callbacks). See [Template Runner](https://noteplan.co/templates/docs/templating-templateRunner) for more information.
+
+| Argument | Description |
+|----------|-------------|
+| arg0 | Template title to run (empty to be prompted at runtime) |
+| arg1 | Open file in editor after running (true/false) (default is false) |
+| arg2 | Template arguments (optional) -- variable name = value, separated by semicolons |
+
+**X-Callback Examples:**
+
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=Project%20Setup
+```
+
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=templateRunner&arg0=Report%20Generator&arg1=true&arg2=repeat=monthly;year=2024
+```
+
+<Callout type="info" title="Template Arguments">
+Template arguments, if provided, are passed to the template as variables. So in the example above, the template will have a variable called `repeat` with a value of `monthly` and a variable called `year` with a value of `2024`.
+</Callout>
+
+---
+
+### New note using Quick Note Template
+
+Creates a new note based on the Quick Note Template.
+
+| Argument | Description |
+|----------|-------------|
+| arg0 | Template title to run |
+
+**X-Callback Examples:**
+
+```
+noteplan://x-callback-url/runPlugin?pluginID=np.Templating&command=New%20note%20using%20Quick%20Note%20Template&arg0=Quick%20Capture
+```
+
+## Common Use Cases
+
+### Shortcuts Integration
+
+- **Morning Routine**: Create a Shortcut that runs "Create new note using template" with your Daily Journal template
+- **Meeting Automation**: Set up a Shortcut that creates meeting notes when you arrive at a location or at a specific time
+- **Quick Capture**: Use "New note using Quick Note Template" for fast note creation from Siri or other triggers
+
+### X-Callback Integration
+
+- **From Other Apps**: Other note-taking or productivity apps can trigger NotePlan template creation
+- **Web Automation**: Use X-Callbacks in web-based workflows or automation tools
+- **Script Integration**: Call NotePlan commands from shell scripts or other automation tools
+
+<Callout type="tip">
+**Testing X-Callbacks**: You can test X-Callback URLs by pasting them directly into your browser's address bar. Make sure NotePlan is installed and the URL scheme is registered.
+</Callout>
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Command Not Found**: Ensure you're using the exact command name as listed above
+2. **Arguments Not Working**: Check that arguments are properly URL-encoded in X-Callbacks
+3. **Template Not Found**: Verify the template name exists and matches exactly (case-sensitive)
+4. **Plugin Not Responding**: Make sure the Templating plugin is installed and enabled
+
+### Debug Tips
+
+- Check NotePlan's Plugin Console for error messages (NotePlan → Help → Plugin Console)
+- Test commands manually in NotePlan first before using in Shortcuts or X-Callbacks
+- Verify template names by checking your Templates folder in NotePlan
