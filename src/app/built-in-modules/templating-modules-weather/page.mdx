@@ -10,6 +10,19 @@ import Callout from '@/components/Callout'
 The weather service has been upgraded from wttr.in to OpenWeatherMap via NotePlan's built-in API (available from NotePlan v3.19.2+). This provides more reliable service, better location detection, and additional weather data fields. All existing weather templates remain compatible.
   `}
 />
+<Callout
+  type="warning"
+  title="Important: Temperature Units Change"
+  description={`
+**Migration Note:** The previous wttr.in service automatically detected your geographic location and returned temperature units appropriate for your region (e.g., Fahrenheit for US users, Celsius for most others). OpenWeatherMap does not automatically detect preferred units based on location.
+
+By default, the weather function now returns **metric units** (Celsius). If you were previously using <code>&lt;%- weather() %&gt;</code> and expect Fahrenheit, you'll need to explicitly specify imperial units:
+
+<code>&lt;%- weather('', 'imperial') %&gt;</code>
+
+This ensures you get temperatures in Fahrenheit and wind speeds in mph instead of the default Celsius and m/s.
+  `}
+/>
 
 ## Overview
 
