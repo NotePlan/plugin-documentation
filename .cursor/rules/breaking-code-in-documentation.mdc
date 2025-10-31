@@ -1,0 +1,9 @@
+---
+alwaysApply: true
+---
+
+When writing MDX files with Callout components (or any JSX with template literal descriptions):
+
+- Never use backticks inside template literals - use <code> tags instead
+- Never use <%- or <% syntax inside template literals - escape as &lt;%- and %&gt; instead
+- Never use <%_ syntax in the document body - escape as &lt;%_ instead, or include it in a ```markdown block or ~~~markdown block

@@ -72,6 +72,10 @@ export const navigation = [
       },
       { title: 'Web Module', href: '/built-in-modules/templating-modules-web' },
       {
+        title: 'Weather Module',
+        href: '/built-in-modules/templating-modules-weather',
+      },
+      {
         title: 'Helpers Module',
         href: '/built-in-modules/templating-modules-helpers',
       },

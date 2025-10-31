@@ -1,0 +1,250 @@
+import Link from 'next/link'
+import Callout from '@/components/Callout'
+
+# Weather Module
+
+<Callout
+  type="info"
+  description={`
+**📢 Provider Change (v2.2.0):**  
+The weather service has been upgraded from wttr.in to OpenWeatherMap via NotePlan's built-in API (available from NotePlan v3.19.2+). This provides more reliable service, better location detection, and additional weather data fields. All existing weather templates remain compatible.
+  `}
+/>
+
+## Overview
+
+The `weather()` function provides access to current weather information using NotePlan's built-in OpenWeatherMap API integration. The function supports automatic location detection via IP address or manual location specification using latitude and longitude coordinates.
+
+## Function Signature
+
+> #### weather(format? : string = '', units? : string = 'metric', latitude? : number = 0, longitude? : number = 0) : string | object
+>
+> Returns weather information using NotePlan's built-in OpenWeatherMap API integration. Uses the <Link href="/configuration/templating-settings">Web Service Settings</Link> from `Templating` Settings when no format is provided, or a custom `format` string.
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `format` | string | `''` (uses formatted output) | Custom format string with placeholders. Use `''` for default formatted output, or `:raw:` / `:object:` to get the raw weather object for custom processing |
+| `units` | string | `'metric'` | Temperature units: `"metric"` (Celsius, m/s) or `"imperial"` (Fahrenheit, mph) |
+| `latitude` | number | `0` | Latitude coordinate (decimal degrees, e.g., `40.7128` for New York). Use `0` for automatic IP-based location detection |
+| `longitude` | number | `0` | Longitude coordinate (decimal degrees, e.g., `-74.0060` for New York). Use `0` for automatic IP-based location detection |
+
+<Callout
+  type="info"
+  description={`
+You can set the default weather format in <code>Templating</code> <a href="/configuration/templating-settings" alt="settings">settings</a> which will be used when <code>&lt;%- weather() %&gt;</code> command is executed. If you need to specify location manually, you can use the latitude and longitude parameters, or see <a href="/examples-templates/templating-examples-js-weather" alt="js weather example">Javascript Weather Example</a> for advanced usage.
+  `}
+/>
+
+<Callout
+  type="info"
+  title="Getting Latitude and Longitude Coordinates"
+  description={`
+To find the exact latitude and longitude coordinates for a specific address or location, you can use a geocoding service like <a href="https://www.latlong.net/convert-address-to-lat-long.html" target="_blank" rel="noopener noreferrer">latlong.net</a>. Simply enter the address, city name, or location, and the service will provide you with the decimal degree coordinates you need.
+
+**Tips:**
+- Include the city/town name, state/province, and country for more accurate results
+- Coordinates are in decimal degrees format (e.g., <code>40.7128</code> for latitude, <code>-74.0060</code> for longitude)
+- Negative longitude values indicate locations west of the Prime Meridian
+- Negative latitude values indicate locations south of the Equator (rarely needed for most locations)
+  `}
+/>
+
+## Available Placeholders
+
+When using a custom format string, you can use the following placeholders surrounded by colons (e.g., `:temperature:`):
+
+### New Placeholders (v2.2.0+)
+
+| Placeholder | Description | Example |
+|-------------|-------------|---------|
+| `:cityName:` | City name | San Francisco |
+| `:temperature:` | Current temperature (numeric) | 72 |
+| `:temperatureUnit:` | Temperature unit | °F or °C |
+| `:apparentTemperature:` | Feels-like temperature | 70 |
+| `:humidity:` | Humidity percentage | 65 |
+| `:windSpeed:` | Wind speed | 8 |
+| `:windSpeedUnit:` | Wind speed unit | m/s or mph |
+| `:windDirection:` | Wind direction in degrees | 180 |
+| `:uvIndex:` | UV index | 5 |
+| `:condition:` | Weather condition description | Clear Sky |
+| `:emoji:` | Weather emoji | ☀️ |
+| `:visibility:` | Visibility distance | 10 |
+| `:highTemp:` | High temperature for today | 18 |
+| `:lowTemp:` | Low temperature for today | 12 |
+| `:sunrise:` | Sunrise time | 7:15 AM |
+| `:sunset:` | Sunset time | 6:30 PM |
+
+### Backward Compatible Placeholders
+
+| Placeholder | Description | Notes |
+|-------------|-------------|-------|
+| `:areaName:` | City name | Same as `:cityName:` |
+| `:description:` | Weather description | Same as `:condition:` |
+| `:icon:` | Weather emoji | Same as `:emoji:` |
+| `:mintempC:` | Minimum temperature (Celsius) | Same as `:lowTemp:` when using metric units |
+| `:maxtempC:` | Maximum temperature (Celsius) | Same as `:highTemp:` when using metric units |
+| `:mintempF:` | Minimum temperature (Fahrenheit) | Same as `:lowTemp:` when using imperial units |
+| `:maxtempF:` | Maximum temperature (Fahrenheit) | Same as `:highTemp:` when using imperial units |
+
+**Note:** All old placeholders continue to work for backward compatibility with existing templates.
+
+## Examples
+
+### Default Usage
+
+The following will use the default weather format from `Templating` [settings](/configuration/templating-settings):
+
+```markdown
+<%- weather() %>
+```
+
+Output example:
+```
+### San Francisco Weather for Tue, 2025-10-28
+☀️ **Clear Sky** - High: **18°C**, Low: **12°C**, Wind: **8m/s**, Visibility: **10km**
+🌅 Sunrise: **7:15 AM**, Sunset: **6:30 PM**, Peak UVI: **5**
+```
+
+<Callout
+  type="info"
+  description={`
+This weather module uses automatic location detection based on your IP address. If you use a VPN or your ISP is in a different location, you may want to specify coordinates manually. See the "Custom Location" section below.
+  `}
+/>
+
+### Custom Format String
+
+The following will override the default weather format from `Templating` settings:
+
+```markdown
+<%- weather(':emoji: :condition: - :temperature::temperatureUnit:') %>
+```
+
+Output: `☀️ Clear Sky - 72°F`
+
+### Custom Location
+
+You can specify a location using latitude and longitude coordinates. If you don't know the coordinates for your desired location, use a geocoding service like [latlong.net](https://www.latlong.net/convert-address-to-lat-long.html) to convert an address or city name to coordinates.
+
+```markdown
+<%# New York City in imperial units %>
+<%- weather('', 'imperial', 40.7128, -74.0060) %>
+
+<%# London in metric units %>
+<%- weather('', 'metric', 51.5074, -0.1278) %>
+```
+
+**Getting Coordinates:**
+- Visit [latlong.net](https://www.latlong.net/convert-address-to-lat-long.html) or similar geocoding service
+- Enter your address or city name (include country for accuracy)
+- Copy the latitude and longitude values (in decimal degrees -- may be negative, which is normal for longitude)
+- Use these values as the third and fourth parameters in the `weather()` function
+
+### Detailed Format Examples
+
+**Simple temperature display:**
+```markdown
+<%- weather(':emoji: :condition: - :temperature::temperatureUnit:') %>
+```
+Output: `☀️ Clear Sky - 72°F`
+
+**Detailed format with new fields:**
+```markdown
+<%- weather(':emoji: :condition: in :cityName: | Temp: :temperature::temperatureUnit: (feels :apparentTemperature:°) | UV: :uvIndex: | Humidity: :humidity:%') %>
+```
+Output: `☀️ Clear Sky in San Francisco | Temp: 72°F (feels 70°) | UV: 5 | Humidity: 65%`
+
+**Sunrise/sunset display:**
+```markdown
+<%- weather('🌅 Sun rises at :sunrise: and sets at :sunset: today') %>
+```
+Output: `🌅 Sun rises at 7:15 AM and sets at 6:30 PM today`
+
+**Specific location with custom format:**
+```markdown
+<%- weather(':emoji: :temperature::temperatureUnit: in :cityName:', 'imperial', 40.7128, -74.0060) %>
+```
+Output: `⛅ 68°F in New York`
+
+**Backward compatible format (still works):**
+```markdown
+<%- weather(':icon: :description: :mintempC:-:maxtempC:°C (:areaName:)') %>
+```
+Output: `☀️ Sunny 6-16°C (Basingstoke)`
+
+## Advanced: Access Raw Weather Object
+
+You can access the raw weather data object for complete custom formatting using the `:raw:` or `:object:` format option:
+
+```markdown
+<%# Get the raw weather object %>
+<% const weatherData = await weather(':raw:') %>
+
+**Current Conditions in <%= weatherData.cityName %>:**
+- 🌡️ Temperature: <%= weatherData.temperature %><%= weatherData.temperatureUnit %>
+- 🤔 Feels like: <%= weatherData.apparentTemperature %>°
+- 💧 Humidity: <%= weatherData.humidity %>%
+- 💨 Wind: <%= weatherData.windSpeed %><%= weatherData.windSpeedUnit %> from <%= weatherData.windDirection %>°
+- 👁️ Visibility: <%= weatherData.visibility %><%= weatherData.visibilityUnit %>
+- ☀️ UV Index: <%= weatherData.uvIndex %>
+- 📈 High/Low: <%= weatherData.highTemp %>° / <%= weatherData.lowTemp %>°
+- 🌅 Sunrise: <%= weatherData.sunrise %> | Sunset: <%= weatherData.sunset %>
+
+_Conditions: <%= weatherData.emoji %> <%= weatherData.condition %>_
+```
+
+### Available Object Properties
+
+The raw weather object contains the following properties:
+
+- `formatted` - Pre-formatted markdown output
+- `cityName` - City name
+- `temperature` - Current temperature (number)
+- `temperatureUnit` - Unit symbol (°C or °F)
+- `apparentTemperature` - Feels-like temperature
+- `humidity` - Humidity percentage
+- `windSpeed` - Wind speed
+- `windSpeedUnit` - Wind speed unit (m/s or mph)
+- `windDirection` - Wind direction in degrees
+- `uvIndex` - UV index
+- `condition` - Weather condition description
+- `emoji` - Weather emoji
+- `iconCode` - OpenWeatherMap icon code
+- `visibility` - Visibility distance
+- `visibilityUnit` - Visibility unit (km)
+- `highTemp` - Today's high temperature
+- `lowTemp` - Today's low temperature
+- `sunrise` - Sunrise time (h:mm AM/PM)
+- `sunset` - Sunset time (h:mm AM/PM)
+- `location` - Object with `{ latitude, longitude, cityName }`
+
+## Migration from wttr.in
+
+**Good news:** No changes required! All existing `weather()` calls continue to work.
+
+**Optional enhancements you can now add:**
+
+1. **Specify location:** Use latitude/longitude parameters for precise location control
+   ```markdown
+   <%- weather('', 'metric', 51.5074, -0.1278) %>
+   ```
+
+2. **Use new placeholders:** Take advantage of new data fields like `:temperature:`, `:humidity:`, `:uvIndex:`, `:sunrise:`, `:sunset:`, etc.
+
+3. **Access raw data:** Get the complete weather object for advanced custom formatting
+   ```markdown
+   <% const data = await weather(':raw:') %>
+   ```
+
+**If you were working around wttr.in failures:**
+- Remove any error handling workarounds
+- The new API is more reliable with better uptime
+
+## Settings Integration
+
+The `weatherFormat` setting in `Templating` preferences still works exactly as before. When you call `weather()` without a format parameter, it will use the format specified in your settings. This maintains full backward compatibility.
+
+For more information about settings, see [Templating Settings](/configuration/templating-settings).
+

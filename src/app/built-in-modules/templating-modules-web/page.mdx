@@ -183,89 +183,28 @@ A clever person turns great troubles into little ones, and little ones into none
 
 ### weather
 
-> #### weather(format? : string = '') : string
+> #### weather(format? : string = '', units? : string = 'metric', latitude? : number = 0, longitude? : number = 0) : string | object
 >
-> Returns weather information from `<a href="https://wttr.in" alt="wttr.in">wttr.in </a>` weather service, using the <Link href="/configuration/templating-settings">Web Service Settings</Link> from `Templating` Settings, or a custom `format` string.
+> Returns weather information using NotePlan's built-in OpenWeatherMap API integration. Uses the <Link href="/configuration/templating-settings">Web Service Settings</Link> from `Templating` Settings when no format is provided, or a custom `format` string.
 
 <Callout
   type="info"
   description={`
-You can set the default weather format in <code>Templating</code> <a href="/configuration/templating-settings" alt="settings">settings</a> which will be used when <code><%- web.weather() %></code> command is executed. If you need to specify location manually, see <a href="/examples-templates/templating-examples-js-weather" alt="js weather example">Javascript Weather Example</a>.
-  
+For complete weather documentation, including all available placeholders, examples, and advanced usage with raw object access, see the <Link href="/built-in-modules/templating-modules-weather">Weather Module</Link> documentation.
   `}
 />
 
-- `format?` - If you wish to override the settings value, you can supply an optional format string with placeholders for the pieces of weather data you wish to output from `current_condition` key from `wttr.in` response.
-
-Each placeholder must be surrounded colons before and after key (e.g. `:FeelsLikeF:`)
-
-#### Additional Keys
-
-In addition to `current_condition` keys, the following placeholders available from elsewhere in the harder-to-access parts of the JSON response:
-
-- `mintempC` and `maxtempC` for the current day in Celsius
-- `mintempF` and `maxtempF` for the current day in Fahrenheit
-- `areaName`
-- `region` for state att time of render
-- `country` for state att time of render
-
-<Callout
-  type="info"
-  description={`
-See the <a href="https://github.com/chubin/wttr.in#different-output-formats" alt="wttr.in docmentation">wttr.in documentation for the detailed JSON output format</a> to see what fields are available. All those in the <code>current_condition</code> are available by adding colons either side (e.g. <code>:humidity:</code> ).
-  
-  `}
-/>
-
-## Weather Examples
-
-### Default
-
-The following will use default weather format from `Templating` [settings](/docs/settings)
+**Quick Examples:**
 
 ```markdown
-Weather: <%- np.weather() %>
+<%# Default usage %>
+<%- weather() %>
+
+<%# Custom format %>
+<%- weather(':emoji: :condition: - :temperature::temperatureUnit:') %>
+
+<%# Specific location %>
+<%- weather('', 'imperial', 40.7128, -74.0060) %>
 ```
-
-and produce something like
-
-Fountain Valley, California, United States: ⛅️ +55°F
-
-<Callout
-  type="info"
-  description={`
-This weather module requires no configuration and uses your IP address to estimate your location. If you use a VPN or your ISP is in a different place, that may not work for you. In the case you need to specify location manually, see <a href="/examples-templates/templating-examples-js-weather" alt="js weather example"> Javascript Weather Example</a>.  
-  `}
-/>
-
----
-
-### Custom Format String
-
-The following will override the default weather format from `Templating` settings
-
-```markdown
-Weather: <%- np.weather( ':icon: :description: :mintempC:-:maxtempC:°C (:areaName:)' ) %>
-```
-
-and will produce something like
-
-Weather: ☀️ Sunny 6-16°C (Basingstoke)
-
----
-
-The following is a more verbose example using addition placeholders
-
-```markdown
-Weather: <%- np.weather( ':icon: :description: :FeelsLikeF:°F [low/high: :mintempF:-:maxtempF:°F, wind: :winddir16Point: :windspeedMiles:mph] (:areaName:, :region:) ' ) %>
-```
-
-and will produce something like
-
-☁️ Partly cloudy 64°F [low/high: 58-68°F, wind: WSW 15mph] (Fountain Valley, California)
-
----
-
-For more information about using web services, refer to <a href="/built-in-modules/templating-modules-web" alt="Web Module"> Web Module </a>.
 
 ---
