@@ -159,13 +159,13 @@ You can specify a location using latitude and longitude coordinates. If you don'
 
 **Simple temperature display:**
 ```markdown
-<%- weather(':emoji: :condition: - :temperature::temperatureUnit:') %>
+<%- weather(':emoji: :condition: - :temperature::temperatureUnit:','imperial') %>
 ```
 Output: `☀️ Clear Sky - 72°F`
 
 **Detailed format with new fields:**
 ```markdown
-<%- weather(':emoji: :condition: in :cityName: | Temp: :temperature::temperatureUnit: (feels :apparentTemperature:°) | UV: :uvIndex: | Humidity: :humidity:%') %>
+<%- weather(':emoji: :condition: in :cityName: | Temp: :temperature::temperatureUnit: (feels :apparentTemperature:°) | UV: :uvIndex: | Humidity: :humidity:%','imperial') %>
 ```
 Output: `☀️ Clear Sky in San Francisco | Temp: 72°F (feels 70°) | UV: 5 | Humidity: 65%`
 
