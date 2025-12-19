@@ -32,13 +32,13 @@ The `weather()` function provides access to current weather information using No
 
 > #### weather(format? : string = '', units? : string = 'metric', latitude? : number = 0, longitude? : number = 0) : string | object
 >
-> Returns weather information using NotePlan's built-in OpenWeatherMap API integration. Uses the <Link href="/configuration/templating-settings">Web Service Settings</Link> from `Templating` Settings when no format is provided, or a custom `format` string.
+> Returns weather information using NotePlan's built-in OpenWeatherMap API integration. When called with an empty format string (default), it returns a single line of formatted text using the default format: `:cityName:, :region: :icon: :temperature::temperatureUnit:`. You can override this with a custom format string or use the format from <Link href="/configuration/templating-settings">Web Service Settings</Link> in `Templating` Settings.
 
 ### Parameters
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `format` | string | `''` (uses formatted output) | Custom format string with placeholders. Use `''` for default formatted output, or `:raw:` / `:object:` to get the raw weather object for custom processing |
+| `format` | string | `''` (uses default format) | Custom format string with placeholders. Use `''` for default single-line output (`:cityName:, :region: :icon: :temperature::temperatureUnit:`), use `:raw:` / `:object:` to get the raw weather object, or use `:formatted:` to access the pre-formatted multi-line markdown weather output |
 | `units` | string | `'metric'` | Temperature units: `"metric"` (Celsius, m/s) or `"imperial"` (Fahrenheit, mph) |
 | `latitude` | number | `0` | Latitude coordinate (decimal degrees, e.g., `40.7128` for New York). Use `0` for automatic IP-based location detection |
 | `longitude` | number | `0` | Longitude coordinate (decimal degrees, e.g., `-74.0060` for New York). Use `0` for automatic IP-based location detection |
@@ -46,7 +46,13 @@ The `weather()` function provides access to current weather information using No
 <Callout
   type="info"
   description={`
-You can set the default weather format in <code>Templating</code> <a href="/configuration/templating-settings" alt="settings">settings</a> which will be used when <code>&lt;%- weather() %&gt;</code> command is executed. If you need to specify location manually, you can use the latitude and longitude parameters, or see <a href="/examples-templates/templating-examples-js-weather" alt="js weather example">Javascript Weather Example</a> for advanced usage.
+**Default Behavior:** When you call <code>&lt;%- weather() %&gt;</code> without a format parameter, it uses the default single-line format: <code>:cityName:, :region: :icon: :temperature::temperatureUnit:</code> (e.g., "San Francisco, CA ☀️ 72°F").
+
+**Pre-formatted Output:** If you want the detailed multi-line formatted output instead, use <code>:formatted:</code> which returns a complete markdown-formatted display with heading, conditions, high/low temperatures, wind, visibility, sunrise/sunset, and UV index.
+
+**Custom Format in Settings:** You can override the default format by setting a custom weather format in <code>Templating</code> <a href="/configuration/templating-settings" alt="settings">settings</a>. If a format is set in settings, that will be used instead of the built-in default.
+
+**Manual Location:** If you need to specify location manually, you can use the latitude and longitude parameters, or see <a href="/examples-templates/templating-examples-js-weather" alt="js weather example">Javascript Weather Example</a> for advanced usage.
   `}
 />
 
@@ -70,9 +76,11 @@ When using a custom format string, you can use the following placeholders surrou
 
 ### New Placeholders (v2.2.0+)
 
+#### Weather Data Placeholders
+
 | Placeholder | Description | Example |
 |-------------|-------------|---------|
-| `:cityName:` | City name | San Francisco |
+| `:formatted:` | Pre-formatted multi-line weather output with markdown formatting (includes heading with date, conditions, high/low, wind, visibility, sunrise/sunset, UV index) | Multi-line output (see examples section) |
 | `:temperature:` | Current temperature (numeric) | 72 |
 | `:temperatureUnit:` | Temperature unit | °F or °C |
 | `:apparentTemperature:` | Feels-like temperature | 70 |
@@ -88,6 +96,20 @@ When using a custom format string, you can use the following placeholders surrou
 | `:lowTemp:` | Low temperature for today | 12 |
 | `:sunrise:` | Sunrise time | 7:15 AM |
 | `:sunset:` | Sunset time | 6:30 PM |
+
+#### Location Data Placeholders
+
+All location fields are drawn from the `weather.location` object:
+
+| Placeholder | Description | Example |
+|-------------|-------------|---------|
+| `:cityName:` | City name | San Francisco |
+| `:region:` | State, province, or region | California or CA |
+| `:country:` | Country name | United States |
+| `:countryCode:` | Two-letter country code | US |
+| `:phoneCode:` | Country phone code | +1 |
+| `:latitude:` | Latitude coordinate | 37.7749 |
+| `:longitude:` | Longitude coordinate | -122.4194 |
 
 ### Backward Compatible Placeholders
 
@@ -107,18 +129,20 @@ When using a custom format string, you can use the following placeholders surrou
 
 ### Default Usage
 
-The following will use the default weather format from `Templating` [settings](/configuration/templating-settings):
+When called without a format string, `weather()` returns a single line of formatted text using the default format: `:cityName:, :region: :icon: :temperature::temperatureUnit:`
 
 ```markdown
 <%- weather() %>
 ```
 
-Output example:
-```
-### San Francisco Weather for Tue, 2025-10-28
-☀️ **Clear Sky** - High: **18°C**, Low: **12°C**, Wind: **8m/s**, Visibility: **10km**
-🌅 Sunrise: **7:15 AM**, Sunset: **6:30 PM**, Peak UVI: **5**
-```
+Output example: `San Francisco, CA ☀️ 72°F`
+
+<Callout
+  type="info"
+  description={`
+The default format can be customized in <code>Templating</code> <a href="/configuration/templating-settings" alt="settings">settings</a>. If you set a custom format in settings, that will be used instead of the built-in default format when you call <code>&lt;%- weather() %&gt;</code> without parameters.
+  `}
+/>
 
 <Callout
   type="info"
@@ -129,13 +153,33 @@ This weather module uses automatic location detection based on your IP address. 
 
 ### Custom Format String
 
-The following will override the default weather format from `Templating` settings:
+You can provide a custom format string with placeholders to create your own weather display:
 
 ```markdown
 <%- weather(':emoji: :condition: - :temperature::temperatureUnit:') %>
 ```
 
 Output: `☀️ Clear Sky - 72°F`
+
+**Using the pre-formatted text:**
+
+You can use the `:formatted:` placeholder to access the complete pre-formatted multi-line weather output:
+
+```markdown
+<%- weather(':formatted:') %>
+```
+
+This returns a multi-line markdown-formatted output like:
+
+```
+### Durham Weather for Tue, 2025-11-11
+
+☁️ **Few clouds** - High: **46°F**, Low: **30°F**, Wind: **8mph**, Visibility: **10km**
+
+🌅 Sunrise: **6:48 AM**, Sunset: **5:11 PM**, Peak UVI: **3**
+```
+
+**Note:** The `:formatted:` placeholder returns a detailed multi-line format, which is different from the default single-line format (`:cityName:, :region: :icon: :temperature::temperatureUnit:`).
 
 ### Custom Location
 
@@ -187,6 +231,18 @@ Output: `⛅ 68°F in New York`
 ```
 Output: `☀️ Sunny 6-16°C (Basingstoke)`
 
+**Using location fields:**
+```markdown
+<%- weather(':cityName:, :region:, :country: - :temperature::temperatureUnit:', 'imperial') %>
+```
+Output: `San Francisco, CA, United States - 72°F`
+
+**Using phone code:**
+```markdown
+<%- weather('Weather in :cityName: (:countryCode: :phoneCode:) - :temperature::temperatureUnit:') %>
+```
+Output: `Weather in San Francisco (US +1) - 22°C`
+
 ## Advanced: Access Raw Weather Object
 
 You can access the raw weather data object for complete custom formatting using the `:raw:` or `:object:` format option:
@@ -195,7 +251,9 @@ You can access the raw weather data object for complete custom formatting using 
 <%# Get the raw weather object %>
 <% const weatherData = await weather(':raw:') %>
 
-**Current Conditions in <%= weatherData.cityName %>:**
+**Current Conditions in <%= weatherData.location.cityName %>, <%= weatherData.location.region %>:**
+- 📍 Location: <%= weatherData.location.cityName %>, <%= weatherData.location.region %>, <%= weatherData.location.country %> (<%= weatherData.location.countryCode %>)
+- 📞 Phone Code: <%= weatherData.location.phoneCode %>
 - 🌡️ Temperature: <%= weatherData.temperature %><%= weatherData.temperatureUnit %>
 - 🤔 Feels like: <%= weatherData.apparentTemperature %>°
 - 💧 Humidity: <%= weatherData.humidity %>%
@@ -206,14 +264,18 @@ You can access the raw weather data object for complete custom formatting using 
 - 🌅 Sunrise: <%= weatherData.sunrise %> | Sunset: <%= weatherData.sunset %>
 
 _Conditions: <%= weatherData.emoji %> <%= weatherData.condition %>_
+
+<%# You can also use the pre-formatted multi-line text %>
+<%= weatherData.formatted %>
 ```
 
 ### Available Object Properties
 
 The raw weather object contains the following properties:
 
-- `formatted` - Pre-formatted markdown output
-- `cityName` - City name
+#### Weather Data Properties
+
+- `formatted` - Pre-formatted multi-line weather output with markdown formatting (includes heading with date, conditions, high/low temps, wind, visibility, sunrise/sunset, UV index)
 - `temperature` - Current temperature (number)
 - `temperatureUnit` - Unit symbol (°C or °F)
 - `apparentTemperature` - Feels-like temperature
@@ -231,7 +293,20 @@ The raw weather object contains the following properties:
 - `lowTemp` - Today's low temperature
 - `sunrise` - Sunrise time (h:mm AM/PM)
 - `sunset` - Sunset time (h:mm AM/PM)
-- `location` - Object with `{ latitude, longitude, cityName }`
+
+#### Location Object Properties
+
+The `location` object contains detailed location information:
+
+- `location.cityName` - City name
+- `location.region` - State, province, or region
+- `location.country` - Country name
+- `location.countryCode` - Two-letter country code (ISO 3166-1 alpha-2)
+- `location.phoneCode` - Country phone code (with + prefix)
+- `location.latitude` - Latitude coordinate
+- `location.longitude` - Longitude coordinate
+
+**Note:** Root-level properties (like `cityName`) are available for backward compatibility and will fall back to `location.cityName` if the root field is missing. New templates should prefer accessing location data through the `location` object.
 
 ## Migration from wttr.in
 

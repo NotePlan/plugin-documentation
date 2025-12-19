@@ -132,6 +132,150 @@ This will print the amount of overdue tasks and the latest overdue task below.
 
 [Learn here](https://help.noteplan.co/article/148-run-javascript-code-in-your-templates) about how you can use JavaScript in general in your templates, and if you don't have that many lines of code (means you don't need a code block).
 
+### Ignoring Code Blocks
+
+The `template: ignore` feature allows you to mark code blocks in templates to prevent them from being processed by the templating engine. There are two different syntaxes that behave differently:
+
+1. **First-line directive** - Completely removes the code block from the template
+2. **Comment-style ignore** - Protects the code block during processing but includes it in the final output
+
+#### First-Line Directive (Complete Removal)
+
+**Syntax:** Place <code>template: ignore</code> as the first line inside a code block (after the opening backticks)
+
+**Behavior:** The entire code block, including the newline that follows it, is completely removed from the template before processing. It will not appear in the final rendered output.
+
+**Supported variations** (the pattern matching allows for flexible whitespace):
+- <code>template: ignore</code> (no spaces around colon)
+- <code> template: ignore</code> (space before)
+- <code>template:ignore</code> (no space after colon)
+- <code>  template:  ignore</code> (multiple spaces)
+
+**Example:**
+
+~~~markdown
+Some text before the block.
+
+```template: ignore
+This entire block will be removed
+and will not appear in the final output.
+```
+
+Some text after the block.
+~~~
+
+**Rendered output:**
+
+```
+Some text before the block.
+
+Some text after the block.
+```
+
+#### Comment-Style Ignore (Protected During Processing)
+
+**Syntax:** <code>// template: ignore</code> or <code>/* template: ignore */</code> (anywhere in the code block)
+
+**Behavior:** The code block is temporarily protected during template processing (replaced with a placeholder) and then restored in the final output. This is useful when you have code examples or documentation that should appear in the output but should not be processed by the templating engine.
+
+**Example:**
+
+~~~markdown
+Here's a code example:
+
+```javascript
+// template: ignore
+const example = "This code won't be processed";
+console.log(example);
+```
+~~~
+
+**Rendered output:**
+
+~~~markdown
+Here's a code example:
+
+```javascript
+// template: ignore
+const example = "This code won't be processed";
+console.log(example);
+```
+~~~
+
+#### Use Cases
+
+**First-Line Directive Use Cases:**
+- **Template metadata or configuration** that should not appear in the rendered output
+- **Development notes** or instructions for template authors
+- **Processing instructions** that are only relevant during template creation
+
+**Comment-Style Ignore Use Cases:**
+- **Code examples** in documentation that should appear in the final output
+- **Sample code snippets** that demonstrate how to use the templating system
+- **Reference implementations** that users should see but not execute
+
+<Callout type="info">
+**Important Notes:**
+
+1. **Pattern matching is strict**: For first-line directives, the pattern must match the first line exactly (with optional whitespace). If <code>template: ignore</code> appears anywhere else in the block (not as a comment), it will not be matched.
+
+2. **Comment-style ignores work anywhere**: Comment-style ignores (<code>// template: ignore</code> or <code>/* template: ignore */</code>) can appear anywhere in the code block, not just the first line.
+
+3. **First-line directive removes everything**: When using the first-line directive, the entire code block including any trailing newline is removed. Be careful not to accidentally remove important whitespace.
+
+4. **Comment-style ignores preserve content**: Comment-style ignores protect the block during processing but restore it exactly as written in the final output.
+</Callout>
+
+#### Examples
+
+**Example 1: Removing a Processing Instruction**
+
+~~~markdown
+---
+title: My Template
+---
+
+```template: ignore
+This is a note for template authors.
+It won't appear in the final output.
+```
+
+The actual template content starts here.
+~~~
+
+**Example 2: Protecting Code Examples**
+
+~~~markdown
+Here's how to use the date module:
+
+```javascript
+// template: ignore
+const today = date.now();
+console.log(today);
+```
+
+This code example will appear in the output.
+~~~
+
+**Example 3: Mixed Usage**
+
+~~~markdown
+Some content.
+
+```template: ignore
+This block will be removed.
+```
+
+More content.
+
+```javascript
+// template: ignore
+This block will be protected but appear in output.
+```
+
+Even more content.
+~~~
+
 ### Important Note on Whitespace
 
 When you have have control/process tags, it is recommended that you always use the `Whitespace Slurping` tags at the end of the line. Generally speaking, any control/process tag (`<% ...`) should have a whitespace slurping tag at the end of the line (`-%>`  ). It is very rare that you would want to have a control tag without removing the newline at the end of the line it's on. This is one of the most common mistakes people make when writing templates -- they end up with a lot of blank lines in their output and they don't know why.
