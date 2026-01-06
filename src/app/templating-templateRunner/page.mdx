@@ -300,35 +300,122 @@ Notice how in this example, `var1` is not set in the frontmatter. This is a vari
 > _Tip_
 > Because it's hard to predict what words are reserved in the Templating system, we suggest you use names that are very unlikely to exist elsewhere. For example, _var1_, _var2_, _var3_ or something like _myThoughtsVar_
 
-## Trigger-Based Template Runner
+## Automatic Template Execution on Note Open
 
-In addition to being called via callback URLs, Template Runner can also be triggered automatically by NotePlan events. This allows you to run templateRunner templates when certain actions occur in NotePlan, such as when a note is saved.
+The `triggerTemplateRunner` command allows templates to automatically execute when a note is opened. This is useful for notes that need dynamic content generated or calculations updated on open.
 
-### templateTitle (required for triggers)
+### How It Works
 
-When using triggers, you need to specify the name of the templateRunner template to execute in the `templateTitle` frontmatter attribute of the note that will trigger the template.
+1. Add `runTemplateOnOpen` attribute to a note's frontmatter with the template title
+2. Add a trigger in the frontmatter: `triggers: onOpen => np.Templating.triggerTemplateRunner` (or `onEditorWillSave => np.Templating.triggerTemplateRunner` for save events)
+3. When the note is opened (or saved, depending on the trigger), the specified template is automatically executed
 
-Example:
+### Required Frontmatter Format
 
-```markdown
+**For note open trigger:**
+```yaml
 ---
-title: My Note
-templateTitle: write modified time to frontmatter
-triggers: onEditorWillSave => np.Templating.templateRunner
+runTemplateOnOpen: Template Title Here
+triggers: onOpen => np.Templating.triggerTemplateRunner
 ---
 ```
 
-In this example, when the note is saved, the templateRunner will execute the template named "write modified time to frontmatter".
+**For note save trigger:**
+```yaml
+---
+runTemplateOnOpen: Template Title Here
+triggers: onEditorWillSave => np.Templating.triggerTemplateRunner
+---
+```
 
-### Setting up the Trigger
+<Callout type="warning">
+**Important Notes:**
+- The template title in `runTemplateOnOpen` must exactly match the template file title (without `.md` extension)
+- No quotes are needed around the template title
+- The trigger line is required for this feature to work
+- If `runTemplateOnOpen` is empty or missing, the trigger will silently skip execution
+- `triggerTemplateRunner` works with both `onOpen` and `onEditorWillSave` triggers
+</Callout>
 
-To set up a trigger, you need to add a `triggers` attribute to your note's frontmatter. The trigger should call the `templateRunner` command from the `np.Templating` plugin.
+### Example: Age Calculation Note
 
-Common trigger patterns:
-- `onOpen => np.Templating.templateRunner` - runs when the note is opened 
-- `onEditorWillSave => np.Templating.templateRunner` - runs when the note is about to be saved
+This example shows a note that automatically updates an age calculation when opened.
 
-In both cases, the trigger will call the `templateRunner` command from the `np.Templating` plugin, which will look for the template specified in the `templateTitle` attribute and execute it.
+#### The Note (with trigger in frontmatter):
+
+```yaml
+---
+Bday: 1980-05-15
+runTemplateOnOpen: Update Age
+triggers: onOpen => np.Templating.triggerTemplateRunner
+---
+# John Doe Contact Note Example
+## Age
+(as of 2026-01-XX)
+```
+
+**Note:** The callback URL is no longer needed in the note body since the template runs automatically when the note is opened via the trigger.
+
+#### The Template (`Update Age` in @Templates folder):
+
+```yaml
+---
+title: Update Age
+type: template-runner
+getNoteTitled: <current>
+writeUnderHeading: Age
+location: replace
+---
+<%
+// Get frontmatter attributes to access Bday
+const bday = Editor.frontmatterAttributes.Bday || attrs.bday || '';
+// Calculate age
+let age = '';
+if (bday) {
+  const daysBetween = date.daysBetween(date.now("YYYY-MM-DD"), bday);
+  age = Math.floor(daysBetween / -365);
+}
+// Get today's date for the "as of" text
+const today = date.now("YYYY-MM-DD");
+%>
+**<%- age %>** (as of <%- today %>)
+```
+
+#### How It Works:
+
+When this note is opened, it automatically runs the "Update Age" template, which:
+1. Reads the `Bday` value from the note's frontmatter
+2. Calculates the current age based on today's date
+3. Gets today's date for the "as of" text
+4. Replaces the content under the "Age" heading with the updated age and today's date
+
+This ensures the age is always current whenever the note is opened, and shows when it was last updated.
+
+<Callout type="info">
+Since the template runs automatically via the trigger, there's no need for a manual "Update" link or callback URL in the note body.
+</Callout>
+
+### Technical Details
+
+- **Command**: `triggerTemplateRunner` (hidden command, invoked via trigger)
+- **Plugin**: `np.Templating`
+- **Trigger Types**: `onOpen` (when note is opened) or `onEditorWillSave` (when note is about to be saved)
+- **Frontmatter Attribute**: `runTemplateOnOpen` (string, required)
+- **Template Execution**: Uses `templateRunner` internally
+
+<Callout type="info">
+This is a separate, hidden command -- specifically designed for trigger-based execution of TemplateRunner templates. The template runs using the same TemplateRunner mechanism, so it supports all TemplateRunner features including `location: replace` to update existing content.
+</Callout>
+
+### Troubleshooting
+
+**Template not running?** Check that:
+- The template title in `runTemplateOnOpen` exactly matches your template file title
+- The trigger line is present in frontmatter: `triggers: onOpen => np.Templating.triggerTemplateRunner`
+- The template exists in your `@Templates` folder
+- The note is actually being opened (not just viewed)
+
+**Template found but not executing?** Check the Plugin Console (Help → Plugin Console) for detailed error messages.
 
 ## Arguments for X-Callbacks and Shortcuts
 
@@ -484,45 +571,6 @@ In this example, I passed two variables (var1 and var2) corresponding to two pro
 After these variables are URL-encoded, they look like this in the final URL:
 `...arg2=var1%3DVALUE1%3Bvar2%3DVALUE2`
 ...now you probably see why the `URL Creator` will save you so much trial and error.
-
-### Trigger-Based Example - Auto-Update Modified Time
-
-This example demonstrates how to use Template Runner with triggers to automatically update a note's frontmatter when it's saved. This is useful for tracking when notes were last modified.
-
-#### Trigger Note
-
-The note that will trigger the templateRunner:
-
-```markdown
----
-title: Test of templateRunner trigger with no args
-templateTitle: write modified time to frontmatter
-triggers: onEditorWillSave => np.Templating.templateRunner
-modified: 7/16/2025, 1:54:11 AM
----
-```
-
-#### TemplateRunner Template
-
-The template that will be executed when the note is saved:
-
-```markdown
----
-title: write modified time to frontmatter
-type: meeting-note, empty-note
----
-```templatejs
-    const theTime = new Date().toISOString() || new Date().toLocaleString()
-    updateFrontmatterVars(Editor, {
-      modified: user?.first||'' ? `${theTime} (${authorID})` : theTime,
-    })
-```
-
-In this example:
-1. When the trigger note is saved, the `templateRunner` will execute the "write modified time to frontmatter" template
-2. The template uses JavaScript to get the current timestamp
-3. It updates the `modified` field in the note's frontmatter with the current time
-4. If a user is logged in, it includes the user's name in parentheses
 
 ### Super Advanced Example - Inline Meeting Notes
 
