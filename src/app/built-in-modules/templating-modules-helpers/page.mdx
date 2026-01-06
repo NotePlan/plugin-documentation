@@ -53,7 +53,7 @@ Access helper functions directly in your templates using the `helpers` namespace
 - `helpers.showMessageYesNo()` - Yes/No confirmation dialog
 - `helpers.chooseOption()` - Choose from a list of options
 - `helpers.chooseFolder()` - Select a folder
-- `helpers.chooseNote()` - Select a note
+- `helpers.chooseNote()` - Select a note (dropdown displays as `<path>/<title>` for personal/project notes)
 - `helpers.chooseNoteV2()` - Select a note with a teamspace and icon support
 - `helpers.chooseHeading()` - Select a heading
 
@@ -197,6 +197,8 @@ The helpers module is automatically available in all templates through the Templ
 <%- helpers.chooseNote('Select target note') %>
 <%- helpers.selectFirstNonTitleLineInEditor() %>
 ```
+
+**Note:** When using `helpers.chooseNote()`, the dropdown options for personal/project notes display in the format `<path>/<title>` (e.g., `Projects/Meeting Notes`), not `<title><path>`. This format makes it easier to identify notes by their location in your folder structure.
 
 **Configuration**
 ```javascript

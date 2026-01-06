@@ -325,8 +325,10 @@ In this example, when the note is saved, the templateRunner will execute the tem
 To set up a trigger, you need to add a `triggers` attribute to your note's frontmatter. The trigger should call the `templateRunner` command from the `np.Templating` plugin.
 
 Common trigger patterns:
+- `onOpen => np.Templating.templateRunner` - runs when the note is opened 
 - `onEditorWillSave => np.Templating.templateRunner` - runs when the note is about to be saved
-- `onEditorDidSave => np.Templating.templateRunner` - runs after the note has been saved
+
+In both cases, the trigger will call the `templateRunner` command from the `np.Templating` plugin, which will look for the template specified in the `templateTitle` attribute and execute it.
 
 ## Arguments for X-Callbacks and Shortcuts
 
