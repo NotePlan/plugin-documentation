@@ -80,10 +80,10 @@ A combined form is only built when questions **don’t need** an answer from **a
 
 ```markdown
 ---
-cityChoices: <%- ['A', 'B', 'C'] %>
+<%- prompt('region', 'Region', ['North', 'South']) %>
 ---
 <%- prompt('region', 'Region', ['North', 'South']) %>
-<%- prompt('city', 'City', cityChoices) %>
+<%- prompt('city', 'City', region) %>
 ```
 
 ## How questions show up on the form
