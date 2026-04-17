@@ -1,9 +1,15 @@
 import Callout from '@/components/Callout'
+import Link from 'next/link'
 
 
 # Prompts
 
 `Templating` provides the ability to ask the user questions through prompts when rendering templates. This page provides an overview of the different types of prompts available.
+
+<Callout type="info" title="NotePlan 3.21+: multiple prompts on one Command Bar form">
+  Back-to-back <code>prompt</code> and <code>promptDate</code> tags can share a single Command Bar form (fewer clicks). You can opt out per template with frontmatter, declare a full form with <code>promptForm</code>, and learn what splits questions into separate steps.{' '}
+  <Link href="/core-features/templating-prompts/command-bar-forms">Command Bar forms and prompt batching →</Link>
+</Callout>
 
 ## Basic Prompts
 

@@ -26,6 +26,10 @@ export const navigation = [
       },
       { title: 'Prompts', href: '/core-features/templating-prompts' },
       {
+        title: 'Command Bar prompt forms',
+        href: '/core-features/templating-prompts/command-bar-forms',
+      },
+      {
         title: 'Quick Notes',
         href: '/core-features/templating-quicknotes',
       },
