@@ -10,16 +10,16 @@ import templateRunnerShortcuts from '@/images/templateRunner-shortcuts.png'
 
 ## Overview
 
-`Templating` includes the `templateRunner` command to allow templates to be invoked from callback URLs or triggers. This allows you to use a template to insert content (including dynamic Templating tag-generated content) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor or display the note you specify at run-time). 
+`Templating` includes the `templateRunner` command to allow templates to be invoked from callback URLs. This allows you to use a template to insert content (including dynamic Templating tag-generated content) into a note of your choosing. It can do so silently (e.g. just write to a note but not pull it up in the Editor or display the note you specify at run-time). 
 
 Template Runner templates can be activated in two ways:
 1. **Callback URLs**: When a link is clicked from within or outside of NotePlan (e.g. Shortcuts, Keyboard Maestro or wherever)
-2. **Triggers**: Automatically when certain events occur in NotePlan (e.g. when a note is saved)
+2. **Note open triggers**: Automatically when a note with `runTemplateOnOpen` is opened, using the separate `triggerTemplateRunner` command
 
 This gives you a way to pass arbitrary information into your notes and automate template execution based on NotePlan events.
 
 <Callout type="info">
-Template Runner is a hidden command to be run from a callback URL or trigger. It is not a command that you can call from the Command Bar.
+Template Runner commands are hidden commands, not Command Bar commands. Use `templateRunner` from callback URLs, and use `triggerTemplateRunner` from note-open triggers.
 </Callout>
 
 ## Required Attributes
@@ -368,31 +368,22 @@ Notice how in this example, `var1` is not set in the frontmatter. This is a vari
 > _Tip_
 > Because it's hard to predict what words are reserved in the Templating system, we suggest you use names that are very unlikely to exist elsewhere. For example, _var1_, _var2_, _var3_ or something like _myThoughtsVar_
 
-## Automatic Template Execution via Triggers (onOpen and onEditorWillSave)
+## Automatic Template Execution on Note Open
 
-The `triggerTemplateRunner` command allows templates to automatically execute when a note is opened. This is useful for notes that need dynamic content generated or calculations updated on open.
+The `triggerTemplateRunner` command allows a note to automatically execute a Template Runner template when that note is opened. This is useful for notes that need dynamic content generated or calculations updated on open.
 
 ### How It Works
 
 1. Add `runTemplateOnOpen` attribute to a note's frontmatter with the template title
-2. Add a trigger in the frontmatter: `triggers: onOpen => np.Templating.triggerTemplateRunner` (or `onEditorWillSave => np.Templating.triggerTemplateRunner` for save events)
-3. When the note is opened (or saved, depending on the trigger), the specified template is automatically executed
+2. Add a trigger in the frontmatter: `triggers: onOpen => np.Templating.triggerTemplateRunner`
+3. When the note is opened, the specified template is automatically executed
 
 ### Required Frontmatter Format
 
-**For note open trigger:**
 ```yaml
 ---
 runTemplateOnOpen: Template Title Here
 triggers: onOpen => np.Templating.triggerTemplateRunner
----
-```
-
-**For note save trigger:**
-```yaml
----
-runTemplateOnOpen: Template Title Here
-triggers: onEditorWillSave => np.Templating.triggerTemplateRunner
 ---
 ```
 
@@ -402,7 +393,7 @@ triggers: onEditorWillSave => np.Templating.triggerTemplateRunner
 - No quotes are needed around the template title
 - The trigger line is required for this feature to work
 - If `runTemplateOnOpen` is empty or missing, the trigger will silently skip execution
-- `triggerTemplateRunner` works with both `onOpen` and `onEditorWillSave` triggers
+- Use `triggerTemplateRunner` for this flow. Do not point an `onOpen` trigger directly at `templateRunner`, because `templateRunner` expects the template title to be passed as an argument rather than reading `runTemplateOnOpen` from the note.
 </Callout>
 
 ### Example: Age Calculation Note
@@ -467,7 +458,7 @@ Since the template runs automatically via the trigger, there's no need for a man
 
 - **Command**: `triggerTemplateRunner` (hidden command, invoked via trigger)
 - **Plugin**: `np.Templating`
-- **Trigger Types**: `onOpen` (when note is opened) or `onEditorWillSave` (when note is about to be saved)
+- **Trigger Type**: `onOpen` (when the note is opened)
 - **Frontmatter Attribute**: `runTemplateOnOpen` (string, required)
 - **Template Execution**: Uses `templateRunner` internally
 
