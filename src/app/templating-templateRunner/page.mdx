@@ -40,13 +40,81 @@ When you want to work with an existing note, use `getNoteTitled`. The value can 
 - a note title - should be a unique title (you will get the first note if there are more than one)
 - `<current>` - the currently opened note in the NotePlan Editor
 - `<today>` - today's note on whatever day the link is clicked to run the template
+- `<tomorrow>`
+- `<yesterday>`
 - `<thisweek>`
 - `<nextweek>`
+- `<thismonth>`
+- `<nextmonth>`
+- `<thisquarter>`
+- `<nextquarter>`
+- `<thisyear>`
+- `<nextyear>`
 - `<choose>` - user will be asked to select a note at run-time
+- `<select>` - user will be asked to select a note at run-time
 
 <Callout type="info">
 **Note**: `getNoteTitled` is only used when you don't specify `newNoteTitle`.
 </Callout>
+
+#### Calendar note titles in getNoteTitled
+
+Template Runner renders any template tags in `getNoteTitled` before it chooses the target note. If the rendered value is a valid calendar note title, Template Runner routes it to the matching calendar note instead of looking for a regular project note with that title.
+
+Supported rendered calendar note titles:
+
+- Daily: `YYYY-MM-DD`, for example `2026-05-03`
+- Monthly: `YYYY-MM`, for example `2026-06`
+- Quarterly: `YYYY-Qn`, for example `2026-Q3`
+- Yearly: `YYYY`, for example `2026`
+
+Invalid date-shaped values are not treated as calendar notes. For example, `2024-99-99`, `2024-13`, and `2024-Q5` fail strict validation and continue through normal note-title handling.
+
+Examples:
+
+```yaml
+---
+getNoteTitled: <tomorrow>
+---
+```
+
+```yaml
+---
+getNoteTitled: <%- date.tomorrow('YYYY-MM-DD') %>
+---
+```
+
+```yaml
+---
+getNoteTitled: <nextmonth>
+---
+```
+
+```yaml
+---
+getNoteTitled: <%- date.now('YYYY-MM', '1m') %>
+---
+```
+
+```yaml
+---
+getNoteTitled: <nextquarter>
+---
+```
+
+```yaml
+---
+getNoteTitled: 2026
+---
+```
+
+Relative calendar tokens use calendar-aware date math:
+
+- On `2024-12-31`, `<nextmonth>` resolves to `2025-01`.
+- On `2024-12-31`, `<nextquarter>` resolves to `2025-Q1`.
+- On `2024-12-31`, `<nextyear>` resolves to `2025`.
+
+When a rendered template expression needs to target a calendar note, include an explicit output format such as `YYYY-MM-DD`. Avoid relying on `date.tomorrow()` without a format, because the user's default templating date format may not be a calendar-note title.
 
 ### Note Creation vs. Note Selection
 
